@@ -1,23 +1,33 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 public class motor {
-   private volatile double position;
-   public volatile double inchestraveled;
+    private volatile double rawposition;
+    private volatile double softposition;
+    public volatile double inchestraveled;
     public motor() {
 
-    position = 0; inchestraveled = 0;
+        rawposition = 0; inchestraveled = 0;
     }
     public synchronized void updatePosition(double newPos) {
-        position = newPos;
+        rawposition = newPos;
+        softposition=newPos;
         calcInches();
     }
     public synchronized void addPosition(double addPos){
-        position+= addPos;
+        rawposition+= addPos;
+        softposition+= addPos;
         calcInches();
     }
     private void calcInches(){
-        //calcinches using pos and update
+        //calcinches using softpos and update
     }
+    public synchronized void resetPos() {
+        softposition=0;
+    }
+    public synchronized void resetPos(double startPos){
+        softposition=startPos;
+    }
+
 
 
 
