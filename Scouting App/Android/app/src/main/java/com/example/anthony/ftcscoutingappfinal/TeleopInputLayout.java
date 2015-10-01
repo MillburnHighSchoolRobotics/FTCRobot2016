@@ -26,10 +26,10 @@ public class TeleopInputLayout extends Activity {
     String[] turtlestwo = new String[5];
     String[] turtles = new String[5];
     String[] secondarray = new String[4];
-    String[] teamone = new String[3];
-    String[] teamtwo = new String[3];
-    String[] teamthree = new String[3];
-    String[] teamfour = new String[3];
+    String[] teamone = new String[8];
+    String[] teamtwo = new String[8];
+    String[] teamthree = new String[8];
+    String[] teamfour = new String[8];
     String[] newstring = new String[5];
     JSONArray teamstwo = new JSONArray();
     JSONArray matchteams = new JSONArray();
@@ -81,12 +81,47 @@ public class TeleopInputLayout extends Activity {
         T2AllClear = (EditText)findViewById(R.id.T2AllClear);
         T3AllClear = (EditText)findViewById(R.id.T3AllClear);
         T4AllClear = (EditText)findViewById(R.id.T4AllClear);
+        teamone[0] = T1Floor.getText().toString();
+        teamone[1] = T1Low.getText().toString();
+        teamone[2] = T1Mid.getText().toString();
+        teamone[3] = T1High.getText().toString();
+        teamone[4] = T1ClimbersTeleOp.getText().toString();
+        teamone[5] = T1ZipLine.getText().toString();
+        teamone[6] = T1ParkingEndgame.getText().toString();
+        teamone[7] = T1AllClear.getText().toString();
+        teamtwo[0] = T2Floor.getText().toString();
+        teamtwo[1] = T2Low.getText().toString();
+        teamtwo[2] = T2Mid.getText().toString();
+        teamtwo[3] = T2High.getText().toString();
+        teamtwo[4] = T2ClimbersTeleOp.getText().toString();
+        teamtwo[5] = T2ZipLine.getText().toString();
+        teamtwo[6] = T2ParkingEndgame.getText().toString();
+        teamtwo[7] = T2AllClear.getText().toString();
+        teamthree[0] = T3Floor.getText().toString();
+        teamthree[1] = T3Low.getText().toString();
+        teamthree[2] = T3Mid.getText().toString();
+        teamthree[3] = T3High.getText().toString();
+        teamthree[4] = T3ClimbersTeleOp.getText().toString();
+        teamthree[5] = T3ZipLine.getText().toString();
+        teamthree[6] = T3ParkingEndgame.getText().toString();
+        teamthree[7] = T3AllClear.getText().toString();
+        teamfour[0] = T4Floor.getText().toString();
+        teamfour[1] = T4Low.getText().toString();
+        teamfour[2] = T4Mid.getText().toString();
+        teamfour[3] = T4High.getText().toString();
+        teamfour[4] = T4ClimbersTeleOp.getText().toString();
+        teamfour[5] = T4ZipLine.getText().toString();
+        teamfour[6] = T4ParkingEndgame.getText().toString();
+        teamfour[7] = T4AllClear.getText().toString();
 
         String value= getIntent().getStringExtra("matchnumber");
         Intent intent = new Intent(this, SecondPageActivity.class);
         intent.putExtra("matchnumber", value);
         data = getIntent().getStringExtra("matchnumber");
-
+        teamstats = new ParseObject("TeamStats");
+        teamstats2 = new ParseObject("TeamStats");
+        teamstats3 = new ParseObject("TeamStats");
+        teamstats4 = new ParseObject("TeamStats");
         final TextView team1 = (TextView) findViewById(R.id.T1TXT);
         final TextView team2 = (TextView) findViewById(R.id.T2TXT);
         final TextView team3 = (TextView) findViewById(R.id.T3TXT);
@@ -122,31 +157,23 @@ public class TeleopInputLayout extends Activity {
             }
         });
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("TeamStats");
-        query.whereEqualTo("TeamNumber", );
-        query.findInBackground(new FindCallback<ParseObject>() {
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("TeamStats");
+        query2.whereEqualTo("TeamNumber", teams3[0]);
+        query2.findInBackground(new FindCallback<ParseObject>() {
 
             public void done(List<ParseObject> l, ParseException e) {
 
                 if (e == null) {
-
-                    for (int i = 0; i < l.size(); i++) {
-                        matchteams = (l.get(i).getJSONArray("Teams"));
-                        test = matchteams.toString();
-                        secondarray = test.split(",");
-                        for (int d = 0; d < 4; d++) {
-                            teams3[d] = secondarray[d].replaceAll("[^\\d.]", "");
-                        }
-                        teamnumber1.setText(teams3[0]);
-                        teamnumber2.setText(teams3[1]);
-                        teamnumber3.setText(teams3[2]);
-                        teamnumber4.setText(teams3[3]);
-
-                    }
-                    Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
-                    intent.putExtra("matchnumber", matchnumber.getText().toString());
-                    startActivity(intent);
-                } else {
+                    teamstats.put("Floor", teamone[0]);
+                    teamstats.put("Low", teamone[1]);
+                    teamstats.put("Mid", teamone[2]);
+                    teamstats.put("High", teamone[3]);
+                    teamstats.put("ClimbersTele", teamone[4]);
+                    teamstats.put("Zipline", teamone[5]);
+                    teamstats.put("ParkingEnd", teamone[6]);
+                    teamstats.put("AllClear", teamone[7]);
+                }
+                else {
                     Log.d("Error", e.getMessage());
                 }
 

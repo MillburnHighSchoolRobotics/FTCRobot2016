@@ -55,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/anthony/ftcscoutingappfinal/AutonomousInputLayout.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="58" column="0" selection-start-line="54" selection-start-column="8" selection-end-line="58" selection-end-column="0" />
+              <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="97" selection-end-column="50" />
               <folding>
                 <element signature="e#2399#3280#0" expanded="true" />
                 <element signature="e#3279#3280#0" expanded="true" />
@@ -70,12 +70,12 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/anthony/ftcscoutingappfinal/TeleopInputLayout.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.94323874">
-              <caret line="137" column="20" selection-start-line="137" selection-start-column="20" selection-end-line="137" selection-end-column="20" />
+              <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
               <folding>
-                <element signature="e#4616#5514#0" expanded="true" />
-                <element signature="e#5513#5514#0" expanded="true" />
-                <element signature="e#5667#6796#0" expanded="true" />
-                <element signature="e#6795#6796#0" expanded="true" />
+                <element signature="e#6546#7444#0" expanded="true" />
+                <element signature="e#7443#7444#0" expanded="true" />
+                <element signature="e#7609#8343#0" expanded="true" />
+                <element signature="e#8342#8343#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2065,10 +2065,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4616#5514#0" expanded="true" />
-            <element signature="e#5513#5514#0" expanded="true" />
-            <element signature="e#5667#6796#0" expanded="true" />
-            <element signature="e#6795#6796#0" expanded="true" />
+            <element signature="e#6546#7444#0" expanded="true" />
+            <element signature="e#7443#7444#0" expanded="true" />
+            <element signature="e#7609#8343#0" expanded="true" />
+            <element signature="e#8342#8343#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2138,10 +2138,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding>
-            <element signature="e#4616#5514#0" expanded="true" />
-            <element signature="e#5513#5514#0" expanded="true" />
-            <element signature="e#5667#6796#0" expanded="true" />
-            <element signature="e#6795#6796#0" expanded="true" />
+            <element signature="e#6546#7444#0" expanded="true" />
+            <element signature="e#7443#7444#0" expanded="true" />
+            <element signature="e#7609#8343#0" expanded="true" />
+            <element signature="e#8342#8343#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2217,7 +2217,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/anthony/ftcscoutingappfinal/AutonomousInputLayout.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="0" selection-start-line="54" selection-start-column="8" selection-end-line="58" selection-end-column="0" />
+          <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="97" selection-end-column="50" />
           <folding>
             <element signature="e#2399#3280#0" expanded="true" />
             <element signature="e#3279#3280#0" expanded="true" />
@@ -2230,12 +2230,12 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/anthony/ftcscoutingappfinal/TeleopInputLayout.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.94323874">
-          <caret line="137" column="20" selection-start-line="137" selection-start-column="20" selection-end-line="137" selection-end-column="20" />
+          <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
           <folding>
-            <element signature="e#4616#5514#0" expanded="true" />
-            <element signature="e#5513#5514#0" expanded="true" />
-            <element signature="e#5667#6796#0" expanded="true" />
-            <element signature="e#6795#6796#0" expanded="true" />
+            <element signature="e#6546#7444#0" expanded="true" />
+            <element signature="e#7443#7444#0" expanded="true" />
+            <element signature="e#7609#8343#0" expanded="true" />
+            <element signature="e#8342#8343#0" expanded="true" />
           </folding>
         </state>
       </provider>
