@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -127,7 +129,7 @@ public class TeleopInputLayout extends Activity {
         final TextView team3 = (TextView) findViewById(R.id.T3TXT);
         final TextView team4 = (TextView) findViewById(R.id.T4TXT);
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Matchinformation");
+       /* ParseQuery<ParseObject> query = ParseQuery.getQuery("Matchinformation");
         query.whereEqualTo("MatchNumber", data);
         query.findInBackground(new FindCallback<ParseObject>() {
 
@@ -148,35 +150,41 @@ public class TeleopInputLayout extends Activity {
                         team4.setText(teams3[3]);
                     }
 
-                }
-                else {
+                } else {
 
                     Log.d("Error", e.getMessage());
                 }
 
             }
-        });
+        });*/
 
-        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("TeamStats");
-        query2.whereEqualTo("TeamNumber", teams3[0]);
-        query2.findInBackground(new FindCallback<ParseObject>() {
+        team1.setText("8405");
+        Button nextpage = (Button)findViewById(R.id.next);
+        nextpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            public void done(List<ParseObject> l, ParseException e) {
+                ParseQuery<ParseObject> query2 = ParseQuery.getQuery("TeamStats");
+                query2.whereEqualTo("TeamNumber", teams3[0]);
+                query2.findInBackground(new FindCallback<ParseObject>() {
 
-                if (e == null) {
-                    teamstats.put("Floor", teamone[0]);
-                    teamstats.put("Low", teamone[1]);
-                    teamstats.put("Mid", teamone[2]);
-                    teamstats.put("High", teamone[3]);
-                    teamstats.put("ClimbersTele", teamone[4]);
-                    teamstats.put("Zipline", teamone[5]);
-                    teamstats.put("ParkingEnd", teamone[6]);
-                    teamstats.put("AllClear", teamone[7]);
-                }
-                else {
-                    Log.d("Error", e.getMessage());
-                }
+                    public void done(List<ParseObject> l, ParseException e) {
 
+                        if (e == null) {
+                            teamstats.put("Floor", teamone[0]);
+                            teamstats.put("Low", teamone[1]);
+                            teamstats.put("Mid", teamone[2]);
+                            teamstats.put("High", teamone[3]);
+                            teamstats.put("ClimbersTele", teamone[4]);
+                            teamstats.put("Zipline", teamone[5]);
+                            teamstats.put("ParkingEnd", teamone[6]);
+                            teamstats.put("AllClear", teamone[7]);
+                        } else {
+                            Log.d("Error", e.getMessage());
+                        }
+
+                    }
+                });
             }
         });
     }
