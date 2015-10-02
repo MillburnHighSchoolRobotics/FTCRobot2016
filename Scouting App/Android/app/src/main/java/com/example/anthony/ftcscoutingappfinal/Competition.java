@@ -1,4 +1,4 @@
-package com.google.example.ftcscoutingapp;
+package com.example.anthony.ftcscoutingappfinal;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
