@@ -96,6 +96,9 @@ public class SecondPageActivity extends Activity {
                             Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
                             intent.putExtra("matchnumber", matchnumber.getText().toString());
                             startActivity(intent);
+                            Intent intent2 = new Intent(getBaseContext(), TeleopInputLayout.class);
+                            intent.putExtra("matchnumber", matchnumber.getText().toString());
+                            startActivity(intent2);
                         } else {
                             Log.d("Error", e.getMessage());
                         }
