@@ -1,7 +1,6 @@
 package com.example.anthony.ftcscoutingappfinal;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,48 +40,49 @@ public class TeleopInputLayout extends Activity {
     String list;
     String[] stringarray = new String[5];
     String data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teleop_input_layout);
 
-        EditText T1Floor,T2Floor,T3Floor,T4Floor,T1Low,T2Low,T3Low,T4Low,T1Mid,T2Mid,T3Mid,T4Mid, T1High,T2High,T3High,T4High;
-        EditText T1ClimbersTeleOp,T2ClimbersTeleOp,T3ClimbersTeleOp,T4ClimbersTeleOp,T1ZipLine,T2ZipLine,T3ZipLine,T4ZipLine;
-        EditText T1ParkingEndgame,T2ParkingEndgame,T3ParkingEndgame,T4ParkingEndgame;
-        EditText T1AllClear,T2AllClear,T3AllClear,T4AllClear;
-        T1Floor = (EditText)findViewById(R.id.T1Floor);
-        T2Floor = (EditText)findViewById(R.id.T2Floor);
-        T3Floor = (EditText)findViewById(R.id.T3Floor);
-        T4Floor = (EditText)findViewById(R.id.T4Floor);
-        T1Low = (EditText)findViewById(R.id.T1Low);
-        T2Low = (EditText)findViewById(R.id.T2Low);
-        T3Low = (EditText)findViewById(R.id.T3Low);
-        T4Low = (EditText)findViewById(R.id.T4Low);
-        T1Mid = (EditText)findViewById(R.id.T1Mid);
-        T2Mid = (EditText)findViewById(R.id.T2Mid);
-        T3Mid = (EditText)findViewById(R.id.T3Mid);
-        T4Mid = (EditText)findViewById(R.id.T4Mid);
-        T1High = (EditText)findViewById(R.id.T1High);
-        T2High = (EditText)findViewById(R.id.T2High);
-        T3High = (EditText)findViewById(R.id.T3High);
-        T4High = (EditText)findViewById(R.id.T4High);
-        T1ClimbersTeleOp = (EditText)findViewById(R.id.T1ClimbersTeleOp);
-        T2ClimbersTeleOp = (EditText)findViewById(R.id.T2ClimbersTeleOp);
-        T3ClimbersTeleOp = (EditText)findViewById(R.id.T3ClimbersTeleOp);
-        T4ClimbersTeleOp = (EditText)findViewById(R.id.T4ClimbersTeleOp);
+        EditText T1Floor, T2Floor, T3Floor, T4Floor, T1Low, T2Low, T3Low, T4Low, T1Mid, T2Mid, T3Mid, T4Mid, T1High, T2High, T3High, T4High;
+        EditText T1ClimbersTeleOp, T2ClimbersTeleOp, T3ClimbersTeleOp, T4ClimbersTeleOp, T1ZipLine, T2ZipLine, T3ZipLine, T4ZipLine;
+        EditText T1ParkingEndgame, T2ParkingEndgame, T3ParkingEndgame, T4ParkingEndgame;
+        EditText T1AllClear, T2AllClear, T3AllClear, T4AllClear;
+        T1Floor = (EditText) findViewById(R.id.T1Floor);
+        T2Floor = (EditText) findViewById(R.id.T2Floor);
+        T3Floor = (EditText) findViewById(R.id.T3Floor);
+        T4Floor = (EditText) findViewById(R.id.T4Floor);
+        T1Low = (EditText) findViewById(R.id.T1Low);
+        T2Low = (EditText) findViewById(R.id.T2Low);
+        T3Low = (EditText) findViewById(R.id.T3Low);
+        T4Low = (EditText) findViewById(R.id.T4Low);
+        T1Mid = (EditText) findViewById(R.id.T1Mid);
+        T2Mid = (EditText) findViewById(R.id.T2Mid);
+        T3Mid = (EditText) findViewById(R.id.T3Mid);
+        T4Mid = (EditText) findViewById(R.id.T4Mid);
+        T1High = (EditText) findViewById(R.id.T1High);
+        T2High = (EditText) findViewById(R.id.T2High);
+        T3High = (EditText) findViewById(R.id.T3High);
+        T4High = (EditText) findViewById(R.id.T4High);
+        T1ClimbersTeleOp = (EditText) findViewById(R.id.T1ClimbersTeleOp);
+        T2ClimbersTeleOp = (EditText) findViewById(R.id.T2ClimbersTeleOp);
+        T3ClimbersTeleOp = (EditText) findViewById(R.id.T3ClimbersTeleOp);
+        T4ClimbersTeleOp = (EditText) findViewById(R.id.T4ClimbersTeleOp);
         T1ZipLine = (EditText) findViewById(R.id.T1ZipLine);
         T2ZipLine = (EditText) findViewById(R.id.T2ZipLine);
         T3ZipLine = (EditText) findViewById(R.id.T3ZipLine);
         T4ZipLine = (EditText) findViewById(R.id.T4ZipLine);
-        T1ParkingEndgame = (EditText)findViewById(R.id.T1ParkingEndgame);
-        T2ParkingEndgame = (EditText)findViewById(R.id.T2ParkingEndgame);
-        T3ParkingEndgame = (EditText)findViewById(R.id.T3ParkingEndgame);
-        T4ParkingEndgame = (EditText)findViewById(R.id.T4ParkingEndgame);
-        T1AllClear = (EditText)findViewById(R.id.T1AllClear);
-        T2AllClear = (EditText)findViewById(R.id.T2AllClear);
-        T3AllClear = (EditText)findViewById(R.id.T3AllClear);
-        T4AllClear = (EditText)findViewById(R.id.T4AllClear);
+        T1ParkingEndgame = (EditText) findViewById(R.id.T1ParkingEndgame);
+        T2ParkingEndgame = (EditText) findViewById(R.id.T2ParkingEndgame);
+        T3ParkingEndgame = (EditText) findViewById(R.id.T3ParkingEndgame);
+        T4ParkingEndgame = (EditText) findViewById(R.id.T4ParkingEndgame);
+        T1AllClear = (EditText) findViewById(R.id.T1AllClear);
+        T2AllClear = (EditText) findViewById(R.id.T2AllClear);
+        T3AllClear = (EditText) findViewById(R.id.T3AllClear);
+        T4AllClear = (EditText) findViewById(R.id.T4AllClear);
         teamone[0] = T1Floor.getText().toString();
         teamone[1] = T1Low.getText().toString();
         teamone[2] = T1Mid.getText().toString();
@@ -116,10 +116,10 @@ public class TeleopInputLayout extends Activity {
         teamfour[6] = T4ParkingEndgame.getText().toString();
         teamfour[7] = T4AllClear.getText().toString();
 
-        String value= getIntent().getStringExtra("matchnumber");
+       /* String value = getIntent().getStringExtra("matchnumber");
         Intent intent = new Intent(this, SecondPageActivity.class);
         intent.putExtra("matchnumber", value);
-        data = getIntent().getStringExtra("matchnumber");
+        data = getIntent().getStringExtra("matchnumber");*/
         teamstats = new ParseObject("TeamStats");
         teamstats2 = new ParseObject("TeamStats");
         teamstats3 = new ParseObject("TeamStats");
@@ -157,20 +157,22 @@ public class TeleopInputLayout extends Activity {
 
             }
         });*/
-
+        Log.d("qqq", teamone[0]);
         team1.setText("8405");
-        Button nextpage = (Button)findViewById(R.id.next);
+        Button nextpage = (Button) findViewById(R.id.next);
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 ParseQuery<ParseObject> query2 = ParseQuery.getQuery("TeamStats");
-                query2.whereEqualTo("TeamNumber", teams3[0]);
+                query2.whereEqualTo("TeamNumber",  "8405");
                 query2.findInBackground(new FindCallback<ParseObject>() {
 
                     public void done(List<ParseObject> l, ParseException e) {
 
                         if (e == null) {
+                            Log.d("qqq", teamone[0]);
+
                             teamstats.put("Floor", teamone[0]);
                             teamstats.put("Low", teamone[1]);
                             teamstats.put("Mid", teamone[2]);
@@ -179,6 +181,7 @@ public class TeleopInputLayout extends Activity {
                             teamstats.put("Zipline", teamone[5]);
                             teamstats.put("ParkingEnd", teamone[6]);
                             teamstats.put("AllClear", teamone[7]);
+                            teamstats.saveEventually();
                         } else {
                             Log.d("Error", e.getMessage());
                         }

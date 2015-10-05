@@ -93,12 +93,7 @@ public class SecondPageActivity extends Activity {
                                 teamnumber4.setText(teams3[3]);
 
                             }
-                            Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
-                            intent.putExtra("matchnumber", matchnumber.getText().toString());
-                            startActivity(intent);
-                            Intent intent2 = new Intent(getBaseContext(), TeleopInputLayout.class);
-                            intent.putExtra("matchnumber", matchnumber.getText().toString());
-                            startActivity(intent2);
+
                         } else {
                             Log.d("Error", e.getMessage());
                         }
@@ -110,7 +105,12 @@ public class SecondPageActivity extends Activity {
             }
         });
 
-
+                          /*  Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
+                            intent.putExtra("matchnumber", matchnumber.getText().toString());
+                            startActivity(intent);
+                            Intent intent2 = new Intent(getBaseContext(), TeleopInputLayout.class);
+                            intent2.putExtra("matchnumber", matchnumber.getText().toString());
+                            startActivity(intent2);*/
 
         final Button backpage = (Button)findViewById(R.id.secondback);
         backpage.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +127,7 @@ public class SecondPageActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent act1 = new Intent(view.getContext(), AutonomousInputLayout.class);
+                act1.putExtra("matchnumber", matchnumber.getText().toString());
                 startActivity(act1);
 
             }

@@ -85,7 +85,6 @@ public class FrontpageActivity extends Activity {
 
         final Button switchact = (Button) findViewById(R.id.done);
         switchact.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent act2 = new Intent(view.getContext(), SecondPageActivity.class);
