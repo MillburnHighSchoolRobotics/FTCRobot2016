@@ -21,6 +21,6 @@ public class Match extends ParseObject {
         return (Competition) getParseObject(COMPETITION);
     }
 
-    public static final String COMPETITION = "Completition";
+    public static final String COMPETITION = "Competition";
 
 }
