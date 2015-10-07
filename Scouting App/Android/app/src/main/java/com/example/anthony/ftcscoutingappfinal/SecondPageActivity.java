@@ -48,7 +48,7 @@ public class SecondPageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.secondpage);
+        setContentView(R.layout.second_page);
 
 
         teamnumber1 = (EditText) findViewById(R.id.Team1AutoComplete);
@@ -104,14 +104,15 @@ public class SecondPageActivity extends Activity {
                         teamnumbers[1] = teamnumber2.getText().toString();
                         teamnumbers[2] = teamnumber3.getText().toString();
                         teamnumbers[3] = teamnumber4.getText().toString();
+
+                        Log.i("qqq", teamnumbers[0]);
+                        Log.i("qqq", String.valueOf(matchnumber));
                         matchinfo.add("Teams", teamnumbers);
                         matchinfo.put("MatchNumber", matchnumber);
 
-                        try {
-                            matchinfo.save();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+
+                        matchinfo.saveEventually();
+
 
                     }
                 });
