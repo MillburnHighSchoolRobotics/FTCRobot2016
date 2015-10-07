@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Anthony\Documents\FTCScoutingAppFolder\Scouting App\Android\app\libs\Parse-1.10.2.jar"
+        jar="C:\Users\shant\Documents\FTCRobot2015\Scouting App\Android\app\libs\Parse-1.10.2.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="a859414011ce2c18187acc83319688e6bd340635">
-        <dex dex="C:\Users\Anthony\Documents\FTCScoutingAppFolder\Scouting App\Android\app\build\intermediates\pre-dexed\debug\Parse-1.10.2-20671d2aee94d6b722a595800c3e3583b7385d28.jar" />
+        <dex dex="C:\Users\shant\Documents\FTCRobot2015\Scouting App\Android\app\build\intermediates\pre-dexed\debug\Parse-1.10.2-5c9801c7768a84a4e0ff7ac72c294729e05af569.jar" />
     </item>
     <item
-        jar="C:\Users\Anthony\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
+        jar="C:\Users\shant\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
-        <dex dex="C:\Users\Anthony\Documents\FTCScoutingAppFolder\Scouting App\Android\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-156cdbc56604bd35c27ea51e83ee7dfe93d2fbeb.jar" />
+        <dex dex="C:\Users\shant\Documents\FTCRobot2015\Scouting App\Android\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-8e0b4c855c46fc1dcb9c5befef3320170bbcbd09.jar" />
     </item>
 
 </items>

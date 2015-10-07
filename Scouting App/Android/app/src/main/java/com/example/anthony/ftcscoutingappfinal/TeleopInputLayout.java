@@ -140,7 +140,7 @@ public class TeleopInputLayout extends Activity {
 
         team1.setText("8405");
 
-        Button nextpage = (Button) findViewById(R.id.next);
+        Button nextpage = (Button) findViewById(R.id.TeleOpNext);
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,7 +266,14 @@ public class TeleopInputLayout extends Activity {
 
             });
 
-
+            Button backButton = (Button) findViewById(R.id.TeleOpBack);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent TeleopBack = new Intent(v.getContext(), AutonomousInputLayout.class);
+                    startActivity(TeleopBack);
+                }
+            });
 
 
 

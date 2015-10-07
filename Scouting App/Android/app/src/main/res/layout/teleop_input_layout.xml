@@ -764,13 +764,13 @@
                     android:layout_height="match_parent"
                     android:text="Back"
                     android:layout_weight="1"
-                    android:id="@+id/back"/>
+                    android:id="@+id/TeleOpBack"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Next Match"
                     android:layout_weight="1"
-                    android:id="@+id/next"/>
+                    android:id="@+id/TeleOpNext"/>
 
             </LinearLayout>
         </LinearLayout>

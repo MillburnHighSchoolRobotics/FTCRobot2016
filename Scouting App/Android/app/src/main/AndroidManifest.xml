@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".FrontpageActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,15 +23,18 @@
         </activity>
         <activity
             android:name=".SecondPageActivity"
-            android:label="@string/title_activity_second_page" >
+            android:label="@string/title_activity_second_page"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AutonomousInputLayout"
-            android:label="@string/title_activity_autonomous_input_layout" >
+            android:label="@string/title_activity_autonomous_input_layout"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".TeleopInputLayout"
-            android:label="@string/title_activity_teleop_input_layout" >
+            android:label="@string/title_activity_teleop_input_layout"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

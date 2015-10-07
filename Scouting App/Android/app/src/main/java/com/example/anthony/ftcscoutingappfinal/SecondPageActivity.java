@@ -94,28 +94,29 @@ public class SecondPageActivity extends Activity {
 
                     }
                 });
-                addmatch = (Button) findViewById(R.id.addmatch);
-                addmatch.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
 
-                        teamnumbers[0] = teamnumber1.getText().toString();
-                        teamnumbers[1] = teamnumber2.getText().toString();
-                        teamnumbers[2] = teamnumber3.getText().toString();
-                        teamnumbers[3] = teamnumber4.getText().toString();
-
-                        Log.i("qqq", teamnumbers[0]);
-                        Log.i("qqq", String.valueOf(matchnumber));
-                        matchinfo.add("Teams", teamnumbers);
-                        matchinfo.put("MatchNumber", matchnumber);
+            }
+        });
+        addmatch = (Button) findViewById(R.id.addmatch);
+        addmatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-                        matchinfo.saveEventually();
+                teamnumbers[0] = teamnumber1.getText().toString();
+                teamnumbers[1] = teamnumber2.getText().toString();
+                teamnumbers[2] = teamnumber3.getText().toString();
+                teamnumbers[3] = teamnumber4.getText().toString();
+
+                Log.i("qqq", teamnumbers[0]);
+                Log.i("qqq", String.valueOf(matchnumber));
+                matchinfo.add("Teams", teamnumbers[0]);
+                matchinfo.put("MatchNumber", matchnumber);
 
 
-                    }
-                });
+                matchinfo.saveEventually();
+
 
             }
         });
@@ -132,6 +133,7 @@ public class SecondPageActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent act2 = new Intent(view.getContext(), FrontpageActivity.class);
+                act2.putExtra("SkipInit", true);
                 startActivity(act2);
             }
         });
