@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class SecondPageActivity extends Activity {
-
+    Button addmatch;
 
     EditText teamnumber, matchnumber, teamnumber1, teamnumber2, teamnumber3, teamnumber4;
     Boolean loaded = false;
@@ -38,11 +38,11 @@ public class SecondPageActivity extends Activity {
     String[] newstring = new String[5];
     JSONArray teamstwo = new JSONArray();
     JSONArray matchteams = new JSONArray();
-    String teamstring, matchnumberq, teamnumber1s, test;
+    String teamstring, matchnumberq, teamnumber1s, teamnumber2s,teamnumber3s,teamnumber4s,test;
     TextView text;
     ParseObject teamlist, matchinfo, teamstats, teamstats2, teamstats3, teamstats4;
     String list;
-    String[] stringarray = new String[5];
+    String[] teamnumbers = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,28 +50,22 @@ public class SecondPageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.secondpage);
 
+
+        teamnumber1 = (EditText) findViewById(R.id.Team1AutoComplete);
+        teamnumber2 = (EditText) findViewById(R.id.Team2AutoComplete);
+        teamnumber3 = (EditText) findViewById(R.id.Team3AutoComplete);
+        teamnumber4 = (EditText) findViewById(R.id.Team4AutoComplete);
         text = (TextView) findViewById(R.id.text);
         matchnumber = (EditText) findViewById(R.id.matchnumber);
         matchinfo = new ParseObject("Matchinformation");
+
+
 
         final Button confirm = (Button) findViewById(R.id.confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                teamnumber1 = (EditText) findViewById(R.id.Team1AutoComplete);
-                teamnumber2 = (EditText) findViewById(R.id.Team2AutoComplete);
-                teamnumber3 = (EditText) findViewById(R.id.Team3AutoComplete);
-                teamnumber4 = (EditText) findViewById(R.id.Team4AutoComplete);
-                teamnumber1s = teamnumber1.getText().toString();
-
-
-                for (int i = 0; i < 4; i++) {
-                    matchinfo.add("Teams", teams[i]);
-                }
-                // matchinfo.put("MatchNumber", "1");
-
-                matchinfo.saveInBackground();
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Matchinformation");
                 query.whereEqualTo("MatchNumber", matchnumber.getText().toString());
                 query.findInBackground(new FindCallback<ParseObject>() {
@@ -100,7 +94,27 @@ public class SecondPageActivity extends Activity {
 
                     }
                 });
+                addmatch = (Button) findViewById(R.id.addmatch);
+                addmatch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+
+                        teamnumbers[0] = teamnumber1.getText().toString();
+                        teamnumbers[1] = teamnumber2.getText().toString();
+                        teamnumbers[2] = teamnumber3.getText().toString();
+                        teamnumbers[3] = teamnumber4.getText().toString();
+                        matchinfo.add("Teams", teamnumbers);
+                        matchinfo.put("MatchNumber", matchnumber);
+
+                        try {
+                            matchinfo.save();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
 
             }
         });
