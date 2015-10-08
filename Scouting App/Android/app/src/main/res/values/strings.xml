@@ -6,4 +6,5 @@
     <string name="title_activity_second_page">SecondPageActivity</string>
     <string name="title_activity_autonomous_input_layout">AutonomousInputLayout</string>
     <string name="title_activity_teleop_input_layout">TeleopInputLayout</string>
+    <string name="title_activity_launcheractivity">launcheractivity</string>
 </resources>

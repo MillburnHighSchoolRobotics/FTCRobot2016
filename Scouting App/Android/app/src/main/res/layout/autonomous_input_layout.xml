@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="0-2"
-                android:inputType="number"
+                android:inputType="phone"
                 android:id="@+id/T1ClimbersAuto"/>
             <EditText
                 android:layout_width="wrap_content"
@@ -113,7 +113,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="0-2"
-                android:inputType="number"
+                android:inputType="phone"
                 android:id="@+id/T2ClimbersAuto"/>
             <EditText
                 android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="0-2"
-                android:inputType="number"
+                android:inputType="phone"
                 android:id="@+id/T3ClimbersAuto"/>
             <EditText
                 android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="0-2"
-                android:inputType="number"
+                android:inputType="phone"
                 android:id="@+id/T4ClimbersAuto"/>
             <EditText
                 android:layout_width="wrap_content"

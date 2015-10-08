@@ -28,14 +28,20 @@ public class FrontpageActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "SlG9zvrlCyjen53XU3WUaf3HAYoZQpra08iCLQNC", "vyRgs4rAN6Ukj6qPfm2fzKNXlTbV8n3ALVringOF");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frontpage);
 
         Button enterteam = (Button) findViewById(R.id.EnterTeamButton);
         teamlist = new ParseObject("TestObject3");
+
+
+        Intent skip = getIntent();
+        if (skip.getBooleanExtra("SkipInit", false) == false) {
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, "SlG9zvrlCyjen53XU3WUaf3HAYoZQpra08iCLQNC", "vyRgs4rAN6Ukj6qPfm2fzKNXlTbV8n3ALVringOF");
+        }
+
         enterteam.setOnClickListener(new View.OnClickListener() {
 
             int a = 0;
