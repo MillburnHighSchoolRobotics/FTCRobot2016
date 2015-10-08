@@ -108,11 +108,14 @@ public class SecondPageActivity extends Activity {
                 teamnumbers[1] = teamnumber2.getText().toString();
                 teamnumbers[2] = teamnumber3.getText().toString();
                 teamnumbers[3] = teamnumber4.getText().toString();
-
+                String matchnumbers = matchnumber.getText().toString();
                 Log.i("qqq", teamnumbers[0]);
-                Log.i("qqq", String.valueOf(matchnumber));
+                Log.i("qqq", matchnumbers);
                 matchinfo.add("Teams", teamnumbers[0]);
-                matchinfo.put("MatchNumber", matchnumber);
+                matchinfo.add("Teams", teamnumbers[1]);
+                matchinfo.add("Teams", teamnumbers[2]);
+                matchinfo.add("Teams", teamnumbers[3]);
+                matchinfo.put("MatchNumber", matchnumbers);
 
 
                 matchinfo.saveEventually();
