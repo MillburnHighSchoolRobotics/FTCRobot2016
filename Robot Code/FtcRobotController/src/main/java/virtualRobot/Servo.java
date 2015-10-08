@@ -7,14 +7,10 @@ package virtualRobot;
  */
 public class Servo {
     int servoPos;
-    int servoSpeed;
 
     public int getServoPos() {
 
         return servoPos;
     }
-    public int getServoSpeed() {
 
-        return servoSpeed;
-    }
 }

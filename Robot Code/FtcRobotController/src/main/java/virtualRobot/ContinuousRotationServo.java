@@ -5,12 +5,13 @@ package virtualRobot;
  */
 public class ContinuousRotationServo extends Servo {
     int crsChangeDirection;
-    @Override
+    int servoSpeed;
     public int getServoSpeed() {
-
-        return super.getServoSpeed();
+    servoSpeed = servoPos;
+        return getServoSpeed();
 
     }
+    //idk if we will need this
     public int getCrsChangeDirection() {
         crsChangeDirection = -servoSpeed;
         return crsChangeDirection;
