@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package virtualRobot;
 
 public class motor {
     private volatile double rawposition;
