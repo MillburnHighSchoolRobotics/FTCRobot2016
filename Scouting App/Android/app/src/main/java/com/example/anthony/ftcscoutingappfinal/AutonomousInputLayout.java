@@ -156,17 +156,18 @@ public class AutonomousInputLayout extends Activity {
                 teamstats2.put("Beacon", teamtwo[0]);
                 teamstats2.put("ClimberAuto", teamtwo[1]);
                 teamstats2.put("ParkingAuto", teamtwo[2]);
-                teamstats2.saveEventually();
+
                 teamstats3.put("TeamNumber", team3s);
                 teamstats3.put("Beacon", teamthree[0]);
                 teamstats3.put("ClimberAuto", teamthree[1]);
                 teamstats3.put("ParkingAuto", teamthree[2]);
-                teamstats3.saveEventually();
+
                 teamstats4.put("TeamNumber", team4s);
                 teamstats4.put("Beacon", teamfour[0]);
                 teamstats4.put("ClimberAuto", teamfour[1]);
                 teamstats4.put("ParkingAuto", teamfour[2]);
-                teamstats4.saveEventually();
+
+
                 try {
                     teamstats.save();
                     teamstats2.save();
@@ -188,6 +189,7 @@ public class AutonomousInputLayout extends Activity {
                 i.putExtra("team2id",idteam2);
                 i.putExtra("team3id",idteam3);
                 i.putExtra("team4id",idteam4);
+                i.putExtra("matchnumber", data);
                 startActivity(i);
 
 
