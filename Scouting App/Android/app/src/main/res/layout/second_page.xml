@@ -146,10 +146,16 @@
         android:layout_height="wrap_content"
         android:text="Add Match"
         android:id="@+id/addmatch"
-        android:layout_below="@id/confirm"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/confirm"
+        android:layout_toStartOf="@+id/confirm" />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:id="@+id/clear"
+        android:layout_above="@+id/secondnext"
+        android:layout_alignStart="@+id/secondnext" />
 
 
 </RelativeLayout>
