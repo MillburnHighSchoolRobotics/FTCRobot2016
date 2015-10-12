@@ -123,6 +123,18 @@ public class SecondPageActivity extends Activity {
 
             }
         });
+        Button clear = (Button)findViewById(R.id.clear);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                matchnumber.setText("");
+                teamnumber1.setText("");
+                teamnumber2.setText("");
+                teamnumber3.setText("");
+                teamnumber4.setText("");
+
+            }
+        });
 
                             Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
                             intent.putExtra("matchnumber", matchnumber.getText().toString());

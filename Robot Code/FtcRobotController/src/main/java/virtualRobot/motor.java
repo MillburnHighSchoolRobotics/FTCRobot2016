@@ -10,13 +10,11 @@ public class motor {
     }
     public synchronized void updatePosition(double newPos) {
         rawposition = newPos;
-        softposition=newPos;
-
+        softposition= newPos;
     }
     public synchronized void addPosition(double addPos){
         rawposition+= addPos;
         softposition+= addPos;
-
     }
     public double getInches(){
         //calcinches using softpos and return
@@ -29,8 +27,4 @@ public class motor {
     public synchronized void resetPos(double startPos){
         softposition=startPos;
     }
-
-
-
-
 }
