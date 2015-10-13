@@ -5,13 +5,16 @@ import java.util.*;
  * Can be accesed by
  */
 public class AutonomousRobot {
-    public List<motor> motors = new ArrayList<motor>();
-    public List<Servo> servos = new ArrayList<Servo>();
-    public List<Sensor> sensors = new ArrayList<Sensor>();
+    private List<motor> motors = new ArrayList<motor>();
+    private List<Servo> servos = new ArrayList<Servo>();
+    private List<Sensor> sensors = new ArrayList<Sensor>();
 public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sensors) {
-this.motors = motors;
+    this.motors = motors;
     this.servos = servos;
     this.sensors = sensors;
 
 }
+    public void readCommand(Command c) {
+        c.changeRobotState();
+    }
 }
