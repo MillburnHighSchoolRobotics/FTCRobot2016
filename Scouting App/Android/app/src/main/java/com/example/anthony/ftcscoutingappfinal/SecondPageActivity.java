@@ -105,12 +105,12 @@ public class SecondPageActivity extends Activity {
             }
         });
 
-                          /*  Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
+                            Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
                             intent.putExtra("matchnumber", matchnumber.getText().toString());
-                            startActivity(intent);
-                            Intent intent2 = new Intent(getBaseContext(), TeleopInputLayout.class);
-                            intent2.putExtra("matchnumber", matchnumber.getText().toString());
-                            startActivity(intent2);*/
+                            //startActivity(intent);
+                            //Intent intent2 = new Intent(getBaseContext(), TeleopInputLayout.class);
+                            //intent2.putExtra("matchnumber", matchnumber.getText().toString());
+                            //startActivity(intent2);
 
         final Button backpage = (Button)findViewById(R.id.secondback);
         backpage.setOnClickListener(new View.OnClickListener() {

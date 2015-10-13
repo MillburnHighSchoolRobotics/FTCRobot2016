@@ -21,6 +21,7 @@ import java.util.List;
 public class AutonomousInputLayout extends Activity {
     EditText teamnumber, matchnumber, teamnumber1, teamnumber2, teamnumber3, teamnumber4;
     Boolean loaded = false;
+    String id;
     String[] teams = new String[5];
     String[] teams2 = new String[5];
     String[] teams3 = new String[5];
@@ -40,7 +41,7 @@ public class AutonomousInputLayout extends Activity {
     ParseObject teamlist, matchinfo, teamstats, teamstats2, teamstats3, teamstats4;
     String list;
     String[] stringarray = new String[5];
-    String data;
+    String data,idteam1,idteam2,idteam3,idteam4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -52,6 +53,7 @@ public class AutonomousInputLayout extends Activity {
         intent.putExtra("matchnumber", value);
 
         data = getIntent().getStringExtra("matchnumber");
+
         final TextView team1 = (TextView) findViewById(R.id.T1TXT);
         final TextView team2 = (TextView) findViewById(R.id.T2TXT);
         final TextView team3 = (TextView) findViewById(R.id.T3TXT);
@@ -149,7 +151,7 @@ public class AutonomousInputLayout extends Activity {
                 teamstats.put("Beacon", teamone[0]);
                 teamstats.put("ClimberAuto", teamone[1]);
                 teamstats.put("ParkingAuto", teamone[2]);
-                teamstats.saveEventually();
+
                 teamstats2.put("TeamNumber", team2s);
                 teamstats2.put("Beacon", teamtwo[0]);
                 teamstats2.put("ClimberAuto", teamtwo[1]);
@@ -165,10 +167,32 @@ public class AutonomousInputLayout extends Activity {
                 teamstats4.put("ClimberAuto", teamfour[1]);
                 teamstats4.put("ParkingAuto", teamfour[2]);
                 teamstats4.saveEventually();
+                try {
+                    teamstats.save();
+                    teamstats2.save();
+                    teamstats3.save();
+                    teamstats4.save();
+                } catch (ParseException e) {
+                    Log.d("qqq", String.valueOf(e));
+                }
+                idteam1 = teamstats.getObjectId();
+                idteam2 = teamstats2.getObjectId();
+                idteam3 = teamstats3.getObjectId();
+                idteam4 = teamstats4.getObjectId();
+                Log.d("qqq", "The object id is: " + idteam1);
 
 
-                Intent act2 = new Intent(view.getContext(), TeleopInputLayout.class);
-                startActivity(act2);
+
+                Intent i = new Intent(view.getContext(), TeleopInputLayout.class);
+                i.putExtra("team1id",idteam1);
+                i.putExtra("team2id",idteam2);
+                i.putExtra("team3id",idteam3);
+                i.putExtra("team4id",idteam4);
+                startActivity(i);
+
+
+                //Intent act2 = new Intent(view.getContext(), TeleopInputLayout.class);
+                //startActivity(act2);
 
             }
         });
