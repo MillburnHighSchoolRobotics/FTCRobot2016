@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class SecondPageActivity extends Activity {
-
+    Button addmatch;
 
     EditText teamnumber, matchnumber, teamnumber1, teamnumber2, teamnumber3, teamnumber4;
     Boolean loaded = false;
@@ -38,40 +38,34 @@ public class SecondPageActivity extends Activity {
     String[] newstring = new String[5];
     JSONArray teamstwo = new JSONArray();
     JSONArray matchteams = new JSONArray();
-    String teamstring, matchnumberq, teamnumber1s, test;
+    String teamstring, matchnumberq, teamnumber1s, teamnumber2s,teamnumber3s,teamnumber4s,test;
     TextView text;
     ParseObject teamlist, matchinfo, teamstats, teamstats2, teamstats3, teamstats4;
     String list;
-    String[] stringarray = new String[5];
+    String[] teamnumbers = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.secondpage);
+        setContentView(R.layout.second_page);
 
+
+        teamnumber1 = (EditText) findViewById(R.id.Team1AutoComplete);
+        teamnumber2 = (EditText) findViewById(R.id.Team2AutoComplete);
+        teamnumber3 = (EditText) findViewById(R.id.Team3AutoComplete);
+        teamnumber4 = (EditText) findViewById(R.id.Team4AutoComplete);
         text = (TextView) findViewById(R.id.text);
         matchnumber = (EditText) findViewById(R.id.matchnumber);
         matchinfo = new ParseObject("Matchinformation");
+
+
 
         final Button confirm = (Button) findViewById(R.id.confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                teamnumber1 = (EditText) findViewById(R.id.Team1AutoComplete);
-                teamnumber2 = (EditText) findViewById(R.id.Team2AutoComplete);
-                teamnumber3 = (EditText) findViewById(R.id.Team3AutoComplete);
-                teamnumber4 = (EditText) findViewById(R.id.Team4AutoComplete);
-                teamnumber1s = teamnumber1.getText().toString();
-
-
-                for (int i = 0; i < 4; i++) {
-                    matchinfo.add("Teams", teams[i]);
-                }
-                // matchinfo.put("MatchNumber", "1");
-
-                matchinfo.saveInBackground();
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Matchinformation");
                 query.whereEqualTo("MatchNumber", matchnumber.getText().toString());
                 query.findInBackground(new FindCallback<ParseObject>() {
@@ -104,6 +98,43 @@ public class SecondPageActivity extends Activity {
 
             }
         });
+        addmatch = (Button) findViewById(R.id.addmatch);
+        addmatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                teamnumbers[0] = teamnumber1.getText().toString();
+                teamnumbers[1] = teamnumber2.getText().toString();
+                teamnumbers[2] = teamnumber3.getText().toString();
+                teamnumbers[3] = teamnumber4.getText().toString();
+                String matchnumbers = matchnumber.getText().toString();
+                Log.i("qqq", teamnumbers[0]);
+                Log.i("qqq", matchnumbers);
+                matchinfo.add("Teams", teamnumbers[0]);
+                matchinfo.add("Teams", teamnumbers[1]);
+                matchinfo.add("Teams", teamnumbers[2]);
+                matchinfo.add("Teams", teamnumbers[3]);
+                matchinfo.put("MatchNumber", matchnumbers);
+
+
+                matchinfo.saveEventually();
+
+
+            }
+        });
+        Button clear = (Button)findViewById(R.id.clear);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                matchnumber.setText("");
+                teamnumber1.setText("");
+                teamnumber2.setText("");
+                teamnumber3.setText("");
+                teamnumber4.setText("");
+
+            }
+        });
 
                             Intent intent = new Intent(getBaseContext(), AutonomousInputLayout.class);
                             intent.putExtra("matchnumber", matchnumber.getText().toString());
@@ -117,6 +148,7 @@ public class SecondPageActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent act2 = new Intent(view.getContext(), FrontpageActivity.class);
+                act2.putExtra("SkipInit", true);
                 startActivity(act2);
             }
         });

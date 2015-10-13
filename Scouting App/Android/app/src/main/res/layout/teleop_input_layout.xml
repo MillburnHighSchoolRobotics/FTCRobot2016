@@ -92,30 +92,30 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="1ea"
-                            android:inputType="number"
                             android:maxLength="1"
-                            android:id="@+id/T1Floor"/>
+                            android:id="@+id/T1Floor"
+                            android:inputType="phone" />
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="5ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T1Low"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="10ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T1Mid"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="15ea"
-                            android:inputType="number"
-                            android:id="@+id/T1High"/>
+                            android:id="@+id/T1High"
+                            android:inputType="phone" />
                     </TableRow>
 
                     <TableRow
@@ -178,7 +178,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-2"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:maxLength="1"
                             android:id="@+id/T1ClimbersTeleOp"/>
                         <AutoCompleteTextView
@@ -186,8 +186,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-3"
-                            android:inputType="number"
-                            android:id="@+id/T1ZipLine"/>
+                            android:id="@+id/T1ZipLine"
+                            android:inputType="phone" />
 
                         <!--THIS ONE HAS TO BE FILLED WITH FLOOR, MID, HIGH, AND PULL-UP-->
                         <AutoCompleteTextView
@@ -275,30 +275,30 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="1ea"
-                            android:inputType="number"
                             android:maxLength="1"
-                            android:id="@+id/T2Floor"/>
+                            android:id="@+id/T2Floor"
+                            android:inputType="phone" />
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="5ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T2Low"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="10ea"
-                            android:inputType="number"
-                            android:id="@+id/T2Mid"/>
+                            android:id="@+id/T2Mid"
+                            android:inputType="phone" />
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="15ea"
-                            android:inputType="number"
-                            android:id="@+id/T2High"/>
+                            android:id="@+id/T2High"
+                            android:inputType="phone" />
                     </TableRow>
 
                     <TableRow
@@ -361,7 +361,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-2"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:maxLength="1"
                             android:id="@+id/T2ClimbersTeleOp"/>
                         <AutoCompleteTextView
@@ -369,8 +369,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-3"
-                            android:inputType="number"
-                            android:id="@+id/T2ZipLine"/>
+                            android:id="@+id/T2ZipLine"
+                            android:inputType="phone" />
 
                         <!--THIS ONE HAS TO BE FILLED WITH FLOOR, MID, HIGH, AND PULL-UP-->
                         <AutoCompleteTextView
@@ -458,7 +458,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="1ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:maxLength="1"
                             android:id="@+id/T3Floor"/>
                         <AutoCompleteTextView
@@ -466,21 +466,21 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="5ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T3Low"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="10ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T3Mid"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="15ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T3High"/>
                     </TableRow>
 
@@ -544,7 +544,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-2"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:maxLength="1"
                             android:id="@+id/T3ClimbersTeleOp"/>
                         <AutoCompleteTextView
@@ -552,7 +552,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-3"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T3ZipLine"/>
 
                         <!--THIS ONE HAS TO BE FILLED WITH FLOOR, MID, HIGH, AND PULL-UP-->
@@ -641,7 +641,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="1ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:maxLength="1"
                             android:id="@+id/T4Floor"/>
                         <AutoCompleteTextView
@@ -649,20 +649,20 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="5ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T4Low"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="10ea"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T4Mid"/>
                         <AutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:hint="15ea"
                             android:id="@+id/T4High"/>
                     </TableRow>
@@ -727,7 +727,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-2"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:maxLength="1"
                             android:id="@+id/T4ClimbersTeleOp"/>
                         <AutoCompleteTextView
@@ -735,7 +735,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:hint="0-3"
-                            android:inputType="number"
+                            android:inputType="phone"
                             android:id="@+id/T4ZipLine"/>
 
                         <!--THIS ONE HAS TO BE FILLED WITH FLOOR, MID, HIGH, AND PULL-UP-->
@@ -764,13 +764,13 @@
                     android:layout_height="match_parent"
                     android:text="Back"
                     android:layout_weight="1"
-                    android:id="@+id/back"/>
+                    android:id="@+id/TeleOpBack"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Next Match"
                     android:layout_weight="1"
-                    android:id="@+id/next"/>
+                    android:id="@+id/TeleOpNext"/>
 
             </LinearLayout>
         </LinearLayout>

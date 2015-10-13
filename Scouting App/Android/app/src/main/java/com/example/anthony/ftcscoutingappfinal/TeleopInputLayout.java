@@ -9,12 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
+
+import java.util.List;
 
 public class TeleopInputLayout extends Activity {
     EditText teamnumber, matchnumber, teamnumber1, teamnumber2, teamnumber3, teamnumber4;
@@ -55,6 +58,7 @@ public class TeleopInputLayout extends Activity {
         team2id = extras.getStringExtra("team2id");
         team3id = extras.getStringExtra("team3id");
         team4id = extras.getStringExtra("team4id");
+        data = extras.getStringExtra("matchnumber");
         if(team1id==null){
             Log.i("qqq", "null");
         }
@@ -109,7 +113,7 @@ public class TeleopInputLayout extends Activity {
         final TextView team3 = (TextView) findViewById(R.id.T3TXT);
         final TextView team4 = (TextView) findViewById(R.id.T4TXT);
 
-       /* ParseQuery<ParseObject> query = ParseQuery.getQuery("Matchinformation");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Matchinformation");
         query.whereEqualTo("MatchNumber", data);
         query.findInBackground(new FindCallback<ParseObject>() {
 
@@ -136,11 +140,11 @@ public class TeleopInputLayout extends Activity {
                 }
 
             }
-        });*/
+        });
 
-        team1.setText("8405");
 
-        Button nextpage = (Button) findViewById(R.id.next);
+
+        Button nextpage = (Button) findViewById(R.id.TeleOpNext);
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,6 +263,8 @@ public class TeleopInputLayout extends Activity {
                             }
                         }
                 );
+                Intent teleoprestart = new Intent(v.getContext(), SecondPageActivity.class);
+                startActivity(teleoprestart);
             }
 
 
@@ -266,7 +272,14 @@ public class TeleopInputLayout extends Activity {
 
             });
 
-
+            Button backButton = (Button) findViewById(R.id.TeleOpBack);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent TeleopBack = new Intent(v.getContext(), AutonomousInputLayout.class);
+                    startActivity(TeleopBack);
+                }
+            });
 
 
 
