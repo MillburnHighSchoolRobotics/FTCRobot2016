@@ -5,6 +5,8 @@ import com.parse.ParseObject;
 import com.parse.ParseRelation;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Yanjun on 9/29/2015.
@@ -13,7 +15,11 @@ import java.util.Date;
 @ParseClassName("Competition")
 public class Competition extends ParseObject {
     public Competition() {
-
+        if (tournamentType.size() == 0) {
+            tournamentType.add(MEET);
+            tournamentType.add(QUALIFIER);
+            tournamentType.add(CHAMPIONSHIP);
+        }
     }
 
     public void setDate(Date date) {
@@ -25,7 +31,9 @@ public class Competition extends ParseObject {
     }
 
     public void setType(String type) {
-        put(TYPE, type);
+        if (tournamentType.contains(type)) {
+            put(TYPE, type);
+        }
     }
 
     public Date getDate() {
@@ -68,13 +76,24 @@ public class Competition extends ParseObject {
         return getRelation(TEAM);
     }
 
+    public void setName(String name) {
+        put(NAME, name);
+    }
+
+    public String getName() {
+        return getString(NAME);
+    }
+
     public static final String DATE = "Date";
-    public static final String HOSTING_TEAM_ID = "HostingTeamID";
+    public static final String HOSTING_TEAM_ID = "Hosting Team ID";
     public static final String TYPE = "Type";
     public static final String MATCH = "Match";
     public static final String TEAM = "Team";
+    public static final String NAME = "Name";
 
     public static final String QUALIFIER = "Qualifier";
     public static final String MEET = "Meet";
     public static final String CHAMPIONSHIP = "Championship";
+
+    public static final Set<String> tournamentType = new HashSet<String>();
 }
