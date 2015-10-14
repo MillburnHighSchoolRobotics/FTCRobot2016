@@ -10,10 +10,9 @@ public class AutonomousRobot {
     public List<Sensor> sensors = new ArrayList<Sensor>();
 
     /* DriveTrain Motors */
-    private Motor rightTop;
-    private Motor rightBottom;
-    private Motor leftTop;
-    private Motor leftBottom;
+    public static Motor[] driveMotors = {new Motor(), new Motor(), new Motor(), new Motor()};
+    //in this array, 0 = rightTop, 1 = rightBottom, 2 = leftTop, 3 = leftBottom
+
 
     /*Other Motors*/
 
