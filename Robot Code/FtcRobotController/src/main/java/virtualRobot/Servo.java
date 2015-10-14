@@ -6,15 +6,15 @@ package virtualRobot;
  * Created by Alex on 9/30/2015.
  */
 public class Servo {
-    int servoPos;
-    int servoSpeed;
+    private double position;
+    //0-180
 
-    public int getServoPos() {
-
-        return servoPos;
+    public double getPosition() {
+        return position;
     }
-    public int getServoSpeed() {
 
-        return servoSpeed;
+    public void setPosition(double position) {
+        this.position = position;
     }
+
 }
