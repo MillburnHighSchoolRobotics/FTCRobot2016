@@ -10,6 +10,11 @@ public class Sensor {
     double hardValue;
     double offset;
 
+
+    public Sensor () {
+
+    }
+
     //Soft clears a sensor or encoder value
     public void clearValue() {
         offset = hardValue;

@@ -9,6 +9,10 @@ public class AutonomousRobot {
     public List<Servo> servos = new ArrayList<Servo>();
     public List<Sensor> sensors = new ArrayList<Sensor>();
 
+    /* DriveTrain Motors */
+
+
+
     public AutonomousRobot(List<Motor> motors, List<Servo> servos, List<Sensor> sensors) {
         this.motors = motors;
         this.servos = servos;
