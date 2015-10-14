@@ -5,10 +5,12 @@ package virtualRobot;
  *
  * A class that reads in values from the sensors, including motors.
  * All sensors and encoders should extend this class
+ * IMU, Motor Encoders, Color Sensor, etc should use this class
  */
 public class Sensor {
     double hardValue;
     double offset;
+
 
     //Soft clears a sensor or encoder value
     public void clearValue() {
