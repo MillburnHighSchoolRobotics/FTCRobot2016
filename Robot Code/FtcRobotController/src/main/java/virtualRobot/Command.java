@@ -7,5 +7,5 @@ public interface Command  {
     /*
         changeRobotState should manipulate the AutonomousRobot through the LogicThread
      */
-    public void changeRobotState ();
+    void changeRobotState ();
 }
