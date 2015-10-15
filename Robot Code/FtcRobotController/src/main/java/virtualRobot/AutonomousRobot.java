@@ -13,8 +13,12 @@ public class AutonomousRobot {
     public static Motor[] driveMotors = {new Motor(), new Motor(), new Motor(), new Motor()};
     //in this array, 0 = rightTop, 1 = rightBottom, 2 = leftTop, 3 = leftBottom
 
+    public static Sensor[] driveMotorEncoders = {new Sensor(), new Sensor(), new Sensor(), new Sensor()};
 
     /*Other Motors*/
+
+    /*Define Other Servos Here */
+
 
 
 
