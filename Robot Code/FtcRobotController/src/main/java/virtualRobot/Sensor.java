@@ -8,22 +8,22 @@ package virtualRobot;
  * IMU, Motor Encoders, Color Sensor, etc should use this class
  */
 public class Sensor {
-    double hardValue;
-    double offset;
+    private volatile double hardValue;
+    private volatile double offset;
 
 
     //Soft clears a sensor or encoder value
-    public void clearValue() {
+    public synchronized void clearValue() {
         offset = hardValue;
     }
 
     //return the current softValue of the sensor
-    public double getValue() {
+    public synchronized double getValue() {
         return hardValue - offset;
     }
 
     //allows the UpdateThread to set the HardValue
-    public void setRawValue(double hardValue) {
+    public synchronized void setRawValue(double hardValue) {
         this.hardValue = hardValue;
     }
 

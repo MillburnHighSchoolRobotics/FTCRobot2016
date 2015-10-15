@@ -6,14 +6,14 @@ package virtualRobot;
  * Created by Alex on 9/30/2015.
  */
 public class Servo {
-    private double position;
+    private volatile double position;
     //0-180
 
-    public double getPosition() {
+    public synchronized double getPosition() {
         return position;
     }
 
-    public void setPosition(double position) {
+    public synchronized void setPosition(double position) {
         this.position = position;
     }
 
