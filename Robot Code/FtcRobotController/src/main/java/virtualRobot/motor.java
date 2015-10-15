@@ -1,14 +1,14 @@
 package virtualRobot;
 
 public class Motor {
-    private double speed;
+    private volatile double speed;
     //-1 to 1
 
-    public double getSpeed () {
+    public synchronized double getSpeed () {
         return speed;
     }
 
-    public void setSpeed(double newSpeed) {
+    public synchronized void setSpeed(double newSpeed) {
         speed = newSpeed;
     }
 

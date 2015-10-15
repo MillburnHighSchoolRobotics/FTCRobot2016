@@ -10,7 +10,7 @@ import java.util.Queue;
  * Implements Runnable, which contains a loop that executes commands and
  * exits when the thread is interrupted or when custom ExitCondition is met
  */
-public abstract class LogicThread implements Runnable, Command {
+public abstract class LogicThread implements Runnable {
     Queue<Command> commands;
 
     @Override
