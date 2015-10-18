@@ -42,16 +42,24 @@ public class TankTreadDrive extends OpMode {
 
         // Qualcomm is very inconsistent, so the x-values are 1 if pushed the the right
         double turnRadius = gamepad1.right_stick_x;
-        double turnInPlace = gamepad1.right_stick_x;
+        double turnInPlace = gamepad1.left_stick_x;
 
-        if (Math.abs(turnInPlace) > 0.7){
-            double motorPower = scaleValues(turnInPlace, 0.7, 1, .3, 1);
+        if (Math.abs(turnInPlace) > TURN_IN_PLACE_THRESHOLD){
+            double motorPower = scaleValues(Math.abs(turnInPlace), TURN_IN_PLACE_THRESHOLD, JOYSTICK_MAX, MIN_TURN_IN_PLACE_POWER, MAX_POWER);
             //scale [0.7, 1] to [0.3, 1]
-            Range.clip(motorPower, -1, 1);
+            motorPower = Range.clip(motorPower, MIN_POWER, MAX_POWER);
             setMotors(-motorPower, motorPower);
         }
         else {
-            speedForward = findPower(speedForward, turnRadius);
+            if (turnRadius < 0) {
+            	double leftPower = (MAX_POWER + turnRadius) * speedForward;
+            	setMotors(leftPower, speedForward);
+            }
+            
+            if (turnRadius >= 0) {
+            	double rightPower = (MAX_POWER - turnRadius) * speedForward;
+            	setMotors(speedForward, rightPower);
+            }
         }
 
 
@@ -62,7 +70,7 @@ public class TankTreadDrive extends OpMode {
     }
 
     private double findPower (double xValue, double yValue) {
-        return Math.sqrt(Math.pow(xValue, 2) + Math.pow(yValue, 2));
+        return Math.sqrt(xValue * xValue + yValue * yValue);
     }
 
 
@@ -84,4 +92,11 @@ public class TankTreadDrive extends OpMode {
         leftTop.setPower(leftPower);
         leftBottom.setPower(leftPower);
     }
+    
+    public static double TURN_IN_PLACE_THRESHOLD = 0.7;
+    public static double MIN_TURN_IN_PLACE_POWER = 0.3;
+    public static double NO_POWER = 0.0;
+    public static double MAX_POWER = 1.0;
+    public static double MIN_POWER = -1.0;
+    public static double JOYSTICK_MAX = 1.0;
 }
