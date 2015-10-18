@@ -51,7 +51,7 @@ public class TankTreadDrive extends OpMode {
             setMotors(motorPower, -motorPower);
         } else {
         	
-        	speedForward = Math.signum(speedForward) * Range.clip(findPower(speedForward, turnRadius), NO_POWER, MAX_POWER)
+        	speedForward = Math.signum(speedForward) * Range.clip(findPower(speedForward, turnRadius), NO_POWER, MAX_POWER);
         	
             if (turnRadius < 0) {
             	double leftPower = (MAX_POWER + turnRadius) * speedForward;
