@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.robocol.Telemetry;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -13,8 +12,11 @@ import com.qualcomm.robotcore.util.Range;
 public class ArmTest extends OpMode {
     Servo armRight;
     Servo armLeft;
-    double currentPos = 1;
+    double currentPos = .6;
     final double servoDelta = 0.00115;
+
+    final double ARM_TOP_CAP = 0.55;
+    final double ARM_BOTTOM_CAP = 0.8;
 
     @Override
     public void init() {
@@ -50,10 +52,11 @@ public class ArmTest extends OpMode {
 
             }
         }
-        currentPos = Range.clip(currentPos, 0.7, 1.00);
+        currentPos = Range.clip(currentPos, ARM_TOP_CAP, ARM_BOTTOM_CAP);
+
 
         armLeft.setPosition(currentPos);
         armRight.setPosition(currentPos);
-        Log.d("robot", "setting value");
+        Log.d("robot", "setting value to " + currentPos);
     }
 }
