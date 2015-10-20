@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 
 /**
  * Created by shant on 10/20/2015.
@@ -12,6 +13,7 @@ public class AutonomousTestOp extends OpMode {
     DcMotor rightBottom;
     DcMotor leftTop;
     DcMotor leftBottom;
+    GyroSensor gyroSensor;
 
 
 
@@ -22,6 +24,7 @@ public class AutonomousTestOp extends OpMode {
         rightBottom = hardwareMap.dcMotor.get("rightBottom");
         leftTop = hardwareMap.dcMotor.get("leftTop");
         leftBottom = hardwareMap.dcMotor.get("leftBottom");
+        gyroSensor = hardwareMap.gyroSensor.get("gyro");
 
         leftTop.setDirection(DcMotor.Direction.REVERSE);
         leftBottom.setDirection(DcMotor.Direction.REVERSE);
@@ -29,7 +32,7 @@ public class AutonomousTestOp extends OpMode {
 
     @Override
     public void loop() {
-
+        RotateRaw(90, -1);
     }
 
     private double RotateRaw(double angleInDegrees, double timeout) {
@@ -38,6 +41,7 @@ public class AutonomousTestOp extends OpMode {
         if (angleInDegrees < 0) {
             setMotors(1, -1);
             while (offset > angleInDegrees) {
+                offset = gyroSensor.getRotation();
                 if (timeout != -1 && this.getRuntime() > timeout) {
                     setMotors(0, 0);
                     return offset;
@@ -47,15 +51,14 @@ public class AutonomousTestOp extends OpMode {
         } else {
             setMotors(-1, 1);
             while (offset < angleInDegrees) {
+                offset = gyroSensor.getRotation();
                 if (timeout != -1 && this.getRuntime() > timeout) {
                     setMotors(0,0);
                     return offset;
                 }
             }
         }
-
         setMotors(0,0);
-
         return offset;
     }
 
