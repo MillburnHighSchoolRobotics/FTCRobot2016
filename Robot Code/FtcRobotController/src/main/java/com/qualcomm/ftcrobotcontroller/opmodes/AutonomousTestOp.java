@@ -1,13 +1,13 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
 /**
  * Created by shant on 10/20/2015.
  */
-public class AutonomousTestOp extends OpMode {
+public class AutonomousTestOp extends LinearOpMode {
 
     DcMotor rightTop;
     DcMotor rightBottom;
@@ -19,7 +19,7 @@ public class AutonomousTestOp extends OpMode {
 
 
     @Override
-    public void init() {
+    public void runOpMode() throws InterruptedException {
         rightTop = hardwareMap.dcMotor.get("rightTop");
         rightBottom = hardwareMap.dcMotor.get("rightBottom");
         leftTop = hardwareMap.dcMotor.get("leftTop");
@@ -28,37 +28,71 @@ public class AutonomousTestOp extends OpMode {
 
         leftTop.setDirection(DcMotor.Direction.REVERSE);
         leftBottom.setDirection(DcMotor.Direction.REVERSE);
+
+
+
+        waitForStart();
+
+        moveStraight(2500);
+
+        try {
+            RotateHP(-45, -1);
+        }
+        catch (InterruptedException E){
+
+        }
+
+        moveStraight(-3000);
+
+
+
     }
 
-    @Override
-    public void loop() {
-        RotateRaw(90, -1);
-    }
+    private double RotateHP(double angleInDegrees, double timeout) throws InterruptedException {
+        double offset = 0;
+        double prevTime = System.currentTimeMillis();
+        double curTime;
+        double gyroOffset = gyroSensor.getRotation();
 
-    private double RotateRaw(double angleInDegrees, double timeout) {
-        double offset;
-        offset = 0;
         if (angleInDegrees < 0) {
             setMotors(1, -1);
             while (offset > angleInDegrees) {
-                offset = gyroSensor.getRotation();
+                double gyroValue = gyroSensor.getRotation() - gyroOffset;
+                if (Math.abs(gyroValue) <= 2){
+                    gyroValue = 0;
+                }
+
+                curTime = System.currentTimeMillis();
+                offset += gyroValue * 0.001 * (curTime - prevTime);
+                prevTime = curTime;
+
                 if (timeout != -1 && this.getRuntime() > timeout) {
                     setMotors(0, 0);
                     return offset;
                 }
+                waitOneFullHardwareCycle();
             }
 
         } else {
             setMotors(-1, 1);
             while (offset < angleInDegrees) {
-                offset = gyroSensor.getRotation();
+                double gyroValue = gyroSensor.getRotation() - gyroOffset;
+                if (Math.abs(gyroValue) <= 2){
+                    gyroValue = 0;
+                }
+
+                curTime = System.currentTimeMillis();
+                offset += gyroValue * 0.001 * (curTime - prevTime);
+                prevTime = curTime;
+
                 if (timeout != -1 && this.getRuntime() > timeout) {
-                    setMotors(0,0);
+                    setMotors(0, 0);
                     return offset;
                 }
+                waitOneFullHardwareCycle();
             }
         }
-        setMotors(0,0);
+        setMotors(0, 0);
         return offset;
     }
 
@@ -67,5 +101,18 @@ public class AutonomousTestOp extends OpMode {
         rightBottom.setPower(rightPower);
         leftTop.setPower(leftPower);
         leftBottom.setPower(leftPower);
+    }
+
+    private double[] getAvgEncoderValues() {
+        //returns average encoder values [right, left]
+        return new double [] {(rightTop.getCurrentPosition() + rightBottom.getCurrentPosition())/-2.0,
+                                (leftTop.getCurrentPosition() + leftBottom.getCurrentPosition())/-2.0};
+    }
+
+    private boolean moveStraight (int encoderClicks) {
+        while (getAvgEncoderValues()[0] < encoderClicks && getAvgEncoderValues()[1] < encoderClicks) {
+            setMotors(1, 1);
+        }
+        return true;
     }
 }
