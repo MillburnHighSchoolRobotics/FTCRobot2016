@@ -5,21 +5,21 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
 /**
- * Created by shant on 10/20/2015.
+ * Created by shant on 10/22/2015.
  */
-public class AutonomousTestOp extends LinearOpMode {
-
+public class AutonomousTemplate extends LinearOpMode {
     DcMotor rightTop;
     DcMotor rightBottom;
     DcMotor leftTop;
     DcMotor leftBottom;
     GyroSensor gyroSensor;
 
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
+
+    }
+
+    protected void initializeComponents() {
         rightTop = hardwareMap.dcMotor.get("rightTop");
         rightBottom = hardwareMap.dcMotor.get("rightBottom");
         leftTop = hardwareMap.dcMotor.get("leftTop");
@@ -28,27 +28,9 @@ public class AutonomousTestOp extends LinearOpMode {
 
         leftTop.setDirection(DcMotor.Direction.REVERSE);
         leftBottom.setDirection(DcMotor.Direction.REVERSE);
-
-
-
-        waitForStart();
-
-        moveStraight(2500);
-
-        try {
-            RotateHP(-45, -1);
-        }
-        catch (InterruptedException E){
-
-        }
-
-        moveStraight(-3000);
-
-
-
     }
 
-    private double RotateHP(double angleInDegrees, double timeout) throws InterruptedException {
+    protected double RotateHP(double angleInDegrees, double timeout) throws InterruptedException {
         double offset = 0;
         double prevTime = System.currentTimeMillis();
         double curTime;
@@ -58,7 +40,7 @@ public class AutonomousTestOp extends LinearOpMode {
             setMotors(1, -1);
             while (offset > angleInDegrees) {
                 double gyroValue = gyroSensor.getRotation() - gyroOffset;
-                if (Math.abs(gyroValue) <= 2){
+                if (Math.abs(gyroValue) <= 2) {
                     gyroValue = 0;
                 }
 
@@ -77,7 +59,7 @@ public class AutonomousTestOp extends LinearOpMode {
             setMotors(-1, 1);
             while (offset < angleInDegrees) {
                 double gyroValue = gyroSensor.getRotation() - gyroOffset;
-                if (Math.abs(gyroValue) <= 2){
+                if (Math.abs(gyroValue) <= 2) {
                     gyroValue = 0;
                 }
 
@@ -96,23 +78,25 @@ public class AutonomousTestOp extends LinearOpMode {
         return offset;
     }
 
-    private void setMotors(double rightPower, double leftPower) {
+    protected void setMotors(double rightPower, double leftPower) {
         rightTop.setPower(rightPower);
         rightBottom.setPower(rightPower);
         leftTop.setPower(leftPower);
         leftBottom.setPower(leftPower);
     }
 
-    private double[] getAvgEncoderValues() {
+    protected double[] getAvgEncoderValues() {
         //returns average encoder values [right, left]
-        return new double [] {(rightTop.getCurrentPosition() + rightBottom.getCurrentPosition())/-2.0,
-                                (leftTop.getCurrentPosition() + leftBottom.getCurrentPosition())/-2.0};
+        return new double[]{(rightTop.getCurrentPosition() + rightBottom.getCurrentPosition()) / -2.0,
+                (leftTop.getCurrentPosition() + leftBottom.getCurrentPosition()) / -2.0};
     }
 
-    private boolean moveStraight (int encoderClicks) {
+    protected boolean moveStraight(int encoderClicks) {
         while (getAvgEncoderValues()[0] < encoderClicks && getAvgEncoderValues()[1] < encoderClicks) {
             setMotors(1, 1);
         }
         return true;
     }
+
+
 }
