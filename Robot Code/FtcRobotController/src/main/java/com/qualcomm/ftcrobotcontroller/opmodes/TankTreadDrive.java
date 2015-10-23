@@ -29,7 +29,7 @@ public class TankTreadDrive extends OpMode {
 
 	final double ARM_TOP_CAP = 0.55;
 	final double ARM_BOTTOM_CAP = 0.7;
-	final double LEFT_GATE_REST_POSITION = 0.9;
+	final double LEFT_GATE_REST_POSITION = 0.93;
 	final double LEFT_GATE_DOWN_POSITION = 0.4;
 	final double RIGHT_GATE_REST_POSITION = 1;
 	final double RIGHT_GATE_DOWN_POSITION = 0;
