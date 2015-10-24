@@ -27,12 +27,13 @@ public class TankTreadDrive extends OpMode {
 	double currentPos = .8;
 	final double servoDelta = 0.00115;
 
-	final double ARM_TOP_CAP = 0.55;
-	final double ARM_BOTTOM_CAP = 0.7;
-	final double LEFT_GATE_REST_POSITION = 0.93;
+	final double ARM_TOP_CAP = 0.5;
+	final double ARM_BOTTOM_CAP = 0.75;
+	final double LEFT_GATE_REST_POSITION = 0.9;
 	final double LEFT_GATE_DOWN_POSITION = 0.4;
 	final double RIGHT_GATE_REST_POSITION = 1;
-	final double RIGHT_GATE_DOWN_POSITION = 0;
+	final double RIGHT_GATE_DOWN_POSITION = 0.3;
+	final double SWEEPER_MOTOR_SPEED = 0.4;
 
 	@Override
 	public void init() {
@@ -108,21 +109,23 @@ public class TankTreadDrive extends OpMode {
 		}
 
 		if (currentPos == ARM_BOTTOM_CAP) {
-			motorSweeper.setPower(-.5);
+			motorSweeper.setPower(-SWEEPER_MOTOR_SPEED);
 		} else {
 			motorSweeper.setPower(0);
 		}
+
+
 
 		if(gamepad1.left_trigger > 0.7) {
 			leftGate.setPosition(LEFT_GATE_DOWN_POSITION);
 			rightGate.setPosition(RIGHT_GATE_REST_POSITION);
 			scorer.setPosition(0);
-			motorSweeper.setPower(-0.5);
+			motorSweeper.setPower(-SWEEPER_MOTOR_SPEED);
 		} else if (gamepad1.right_trigger > 0.7) {
 			rightGate.setPosition(RIGHT_GATE_DOWN_POSITION);
 			leftGate.setPosition(LEFT_GATE_REST_POSITION);
 			scorer.setPosition(1);
-			motorSweeper.setPower(-0.5);
+			motorSweeper.setPower(-SWEEPER_MOTOR_SPEED);
 		} else {
 			leftGate.setPosition(LEFT_GATE_REST_POSITION);
 			rightGate.setPosition(1);
@@ -132,7 +135,11 @@ public class TankTreadDrive extends OpMode {
 
 		currentPos = Range.clip(currentPos, ARM_TOP_CAP, ARM_BOTTOM_CAP);
 		if (currentPos == ARM_BOTTOM_CAP) {
-			motorSweeper.setPower(-.5);
+			motorSweeper.setPower(-SWEEPER_MOTOR_SPEED);
+		}
+		//reverse the sweeper
+		if (gamepad1.left_bumper && gamepad1.right_bumper) {
+			motorSweeper.setPower(SWEEPER_MOTOR_SPEED);
 		}
 
 		armLeft.setPosition(currentPos);
@@ -159,8 +166,8 @@ public class TankTreadDrive extends OpMode {
 	}
 */
 	private void setMotors(double rightPower, double leftPower) {
-		rightTop.setPower(rightPower);
-		rightBottom.setPower(rightPower);
+		rightTop.setPower(rightPower * .85);
+		rightBottom.setPower(rightPower * .85);
 		leftTop.setPower(leftPower);
 		leftBottom.setPower(leftPower);
 	}
