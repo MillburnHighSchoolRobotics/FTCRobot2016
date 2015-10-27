@@ -5,7 +5,7 @@ package virtualRobot;
  */
 public class Translate implements Command {
     private ExitCondition exitCondition;
-    private Motor[] motors;
+    private motor[] motors;
     static final int MAX = 100;
     private Sensor[] encoders;
     private RunMode runMode;

@@ -1,6 +1,6 @@
 package virtualRobot;
 
-<<<<<<< HEAD
+
 public class motor {
     private volatile double rawposition;
     private volatile double softposition;
@@ -28,7 +28,7 @@ public class motor {
     public synchronized void resetPos(double startPos){
         softposition=startPos;
     }
-=======
+
 public class Motor {
     private volatile double speed;
     //-1 to 1
@@ -41,5 +41,4 @@ public class Motor {
         speed = newSpeed;
     }
 
->>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
-}
+}}
