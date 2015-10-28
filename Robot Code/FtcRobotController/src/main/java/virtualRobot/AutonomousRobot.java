@@ -9,7 +9,7 @@ public class AutonomousRobot {
     public List<Motor> motors = new ArrayList<Motor>();
     public List<Servo> servos = new ArrayList<Servo>();
     public List<Sensor> sensors = new ArrayList<Sensor>();
-
+<<<<<<< HEAD
 public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sensors) {
 this.motors = motors;
     this.servos = servos;
@@ -19,6 +19,7 @@ this.motors = motors;
     /* DriveTrain Motors */
     public static Motor[] driveMotors = {new Motor(), new Motor(), new Motor(), new Motor()};
     //in this array, 0 = rightTop, 1 = rightBottom, 2 = leftTop, 3 = leftBottom
+    public static Servo[]
 
     public static Sensor[] driveMotorEncoders = {new Sensor(), new Sensor(), new Sensor(), new Sensor()};
 
@@ -33,6 +34,6 @@ this.motors = motors;
         this.motors = motors;
         this.servos = servos;
         this.sensors = sensors;
-
+>>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
     }
 }

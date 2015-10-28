@@ -8,4 +8,6 @@ public interface Command  {
         changeRobotState should manipulate the AutonomousRobot through the LogicThread
      */
     void changeRobotState ();
+
+    AutonomousRobot robot = null;
 }
