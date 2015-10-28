@@ -16,12 +16,20 @@ public abstract class LogicThread implements Runnable {
 
     @Override
     public void run() {
+
         while (!Thread.currentThread().isInterrupted() && (commands.size() != 0)) {
            Command c = commands.poll();
             c.changeRobotState();
             if (c instanceof SpawnNewThread)
                 children.add(((SpawnNewThread) c).getThread());
         }
+        if (Thread.currentThread().isInterrupted())
+        for (Thread x: children)
+            x.interrupt();
+
+
+
+
 
     }
 }
