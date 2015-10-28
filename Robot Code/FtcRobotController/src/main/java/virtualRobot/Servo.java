@@ -7,6 +7,7 @@ package virtualRobot;
  */
 public class Servo {
 
+
     int servoPos;
 
     private volatile double position;
