@@ -22,5 +22,6 @@ public abstract class LogicThread implements Runnable {
             if (c instanceof SpawnNewThread)
                 children.add(((SpawnNewThread) c).getThread());
         }
+
     }
 }
