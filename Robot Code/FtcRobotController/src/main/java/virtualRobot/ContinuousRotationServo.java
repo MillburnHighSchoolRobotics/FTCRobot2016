@@ -15,6 +15,7 @@ public class ContinuousRotationServo extends Servo {
     public int getCrsChangeDirection() {
         crsChangeDirection = -servoSpeed;
         return crsChangeDirection;
+    }
 
     // position is speed for CRS - no need for new variable
     // speed should be from -1 to 1
