@@ -63,4 +63,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
+<<<<<<< HEAD
 <!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/layout/header.xml -->
+=======
+<!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/layout/header.xml -->
+>>>>>>> b522546ff762aa9b1749801d5748a39d4b7eda01
