@@ -19,36 +19,35 @@ public class AutonomousRobot {
         this.leftMotorEncoder = leftMotorEncoder;
         this.angleSensor = angleSensor;
 
-<<<<<<< HEAD
-    public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sensors) {
-        this.motors = motors;
-        this.servos = servos;
-        for (Sensor sensor : this.sensors = sensors) {
 
-        };
+        public
+        AutonomousRobot(List < motor > motors, List < Servo > servos, List < Sensor > sensors) {
+            this.motors = motors;
+            this.servos = servos;
+            for (Sensor sensor : this.sensors = sensors) {
 
-     class AutonomousRotate extends Rotate{
-=======
-    }
+            }
+            ;
 
-    public Motor getRightMotor () {
-        return rightMotor;
-    }
+            class AutonomousRotate extends Rotate {
+            }
 
-    public Motor getLeftMotor () {
-        return leftMotor;
-    }
+        public Motor getRightMotor () {
+            return rightMotor;
+        }
 
-    public Sensor getRightMotorEncoder() {
-        return rightMotorEncoder;
-    }
+        public Motor getLeftMotor () {
+            return leftMotor;
+        }
 
-    public Sensor getLeftMotorEncoder() {
-        return leftMotorEncoder;
-    }
->>>>>>> 22e33e25c26cc87cd543d3aaa83aa5135c12c6db
+        public Sensor getRightMotorEncoder () {
+            return rightMotorEncoder;
+        }
 
-    public Sensor getAngleSensor() {
-        return angleSensor;
-    }
-}
+        public Sensor getLeftMotorEncoder () {
+            return leftMotorEncoder;
+        }
+
+        public Sensor getAngleSensor () {
+            return angleSensor;
+        }
