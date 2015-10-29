@@ -51,4 +51,8 @@
 
 
 </merge>
+<<<<<<< HEAD
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/digital_device.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/digital_device.xml -->
+=======
+<!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/digital_device.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/digital_device.xml -->
+>>>>>>> 22e33e25c26cc87cd543d3aaa83aa5135c12c6db

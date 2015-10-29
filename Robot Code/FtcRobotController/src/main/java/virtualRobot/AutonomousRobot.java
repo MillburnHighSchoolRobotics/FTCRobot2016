@@ -1,41 +1,25 @@
 package virtualRobot;
-import java.util.*;
+
 /**
  * Created by DOSullivan on 10/5/15.
  * Can be accesed by
  */
 public class AutonomousRobot {
 
-    public List<motor> motors = new ArrayList<motor>();
-    public List<Servo> servos = new ArrayList<Servo>();
-    public List<Sensor> sensors = new ArrayList<Sensor>();
+    private Motor rightMotor, leftMotor;
+    private Sensor rightMotorEncoder, leftMotorEncoder;
+    private Sensor angleSensor;
 
-public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sensors) {
-    this.motors = motors;
-    this.servos = servos;
-    this.sensors = sensors;
+    public AutonomousRobot(Motor rightMotor, Motor leftMotor,
+                           Sensor rightMotorEncoder, Sensor leftMotorEncoder,
+                           Sensor angleSensor) {
+        this.rightMotor = rightMotor;
+        this.leftMotor = leftMotor;
+        this.rightMotorEncoder = rightMotorEncoder;
+        this.leftMotorEncoder = leftMotorEncoder;
+        this.angleSensor = angleSensor;
 
-
-    /* DriveTrain Motors */
-    public static motor[] driveMotors = {new motor(), new motor()};
-    //in the updated driveMotor array 0 = RightMotor and 1 = LeftMotor
-    //from what I have gathered the general consensus is that we will be grouping the drive train motors
-    // the original code is commented below
-    /*
-    //public static motor[] driveMotors = {new motor(), new motor(), new motor(), new motor()};
-    //in this array, 0 = rightTop, 1 = rightBottom, 2 = leftTop, 3 = leftBottom
-    */
-    public static MoveServo[] servo = {new servo(), new servo()};
-    // in the array, 0 = ZiplineServo, 1 = BeaconPressServo
-    public static Sensor[] driveMotorEncoders = {new Sensor(), new Sensor(), new Sensor(), new Sensor()};
-
-    /*Other Motors*/
-
-    /*Define Other Servos Here */
-    //if the array is unnecessary then we can just use these
-    /*servos ServoBeacon;
-    servos ServoClimbers;*/
-
+<<<<<<< HEAD
     public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sensors) {
         this.motors = motors;
         this.servos = servos;
@@ -44,6 +28,27 @@ public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sens
         };
 
      class AutonomousRotate extends Rotate{
-
+=======
     }
-}}}
+
+    public Motor getRightMotor () {
+        return rightMotor;
+    }
+
+    public Motor getLeftMotor () {
+        return leftMotor;
+    }
+
+    public Sensor getRightMotorEncoder() {
+        return rightMotorEncoder;
+    }
+
+    public Sensor getLeftMotorEncoder() {
+        return leftMotorEncoder;
+    }
+>>>>>>> 22e33e25c26cc87cd543d3aaa83aa5135c12c6db
+
+    public Sensor getAngleSensor() {
+        return angleSensor;
+    }
+}
