@@ -36,15 +36,14 @@ public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sens
     /*servos ServoBeacon;
     servos ServoClimbers;*/
 
-
-
-
     public AutonomousRobot(List<motor> motors, List<Servo> servos, List<Sensor> sensors) {
         this.motors = motors;
         this.servos = servos;
-        this.sensors = sensors;
+        for (Sensor sensor : this.sensors = sensors) {
 
-    public class AutonomousRotate extends Rotate{
+        };
+
+     class AutonomousRotate extends Rotate{
 
     }
 }}}
