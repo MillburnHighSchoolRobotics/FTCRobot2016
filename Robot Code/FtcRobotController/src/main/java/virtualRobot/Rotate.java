@@ -68,7 +68,7 @@ public class Rotate implements Command {
             double offset = 0;
             double curTime, prevTime;
             double adjustedPower;
-            double prevRot, curRot;
+            double prevRot = 0, curRot;
             // pidData;
             float pidOutput;
 
@@ -126,7 +126,7 @@ public class Rotate implements Command {
             }
 
             robot.getRightMotor().setPower(0);
-            robot.getLeftMotor().setpower(0);
+            robot.getLeftMotor().setPower(0);
 
 
         }

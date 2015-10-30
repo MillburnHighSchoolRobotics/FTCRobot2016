@@ -23,7 +23,6 @@ public class Translate implements Command {
                 return false;
             }
         };
-        motors = AutonomousRobot.driveMotors;
 
         runMode = RunMode.WITH_PID;
 
@@ -63,19 +62,15 @@ public class Translate implements Command {
         curTime = prevTime;
 
         if (angleInDegrees < 0) {
-            motors[0].setSpeed(100);
-            motors[1].setSpeed(100);
-            motors[2].setSpeed(-100);
-            motors[3].setSpeed(-100);
+            robot.getRightMotor().setPower(1);
+            robot.getLeftMotor().setPower(-1);
 
             while (offset > angleInDegrees) {
                 //update offset in here once sensors are in
                 curTime = System.currentTimeMillis() - prevTime;
                 if (curTime > timeout) {
-                    motors[0].setSpeed(0);
-                    motors[1].setSpeed(0);
-                    motors[2].setSpeed(0);
-                    motors[3].setSpeed(0);
+                    robot.getRightMotor().setPower(0);
+                    robot.getLeftMotor().setPower(0);
 
                     return offset;
                 }
@@ -83,30 +78,25 @@ public class Translate implements Command {
         }
 
         else {
-            motors[0].setSpeed(-100);
-            motors[1].setSpeed(-100);
-            motors[2].setSpeed(100);
-            motors[3].setSpeed(100);
+            robot.getRightMotor().setPower(-1);
+            robot.getLeftMotor().setPower(1);
+
 
             while (offset < angleInDegrees) {
                 curTime = System.currentTimeMillis() - prevTime;
                 //update offset in here once sensors are connected
                 if (curTime > timeout) {
-                    motors[0].setSpeed(0);
-                    motors[1].setSpeed(0);
-                    motors[2].setSpeed(0);
-                    motors[3].setSpeed(0);
+                    robot.getRightMotor().setPower(0);
+                    robot.getLeftMotor().setPower(0);
+
 
                     return offset;
                 }
             }
         }
 
-        motors[0].setSpeed(0);
-        motors[1].setSpeed(0);
-        motors[2].setSpeed(0);
-        motors[3].setSpeed(0);
-
+        robot.getRightMotor().setPower(0);
+        robot.getLeftMotor().setPower(0);
 
         return offset;
     }
@@ -123,9 +113,8 @@ public class Translate implements Command {
                     s.clearValue();
                 }
 
-                for (Motor m : motors) {
-                    m.setSpeed(maxSpeed);
-                }
+                robot.getRightMotor().setPower(0);
+                robot.getLeftMotor().setPower(0);
 
                 while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()) {
 
@@ -137,9 +126,10 @@ public class Translate implements Command {
                     s.clearValue();
                 }
 
-                for (Motor m : motors) {
-                    m.setSpeed(maxSpeed);
-                }
+
+
+                robot.getRightMotor().setPower(maxSpeed);
+                robot.getLeftMotor().setPower(maxSpeed);
 
                 while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
                     currentValue = 0;
@@ -166,9 +156,9 @@ public class Translate implements Command {
 
                     double pidOutput = translateController.getPIDOutput(currentValue);
 
-                    for (Motor m : motors) {
-                        m.setSpeed(pidOutput);
-                    }
+
+                    robot.getRightMotor().setPower(pidOutput);
+                    robot.getLeftMotor().setPower(pidOutput);
                 }
 
                 break;

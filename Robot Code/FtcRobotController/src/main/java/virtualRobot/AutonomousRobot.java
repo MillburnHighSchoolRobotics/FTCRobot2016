@@ -1,31 +1,43 @@
 package virtualRobot;
-import java.util.*;
+
 /**
  * Created by DOSullivan on 10/5/15.
  * Can be accesed by
  */
 public class AutonomousRobot {
 
-    public List<Motor> motors = new ArrayList<Motor>();
-    public List<Servo> servos = new ArrayList<Servo>();
-    public List<Sensor> sensors = new ArrayList<Sensor>();
+    private Motor rightMotor, leftMotor;
+    private Sensor rightMotorEncoder, leftMotorEncoder;
+    private Sensor angleSensor;
 
-    /* DriveTrain Motors */
-    public static Motor[] driveMotors = {new Motor(), new Motor(), new Motor(), new Motor()};
-    //in this array, 0 = rightTop, 1 = rightBottom, 2 = leftTop, 3 = leftBottom
+    public AutonomousRobot(Motor rightMotor, Motor leftMotor,
+                           Sensor rightMotorEncoder, Sensor leftMotorEncoder,
+                           Sensor angleSensor) {
+        this.rightMotor = rightMotor;
+        this.leftMotor = leftMotor;
+        this.rightMotorEncoder = rightMotorEncoder;
+        this.leftMotorEncoder = leftMotorEncoder;
+        this.angleSensor = angleSensor;
 
-    public static Sensor[] driveMotorEncoders = {new Sensor(), new Sensor(), new Sensor(), new Sensor()};
+    }
 
-    /*Other Motors*/
+    public Motor getRightMotor () {
+        return rightMotor;
+    }
 
-    /*Define Other Servos Here */
+    public Motor getLeftMotor () {
+        return leftMotor;
+    }
 
+    public Sensor getRightMotorEncoder() {
+        return rightMotorEncoder;
+    }
 
+    public Sensor getLeftMotorEncoder() {
+        return leftMotorEncoder;
+    }
 
-
-    public AutonomousRobot(List<Motor> motors, List<Servo> servos, List<Sensor> sensors) {
-        this.motors = motors;
-        this.servos = servos;
-        this.sensors = sensors;
+    public Sensor getAngleSensor() {
+        return angleSensor;
     }
 }
