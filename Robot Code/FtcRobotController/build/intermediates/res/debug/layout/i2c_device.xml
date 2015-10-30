@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
   <TableRow
@@ -53,59 +52,3 @@
 
 </merge>
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/i2c_device.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/i2c_device.xml -->
-=======
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-  <TableRow
-    android:id="@+id/row_port_i2c"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="2dip" >
-
-    <TextView
-      android:id="@+id/port_number_i2c"
-      android:textStyle="bold"
-      android:textSize="22sp"
-      android:paddingRight="5dp"
-      android:paddingLeft="5dp"
-      android:text="0"/>
-
-    <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <Spinner
-        android:id="@+id/choiceSpinner_i2c"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:entries="@array/choice_array_i2c"
-        android:prompt="@string/choice_prompt_i2c"
-        android:spinnerMode="dropdown" />
-
-      <EditText
-        android:id="@+id/editTextResult_i2c"
-        android:layout_below="@id/choiceSpinner_i2c"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:inputType="text"
-        android:maxLength="200"
-        android:hint="@string/input_name_hint">
-      </EditText>
-
-      <TextView
-        android:id="@+id/titleTextView_i2c"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextResult_i2c"
-        android:text="@string/input_name_label">
-      </TextView>
-    </RelativeLayout>
-  </TableRow>
-
-
-</merge>
-<!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/i2c_device.xml --><!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/i2c_device.xml -->
->>>>>>> b522546ff762aa9b1749801d5748a39d4b7eda01
