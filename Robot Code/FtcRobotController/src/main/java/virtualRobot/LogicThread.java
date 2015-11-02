@@ -10,30 +10,39 @@ import java.util.*;
  * Implements Runnable, which contains a loop that executes commands and
  * exits when the thread is interrupted or when custom ExitCondition is met
  */
-public abstract class LogicThread implements Runnable {
-    Queue<Command> commands;
+public class LogicThread implements Runnable {
+    List<Command> commands;
     List<Thread> children;
+    AutonomousRobot robot;
 
     @Override
     public void run() {
+    	
+    	robot.getLeftMotorEncoder.clearValue();
+    	robot.getRightMotorEncoder.clearValue();
+    	robot.getAngleSensor().clearValue();
 
         while (!Thread.currentThread().isInterrupted() && (commands.size() != 0)) {
-            if (Thread.currentThread().isInterrupted()) {
-                for (Thread x: children)
-                    x.interrupt();
-                return;
-            }
-           Command c = commands.poll();
-            c.changeRobotState();
-            if (c instanceof SpawnNewThread)
+           
+           Command c = commands.remove(0);
+           boolean isInterrupted = c.changeRobotState();
+           if (c instanceof SpawnNewThread)
                 children.add(((SpawnNewThread) c).getThread());
+           
+           if (isInterrupted) 
+        	   break;
         }
+        
+       
+        for (Thread x: children)
+        	if (x.isAlive())
+        		x.interrupt();
 
-
-
-
-
-
-
+    }
+    
+    public LogicThread() {
+    	robot = Command.robot;
+    	commands = new ArrayList<>();
+    	children = new ArrayList<>();
     }
 }

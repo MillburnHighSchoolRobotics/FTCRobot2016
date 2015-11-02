@@ -26,5 +26,9 @@ public class Sensor {
     public synchronized void setRawValue(double hardValue) {
         this.hardValue = hardValue;
     }
+    
+    public synchronized double getRawValue() {
+    	return hardValue;
+    }
 
 }

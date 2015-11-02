@@ -5,16 +5,16 @@ package virtualRobot;
  */
 public class Translate implements Command {
     private ExitCondition exitCondition;
-    private Motor[] motors;
     static final int MAX = 100;
-    private Sensor[] encoders;
     private RunMode runMode;
+    private Direction direction;
 
     private PIDController translateController;
     private PIDController headingController;
 
     private double maxSpeed;
     private double currentValue;
+    private double multiplier;
 
     public Translate() {
         exitCondition = new ExitCondition() {
@@ -31,6 +31,8 @@ public class Translate implements Command {
 
         maxSpeed = 1;
         currentValue = 0;
+        direction = Direction.FORWARD;
+        multiplier = 1;
     }
 
     public Translate(double target) {
@@ -39,10 +41,18 @@ public class Translate implements Command {
         translateController.setTarget(target);
     }
 
-    public Translate(double target, double maxSpeed) {
-        this(target);
+    public Translate(double target, Direction direction, double maxSpeed) {
+        this(target, direction);
 
         this.maxSpeed = maxSpeed;
+    }
+    
+    public Translate(double target, Direction direction) {
+    	this(target);
+    	
+    	this.direction = direction;
+    	
+    	multiplier = (direction == Direction.FORWARD ? 1 : -1);
     }
 
     public void setExitCondition (ExitCondition e) {
@@ -53,118 +63,84 @@ public class Translate implements Command {
         return exitCondition;
     }
 
-    private double rotateRaw(double angleInDegrees, double timeout) {
-        double offset;
-        double prevTime, curTime;
-
-        offset = 0;
-        prevTime = System.currentTimeMillis();
-        curTime = prevTime;
-
-        if (angleInDegrees < 0) {
-            robot.getRightMotor().setPower(1);
-            robot.getLeftMotor().setPower(-1);
-
-            while (offset > angleInDegrees) {
-                //update offset in here once sensors are in
-                curTime = System.currentTimeMillis() - prevTime;
-                if (curTime > timeout) {
-                    robot.getRightMotor().setPower(0);
-                    robot.getLeftMotor().setPower(0);
-
-                    return offset;
-                }
-            }
-        }
-
-        else {
-            robot.getRightMotor().setPower(-1);
-            robot.getLeftMotor().setPower(1);
-
-
-            while (offset < angleInDegrees) {
-                curTime = System.currentTimeMillis() - prevTime;
-                //update offset in here once sensors are connected
-                if (curTime > timeout) {
-                    robot.getRightMotor().setPower(0);
-                    robot.getLeftMotor().setPower(0);
-
-
-                    return offset;
-                }
-            }
-        }
-
-        robot.getRightMotor().setPower(0);
-        robot.getLeftMotor().setPower(0);
-
-        return offset;
-    }
-
-
-
-
     @Override
-    public void changeRobotState() {
+    public boolean changeRobotState() {
+    	
+    	boolean isInterrupted = false;
+    	
         switch (runMode) {
             case CUSTOM:
+            	
+            	robot.getLeftMotor().setPower(maxPower * multiplier);
+            	robot.getRightMotor().setPower(maxPower * multiplier);
 
-                for (Sensor s : encoders) {
-                    s.clearValue();
+                while (!exitCondition.isConditionMet()) {
+                	
+                	if (Thread.currentThread().isInterrupted()) {
+                		isInterrupted = true;
+                		break;
+                	}
+                	
+                	Thread.currentThread().sleep(25);
                 }
-
-                robot.getRightMotor().setPower(0);
-                robot.getLeftMotor().setPower(0);
-
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()) {
-
-                }
+                
                 break;
             case WITH_ENCODERS:
-
-                for (Sensor s : encoders) {
-                    s.clearValue();
-                }
-
-
-
-                robot.getRightMotor().setPower(maxSpeed);
-                robot.getLeftMotor().setPower(maxSpeed);
-
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
-                    currentValue = 0;
-                    for (Sensor s : encoders) {
-                        currentValue += s.getValue();
-                    }
-
-                    currentValue /= encoders.length;
-                }
+            	
+            	robot.getLeftMotorEncoder().clearValue();
+            	robot.getRightMotorEncoder().clearValue();
+            	
+            	robot.getLeftMotor().setPower(maxPower * multiplier);
+            	robot.getRightMotor().setPower(maxPower * multiplier);
+            	
+            	while (!exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
+            		
+            		currentValue = Math.abs((robot.getLeftMotorEncoder().getValue() + robot.getRightMotorEncoder.getValue()) / 2);
+            		
+            		if (Thread.currentThread().isInterrupted()) {
+            			isInterrupted = true;
+            			break;
+            		}
+            		
+            		Thread.currentThread().sleep(25);
+            	}
+            	
                 break;
             case WITH_PID:
 
-                for (Sensor s : encoders) {
-                    s.clearValue();
-                }
+            	robot.getLeftMotorEncoder().clearValue();
+            	robot.getRightMotorEncoder().clearValue();
 
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
-                    currentValue = 0;
-                    for (Sensor s : encoders) {
-                        currentValue += s.getValue();
-                    }
-
-                    currentValue /= encoders.length;
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE) {
+                   
+                    double left = robot.getLeftMotorEncoder().getValue();
+                    double right = robot.getRightMotorEncoder().getValue();
+                    
+                    currentValue = Math.abs((left + right) / 2);
 
                     double pidOutput = translateController.getPIDOutput(currentValue);
 
-
-                    robot.getRightMotor().setPower(pidOutput);
-                    robot.getLeftMotor().setPower(pidOutput);
+                    robot.getRightMotor().setPower(pidOutput * multiplier);
+                    robot.getLeftMotor().setPower(pidOutput * multiplier);
+                    
+                    if (Thread.currentThread().isInterrupted()) {
+                    	isInterrupted = true;
+                    	break;
+                    }
+                    
+                    Thread.currentThread().sleep(25);
+                    
                 }
 
                 break;
             default:
                 break;
         }
+        
+        robot.getLeftMotor().setPower(0);
+        robot.getRightMotor().setPower(0);
+        
+        return isInterrupted;
 
     }
 
@@ -183,12 +159,21 @@ public class Translate implements Command {
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
-
+    
+    public void setDirection(Direction direction) {
+    	this.direction = direction;
+    	this.multiplier = (direction == Direction.FORWARD ? 1 : -1);
+    }
 
     public enum RunMode {
         CUSTOM,
         WITH_ENCODERS,
         WITH_PID
+    }
+    
+    public enum Direction {
+    	FORWARD,
+    	BACKWARD
     }
 
     public static int KP = 0;
@@ -200,4 +185,6 @@ public class Translate implements Command {
     public static int HEADING_KI = 0;
     public static int HEADING_KD = 0;
     public static int HEADING_THRESHOLD = 0;
+    
+    public static int TOLERANCE = 20;
 }

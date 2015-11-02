@@ -9,6 +9,14 @@ public class AutonomousRobot {
     private Motor rightMotor, leftMotor;
     private Sensor rightMotorEncoder, leftMotorEncoder;
     private Sensor angleSensor;
+    
+    public AutonomousRobot() {
+    	rightMotor = new Motor();
+    	leftMotor = new Motor();
+    	rightMotorEncoder = new Sensor();
+    	leftMotorEncoder = new Sensor();
+    	angleSensor = new Sensor();
+    }
 
     public AutonomousRobot(Motor rightMotor, Motor leftMotor,
                            Sensor rightMotorEncoder, Sensor leftMotorEncoder,
@@ -20,24 +28,32 @@ public class AutonomousRobot {
         this.angleSensor = angleSensor;
 
     }
+    
+    public AutonomousRobot(AutonomousRobot robot) {
+    	rightMotor = robot.getRightMotor();
+    	leftMotor = robot.getLeftMotor();
+    	rightMotorEncoder = robot.getRightMotorEncoder();
+    	leftMotorEncoder = robot.getLeftMotorEncoder();
+    	angleSensor = robot.getAngleSensor();
+    }
 
-    public Motor getRightMotor () {
+    public synchronized Motor getRightMotor () {
         return rightMotor;
     }
 
-    public Motor getLeftMotor () {
+    public synchronized Motor getLeftMotor () {
         return leftMotor;
     }
 
-    public Sensor getRightMotorEncoder() {
+    public synchronized Sensor getRightMotorEncoder() {
         return rightMotorEncoder;
     }
 
-    public Sensor getLeftMotorEncoder() {
+    public synchronized Sensor getLeftMotorEncoder() {
         return leftMotorEncoder;
     }
 
-    public Sensor getAngleSensor() {
+    public synchronized Sensor getAngleSensor() {
         return angleSensor;
     }
 }
