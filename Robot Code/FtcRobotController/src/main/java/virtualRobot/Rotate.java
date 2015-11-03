@@ -88,7 +88,7 @@ public class Rotate implements Command {
             	break;
             }
             
-            Thread.currentThread().sleep(25);
+            Thread.currentThread().sleep(10);
         }
 
     	robot.getRightMotor().setPower(0);

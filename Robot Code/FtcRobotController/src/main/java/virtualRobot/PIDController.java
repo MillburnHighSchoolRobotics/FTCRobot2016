@@ -50,11 +50,11 @@ public class PIDController {
     }
 
     public double getPIDOutput(double currentValue) {
-        D = currentValue - P;
-        P = currentValue;
+        D = (target-currentValue) - P;
+        P = target - currentValue;
 
         if (Math.abs(currentValue - target) < threshold) {
-            I = currentValue + I;
+            I = P + I;
         } else {
             I = 0;
         }

@@ -6,8 +6,16 @@ package virtualRobot;
 public class AutonomousTest1 extends LogicThread {
     public AutonomousTest1 () {
         super();
-        commands.add(new Translate(150, Translate.Direction.FORWARD));
+        Translate temp = new Translate(1500, Translate.Direction.FORWARD);
+        //temp.setRunMode(Translate.RunMode.WITH_ENCODERS);
+        commands.add(temp);
+        //commands.add(new Translate(1500, Translate.Direction.FORWARD));
         commands.add(new Rotate(45));
-        commands.add(new Translate(300, Translate.Direction.FORWARD));
+
+        temp = new Translate(3000, Translate.Direction.FORWARD);
+        temp.setRunMode(Translate.RunMode.WITH_ENCODERS);
+        commands.add(temp);
+
+        //commands.add(new Translate(3000, Translate.Direction.FORWARD));
     }
 }
