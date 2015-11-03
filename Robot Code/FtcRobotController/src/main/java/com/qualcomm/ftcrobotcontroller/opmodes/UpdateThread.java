@@ -1,6 +1,10 @@
+package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+
+import virtualRobot.*;
 
 public class UpdateThread extends OpMode {
 	
@@ -23,11 +27,9 @@ public class UpdateThread extends OpMode {
 		leftTop = hardwareMap.dcMotor.get("leftTop");
 		leftBottom = hardwareMap.dcMotor.get("leftBottom");
 		
-		gyroSensor = hardwareMap.gyroSensor.get("gyro");
+		gyro = hardwareMap.gyroSensor.get("gyro");
 				
-		robot = new AutonomousRobot();
-		
-		Command.robot = robot;
+		robot = Command.robot;
 		
 		leftMotor = robot.getLeftMotor();
 		rightMotor = robot.getRightMotor();

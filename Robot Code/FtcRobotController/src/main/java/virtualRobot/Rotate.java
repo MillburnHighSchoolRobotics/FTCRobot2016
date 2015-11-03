@@ -5,7 +5,7 @@ package virtualRobot;
  */
 public class Rotate implements Command {
     private ExitCondition exitCondition;
-    private double ROTATION_TOLERANCE = 0.2;
+    private double ROTATIONAL_THRESHOLD = 0.2;
     private double power;
     private double angleInDegrees;
     
@@ -22,14 +22,14 @@ public class Rotate implements Command {
             }
         };
         
-        pidController = new PIDController(KP, KI, KD, THRESHOLD);
+        //pidController = new PIDController(KP, KI, KD, THRESHOLD);
     }
 
     public Rotate (double angleInDegrees) {
         this();
         this.angleInDegrees = angleInDegrees;
         
-        pidController.setTarget(target);
+        //pidController.setTarget(target);
     }
 
     public Rotate (double angleInDegrees, double power) {
@@ -65,14 +65,14 @@ public class Rotate implements Command {
     }
 
     @Override
-    public void changeRobotState() {
+    public boolean changeRobotState() throws InterruptedException{
     	boolean isInterrupted = false;
     	
-        while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor.getValue()) > ROTATIONAL_THRESHOLD) {
+        while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor().getValue()) > ROTATIONAL_THRESHOLD) {
         	
         	double adjustedPower = pidController.getPIDOutput(robot.getAngleSensor().getValue()) * power;
         	
-            if (angleInDegrees < 0)
+            if (angleInDegrees < 0){
 
                 robot.getLeftMotor().setPower(adjustedPower);
                 robot.getRightMotor().setPower(-adjustedPower);
