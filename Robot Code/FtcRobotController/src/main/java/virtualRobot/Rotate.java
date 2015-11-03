@@ -8,25 +8,32 @@ public class Rotate implements Command {
     private double ROTATION_TOLERANCE = 0.2;
     private double power;
     private double angleInDegrees;
+    
+    private PIDController pidController;
 
     public Rotate () {
+    	
+    	power = 1;
+    	
         exitCondition = new ExitCondition() {
             @Override
             public boolean isConditionMet() {
                 return false;
             }
         };
+        
+        pidController = new PIDController(KP, KI, KD, THRESHOLD);
     }
 
     public Rotate (double angleInDegrees) {
         this();
         this.angleInDegrees = angleInDegrees;
-        power = 1;
+        
+        pidController.setTarget(target);
     }
 
     public Rotate (double angleInDegrees, double power) {
-        this();
-        this.angleInDegrees = angleInDegrees;
+        this(angleInDegrees);
         this.power = power;
     }
 
@@ -57,81 +64,37 @@ public class Rotate implements Command {
         return exitCondition;
     }
 
-
-
-
     @Override
     public void changeRobotState() {
-        while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()) {
+    	boolean isInterrupted = false;
+    	
+        while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor.getValue()) > ROTATIONAL_THRESHOLD) {
+        	
+        	double adjustedPower = pidController.getPIDOutput(robot.getAngleSensor().getValue()) * power;
+        	
+            if (angleInDegrees < 0)
 
-
-            double offset = 0;
-            double curTime, prevTime;
-            double adjustedPower;
-            double prevRot = 0, curRot;
-            // pidData;
-            float pidOutput;
-
-            if (angleInDegrees < 0) {
-
-                offset = 0;
-                curTime = System.currentTimeMillis();
-                prevTime = System.currentTimeMillis();
-
-                while (Math.abs(offset - angleInDegrees) > ROTATION_TOLERANCE) {
-
-                    curTime = System.currentTimeMillis() - prevTime;
-                    curRot = robot.getAngleSensor().getValue();
-                    if (Math.abs(curRot) < 2) {
-                        curRot = 0;
-                    }
-                    offset += 0.5 * (curRot + prevRot) * 0.001 * (curTime - prevTime);
-                    prevTime = curTime;
-                    prevRot = curRot;
-
-                    //pidOutput = GetPIDOutput(&pidData, abs(offset));
-                    //adjustedPower = pidOutput;
-
-                    adjustedPower = power;
-
-                    robot.getLeftMotor().setPower(adjustedPower);
-
-                    robot.getRightMotor().setPower(-adjustedPower);
-                }
+                robot.getLeftMotor().setPower(adjustedPower);
+                robot.getRightMotor().setPower(-adjustedPower);
+                
             } else {
-                offset = 0;
-                curTime = System.currentTimeMillis();
-                prevTime = System.currentTimeMillis();
 
-                while (Math.abs(offset - angleInDegrees) < ROTATION_TOLERANCE) {
-
-                    curTime = System.currentTimeMillis() - prevTime;
-                    curRot = robot.getAngleSensor().getValue();
-                    if (Math.abs(curRot) < 2) {
-                        curRot = 0;
-                    }
-                    offset += 0.5 * (curRot + prevRot) * 0.001 * (curTime - prevTime);
-                    prevTime = curTime;
-                    prevRot = curRot;
-
-                    //pidOutput = GetPIDOutput(&pidData, abs(offset));
-                    //adjustedPower = pidOutput;
-
-                    adjustedPower = power;
-
-                    robot.getLeftMotor().setPower(-adjustedPower);
-
-                    robot.getRightMotor().setPower(adjustedPower);
-                }
+                robot.getLeftMotor().setPower(-adjustedPower);
+                robot.getRightMotor().setPower(adjustedPower);
             }
-
-            robot.getRightMotor().setPower(0);
-            robot.getLeftMotor().setPower(0);
-
-
+            
+            if (Thread.currentThread().isInterrupted()) {
+            	isInterrupted = true;
+            	break;
+            }
+            
+            Thread.currentThread().sleep(25);
         }
 
-
+    	robot.getRightMotor().setPower(0);
+        robot.getLeftMotor().setPower(0);
+        
+        return isInterrupted;
         
     }
 }

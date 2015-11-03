@@ -12,7 +12,7 @@ public class ContinuousRotationServo extends Servo {
 
     }
     //idk if we will need this
-    public int getCrsChangeDirection() {
+    public synchronized int getCrsChangeDirection() {
         crsChangeDirection = -servoSpeed;
         return crsChangeDirection;
     }
