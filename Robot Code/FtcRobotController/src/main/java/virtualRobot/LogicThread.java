@@ -31,7 +31,7 @@ public class LogicThread implements Runnable {
                isInterrupted = c.changeRobotState();
            }
            catch (InterruptedException e) {
-
+        	   isInterrupted = true;
            }
            if (c instanceof SpawnNewThread) {
                List<Thread> threadList = ((SpawnNewThread) c).getThreads();

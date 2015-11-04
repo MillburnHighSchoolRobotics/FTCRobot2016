@@ -83,7 +83,12 @@ public class Translate implements Command {
                 		break;
                 	}
                 	
-                	Thread.currentThread().sleep(25);
+                	try {
+                		Thread.currentThread().sleep(25);
+                	} catch (InterruptedException e) {
+                		isInterrupted = true;
+                		break;
+                	}
                 }
                 
                 break;
@@ -104,7 +109,12 @@ public class Translate implements Command {
             			break;
             		}
             		
-            		Thread.currentThread().sleep(25);
+            		try {
+                		Thread.currentThread().sleep(25);
+                	} catch (InterruptedException e) {
+                		isInterrupted = true;
+                		break;
+                	}
             	}
             	
                 break;
@@ -132,7 +142,12 @@ public class Translate implements Command {
                     	break;
                     }
                     
-                    Thread.currentThread().sleep(10);
+                    try {
+                		Thread.currentThread().sleep(10);
+                	} catch (InterruptedException e) {
+                		isInterrupted = true;
+                		break;
+                	}
                     
                 }
 
