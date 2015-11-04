@@ -1,6 +1,15 @@
+package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.AutonomousTest1;
+import virtualRobot.Command;
+import virtualRobot.LogicThread;
+import virtualRobot.Motor;
+import virtualRobot.Sensor;
 
 public class UpdateThread extends OpMode {
 	
@@ -22,21 +31,22 @@ public class UpdateThread extends OpMode {
 		rightBottom = hardwareMap.dcMotor.get("rightBottom");
 		leftTop = hardwareMap.dcMotor.get("leftTop");
 		leftBottom = hardwareMap.dcMotor.get("leftBottom");
-		
-		gyroSensor = hardwareMap.gyroSensor.get("gyro");
+		rightTop.setDirection(DcMotor.Direction.REVERSE);
+		rightBottom.setDirection(DcMotor.Direction.REVERSE);
+		gyro = hardwareMap.gyroSensor.get("gyro");
 				
-		robot = new AutonomousRobot();
-		
-		Command.robot = robot;
+		robot = Command.robot;
 		
 		leftMotor = robot.getLeftMotor();
 		rightMotor = robot.getRightMotor();
+
 		leftMotorEncoder = robot.getLeftMotorEncoder();
 		rightMotorEncoder = robot.getRightMotorEncoder();
 		angleSensor = robot.getAngleSensor();
 		
-		logicThread = new LogicThread();
+		logicThread = new AutonomousTest1();
 		t = new Thread(logicThread);
+
 		
 		gyroOffset = gyro.getRotation();
 	}
@@ -51,8 +61,8 @@ public class UpdateThread extends OpMode {
 		
 		angleSensor.setRawValue(0);
 		
-		leftMotorEncoder.setRawValue(leftTop.getCurrentPosition());
-		rightMotorEncoder.setRawValue(rightTop.getCurrentPosition());
+		leftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
+		rightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
 		
 		t.start();
 	}
@@ -72,8 +82,8 @@ public class UpdateThread extends OpMode {
 		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
 		angleSensor.setRawValue(angleSensor.getRawValue() + delta);
 		
-		leftMotorEncoder.setRawValue(leftTop.getCurrentPosition());
-		rightMotorEncoder.setRawValue(rightTop.getCurrentPosition());
+		leftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
+		rightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
 		
 		// Copy State
 		
@@ -82,6 +92,11 @@ public class UpdateThread extends OpMode {
 		
 		rightTop.setPower(rightPower);
 		rightBottom.setPower(rightPower);
+
+		telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
+		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
+		telemetry.addData("leftEncoder", Double.toString(leftMotorEncoder.getRawValue()));
+		telemetry.addData("rightEncoder", Double.toString(rightMotorEncoder.getRawValue()));
 	}
 	
 	public void stop() {

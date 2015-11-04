@@ -7,7 +7,7 @@ public interface Command  {
     /*
         changeRobotState should manipulate the AutonomousRobot through the LogicThread
      */
-    boolean changeRobotState ();
+    boolean changeRobotState () throws InterruptedException;
 
-    AutonomousRobot robot = null;
+    AutonomousRobot robot = new AutonomousRobot();
 }

@@ -1,5 +1,8 @@
 package virtualRobot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by DOSullivan on 10/28/15.
  */
@@ -10,14 +13,14 @@ public class SpawnNewThread implements Command {
     private ExitCondition exitCondition;
     
     public SpawnNewThread() {
-    	logic = new ArrayList<>();
-    	t = new ArrayList<>();
+    	logic = new ArrayList<LogicThread>();
+    	t = new ArrayList<Thread>();
     	
     	exitCondition = new ExitCondition() {
-    		public boolean isConditioMet() {
+    		public boolean isConditionMet() {
     			return false;
     		}
-    	}
+    	};
     }
     
     public SpawnNewThread(List<LogicThread> l) {
@@ -26,7 +29,7 @@ public class SpawnNewThread implements Command {
     }
 
     @Override
-    public boolean void changeRobotState() {
+    public boolean changeRobotState() {
         int i = 0;
         boolean isInterrupted = false;
         

@@ -1,5 +1,7 @@
 package virtualRobot;
 
+import android.util.Log;
+
 /**
  * Created by shant on 10/14/2015.
  */
@@ -12,7 +14,7 @@ public class Translate implements Command {
     private PIDController translateController;
     private PIDController headingController;
 
-    private double maxSpeed;
+    private double maxPower;
     private double currentValue;
     private double multiplier;
 
@@ -29,7 +31,7 @@ public class Translate implements Command {
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
         headingController = new PIDController(HEADING_KP, HEADING_KI, HEADING_KD, HEADING_THRESHOLD);
 
-        maxSpeed = 1;
+        maxPower = 1;
         currentValue = 0;
         direction = Direction.FORWARD;
         multiplier = 1;
@@ -41,10 +43,10 @@ public class Translate implements Command {
         translateController.setTarget(target);
     }
 
-    public Translate(double target, Direction direction, double maxSpeed) {
+    public Translate(double target, Direction direction, double maxPower) {
         this(target, direction);
 
-        this.maxSpeed = maxSpeed;
+        this.maxPower = maxPower;
     }
     
     public Translate(double target, Direction direction) {
@@ -64,7 +66,7 @@ public class Translate implements Command {
     }
 
     @Override
-    public boolean changeRobotState() {
+    public boolean changeRobotState() throws InterruptedException {
     	
     	boolean isInterrupted = false;
     	
@@ -81,7 +83,12 @@ public class Translate implements Command {
                 		break;
                 	}
                 	
-                	Thread.currentThread().sleep(25);
+                	try {
+                		Thread.currentThread().sleep(25);
+                	} catch (InterruptedException e) {
+                		isInterrupted = true;
+                		break;
+                	}
                 }
                 
                 break;
@@ -95,14 +102,19 @@ public class Translate implements Command {
             	
             	while (!exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
             		
-            		currentValue = Math.abs((robot.getLeftMotorEncoder().getValue() + robot.getRightMotorEncoder.getValue()) / 2);
+            		currentValue = Math.abs((Math.abs(robot.getLeftMotorEncoder().getValue()) + Math.abs(robot.getRightMotorEncoder().getValue())) / 2);
             		
             		if (Thread.currentThread().isInterrupted()) {
             			isInterrupted = true;
             			break;
             		}
             		
-            		Thread.currentThread().sleep(25);
+            		try {
+                		Thread.currentThread().sleep(25);
+                	} catch (InterruptedException e) {
+                		isInterrupted = true;
+                		break;
+                	}
             	}
             	
                 break;
@@ -111,14 +123,16 @@ public class Translate implements Command {
             	robot.getLeftMotorEncoder().clearValue();
             	robot.getRightMotorEncoder().clearValue();
 
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE) {
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() /*&& Math.abs(currentValue - translateController.getTarget()) > TOLERANCE*/) {
                    
-                    double left = robot.getLeftMotorEncoder().getValue();
-                    double right = robot.getRightMotorEncoder().getValue();
-                    
+                    double left = Math.abs(robot.getLeftMotorEncoder().getValue());
+                    double right = Math.abs(robot.getRightMotorEncoder().getValue());
+
                     currentValue = Math.abs((left + right) / 2);
 
                     double pidOutput = translateController.getPIDOutput(currentValue);
+
+                    Log.d("pidoutput", Double.toString(pidOutput));
 
                     robot.getRightMotor().setPower(pidOutput * multiplier);
                     robot.getLeftMotor().setPower(pidOutput * multiplier);
@@ -128,7 +142,12 @@ public class Translate implements Command {
                     	break;
                     }
                     
-                    Thread.currentThread().sleep(25);
+                    try {
+                		Thread.currentThread().sleep(10);
+                	} catch (InterruptedException e) {
+                		isInterrupted = true;
+                		break;
+                	}
                     
                 }
 
@@ -156,8 +175,8 @@ public class Translate implements Command {
         translateController.setTarget(target);
     }
 
-    public void setMaxSpeed(double maxSpeed) {
-        this.maxSpeed = maxSpeed;
+    public void setMaxPower(double maxPower) {
+        this.maxPower = maxPower;
     }
     
     public void setDirection(Direction direction) {
@@ -176,10 +195,10 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static int KP = 0;
-    public static int KI = 0;
-    public static int KD = 0;
-    public static int THRESHOLD = 0;
+    public static double KP = 0.05;
+    public static double KI = 0;
+    public static double KD = 0;
+    public static double THRESHOLD = 1000;
 
     public static int HEADING_KP = 0;
     public static int HEADING_KI = 0;

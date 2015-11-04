@@ -61,6 +61,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("BlueAutoFloorGoal", BlueAutoFloorGoal.class);
     //manager.register ("BlueFirstMountain", BlueFirstMountain.class);
     manager.register("ReddAutoFloorGoal", RedAutoFloorGoal.class);
+    manager.register("Autonomous Test", UpdateThread.class);
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */

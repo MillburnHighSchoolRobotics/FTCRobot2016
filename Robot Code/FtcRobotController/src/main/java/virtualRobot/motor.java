@@ -40,6 +40,13 @@ public class Motor {
 
     public synchronized void setPower(double newPower) {
         power = newPower;
+        if (power > 1) {
+            power = 1;
+        }
+
+        if (power < -1) {
+            power = -1;
+        }
     }
 
 }

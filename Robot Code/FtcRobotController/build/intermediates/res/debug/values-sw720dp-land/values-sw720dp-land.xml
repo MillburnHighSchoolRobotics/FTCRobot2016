@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/values-sw720dp-land/dimens.xml -->
+=======
+    <!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/values-sw720dp-land/dimens.xml -->
+>>>>>>> 961c2a9ece00b006bd618961b562a49264525a76
     <eat-comment/>
     <dimen name="activity_horizontal_margin">128dp</dimen>
 </resources>
