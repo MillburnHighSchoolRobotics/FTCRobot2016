@@ -195,9 +195,9 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static double KP = 0.05;
-    public static double KI = 0;
-    public static double KD = 0;
+    public static double KP = 0.0045;
+    public static double KI = 0.0000;
+    public static double KD = 0.010125;
     public static double THRESHOLD = 1000;
 
     public static int HEADING_KP = 0;

@@ -1,5 +1,4 @@
-<!--
-Copyright (c) 2014, 2015 Qualcomm Technologies Inc
+/* Copyright (c) 2014, 2015 Qualcomm Technologies Inc
 
 All rights reserved.
 
@@ -28,17 +27,29 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.qualcomm.ftcrobotcontroller.FtcLoadFileActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" android:showAsAction="never" />
-</menu>
-<<<<<<< HEAD
-<!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/menu/menu_load.xml -->
-=======
-<!-- From: file:/C:/Users/Yanjun/Documents/Gits/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/menu/menu_load.xml -->
->>>>>>> c87dc1c00dd2023db69e14fb32199ad75b1b700b
+package com.qualcomm.ftcrobotcontroller.opmodes.opmodes;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
+import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
+
+/**
+ * Register Op Modes
+ */
+public class FtcOpModeRegister implements OpModeRegister {
+
+  /**
+   * The Op Mode Manager will call this method when it wants a list of all
+   * available op modes. Add your op mode to the list to enable it.
+   *
+   * @param manager op mode manager
+   */
+  public void register(OpModeManager manager) {
+
+    manager.register("ArmTest", ArmTest.class);
+    manager.register ("TankTreadDrive", TankTreadDrive.class);
+    manager.register("Autonomous Test", AutonomousTest1Update.class);
+
+  }
+}

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\src\androidTest\res"/><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\build\generated\res\rs\androidTest\debug"/><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\build\generated\res\generated\androidTest\debug"/></dataSet><mergedItems/></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="C:\Users\Yanjun\Documents\Gits\FTCRobot2015\Robot Code\FtcRobotController\src\androidTest\res"/><source path="C:\Users\Yanjun\Documents\Gits\FTCRobot2015\Robot Code\FtcRobotController\build\generated\res\rs\androidTest\debug"/><source path="C:\Users\Yanjun\Documents\Gits\FTCRobot2015\Robot Code\FtcRobotController\build\generated\res\generated\androidTest\debug"/></dataSet><mergedItems/></merger>
+>>>>>>> c87dc1c00dd2023db69e14fb32199ad75b1b700b
