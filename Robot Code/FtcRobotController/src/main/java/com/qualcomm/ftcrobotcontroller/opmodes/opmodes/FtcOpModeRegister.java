@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
-Copyright (c) 2014, 2015 Qualcomm Technologies Inc
+/* Copyright (c) 2014, 2015 Qualcomm Technologies Inc
 
 All rights reserved.
 
@@ -30,32 +27,29 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-<shape
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:shape="oval"
-  android:layout_height="wrap_content"
-  android:layout_width="wrap_content">
-  <corners
-    android:radius="14dp"
-    />
-  <solid
-    android:color="#4F4F4F"
-    />
-  <padding
-    android:left="0dp"
-    android:top="0dp"
-    android:right="0dp"
-    android:bottom="0dp"
-    />
-  <size
-    android:width="30dp"
-    android:height="30dp"
-    />
-  <stroke
-    android:width="3dp"
-    android:color="#878787"
-    />
-</shape> <!-- From: file:/C:/Users/Yanjun/Documents/Gits/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/drawable-hdpi/button_shape.xml -->
+package com.qualcomm.ftcrobotcontroller.opmodes.opmodes;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
+import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
+
+/**
+ * Register Op Modes
+ */
+public class FtcOpModeRegister implements OpModeRegister {
+
+  /**
+   * The Op Mode Manager will call this method when it wants a list of all
+   * available op modes. Add your op mode to the list to enable it.
+   *
+   * @param manager op mode manager
+   */
+  public void register(OpModeManager manager) {
+
+    manager.register("ArmTest", ArmTest.class);
+    manager.register ("TankTreadDrive", TankTreadDrive.class);
+    manager.register("Autonomous Test", AutonomousTest1Update.class);
+
+  }
+}

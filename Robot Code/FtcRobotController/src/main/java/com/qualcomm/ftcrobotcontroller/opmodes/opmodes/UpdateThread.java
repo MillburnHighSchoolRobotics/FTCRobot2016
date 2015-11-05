@@ -1,13 +1,10 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
-
-import android.util.Log;
+package com.qualcomm.ftcrobotcontroller.opmodes.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
 import virtualRobot.AutonomousRobot;
-import virtualRobot.AutonomousTest1Logic;
 import virtualRobot.Command;
 import virtualRobot.LogicThread;
 import virtualRobot.Motor;
