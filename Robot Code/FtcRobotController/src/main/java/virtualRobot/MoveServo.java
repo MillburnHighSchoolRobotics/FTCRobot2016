@@ -40,12 +40,20 @@ public class MoveServo implements Command {
     }
 
     @Override
-    public void changeRobotState() {
+    public boolean changeRobotState() {
         int i = 0;
-        while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && i < servos.size()) {
+        boolean isInterrupted = false;
+        while (!exitCondition.isConditionMet() && i < servos.size()) {
             ((Servo)servos.get(i)[0]).setPosition(((Double)servos.get(i)[1]));
             i++;
+            
+            if (Thread.currentThread().isInterrupted()) {
+            	isInterrupted = true;
+            	break;
+            }
         }
+        
+        return isInterrupted;
     }
 
 }

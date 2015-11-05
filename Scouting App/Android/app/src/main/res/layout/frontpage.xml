@@ -7,7 +7,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.app.fragments.FrontFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="match_parent"
@@ -22,8 +23,13 @@
         android:inputType="number"
         android:ems="4"
         android:hint="#"
-        android:id="@+id/TeamEnterEditText"
-        android:layout_gravity="center"/>
+        android:id="@+id/TeamEnterEditText" />
+
+    <EditText
+        android:layout_width="242dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamname"
+        android:hint="Name" />
 
     <Button
         android:layout_width="wrap_content"
@@ -32,31 +38,45 @@
         android:id="@+id/EnterTeamButton"
         android:layout_gravity="center"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <EditText
+        android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:text="Load Teams"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:layout_marginTop="72dp"
-        android:layout_gravity="center"/>
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/date"
+        android:hint="Competition Date" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/teamnumber"
+        android:hint="Hosting Team Number" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/type"
+        android:hint="Competition Type" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Load teams"
-        android:id="@+id/LoadButton"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"/>
+        android:text="Competititon"
+        android:id="@+id/competition"
+        android:layout_gravity="center_horizontal" />
 
-    ,<Button
+    <Button
         android:layout_width="144dp"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Done"
         android:id="@+id/done"
         android:layout_marginTop="120dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
