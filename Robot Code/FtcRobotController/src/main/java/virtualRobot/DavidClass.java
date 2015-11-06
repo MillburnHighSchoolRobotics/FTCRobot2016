@@ -6,7 +6,7 @@ import java.util.*;
  * Created by DOSullivan on 11/4/15.
  */
 public class DavidClass {
-    public static final long RED = Color.RED; //note that Color.RED is negative
+    public static final long RED = Color.red(Color.RED); //note that Color.RED is negative
     //returns true if left is red (right is blue)
     //returns false if left if blue (right is red)
     public static boolean analyzePic(String filepath) {
@@ -19,13 +19,13 @@ public class DavidClass {
         int Midx = roundUp(width, 2)-1, Midy = roundUp(height,2)-1;
         int Q1x = roundUp(Midx, 2), Q3x = roundUp(Midx+width, 2), Q1y = roundUp(Midy,2), Q3y = roundUp(Midy+height,2);
         List<Integer> leftPixels = new ArrayList<Integer>(), rightPixels = new ArrayList<Integer>();
-        for (int i = Q1y; i <= Q1y+Q3y; i++){
-            int z1 = (width * (i-1))-1;
-            int z2 = ((width*(i-1))-1)+Q3x;
-            for (int x = z1; x<=z1+(Q1x-1); x++){
-               leftPixels.add(pixels[x]);
+        for (int i = Q1y; i < Q1y+Q3y; i++){
+            int z1 = (width * i)+1;
+            int z2 = (width*i)+Midx+1;
+            for (int x = z1; x<(z1+Q1x); x++){
+                leftPixels.add(pixels[x]);
             }
-            for (int x = z2; x<=z2+(width-1-1);x++) {
+            for (int x = z2; x<(z2+(width-Q3x));x++) {
                 rightPixels.add(pixels[x]);
             }
         }
@@ -34,14 +34,14 @@ public class DavidClass {
         long lAvg, rAvg;
 
         for (int i = 0; i < lNum;i++){
-           lSum+= Color.red(leftPixels.get(i));
+            lSum+= Color.red(leftPixels.get(i));
         }
         for (int i = 0; i <rNum;i++) {
-            rSum+= Color.red(rightPixels.get(i));
+            rSum+=  Color.red(rightPixels.get(i));
         }
         lAvg = roundUp(lSum, lNum);
         rAvg = roundUp(rSum, rNum);
-       return ((lAvg < 0 && rAvg > 0)? true : (rAvg <0 && lAvg > 0) ? false : (Math.abs(lAvg-RED) > Math.abs(rAvg-RED)) ? true: false);
+        return (lAvg-RED > rAvg-RED);
 
 
 
