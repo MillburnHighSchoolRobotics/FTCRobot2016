@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <<<<<<< HEAD
+<merger version="3"><dataSet config="main"><source path="/Users/DOSullivan/FTCRobot2015/Robot Code/FtcRobotController/src/androidTest/assets"/></dataSet></merger>
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\src\androidTest\assets"/></dataSet></merger>
 =======
@@ -8,3 +11,4 @@
 =======
 <merger version="3"><dataSet config="main"><source path="C:\Users\shant\Documents\FTCRobot2015\Robot Code\FtcRobotController\src\androidTest\assets"/></dataSet></merger>
 >>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
+>>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb

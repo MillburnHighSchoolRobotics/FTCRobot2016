@@ -39,6 +39,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           android:layout_height="match_parent"
           android:padding="10dp"
 <<<<<<< HEAD
+          android:textSize="30sp" /><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/layout/spinner_textview.xml -->
+=======
+<<<<<<< HEAD
+          android:textSize="30sp" /><!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/layout/spinner_textview.xml -->
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
           android:textSize="30sp" /><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/layout/spinner_textview.xml -->
 =======
@@ -47,3 +53,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =======
           android:textSize="30sp" /><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/layout/spinner_textview.xml -->
 >>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
+>>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a
