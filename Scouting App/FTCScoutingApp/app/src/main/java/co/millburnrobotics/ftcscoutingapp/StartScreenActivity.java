@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.parse.*;
+
 public class StartScreenActivity extends AppCompatActivity {
 
     @Override
@@ -19,14 +21,21 @@ public class StartScreenActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //INSERT PARSE INIT STUFF HERE
 
-        final Button switchact = (Button) findViewById(R.id.toMenuPage);
-        switchact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent toMenu = new Intent(view.getContext(), MenuActivity.class);
-                startActivity(toMenu);
-            }
-        });
+        Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(Competition.class);
+        ParseObject.registerSubclass(Match.class);
+        ParseObject.registerSubclass(MatchData.class);
+        ParseObject.registerSubclass(Team.class);
+        Parse.initialize(this, "SlG9zvrlCyjen53XU3WUaf3HAYoZQpra08iCLQNC", "vyRgs4rAN6Ukj6qPfm2fzKNXlTbV8n3ALVringOF");
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Intent goToMenu = new Intent(this, MenuActivity.class);
+        startActivity(goToMenu);
     }
 
     @Override

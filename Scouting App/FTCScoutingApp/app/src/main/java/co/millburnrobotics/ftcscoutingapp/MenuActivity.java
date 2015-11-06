@@ -27,6 +27,45 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        final Button addCompetition = (Button) findViewById(R.id.addCompetition);
+        addCompetition.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent toAddCompetition = new Intent(v.getContext(), AddCompetitionActivity.class);
+                startActivity(toAddCompetition);
+            }
+        });
+
+        final Button pickCompetition = (Button) findViewById(R.id.pickCompetition);
+        pickCompetition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSelectCompetition = new Intent(v.getContext(), SelectCompetitionActivity.class);
+                startActivity(toSelectCompetition);
+            }
+        });
+
+        final Button enterMatches = (Button) findViewById(R.id.enterMatches);
+        enterMatches.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent toAddMatches = new Intent(v.getContext(), AddMatchesActivity.class);
+                startActivity(toAddMatches);
+            }
+        });
+
+        final Button viewMatches = (Button) findViewById(R.id.viewMatches);
+        viewMatches.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent toViewMatchData = new Intent(v.getContext(), ViewMatchDataActivity.class);
+                startActivity(toViewMatchData);
+            }
+        });
+
         
     }
 
