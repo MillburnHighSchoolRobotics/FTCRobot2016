@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -341,6 +343,7 @@
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -679,6 +682,9 @@
     </LinearLayout>
   </ScrollView>
 </LinearLayout>
+<<<<<<< HEAD
+<!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/legacy.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/legacy.xml -->
+=======
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/legacy.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/legacy.xml -->
 =======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -1363,3 +1369,4 @@
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/legacy.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/legacy.xml -->
 >>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
 >>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a

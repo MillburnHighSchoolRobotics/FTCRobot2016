@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
@@ -87,6 +89,7 @@
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
@@ -171,6 +174,9 @@
 
       </ListView>
    </LinearLayout>
+<<<<<<< HEAD
+</LinearLayout><!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/device_interface_module.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/device_interface_module.xml -->
+=======
 </LinearLayout><!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/device_interface_module.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/device_interface_module.xml -->
 =======
 <?xml version="1.0" encoding="utf-8"?>
@@ -347,3 +353,4 @@
 </LinearLayout><!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/device_interface_module.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/device_interface_module.xml -->
 >>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
 >>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a

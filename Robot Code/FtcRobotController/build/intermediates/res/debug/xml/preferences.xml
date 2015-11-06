@@ -70,6 +70,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </PreferenceScreen>
   </PreferenceCategory>
 <<<<<<< HEAD
+</PreferenceScreen><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/xml/preferences.xml -->
+=======
+<<<<<<< HEAD
 </PreferenceScreen><!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/xml/preferences.xml -->
 =======
 <<<<<<< HEAD
@@ -82,3 +85,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 </PreferenceScreen><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/xml/preferences.xml -->
 >>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
 >>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a

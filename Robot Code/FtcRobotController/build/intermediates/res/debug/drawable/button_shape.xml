@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <shape
   xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,6 +32,7 @@
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a
 <?xml version="1.0" encoding="utf-8"?>
 <shape
   xmlns:android="http://schemas.android.com/apk/res/android"
@@ -57,6 +60,9 @@
     android:color="#878787"
     />
 </shape>
+<<<<<<< HEAD
+<!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/drawable/button_shape.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/drawable/button_shape.xml -->
+=======
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/drawable/button_shape.xml --><!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/drawable/button_shape.xml -->
 =======
 <?xml version="1.0" encoding="utf-8"?>
@@ -119,3 +125,4 @@
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/drawable/button_shape.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/drawable/button_shape.xml -->
 >>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
 >>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb
+>>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a
