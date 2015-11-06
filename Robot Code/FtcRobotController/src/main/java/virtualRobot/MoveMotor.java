@@ -6,54 +6,191 @@ import java.util.ArrayList;
  * Created by shant on 11/5/2015.
  */
 public class MoveMotor implements Command {
-    private ExitCondition exitCondition;
-    private ArrayList<Object[]> motors = new ArrayList<Object[]>();
+	private ExitCondition exitCondition;
+	private Motor motor;
+	private Sensor encoder;
+	private boolean clearEncoders;
+	private double power;
+	private PIDController pidController;
+	private Translate.RunMode runMode;
+	private double tolerance;
 
-    public MoveMotor() {
-        exitCondition = new ExitCondition() {
-            @Override
-            public boolean isConditionMet() {
-                return false;
-            }
-        };
-    }
+	public MoveMotor() {
+		exitCondition = new ExitCondition() {
+			@Override
+			public boolean isConditionMet() {
+				return false;
+			}
+		};
 
-    public void addMotorChange (Motor motor, double newPower) {
-        motors.add(new Object[] {motor, new Double(newPower)});
-    }
+		motor = null;
+		encoder = null;
+		power = 1;
+		runMode = Translate.RunMode.CUSTOM;
+		tolerance = 20;
+		clearEncoders = true;
 
-    public void removeMotorChange (Motor motor) {
-        for (int i = 0; i < motors.size(); i++){
-            if (motors.get(i)[0] == motor) {
-                motors.remove(i);
-                break;
-            }
-        }
-    }
-    public void setExitCondition (ExitCondition e) {
-        exitCondition = e;
-    }
+		pidController = new PIDController();
+	}
 
-    public ExitCondition getExitCondition () {
-        return exitCondition;
-    }
+	public MoveMotor(Motor motor) {
+		this();
+		this.motor = motor;
+	}
+
+	public MoveMotor(Motor motor, double power) {
+		this(motor);
+		this.power = power;
+	}
+
+	public MoveMotor(Motor motor, double power, Sensor encoder, double target, Translate.RunMode runMode, boolean clearEncoders) {
+		this(motor, power);
+
+		this.runMode = runMode;
+		this.encoder = encoder;
+		this.clearEncoders = clearEncoders;
+
+		this.pidController.setTarget(target);
+	}
+
+	public MoveMotor(Motor motor, double power, Sensor encoder, double target, Translate.RunMode runMode, double kP, double kI, double kD, double threshold, double tolerance) {
+		this(motor, power, encoder, target, runMode, clearEncoders);
+
+		this.pidController.setKP(kP);
+		this.pidController.setKI(kI);
+		this.pidController.setKD(kD);
+		this.pidController.setThreshold(threshold);
+
+		this.tolerance = tolerance;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
+	}
+
+	public void setMotor(Motor motor) {
+		this.motor = motor;
+	}
+
+	public void setExitCondition (ExitCondition e) {
+		exitCondition = e;
+	}
+
+	public ExitCondition getExitCondition() {
+		return exitCondition;
+	}
+
+	public void setEncoder(Sensor encoder) {
+		this.encoder = encoder;
+	}
+
+	public void setTarget(double target) {
+		this.pidController.setTarget(target);
+	}
+
+	public void setRunMode(Translate.RunMode runMode) {
+		this.runMode = runMode;
+	}
+
+	public void setPIDValues(double kP, double kI, double kD, double threshold, double tolerance) {
+		this.pidController.setKP(kP);
+		this.pidController.setKI(kI);
+		this.pidController.setKD(kD);
+		this.pidController.setThreshold(threshold);
+
+		this.tolerance = tolerance;
+	}
 
 
-    @Override
-    public boolean changeRobotState() throws InterruptedException {
-        int i = 0;
-        boolean isInterrupted = false;
-        while (!exitCondition.isConditionMet() && i < motors.size()) {
-            ((Motor) motors.get(i)[0]).setPower((Double) motors.get(i)[1]);
-            i++;
+	@Override
+	public boolean changeRobotState() throws InterruptedException {
 
+		boolean isInterrupted = false;
 
-            if (Thread.currentThread().isInterrupted()) {
-                isInterrupted = true;
-                break;
-            }
-        }
+		switch (runMode) {
+		case CUSTOM:
+			motor.setPower(power);
 
-        return isInterrupted;
-    }
+			while (!exitCondition.isConditionMet()) {
+
+				if (Thread.currentThread().isInterrupted()) {
+					isInterrupted = true;
+					break;
+				}
+
+				try {
+					Thread.currentThread().sleep(10);
+				} catch (InterruptedException e) {
+					isInterrupted = true;
+					break;
+				}
+			}
+
+			break;
+		case WITH_ENCODERS:
+			if (clearEncoders) encoder.clearValue();
+			motor.setPower(power);
+
+			if (power > 0) {
+				while (!exitCondition.isConditionMet() && encoder.getValue() < pidController.getTarget()) {
+
+					if (Thread.currentThread().isInterrupted()) {
+						isInterrupted = true;
+						break;
+					}
+
+					try {
+						Thread.currentThread().sleep(25);
+					} catch (InterruptedException e) {
+						isInterrupted = true;
+						break;
+					}
+				}
+			} else {
+				while (!exitCondition.isConditionMet() && encoder.getValue() > pidController.getTarget()) {
+
+					if (Thread.currentThread().isInterrupted()) {
+						isInterrupted = true;
+						break;
+					}
+
+					try {
+						Thread.currentThread().sleep(10);
+					} catch (InterruptedException e) {
+						isInterrupted = true;
+						break;
+					}
+				}
+			}
+
+			break;
+
+		case WITH_PID:
+			if (clearEncoders) encoder.clearValue();
+
+			while (!exitCondition.isConditionMet() && Math.abs(encoder.getValue() - translateController.getTarget()) > tolerance) {
+
+				double pidOutput = translateController.getPIDOutput(currentValue);
+
+				motor.setPower(pidOutput * power);
+
+				if (Thread.currentThread().isInterrupted()) {
+					isInterrupted = true;
+					break;
+				}
+
+				try {
+					Thread.currentThread().sleep(10);
+				} catch (InterruptedException e) {
+					isInterrupted = true;
+					break;
+				}
+
+			}
+		default:
+			break;
+		}
+
+		return isInterrupted;
+	}
 }
