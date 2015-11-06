@@ -53,7 +53,7 @@ public class MoveMotor implements Command {
 		this.pidController.setTarget(target);
 	}
 
-	public MoveMotor(Motor motor, double power, Sensor encoder, double target, Translate.RunMode runMode, double kP, double kI, double kD, double threshold, double tolerance) {
+	public MoveMotor(Motor motor, double power, Sensor encoder, double target, Translate.RunMode runMode, boolean clearEncoders, double kP, double kI, double kD, double threshold, double tolerance) {
 		this(motor, power, encoder, target, runMode, clearEncoders);
 
 		this.pidController.setKP(kP);
@@ -168,9 +168,9 @@ public class MoveMotor implements Command {
 		case WITH_PID:
 			if (clearEncoders) encoder.clearValue();
 
-			while (!exitCondition.isConditionMet() && Math.abs(encoder.getValue() - translateController.getTarget()) > tolerance) {
+			while (!exitCondition.isConditionMet() && Math.abs(encoder.getValue() - pidController.getTarget()) > tolerance) {
 
-				double pidOutput = translateController.getPIDOutput(currentValue);
+				double pidOutput = pidController.getPIDOutput(Math.abs(encoder.getValue()));
 
 				motor.setPower(pidOutput * power);
 

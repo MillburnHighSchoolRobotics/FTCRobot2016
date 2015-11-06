@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -12,17 +13,19 @@ import com.qualcomm.robotcore.util.Range;
 public class ArmTest extends OpMode {
     Servo armRight;
     Servo armLeft;
+    DcMotor armReach;
     //DcMotor motorSweeper;
-    double currentPos = .8;
+    double currentPos = .7;
     final double servoDelta = 0.00115;
 
     final double ARM_TOP_CAP = 0.55;
-    final double ARM_BOTTOM_CAP = 0.8;
+    final double ARM_BOTTOM_CAP = 0.7;
 
     @Override
     public void init() {
         armRight = hardwareMap.servo.get("armRight");
         armLeft = hardwareMap.servo.get("armLeft");
+        armReach = hardwareMap.dcMotor.get("armReach");
         //motorSweeper = hardwareMap.dcMotor.get("motorSweeper");
         armLeft.setDirection(Servo.Direction.REVERSE);
         Log.d("robot", "servo ports: " + armRight.getPortNumber() + "   " + armLeft.getPortNumber());
@@ -49,8 +52,16 @@ public class ArmTest extends OpMode {
                 Log.d("robot", "subtracting value");
 
             }
+
         }
-        currentPos = Range.clip(currentPos, ARM_TOP_CAP, ARM_BOTTOM_CAP);
+        if (gamepad1.x) {
+            armReach.setPower(.5);
+        } else if (gamepad1.y){
+            armReach.setPower(-.5);
+        } else {
+            armReach.setPower(0);
+        }
+            currentPos = Range.clip(currentPos, 0.2, ARM_BOTTOM_CAP);
         /*if (currentPos == ARM_BOTTOM_CAP) {
             motorSweeper.setPower(-.5);
         } else {
