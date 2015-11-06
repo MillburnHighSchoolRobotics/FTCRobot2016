@@ -97,12 +97,16 @@
     <orderEntry type="library" exported="" name="Analytics-release-" level="project" />
     <orderEntry type="library" exported="" name="FtcCommon-release-" level="project" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="WirelessP2p-release-" level="project" />
     <orderEntry type="library" exported="" name="Hardware-release-" level="project" />
     <orderEntry type="library" exported="" name="RobotCore-release-" level="project" />
 =======
     <orderEntry type="library" exported="" name="usb-Google Inc.:Google APIs:19" level="project" />
+=======
+>>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
     <orderEntry type="library" exported="" name="effects-Google Inc.:Google APIs:19" level="project" />
+    <orderEntry type="library" exported="" name="usb-Google Inc.:Google APIs:19" level="project" />
     <orderEntry type="library" exported="" name="maps-Google Inc.:Google APIs:19" level="project" />
 >>>>>>> c87dc1c00dd2023db69e14fb32199ad75b1b700b
   </component>
