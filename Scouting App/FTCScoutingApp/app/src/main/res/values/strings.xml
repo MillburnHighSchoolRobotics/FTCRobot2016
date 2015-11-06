@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">"FTCScoutingApp "</string>
+    <string name="title_activity_start_screen">StartScreenActivity</string>
 </resources>
