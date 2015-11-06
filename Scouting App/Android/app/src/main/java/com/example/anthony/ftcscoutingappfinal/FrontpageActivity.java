@@ -7,24 +7,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
+
 public class FrontpageActivity extends Activity {
-    EditText teamnumber,teamname,competitiondate, competitiontype, competitionteam;
-    Boolean loaded = false;
-    String competitiondates;
-    String[] teams = new String[5];
-    JSONArray teamstwo = new JSONArray();
-    String teamstring,teamnames,competitionteams,competitiontypes;
-    ParseObject teamlist, competition;
-    String list;
-    String[] stringarray = new String[5];
-    String teamnamestring;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -33,59 +28,85 @@ public class FrontpageActivity extends Activity {
 
         Button enterteam = (Button) findViewById(R.id.EnterTeamButton);
 
-
-
         Intent skip = getIntent();
+
         if (skip.getBooleanExtra("SkipInit", false) == false) {
             Parse.enableLocalDatastore(this);
+            ParseObject.registerSubclass(Competition.class);
+            ParseObject.registerSubclass(Match.class);
+            ParseObject.registerSubclass(MatchData.class);
+            ParseObject.registerSubclass(Team.class);
             Parse.initialize(this, "SlG9zvrlCyjen53XU3WUaf3HAYoZQpra08iCLQNC", "vyRgs4rAN6Ukj6qPfm2fzKNXlTbV8n3ALVringOF");
         }
-        teamlist = new ParseObject("Teams");
+
         enterteam.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                EditText teamNumber = (EditText) findViewById(R.id.TeamEnterEditText);
+                EditText teamName = (EditText) findViewById(R.id.teamname);
 
-            int a = 0;
+                String name = teamName.getText().toString();
+                int number = Integer.parseInt(teamNumber.getText().toString());
 
-            public void onClick(View v) {
-                teamnumber = (EditText) findViewById(R.id.TeamEnterEditText);
-                teamname = (EditText)findViewById(R.id.teamname);
-                teamstring = teamnumber.getText().toString();
-                teamnames = teamname.getText().toString();
-                teams[a] = teamstring;
-                teamnamestring = teamnames;
-                teamnumber.setText("");
-                teamname.setText("");
-                Log.i("qqq", teams[a]);
-                Log.i("qqq", teamnamestring);
-                teamlist.add("teamnumber", teams[a]);
-                teamlist.put("teamname", teamnamestring);
-                try {
-                   teamlist.save();
-                } catch (ParseException e) {
-                    Log.d("qqq", String.valueOf(e));
-                }
-                a++;
-                if (a > 24) {
-                    teamnumber.setText("Max");
-                }
+                teamNumber.setText("");
+                teamName.setText("");
+
+                Log.i("qqq", name);
+                Log.i("qqq", Integer.toString(number));
+
+                Team team = new Team();
+
+                team.setName(name);
+                team.setNumber(number);
+
+                team.saveInBackground(new SaveCallback() {
+
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Toast toast = Toast.makeText(v.getContext(), "Team not saved", Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else {
+                            Toast toast = Toast.makeText(v.getContext(), "Team saved", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
             }
         });
-        competition = new ParseObject("Competition");
-        competitiondate = (EditText)findViewById(R.id.date);
-        competitionteam = (EditText)findViewById(R.id.teamname);
-        competitiontype = (EditText)findViewById(R.id.type);
-        competitiondates = competitiondate.getText().toString();
-        competitionteams = competitionteam.getText().toString();
-        competitiontypes = competitiontype.getText().toString();
+
+        final EditText competitionDate = (EditText)findViewById(R.id.date);
+        final EditText competitionTeam = (EditText)findViewById(R.id.teamname);
+        final EditText competitionType = (EditText)findViewById(R.id.type);
+        final EditText competitionName = (EditText) findViewById(R.id.compname);
         final Button competitions = (Button)findViewById(R.id.competition);
+        final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
         competitions.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                competition.put("Date", competitiondates);
+            public void onClick(final View v) {
+                Competition comp = new Competition();
 
+                comp.setHostingTeamID(Integer.parseInt(competitionTeam.getText().toString()));
 
-                competition.put("Team", competitionteams);
-                competition.put("Type", competitiontypes);
+                try {
+                    comp.setDate(sdf.parse(competitionDate.getText().toString()));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
 
+                comp.setType(competitionType.getText().toString());
+                comp.setName(competitionName.getText().toString());
+
+                comp.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(v.getContext(), "Competition saved", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(v.getContext(), "Competiton not saved", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -96,7 +117,6 @@ public class FrontpageActivity extends Activity {
             public void onClick(View view) {
                 Intent act2 = new Intent(view.getContext(), SecondPageActivity.class);
                 startActivity(act2);
-
             }
         });
     }
