@@ -9,23 +9,27 @@
     tools:context="co.millburnrobotics.ftcscoutingapp.SelectCompetitionActivity"
     android:textColor="#000">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Showing all matches for team #0000"
+        android:layout_gravity="center_horizontal"
+        android:text="Select Competition"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:id="@+id/title"
-        android:layout_weight="1"/>
+        android:id="@+id/title" />
 
-    <ListView
-        android:layout_weight="8"
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listOfMatches">
+        android:id="@+id/spinner_select_comp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="left" />
 
-    </ListView>
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Competition"
+        android:id="@+id/submit_button"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>

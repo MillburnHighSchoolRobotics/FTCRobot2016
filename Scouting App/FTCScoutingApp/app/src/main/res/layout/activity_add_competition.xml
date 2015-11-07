@@ -35,11 +35,11 @@
         android:id="@+id/teamnumber"
         android:hint="Hosting Team Number" />
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/type"
-        android:hint="Competition Type" />
+        android:id="@+id/type_spinner"
+        android:layout_gravity="left" />
 
     <EditText
         android:layout_width="match_parent"

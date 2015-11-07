@@ -5,6 +5,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,14 @@ public class MatchData extends ParseObject {
 
     public String getCompetitionName() {
         return getString(COMPETITION_NAME);
+    }
+
+    public void setCompetitionDate(Date competitionDate) {
+        put(COMPETITION_DATE, competitionDate);
+    }
+
+    public Date getCompetitionDate() {
+        return getDate(COMPETITION_DATE);
     }
 
     public Competition getCompetition() {
@@ -91,7 +100,7 @@ public class MatchData extends ParseObject {
     }
 
     public void setAllianceColor(String color) {
-        if (color.equals(BLUE) || color.equals(RED)) {
+        if (color.equals(BLUE_1) || color.equals(RED_1) || color.equals(BLUE_2) || color.equals(RED_2)) {
             put(ALLIANCE_COLOR, color);
         }
     }
@@ -237,6 +246,7 @@ public class MatchData extends ParseObject {
     }
 
     public static final String COMPETITION_NAME = "Competition Name";
+    public static final String COMPETITION_DATE = "Competition Date";
     public static final String MATCH_NUMBER = "Match Number";
     public static final String TEAM_NUMBER = "Team Number";
     public static final String ALLIANCE_COLOR = "Alliance Color";
@@ -263,8 +273,10 @@ public class MatchData extends ParseObject {
     public static final Map<String, Integer> parkingPoints = new HashMap<String, Integer>();
     public static final Map<Integer, String> parkingStrings = new HashMap<Integer, String>();
 
-    public static final String BLUE = "Blue";
-    public static final String RED = "Red";
+    public static final String BLUE_1 = "Blue 1";
+    public static final String BLUE_2 = "Blue 2";
+    public static final String RED_1 = "Red 1";
+    public static final String RED_2 = "Red 2";
 
     public static final int CLIMBER_IN_SHELTER_MULTIPLIER = 10;
     public static final int BEACON_MULITPLIER = 20;

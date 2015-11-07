@@ -7,6 +7,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseException;
 import com.parse.ParseRelation;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +28,14 @@ public class Match extends ParseObject {
         return getString(COMPETITION_NAME);
     }
 
+    public void setCompetitionDate(Date competitionDate) {
+        put(COMPETITION_DATE, competitionDate);
+    }
+
+    public Date getCompetitionDate() {
+        return getDate(COMPETITION_DATE);
+    }
+
     public Competition getCompetition() {
         ParseQuery<Competition> query = ParseQuery.getQuery(Competition.class);
         query.whereEqualTo(Competition.NAME, getString(COMPETITION_NAME));
@@ -43,6 +52,14 @@ public class Match extends ParseObject {
         } else {
             return null;
         }
+    }
+
+    public void setMatchNumber(int matchNumber) {
+        put(MATCH_NUMBER, matchNumber);
+    }
+
+    public int getMatchNumber() {
+        return getInt(MATCH_NUMBER);
     }
 
     public void addMatchData(MatchData matchData) {
@@ -109,7 +126,9 @@ public class Match extends ParseObject {
 
 
     public static final String COMPETITION_NAME = "Competition Name";
+    public static final String COMPETITION_DATE = "Competition Date";
     public static final String MATCH_DATA = "Match Data";
+    public static final String MATCH_NUMBER = "Match Number";
     public static final String NOTES = "Notes";
     public static final String BLUE_ALLIANCE_RAW_SCORE = "Blue Alliance Raw Score";
     public static final String BLUE_ALLIANCE_PENALTY = "Blue Alliance Penalty";

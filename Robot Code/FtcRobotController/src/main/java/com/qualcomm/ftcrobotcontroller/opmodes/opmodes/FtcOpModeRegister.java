@@ -50,6 +50,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("ArmTest", ArmTest.class);
     manager.register ("TankTreadDrive", TankTreadDrive.class);
     manager.register("Autonomous Test", AutonomousTest1Update.class);
+    manager.register("Servo test", TestServo.class);
 
   }
 }

@@ -49,14 +49,11 @@
                 android:layout_height="wrap_content"
                 android:text="Team 1"
                 android:textAppearance="@android:style/TextAppearance.Medium"/>
-            <EditText
-                android:layout_marginLeft="16dp"
-                android:id="@+id/Team1AutoComplete"
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="number"
-                android:hint="#"/>
+                android:id="@+id/team1" />
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,14 +64,10 @@
                 android:layout_height="wrap_content"
                 android:text="Team 2"
                 android:textAppearance="@android:style/TextAppearance.Medium"/>
-            <EditText
-                android:layout_marginLeft="16dp"
-                android:id="@+id/Team2AutoComplete"
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="number"
-                android:hint="#"/>
+                android:id="@+id/team2" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,14 +78,10 @@
                 android:layout_height="wrap_content"
                 android:text="Team 3"
                 android:textAppearance="@android:style/TextAppearance.Medium"/>
-            <EditText
-                android:layout_marginLeft="16dp"
-                android:id="@+id/Team3AutoComplete"
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="number"
-                android:hint="#"/>
+                android:id="@+id/team3" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,14 +92,10 @@
                 android:layout_height="wrap_content"
                 android:text="Team 4"
                 android:textAppearance="@android:style/TextAppearance.Medium"/>
-            <EditText
-                android:layout_marginLeft="16dp"
-                android:id="@+id/Team4AutoComplete"
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="number"
-                android:hint="#"/>
+                android:id="@+id/team4" />
         </LinearLayout>
 
 
@@ -130,9 +115,6 @@
         android:text="Back"
         android:id="@+id/toMenuPage"
         android:layout_alignParentBottom="true" />
-
-
-
 
 
 

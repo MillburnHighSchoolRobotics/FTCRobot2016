@@ -15,6 +15,8 @@ import com.parse.SaveCallback;
 
 public class AddTeamActivity extends AppCompatActivity {
 
+    String selectedCompetition = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,9 @@ public class AddTeamActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //INSERT PARSE INIT STUFF HE2RE
+
+        Intent incoming = getIntent();
+        selectedCompetition = incoming.getStringExtra("SelectedCompetition");
 
         final Button switchact = (Button) findViewById(R.id.toMenuPage);
         switchact.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +80,7 @@ public class AddTeamActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         Intent toMenu = new Intent(this, MenuActivity.class);
+        toMenu.putExtra("SelectedCompetition", selectedCompetition);
         startActivity(toMenu);
     }
 

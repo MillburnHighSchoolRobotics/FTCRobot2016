@@ -19,10 +19,11 @@ public class TankTreadDrive extends OpMode {
 	Servo armRight;
 	Servo armLeft;
 	DcMotor motorSweeper;
-
-	Servo leftGate;
+    DcMotor armReachL;
+	DcMotor armReachR;
+	/*Servo leftGate;
 	Servo rightGate;
-	Servo scorer;
+	Servo scorer;*/
 
 	double currentPos = .8;
 	final double servoDelta = 0.00115;
@@ -49,11 +50,13 @@ public class TankTreadDrive extends OpMode {
 		armLeft = hardwareMap.servo.get("armLeft");
 		motorSweeper = hardwareMap.dcMotor.get("motorSweeper");
 		armLeft.setDirection(Servo.Direction.REVERSE);
+		armReachL = hardwareMap.dcMotor.get("armReachL");
+		armReachR = hardwareMap.dcMotor.get("armReachR");
 		Log.d("robot", "servo ports: " + armRight.getPortNumber() + "   " + armLeft.getPortNumber());
 		armRight.setPosition(currentPos);
 		armLeft.setPosition(currentPos);
 
-		leftGate = hardwareMap.servo.get("leftGate");
+		/*leftGate = hardwareMap.servo.get("leftGate");
 		rightGate = hardwareMap.servo.get("rightGate");
 		scorer = hardwareMap.servo.get("scorer");
 
@@ -61,7 +64,7 @@ public class TankTreadDrive extends OpMode {
 
 		leftGate.setPosition(LEFT_GATE_REST_POSITION);
 		rightGate.setPosition(1);
-		scorer.setPosition(0.5);
+		scorer.setPosition(0.5);*/
 	}
 
 	@Override
@@ -88,9 +91,9 @@ public class TankTreadDrive extends OpMode {
 		rightBottom.setPower(right);
 		rightTop.setPower(right);
 
-		leftGate.setPosition(LEFT_GATE_REST_POSITION);
+		//leftGate.setPosition(LEFT_GATE_REST_POSITION);
 
-		if (gamepad1.a && gamepad1.b) {
+		/*if (gamepad1.a && gamepad1.b) {
 
 		}
 		else {
@@ -105,10 +108,25 @@ public class TankTreadDrive extends OpMode {
 				telemetry.addData("key", "subtracting value");
 				Log.d("robot", "subtracting value");
 
+			}*/
+			if (gamepad1.left_bumper){
+				armReachL.setPower(.5);
+			} else if (gamepad1.left_trigger >= .5){
+				armReachL.setPower(-.5);
+			} else {
+				armReachL.setPower(0);
 			}
-		}
+			if (gamepad1.right_bumper){
+				armReachR.setPower(.5);
+			} else if (gamepad1.right_trigger >= .5){
+				armReachR.setPower(-.5);
+			} else {
+				armReachR.setPower(0);
+			}
+			}
 
-		if (currentPos == ARM_BOTTOM_CAP) {
+
+		/*if (currentPos == ARM_BOTTOM_CAP) {
 			motorSweeper.setPower(-SWEEPER_MOTOR_SPEED);
 		} else {
 			motorSweeper.setPower(0);
@@ -146,7 +164,7 @@ public class TankTreadDrive extends OpMode {
 		armRight.setPosition(currentPos);
 		Log.d("robot", "setting value to " + currentPos);
 
-    }
+    }*/
 
 	/*private double findPower(double xValue, double yValue) {
 		return Math.sqrt(xValue * xValue + yValue * yValue);

@@ -18,11 +18,15 @@ public class MenuActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //INSERT PARSE INIT STUFF HERE
 
+        Intent incoming = getIntent();
+        final String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
+
         final Button addTeam = (Button) findViewById(R.id.addTeam);
         addTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent toAddTeam = new Intent(view.getContext(), MenuActivity.class);
+                Intent toAddTeam = new Intent(view.getContext(), AddTeamActivity.class);
+                toAddTeam.putExtra("SelectedCompetition", selectedCompetition);
                 startActivity(toAddTeam);
             }
         });
@@ -33,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toAddCompetition = new Intent(v.getContext(), AddCompetitionActivity.class);
+                toAddCompetition.putExtra("SelectedCompetition", selectedCompetition);
                 startActivity(toAddCompetition);
             }
         });
@@ -42,6 +47,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toSelectCompetition = new Intent(v.getContext(), SelectCompetitionActivity.class);
+                toSelectCompetition.putExtra("SelectedCompetition", selectedCompetition);
                 startActivity(toSelectCompetition);
             }
         });
@@ -51,7 +57,8 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent toAddMatches = new Intent(v.getContext(), AddMatchesActivity.class);
+                Intent toAddMatches = new Intent(v.getContext(), AddMatchesFrontActivity.class);
+                toAddMatches.putExtra("SelectedCompetition", selectedCompetition);
                 startActivity(toAddMatches);
             }
         });
@@ -62,6 +69,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toViewMatchData = new Intent(v.getContext(), ViewMatchDataActivity.class);
+                toViewMatchData.putExtra("SelectedCompetition", selectedCompetition);
                 startActivity(toViewMatchData);
             }
         });

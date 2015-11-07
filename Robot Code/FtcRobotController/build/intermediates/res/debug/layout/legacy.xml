@@ -131,12 +131,20 @@
 
             <!-- ****************************************************** Port 0 ******************************************************-->
             <TableRow
+<<<<<<< HEAD
                 android:id="@+id/row_port0"
+=======
+                android:id="@+id/row_port5"
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dip" >
                 <TextView
+<<<<<<< HEAD
                     android:id="@+id/port0"
+=======
+                    android:id="@+id/port5"
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
                     android:textStyle="bold"
                     android:textSize="22sp"
                     android:paddingRight="5dp"
@@ -171,7 +179,11 @@
                 android:layout_height="wrap_content"
                 android:padding="5dip" >
                 <TextView
+<<<<<<< HEAD
                     android:id="@+id/port1"
+=======
+                    android:id="@+id/port7"
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
                     android:textStyle="bold"
                     android:textSize="22sp"
                     android:paddingRight="5dp"
@@ -199,13 +211,21 @@
 
             <!-- ****************************************************** Port 2 ******************************************************-->
             <TableRow
+<<<<<<< HEAD
                 android:id="@+id/row_port2"
+=======
+                android:id="@+id/row_port5"
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip" >
 
                 <TextView
+<<<<<<< HEAD
                     android:id="@+id/port2"
+=======
+                    android:id="@+id/port5"
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
                     android:textStyle="bold"
                     android:textSize="22sp"
                     android:paddingRight="5dp"
@@ -336,4 +356,8 @@
     </LinearLayout>
   </ScrollView>
 </LinearLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/tom/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/legacy.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/legacy.xml -->
+=======
+<!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/legacy.xml --><!-- From: file:/C:/Users/Yanjun/Documents/Gits/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/legacy.xml -->
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
