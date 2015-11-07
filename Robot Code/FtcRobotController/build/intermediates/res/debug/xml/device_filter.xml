@@ -34,20 +34,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <resources>
    <usb-device vendor-id="1027" product-id="24577" /> <!-- FT232 Modern Robotics -->
 </resources>
-<<<<<<< HEAD
-<!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/xml/device_filter.xml -->
-=======
-<<<<<<< HEAD
-<!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/xml/device_filter.xml -->
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!-- From: file:/C:/Users/Alex/Documents/FTC%20Robot%202015-16/Robot%20Code/FtcRobotController/src/main/res/xml/device_filter.xml -->
-=======
-<!-- From: file:/C:/Users/Yanjun/Documents/Gits/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/xml/device_filter.xml -->
->>>>>>> c87dc1c00dd2023db69e14fb32199ad75b1b700b
-=======
 <!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/xml/device_filter.xml -->
->>>>>>> b4dcb84c8f5259f2f522a0a6d9a01b88d085753e
->>>>>>> 9c1bdb6baf49bfc0a5d585ada4214c49786d55eb
->>>>>>> e82e681321afb4f3408e47dd894fcf926eb2716a
