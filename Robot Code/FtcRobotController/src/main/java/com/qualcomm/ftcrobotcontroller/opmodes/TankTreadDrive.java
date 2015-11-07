@@ -56,7 +56,7 @@ public class TankTreadDrive extends OpMode {
 		armRight.setPosition(currentPos);
 		armLeft.setPosition(currentPos);
 
-		leftGate = hardwareMap.servo.get("leftGate");
+		/*leftGate = hardwareMap.servo.get("leftGate");
 		rightGate = hardwareMap.servo.get("rightGate");
 		scorer = hardwareMap.servo.get("scorer");
 
@@ -64,7 +64,7 @@ public class TankTreadDrive extends OpMode {
 
 		leftGate.setPosition(LEFT_GATE_REST_POSITION);
 		rightGate.setPosition(1);
-		scorer.setPosition(0.5);
+		scorer.setPosition(0.5);*/
 	}
 
 	@Override
