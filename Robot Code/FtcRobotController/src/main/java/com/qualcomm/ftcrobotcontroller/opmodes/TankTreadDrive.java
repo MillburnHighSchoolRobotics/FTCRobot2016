@@ -21,6 +21,7 @@ public class TankTreadDrive extends OpMode {
 	DcMotor motorSweeper;
     DcMotor armReachL;
 	DcMotor armReachR;
+    DcMotor conveyorCollection;
 	/*Servo leftGate;
 	Servo rightGate;
 	Servo scorer;*/
@@ -109,6 +110,10 @@ public class TankTreadDrive extends OpMode {
 				Log.d("robot", "subtracting value");
 
 			}*/
+        if (gamepad1.a) {
+            conveyorCollection.setPower(.5);
+        }
+
 			if (gamepad1.left_bumper){
 				armReachL.setPower(.5);
 			} else if (gamepad1.left_trigger >= .5){
