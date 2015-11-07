@@ -28,6 +28,36 @@
             android:label="@string/title_activity_add_team"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".AddCompetition"
+            android:label="@string/title_activity_add_competition"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".SelectCompetitionActivity"
+            android:label="@string/title_activity_select_competition"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".AddMatchesActivity"
+            android:label="@string/title_activity_add_matches"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".VIewMatchDataActivity"
+            android:label="@string/title_activity_view_match_data"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".AddMatchesTeleop"
+            android:label="@string/title_activity_add_matches_teleop"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ViewMatchDataTeamActivity"
+            android:label="@string/title_activity_view_match_data_team"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

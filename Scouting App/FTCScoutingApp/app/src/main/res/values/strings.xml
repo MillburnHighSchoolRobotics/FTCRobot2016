@@ -3,4 +3,10 @@
     <string name="title_activity_start_screen">StartScreenActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_add_team">AddTeamActivity</string>
+    <string name="title_activity_add_competition">AddCompetition</string>
+    <string name="title_activity_select_competition">SelectCompetitionActivity</string>
+    <string name="title_activity_add_matches">AddMatchesActivity</string>
+    <string name="title_activity_view_match_data">VIewMatchDataActivity</string>
+    <string name="title_activity_add_matches_teleop">AddMatchesTeleop</string>
+    <string name="title_activity_view_match_data_team">ViewMatchDataTeamActivity</string>
 </resources>

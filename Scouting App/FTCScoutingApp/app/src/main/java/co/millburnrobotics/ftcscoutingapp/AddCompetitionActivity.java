@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class MenuActivity extends AppCompatActivity {
+public class AddCompetitionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MenuActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //INSERT PARSE INIT STUFF HERE
 
-        final Button addTeam = (Button) findViewById(R.id.addTeam);
+        final Button addTeam = (Button) findViewById(R.id.done);
         addTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -27,18 +27,8 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        final Button addCompetition = (Button) findViewById(R.id.addCompetition);
-        addCompetition.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent toAddCompetition = new Intent(v.getContext(), AddCompetitionActivity.class);
-                startActivity(toAddCompetition);
-            }
-        });
 
 
 
     }
-
 }
