@@ -37,4 +37,8 @@
     </LinearLayout>
   </LinearLayout>
 </LinearLayout>
+<<<<<<< HEAD
+<!-- From: file:/Users/tom/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/orange_warning.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/orange_warning.xml -->
+=======
 <!-- From: file:/C:/Users/TEInspiron/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/orange_warning.xml --><!-- From: file:/C:/Users/Yanjun/Documents/Gits/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/orange_warning.xml -->
+>>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
