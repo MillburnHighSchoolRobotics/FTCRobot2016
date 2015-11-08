@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.parse.*;
+import java.util.*;
+
 public class ViewMatchDataTeamActivity extends AppCompatActivity {
 
     @Override
@@ -15,10 +18,18 @@ public class ViewMatchDataTeamActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent i = getIntent();
-        int teamNumber = Integer.parseInt(i.getStringExtra("number"));
-        ((TextView) findViewById(R.id.title)).setText("Showing all matches for team #" + teamNumber);
+        int teamNumber = i.getIntExtra("TeamNumber", -1);
+        ((TextView) findViewById(R.id.title)).setText("Showing all matches for Team " + teamNumber);
 
-
+        ParseQuery<MatchData> mdQuery = ParseQuery.getQuery(MatchData.class);
+        mdQuery.whereEqualTo(MatchData.TEAM_NUMBER, teamNumber);
+        mdQuery.orderByAscending(MatchData.MATCH_NUMBER);
+        List<MatchData> matches = null;
+        try {
+            matches = mdQuery.find();
+        } catch (ParseException e) {
+            return;
+        }
 
 
 
