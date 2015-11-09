@@ -2,12 +2,77 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
+    android:layout_padding="0dp"
     android:background="#ffffff">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FUCK YOU ANDROID"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:textColor="#000" />
+        android:text="Match #"
+        android:layout_margin="8dp"
+        android:id="@+id/matchnumber"
+        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Win/Loss"
+        android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+        android:layout_margin="8dp"
+        android:id="@+id/textView2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/matchnumber"
+        android:layout_margin="8dp"
+        android:id="@+id/autonomousLinearLayout"
+        android:layout_marginTop="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autonomous: "
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="###"
+            android:id="@+id/autoScore"
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/autonomousLinearLayout"
+        android:layout_margin="8dp"
+        android:layout_marginTop="0dp"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teleop: "
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="###"
+            android:id="@+id/teleOpScore"
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="total"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

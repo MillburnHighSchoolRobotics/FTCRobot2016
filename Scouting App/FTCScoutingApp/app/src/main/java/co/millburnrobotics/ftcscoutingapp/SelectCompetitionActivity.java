@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-<<<<<<< HEAD
-=======
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
->>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
 
 public class SelectCompetitionActivity extends AppCompatActivity {
 
@@ -41,9 +38,7 @@ public class SelectCompetitionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-<<<<<<< HEAD
 
-=======
         final Spinner selectCompetition = (Spinner) findViewById(R.id.spinner_select_comp);
         final Button select = (Button) findViewById(R.id.submit_button);
 
@@ -90,7 +85,6 @@ public class SelectCompetitionActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
->>>>>>> c8c8937c668e0023226cce5ce60ab85360733940
     }
 
 }
