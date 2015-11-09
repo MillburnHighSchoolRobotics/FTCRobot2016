@@ -5,10 +5,12 @@ import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import virtualRobot.AutonomousRobot;
 import virtualRobot.AutonomousTest1Logic;
 import virtualRobot.Command;
+import virtualRobot.ContinuousRotationServo;
 import virtualRobot.LogicThread;
 import virtualRobot.Motor;
 import virtualRobot.Sensor;
@@ -19,11 +21,14 @@ public abstract class UpdateThread extends OpMode {
 	protected Class<? extends LogicThread> logicThread;
 	private Thread t;
 	
-	private DcMotor rightTop, rightBottom, leftTop, leftBottom;
+	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper;
+	private Servo armLeft, armRight, gateLeft, gateRight, spinner;
 	private GyroSensor gyro;
 	
-	private Motor leftMotor, rightMotor;
-	private Sensor leftMotorEncoder, rightMotorEncoder, angleSensor;
+	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor;
+	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo;
+    private ContinuousRotationServo vSpinnerServo;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor;
 	
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
 	
@@ -33,18 +38,39 @@ public abstract class UpdateThread extends OpMode {
 		rightBottom = hardwareMap.dcMotor.get("rightBottom");
 		leftTop = hardwareMap.dcMotor.get("leftTop");
 		leftBottom = hardwareMap.dcMotor.get("leftBottom");
+        armLeftMotor = hardwareMap.dcMotor.get("armLeftMotor");
+        armRightMotor = hardwareMap.dcMotor.get("armRightMotor");
+        reaper = hardwareMap.dcMotor.get("reaper");
+
+        armLeft = hardwareMap.servo.get("armLeft");
+        armRight = hardwareMap.servo.get("armRight");
+        gateLeft = hardwareMap.servo.get("gateLeft");
+        gateRight = hardwareMap.servo.get("gateRight");
+        spinner = hardwareMap.servo.get("spinner");
+
 		rightTop.setDirection(DcMotor.Direction.REVERSE);
 		rightBottom.setDirection(DcMotor.Direction.REVERSE);
 		gyro = hardwareMap.gyroSensor.get("gyro");
 				
 		robot = Command.robot;
-		
-		leftMotor = robot.getLeftMotor();
-		rightMotor = robot.getRightMotor();
 
-		leftMotorEncoder = robot.getLeftMotorEncoder();
-		rightMotorEncoder = robot.getRightMotorEncoder();
-		angleSensor = robot.getAngleSensor();
+        vDriveLeftMotor = robot.getDriveLeftMotor();
+        vDriveRightMotor = robot.getDriveRightMotor();
+        vArmLeftMotor = robot.getArmLeftMotor();
+        vArmRightMotor = robot.getArmRightMotor();
+        vReaperMotor = robot.getReaperMotor();
+
+        vDriveLeftMotorEncoder = robot.getDriveLeftMotorEncoder();
+        vDriveRightMotorEncoder = robot.getDriveRightMotorEncoder();
+        vArmLeftMotorEncoder = robot.getArmLeftMotorEncoder();
+        vArmRightMotorEncoder = robot.getArmRightMotorEncoder();
+        vAngleSensor = robot.getAngleSensor();
+
+        vArmLeftServo = robot.getArmLeftServo();
+        vArmRightServo = robot.getArmRightServo();
+        vGateLeftServo = robot.getGateLeftServo();
+        vGateRightServo = robot.getGateRightServo();
+        vSpinnerServo = robot.getSpinnerServo();
 
         setLogicThread();
 
@@ -67,10 +93,10 @@ public abstract class UpdateThread extends OpMode {
 		curRot = gyro.getRotation();
 		prevRot = gyro.getRotation();
 		
-		angleSensor.setRawValue(0);
+		vAngleSensor.setRawValue(0);
 		
-		leftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
-		rightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
+		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
 		
 		t.start();
 	}
@@ -79,8 +105,11 @@ public abstract class UpdateThread extends OpMode {
 		
 		// Capture
 		
-		double leftPower = leftMotor.getPower();
-		double rightPower = rightMotor.getPower();
+		double leftPower = vDriveLeftMotor.getPower();
+		double rightPower = vDriveRightMotor.getPower();
+        double armLeftPower = vArmLeftMotor.getPower();
+        double armRightPower = vArmRightMotor.getPower();
+        double reaperPower = vReaperMotor.getPower();
 		
 		// Update
 		
@@ -88,10 +117,12 @@ public abstract class UpdateThread extends OpMode {
 		curRot = gyro.getRotation();
 		
 		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
-		angleSensor.setRawValue(angleSensor.getRawValue() + delta);
+		vAngleSensor.setRawValue(vAngleSensor.getRawValue() + delta);
 		
-		leftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
-		rightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
+		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
+        vArmLeftMotorEncoder.setRawValue(-armLeftMotor.getCurrentPosition());
+        vArmRightMotorEncoder.setRawValue(-armRightMotor.getCurrentPosition());
 		
 		// Copy State
 		
@@ -101,10 +132,21 @@ public abstract class UpdateThread extends OpMode {
 		rightTop.setPower(rightPower);
 		rightBottom.setPower(rightPower);
 
+        armLeftMotor.setPower(armLeftPower);
+        armRightMotor.setPower(armRightPower);
+
+        reaper.setPower(reaperPower);
+
+        gateLeft.setPosition(vGateLeftServo.getPosition());
+        gateRight.setPosition(vGateRightServo.getPosition());
+        armLeft.setPosition(vArmLeftServo.getPosition());
+        armRight.setPosition(vArmRightServo.getPosition());
+        spinner.setPosition(vSpinnerServo.getPosition());
+
 		telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
 		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
-		telemetry.addData("leftEncoder", Double.toString(leftMotorEncoder.getRawValue()));
-		telemetry.addData("rightEncoder", Double.toString(rightMotorEncoder.getRawValue()));
+		telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
+		telemetry.addData("rightEncoder", Double.toString(vDriveRightMotorEncoder.getRawValue()));
 	}
 	
 	public void stop() {

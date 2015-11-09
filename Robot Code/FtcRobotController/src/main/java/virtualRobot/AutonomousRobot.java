@@ -6,53 +6,92 @@ package virtualRobot;
  */
 public class AutonomousRobot {
 
-    private Motor rightMotor, leftMotor;
-    private Sensor rightMotorEncoder, leftMotorEncoder;
+    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor;
+    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
     private Sensor angleSensor;
 
+    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo;
+    private ContinuousRotationServo spinnerServo;
+
     public AutonomousRobot() {
-        rightMotor = new Motor();
-        leftMotor = new Motor();
-        rightMotorEncoder = new Sensor();
-        leftMotorEncoder = new Sensor();
+        driveLeftMotor = new Motor();
+        driveRightMotor = new Motor();
+        armLeftMotor = new Motor();
+        armRightMotor = new Motor();
+        reaperMotor = new Motor();
+
+        driveLeftMotorEncoder = new Sensor();
+        driveRightMotorEncoder = new Sensor();
+        armLeftMotorEncoder = new Sensor();
+        armRightMotorEncoder = new Sensor();
+
         angleSensor = new Sensor();
+
+        armLeftServo = new Servo();
+        armRightServo = new Servo();
+        gateLeftServo = new Servo();
+        gateRightServo = new Servo();
+
+        spinnerServo = new ContinuousRotationServo();
     }
 
-    public AutonomousRobot(Motor rightMotor, Motor leftMotor,
-                           Sensor rightMotorEncoder, Sensor leftMotorEncoder,
-                           Sensor angleSensor) {
-        this.rightMotor = rightMotor;
-        this.leftMotor = leftMotor;
-        this.rightMotorEncoder = rightMotorEncoder;
-        this.leftMotorEncoder = leftMotorEncoder;
-        this.angleSensor = angleSensor;
+    public synchronized Motor getDriveRightMotor() {
+        return driveRightMotor;
     }
 
-    public AutonomousRobot(AutonomousRobot robot) {
-        rightMotor = robot.getRightMotor();
-        leftMotor = robot.getLeftMotor();
-        rightMotorEncoder = robot.getRightMotorEncoder();
-        leftMotorEncoder = robot.getLeftMotorEncoder();
-        angleSensor = robot.getAngleSensor();
+    public synchronized Motor getDriveLeftMotor() {
+        return driveLeftMotor;
     }
 
-    public synchronized Motor getRightMotor() {
-        return rightMotor;
+    public synchronized Motor getArmLeftMotor() {
+        return armLeftMotor;
     }
 
-    public synchronized Motor getLeftMotor() {
-        return leftMotor;
+    public synchronized Motor getArmRightMotor() {
+        return armRightMotor;
     }
 
-    public synchronized Sensor getRightMotorEncoder() {
-        return rightMotorEncoder;
+    public synchronized Motor getReaperMotor() {
+        return reaperMotor;
     }
 
-    public synchronized Sensor getLeftMotorEncoder() {
-        return leftMotorEncoder;
+    public synchronized Sensor getDriveRightMotorEncoder() {
+        return driveRightMotorEncoder;
+    }
+
+    public synchronized Sensor getDriveLeftMotorEncoder() {
+        return driveLeftMotorEncoder;
+    }
+
+    public synchronized Sensor getArmLeftMotorEncoder() {
+        return armLeftMotorEncoder;
+    }
+
+    public synchronized Sensor getArmRightMotorEncoder() {
+        return armRightMotorEncoder;
     }
 
     public synchronized Sensor getAngleSensor() {
         return angleSensor;
+    }
+
+    public synchronized Servo getArmLeftServo() {
+        return armLeftServo;
+    }
+
+    public synchronized Servo getArmRightServo() {
+        return armRightServo;
+    }
+
+    public synchronized Servo getGateLeftServo() {
+        return gateLeftServo;
+    }
+
+    public synchronized Servo getGateRightServo() {
+        return gateRightServo;
+    }
+
+    public synchronized ContinuousRotationServo getSpinnerServo() {
+        return spinnerServo;
     }
 }

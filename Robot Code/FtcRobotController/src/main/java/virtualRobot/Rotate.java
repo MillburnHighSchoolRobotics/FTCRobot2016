@@ -74,13 +74,13 @@ public class Rotate implements Command {
         	
             if (angleInDegrees < 0){
 
-                robot.getLeftMotor().setPower(adjustedPower);
-                robot.getRightMotor().setPower(-adjustedPower);
+                robot.getDriveLeftMotor().setPower(adjustedPower);
+                robot.getDriveRightMotor().setPower(-adjustedPower);
                 
             } else {
 
-                robot.getLeftMotor().setPower(-adjustedPower);
-                robot.getRightMotor().setPower(adjustedPower);
+                robot.getDriveLeftMotor().setPower(-adjustedPower);
+                robot.getDriveRightMotor().setPower(adjustedPower);
             }
             
             if (Thread.currentThread().isInterrupted()) {
@@ -91,8 +91,8 @@ public class Rotate implements Command {
             Thread.currentThread().sleep(10);
         }
 
-    	robot.getRightMotor().setPower(0);
-        robot.getLeftMotor().setPower(0);
+    	robot.getDriveRightMotor().setPower(0);
+        robot.getDriveLeftMotor().setPower(0);
         
         return isInterrupted;
         

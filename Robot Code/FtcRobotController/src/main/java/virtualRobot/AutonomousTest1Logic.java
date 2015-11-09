@@ -7,7 +7,7 @@ public class AutonomousTest1Logic extends LogicThread {
 
     @Override
     public void loadCommands() {
-        Translate temp = new Translate(1500, Translate.Direction.FORWARD);
+        Translate temp = new Translate(15000, Translate.Direction.BACKWARD);
         //temp.setRunMode(Translate.RunMode.WITH_ENCODERS);
         commands.add(temp);
         //commands.add(new Translate(1500, Translate.Direction.FORWARD));
