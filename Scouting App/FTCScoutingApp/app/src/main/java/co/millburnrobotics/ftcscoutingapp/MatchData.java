@@ -245,9 +245,10 @@ public class MatchData extends ParseObject {
         return getInt(TELEOP_ALL_CLEAR);
     }
 
-    public int getAutonomousScore () {
+   // public int getAutonomousScore () {
 
-    }
+
+    //}
 
     public static final String COMPETITION_NAME = "Competition Name";
     public static final String COMPETITION_DATE = "Competition Date";

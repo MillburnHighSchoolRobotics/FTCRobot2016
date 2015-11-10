@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.*;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
-import com.parse.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddMatchesAutonomousActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_matches_autonomous);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

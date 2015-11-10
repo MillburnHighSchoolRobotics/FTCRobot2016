@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.parse.*;
-import java.util.*;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class ViewMatchDataTeamActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_match_data_team);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -30,7 +35,12 @@ public class ViewMatchDataTeamActivity extends AppCompatActivity {
         } catch (ParseException e) {
             return;
         }
+        ListView yourListView = (ListView) findViewById(R.id.listOfMatches);
 
+// get data from the table by the ListAdapter
+        ListAdapter customAdapter = new ListAdapter(this, R.layout.itemlistrow, List<yourItem>);
+
+        yourListView .setAdapter(customAdapter);
 
 
     }
