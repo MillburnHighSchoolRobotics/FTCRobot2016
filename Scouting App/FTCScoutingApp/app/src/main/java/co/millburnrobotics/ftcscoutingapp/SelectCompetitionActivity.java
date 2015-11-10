@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +40,8 @@ public class SelectCompetitionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent incoming = getIntent();
+        selectedCompetition = incoming.getStringExtra("SelectedCompetition");
 
         final Spinner selectCompetition = (Spinner) findViewById(R.id.spinner_select_comp);
         final Button select = (Button) findViewById(R.id.submit_button);

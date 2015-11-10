@@ -73,8 +73,8 @@ public class Translate implements Command {
         switch (runMode) {
             case CUSTOM:
             	
-            	robot.getLeftMotor().setPower(maxPower * multiplier);
-            	robot.getRightMotor().setPower(maxPower * multiplier);
+            	robot.getDriveLeftMotor().setPower(maxPower * multiplier);
+            	robot.getDriveRightMotor().setPower(maxPower * multiplier);
 
                 while (!exitCondition.isConditionMet()) {
                 	
@@ -94,15 +94,15 @@ public class Translate implements Command {
                 break;
             case WITH_ENCODERS:
             	
-            	robot.getLeftMotorEncoder().clearValue();
-            	robot.getRightMotorEncoder().clearValue();
+            	robot.getDriveLeftMotorEncoder().clearValue();
+            	robot.getDriveRightMotorEncoder().clearValue();
             	
-            	robot.getLeftMotor().setPower(maxPower * multiplier);
-            	robot.getRightMotor().setPower(maxPower * multiplier);
+            	robot.getDriveLeftMotor().setPower(maxPower * multiplier);
+            	robot.getDriveRightMotor().setPower(maxPower * multiplier);
             	
             	while (!exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
             		
-            		currentValue = Math.abs((Math.abs(robot.getLeftMotorEncoder().getValue()) + Math.abs(robot.getRightMotorEncoder().getValue())) / 2);
+            		currentValue = Math.abs((Math.abs(robot.getDriveLeftMotorEncoder().getValue()) + Math.abs(robot.getDriveRightMotorEncoder().getValue())) / 2);
             		
             		if (Thread.currentThread().isInterrupted()) {
             			isInterrupted = true;
@@ -120,13 +120,13 @@ public class Translate implements Command {
                 break;
             case WITH_PID:
 
-            	robot.getLeftMotorEncoder().clearValue();
-            	robot.getRightMotorEncoder().clearValue();
+            	robot.getDriveLeftMotorEncoder().clearValue();
+            	robot.getDriveRightMotorEncoder().clearValue();
 
                 while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() /*&& Math.abs(currentValue - translateController.getTarget()) > TOLERANCE*/) {
                    
-                    double left = Math.abs(robot.getLeftMotorEncoder().getValue());
-                    double right = Math.abs(robot.getRightMotorEncoder().getValue());
+                    double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
+                    double right = Math.abs(robot.getDriveRightMotorEncoder().getValue());
 
                     currentValue = Math.abs((left + right) / 2);
 
@@ -134,8 +134,8 @@ public class Translate implements Command {
 
                     Log.d("pidoutput", Double.toString(pidOutput));
 
-                    robot.getRightMotor().setPower(pidOutput * multiplier);
-                    robot.getLeftMotor().setPower(pidOutput * multiplier);
+                    robot.getDriveRightMotor().setPower(pidOutput * multiplier);
+                    robot.getDriveLeftMotor().setPower(pidOutput * multiplier);
                     
                     if (Thread.currentThread().isInterrupted()) {
                     	isInterrupted = true;
@@ -156,8 +156,8 @@ public class Translate implements Command {
                 break;
         }
         
-        robot.getLeftMotor().setPower(0);
-        robot.getRightMotor().setPower(0);
+        robot.getDriveLeftMotor().setPower(0);
+        robot.getDriveRightMotor().setPower(0);
         
         return isInterrupted;
 
