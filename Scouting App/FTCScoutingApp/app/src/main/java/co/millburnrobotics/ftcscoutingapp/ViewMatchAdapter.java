@@ -1,15 +1,9 @@
 package co.millburnrobotics.ftcscoutingapp;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-
 /**
  * Created by shant on 11/9/2015.
  */
-public class ViewMatchAdapter extends ArrayAdapter<MatchData> {
+/*public class ViewMatchAdapter extends ArrayAdapter<MatchData> {
     Context context;
     int layoutResourceId;
 
@@ -23,4 +17,4 @@ public class ViewMatchAdapter extends ArrayAdapter<MatchData> {
         }
 
     }
-}
+}*/

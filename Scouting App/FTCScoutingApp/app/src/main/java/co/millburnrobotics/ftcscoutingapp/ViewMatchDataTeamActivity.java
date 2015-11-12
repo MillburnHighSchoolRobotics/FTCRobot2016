@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,9 +37,9 @@ public class ViewMatchDataTeamActivity extends AppCompatActivity {
         ListView yourListView = (ListView) findViewById(R.id.listOfMatches);
 
 // get data from the table by the ListAdapter
-        ListAdapter customAdapter = new ListAdapter(this, R.layout.itemlistrow, List<yourItem>);
+        //ListAdapter customAdapter = new ListAdapter(this, R.layout.acti, List<yourItem>);
 
-        yourListView .setAdapter(customAdapter);
+       // yourListView .setAdapter(customAdapter);
 
 
     }
