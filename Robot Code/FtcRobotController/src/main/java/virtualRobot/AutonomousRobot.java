@@ -13,6 +13,8 @@ public class AutonomousRobot {
     private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo;
     private ContinuousRotationServo spinnerServo;
 
+    private JoystickController joystickController;
+
     public AutonomousRobot() {
         driveLeftMotor = new Motor();
         driveRightMotor = new Motor();
@@ -34,6 +36,8 @@ public class AutonomousRobot {
         gateRightServo = new Servo();
 
         spinnerServo = new ContinuousRotationServo();
+
+        joystickController = new JoystickController();
     }
 
     public synchronized Motor getDriveRightMotor() {
@@ -98,5 +102,9 @@ public class AutonomousRobot {
 
     public synchronized ContinuousRotationServo getSpinnerServo() {
         return spinnerServo;
+    }
+
+    public synchronized JoystickController getJoystickController() {
+        return joystickController;
     }
 }

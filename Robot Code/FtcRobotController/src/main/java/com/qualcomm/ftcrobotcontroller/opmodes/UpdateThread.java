@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -12,6 +13,7 @@ import virtualRobot.AutonomousRobot;
 import virtualRobot.AutonomousTest1Logic;
 import virtualRobot.Command;
 import virtualRobot.ContinuousRotationServo;
+import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
 import virtualRobot.Motor;
 import virtualRobot.Sensor;
@@ -31,7 +33,9 @@ public abstract class UpdateThread extends OpMode {
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo;
     private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
-	
+
+    private JoystickController vGamepad;
+
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
 	
 	@Override
@@ -76,6 +80,8 @@ public abstract class UpdateThread extends OpMode {
         vGateLeftServo = robot.getGateLeftServo();
         vGateRightServo = robot.getGateRightServo();
         vSpinnerServo = robot.getSpinnerServo();
+
+        vGamepad = robot.getJoystickController();
 
         setLogicThread();
 
@@ -130,8 +136,14 @@ public abstract class UpdateThread extends OpMode {
 		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
         vArmLeftMotorEncoder.setRawValue(-armLeftMotor.getCurrentPosition());
         vArmRightMotorEncoder.setRawValue(-armRightMotor.getCurrentPosition());
-		
-		// Copy State
+
+        try {
+            vGamepad.copyStates(gamepad1);
+        } catch (RobotCoreException e) {
+            e.printStackTrace();
+        }
+
+        // Copy State
 		
 		leftTop.setPower(leftPower);
 		leftBottom.setPower(leftPower);
