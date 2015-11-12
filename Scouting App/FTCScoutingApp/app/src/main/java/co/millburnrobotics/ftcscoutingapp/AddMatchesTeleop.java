@@ -10,16 +10,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.parse.*;
-import java.util.*;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddMatchesTeleop extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_matches_teleop);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
