@@ -56,6 +56,7 @@ public abstract class UpdateThread extends OpMode {
 
 		rightTop.setDirection(DcMotor.Direction.REVERSE);
 		rightBottom.setDirection(DcMotor.Direction.REVERSE);
+        armRight.setDirection(Servo.Direction.REVERSE);
 
 		gyro = hardwareMap.gyroSensor.get("gyro");
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
