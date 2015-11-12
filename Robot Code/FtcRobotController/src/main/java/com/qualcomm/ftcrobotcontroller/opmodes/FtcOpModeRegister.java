@@ -56,5 +56,6 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("Autonomous Test 1", AutonomousTest1Update.class);
+    manager.register("Autonomous Test 2", AutonomousTest2Update.class);
   }
 }

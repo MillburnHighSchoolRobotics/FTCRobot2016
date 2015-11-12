@@ -8,7 +8,7 @@ public class AutonomousRobot {
 
     private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor;
     private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
-    private Sensor angleSensor;
+    private Sensor angleSensor, colorSensor;
 
     private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo;
     private ContinuousRotationServo spinnerServo;
@@ -26,6 +26,7 @@ public class AutonomousRobot {
         armRightMotorEncoder = new Sensor();
 
         angleSensor = new Sensor();
+        colorSensor = new Sensor();
 
         armLeftServo = new Servo();
         armRightServo = new Servo();
@@ -73,6 +74,10 @@ public class AutonomousRobot {
 
     public synchronized Sensor getAngleSensor() {
         return angleSensor;
+    }
+
+    public synchronized Sensor getColorSensor() {
+        return colorSensor;
     }
 
     public synchronized Servo getArmLeftServo() {

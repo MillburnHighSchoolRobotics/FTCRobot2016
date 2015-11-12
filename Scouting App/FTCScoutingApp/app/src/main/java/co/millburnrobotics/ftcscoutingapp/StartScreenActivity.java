@@ -21,13 +21,6 @@ public class StartScreenActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //INSERT PARSE INIT STUFF HERE
 
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(Competition.class);
-        ParseObject.registerSubclass(Match.class);
-        ParseObject.registerSubclass(MatchData.class);
-        ParseObject.registerSubclass(Team.class);
-        Parse.initialize(this, "SlG9zvrlCyjen53XU3WUaf3HAYoZQpra08iCLQNC", "vyRgs4rAN6Ukj6qPfm2fzKNXlTbV8n3ALVringOF");
-
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
