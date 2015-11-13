@@ -15,6 +15,16 @@ public class MoveServo implements Command {
                 return false;
             }
         };
+
+        servos = new ArrayList<Object[]>();
+    }
+
+    public MoveServo(Servo[] servo, double[] newPosition) {
+        this();
+
+        for (int i = 0; i < servo.length; i++) {
+            servos.add(new Object[] {servo[i], newPosition[i]});
+        }
     }
 
 

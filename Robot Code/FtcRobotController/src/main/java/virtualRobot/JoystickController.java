@@ -3,50 +3,66 @@ package virtualRobot;
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.concurrent.atomic.AtomicReferenceArray;
+
 /**
  * Created by Yanjun on 11/12/2015.
  */
 public class JoystickController {
-    boolean[] down, pressed, released;
-    double[] stickValues;
-    boolean dpad_up, dpad_down, dpad_left, dpad_right;
+    AtomicReferenceArray<Boolean> down, pressed, released;
+    AtomicReferenceArray<Double> stickValues;
+    AtomicBoolean dpad_up, dpad_down, dpad_left, dpad_right;
 
     public JoystickController() {
-        down = new boolean[12];
-        pressed = new boolean[12];
-        released = new boolean[12];
-
-        stickValues = new double[8];
-
-        dpad_up = false;
-        dpad_down = false;
-        dpad_left = false;
-        dpad_right = false;
-    }
-
-    public void copyStates(Gamepad gamepad) throws RobotCoreException {
-        boolean[] curStates = new boolean[12];
-
-        curStates[BUTTON_X] = gamepad.x;
-        curStates[BUTTON_A] = gamepad.a;
-        curStates[BUTTON_Y] = gamepad.y;
-        curStates[BUTTON_B] = gamepad.b;
-
-        curStates[BUTTON_RB] = gamepad.right_bumper;
-        curStates[BUTTON_LB] = gamepad.left_bumper;
-
-        curStates[BUTTON_RT] = (gamepad.right_trigger > 0.7);
-        curStates[BUTTON_LT] = (gamepad.left_trigger > 0.7);
-
-        curStates[BUTTON_START] = gamepad.start;
-        curStates[BUTTON_BACK] = gamepad.back;
-        curStates[BUTTON_LEFT_STICK] = gamepad.left_stick_button;
-        curStates[BUTTON_RIGHT_STICK] = gamepad.right_stick_button;
+        down = new AtomicReferenceArray<Boolean>(12);
+        pressed = new AtomicReferenceArray<Boolean>(12);
+        released = new AtomicReferenceArray<Boolean>(12);
 
         for (int i = 0; i < 12; i++) {
-            pressed[i] = !down[i] && curStates[i];
-            released[i] = down[i] && !curStates[i];
-            down[i] = curStates[i];
+            down.set(i, false);
+            pressed.set(i, false);
+            released.set(i, false);
+        }
+
+        stickValues = new AtomicReferenceArray<Double>(8);
+
+        for (int i = 0; i < 8; i++) {
+            stickValues.set(i, 0.0);
+        }
+
+        dpad_up.set(false);
+        dpad_down.set(false);
+        dpad_left.set(false);
+        dpad_right.set(false);
+    }
+
+    public synchronized void copyStates(Gamepad gamepad) throws RobotCoreException {
+        boolean[] curStates = new boolean[12];
+
+        synchronized (gamepad) {
+            curStates[BUTTON_X] = gamepad.x;
+            curStates[BUTTON_A] = gamepad.a;
+            curStates[BUTTON_Y] = gamepad.y;
+            curStates[BUTTON_B] = gamepad.b;
+
+            curStates[BUTTON_RB] = gamepad.right_bumper;
+            curStates[BUTTON_LB] = gamepad.left_bumper;
+
+            curStates[BUTTON_RT] = (gamepad.right_trigger > 0.7);
+            curStates[BUTTON_LT] = (gamepad.left_trigger > 0.7);
+
+            curStates[BUTTON_START] = gamepad.start;
+            curStates[BUTTON_BACK] = gamepad.back;
+            curStates[BUTTON_LEFT_STICK] = gamepad.left_stick_button;
+            curStates[BUTTON_RIGHT_STICK] = gamepad.right_stick_button;
+        }
+
+        for (int i = 0; i < 12; i++) {
+            pressed.set(i, !down.get(i) && curStates[i]);
+            released.set(i, down.get(i) && !curStates[i]);
+            down.set(i, curStates[i]);
         }
 
         double x1 = gamepad.left_stick_x;
@@ -95,37 +111,53 @@ public class JoystickController {
         x2 = radius2 * Math.cos(angle2) * SQRT_2 * 0.5;
         y2 = radius1 * Math.sin(angle2) * SQRT_2 * 0.5;
 
-        stickValues[X_1] = x1;
-        stickValues[Y_1] = y1;
-        stickValues[R_1] = radius1;
-        stickValues[THETA_1] = angle1;
+        stickValues.set(X_1, x1);
+        stickValues.set(Y_1, y1);
+        stickValues.set(R_1, radius1);
+        stickValues.set(THETA_1, angle1);
 
-        stickValues[X_2] = x2;
-        stickValues[Y_2] = y2;
-        stickValues[R_2] = radius2;
-        stickValues[THETA_2] = angle2;
+        stickValues.set(X_2, x2);
+        stickValues.set(Y_2, y2);
+        stickValues.set(R_2, radius2);
+        stickValues.set(THETA_2, angle2);
 
-        dpad_down = gamepad.dpad_down;
-        dpad_up = gamepad.dpad_up;
-        dpad_left = gamepad.dpad_left;
-        dpad_right = gamepad.dpad_right;
+        dpad_down.set(gamepad.dpad_down);
+        dpad_up.set(gamepad.dpad_up);
+        dpad_left.set(gamepad.dpad_left);
+        dpad_right.set(gamepad.dpad_right);
 
     }
 
     public synchronized boolean isDown(int buttonID) {
-        return down[buttonID];
+        return down.get(buttonID);
     }
 
     public synchronized boolean isPressed(int buttonID) {
-        return pressed[buttonID];
+        return pressed.get(buttonID);
     }
 
     public synchronized boolean isReleased(int buttonID) {
-        return released[buttonID];
+        return released.get(buttonID);
     }
 
     public synchronized double getValue(int ID) {
-        return stickValues[ID];
+        return stickValues.get(ID);
+    }
+
+    public synchronized boolean isDpadUp() {
+        return dpad_up.get();
+    }
+
+    public synchronized boolean isDpadDown() {
+        return dpad_down.get();
+    }
+
+    public synchronized boolean isDpadLeft() {
+        return dpad_left.get();
+    }
+
+    public synchronized boolean isDpadRight() {
+        return dpad_right.get();
     }
 
     public static int BUTTON_X = 0;

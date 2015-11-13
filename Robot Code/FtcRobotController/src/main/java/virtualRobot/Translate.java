@@ -123,7 +123,7 @@ public class Translate implements Command {
             	robot.getDriveLeftMotorEncoder().clearValue();
             	robot.getDriveRightMotorEncoder().clearValue();
 
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() /*&& Math.abs(currentValue - translateController.getTarget()) > TOLERANCE*/) {
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE) {
                    
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
                     double right = Math.abs(robot.getDriveRightMotorEncoder().getValue());
