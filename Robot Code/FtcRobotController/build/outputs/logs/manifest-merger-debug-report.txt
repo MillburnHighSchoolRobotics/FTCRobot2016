@@ -188,6 +188,18 @@ category#android.intent.category.DEFAULT
 ADDED from AndroidManifest.xml:85:9
 	android:name
 		ADDED from AndroidManifest.xml:85:19
+uses-permission#android.permission.CAMERA
+ADDED from AndroidManifest.xml:89:3
+	android:name
+		ADDED from AndroidManifest.xml:89:20
+uses-feature#android.hardware.camera
+ADDED from AndroidManifest.xml:90:3
+	android:name
+		ADDED from AndroidManifest.xml:90:17
+uses-feature#android.hardware.camera.autofocus
+ADDED from AndroidManifest.xml:91:3
+	android:name
+		ADDED from AndroidManifest.xml:91:17
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from :RobotCore-release::5:5

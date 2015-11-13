@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
@@ -31,6 +30,11 @@ public class JoystickController {
         for (int i = 0; i < 8; i++) {
             stickValues.set(i, 0.0);
         }
+
+        dpad_up = new AtomicBoolean();
+        dpad_down = new AtomicBoolean();
+        dpad_left = new AtomicBoolean();
+        dpad_right = new AtomicBoolean();
 
         dpad_up.set(false);
         dpad_down.set(false);
