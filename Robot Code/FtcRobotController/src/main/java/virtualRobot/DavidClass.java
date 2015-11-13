@@ -2,10 +2,13 @@ package virtualRobot;
 import java.io.*;
 import android.graphics.*;
 import java.util.*;
+
 /**
  * Created by DOSullivan on 11/4/15.
  */
+
 public class DavidClass {
+
     public static final long RED = Color.red(Color.RED); //note that Color.RED is negative
     //returns true if left is red (right is blue)
     //returns false if left if blue (right is red)
