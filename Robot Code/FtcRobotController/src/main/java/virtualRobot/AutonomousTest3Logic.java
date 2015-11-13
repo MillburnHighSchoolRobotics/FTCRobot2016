@@ -11,8 +11,8 @@ public class AutonomousTest3Logic extends LogicThread {
             public boolean changeRobotState() {
 
                 while (true) {
-                    robot.getArmLeftServo().setPosition(0.7);
-                    robot.getArmRightServo().setPosition(0.7);
+                    robot.getArmLeftServo().setPosition(0.63);
+                    robot.getArmRightServo().setPosition(0.63);
                 }
             }
         });

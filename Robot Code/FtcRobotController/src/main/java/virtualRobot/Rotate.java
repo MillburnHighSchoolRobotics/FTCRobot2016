@@ -5,7 +5,10 @@ package virtualRobot;
  */
 public class Rotate implements Command {
     private ExitCondition exitCondition;
-    private double ROTATIONAL_THRESHOLD = 0.2;
+    private double THRESHOLD = 0.2;
+    private double KP = 0.001;
+    private double KI = 0;
+    private double KD = 0;
     private double power;
     private double angleInDegrees;
     
@@ -22,14 +25,14 @@ public class Rotate implements Command {
             }
         };
         
-        //pidController = new PIDController(KP, KI, KD, THRESHOLD);
+        pidController = new PIDController(KP, KI, KD, THRESHOLD);
     }
 
-    public Rotate (double angleInDegrees) {
+    public Rotate (double target) {
         this();
         this.angleInDegrees = angleInDegrees;
         
-        //pidController.setTarget(target);
+        pidController.setTarget(target);
     }
 
     public Rotate (double angleInDegrees, double power) {
@@ -68,19 +71,19 @@ public class Rotate implements Command {
     public boolean changeRobotState() throws InterruptedException{
     	boolean isInterrupted = false;
     	
-        while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor().getValue()) > ROTATIONAL_THRESHOLD) {
+        while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor().getValue()) > THRESHOLD) {
         	
         	double adjustedPower = pidController.getPIDOutput(robot.getAngleSensor().getValue()) * power;
         	
             if (angleInDegrees < 0){
 
-                robot.getDriveLeftMotor().setPower(adjustedPower);
-                robot.getDriveRightMotor().setPower(-adjustedPower);
+                robot.getDriveLeftMotor().setPower(Math.abs(adjustedPower));
+                robot.getDriveRightMotor().setPower(-Math.abs(adjustedPower));
                 
             } else {
 
-                robot.getDriveLeftMotor().setPower(-adjustedPower);
-                robot.getDriveRightMotor().setPower(adjustedPower);
+                robot.getDriveLeftMotor().setPower(-Math.abs(adjustedPower));
+                robot.getDriveRightMotor().setPower(Math.abs(adjustedPower));
             }
             
             if (Thread.currentThread().isInterrupted()) {
