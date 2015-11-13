@@ -6,7 +6,7 @@ package virtualRobot;
  */
 public class AutonomousRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor;
+    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor, conveyorMotor;
     private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
     private Sensor angleSensor, colorSensor, tiltSensor, ultrasoundSensor;
 
@@ -21,6 +21,7 @@ public class AutonomousRobot {
         armLeftMotor = new Motor();
         armRightMotor = new Motor();
         reaperMotor = new Motor();
+        conveyorMotor = new Motor();
 
         driveLeftMotorEncoder = new Sensor();
         driveRightMotorEncoder = new Sensor();
@@ -63,6 +64,10 @@ public class AutonomousRobot {
 
     public synchronized Motor getReaperMotor() {
         return reaperMotor;
+    }
+
+    public synchronized Motor getConveyorMotor() {
+        return conveyorMotor;
     }
 
     public synchronized Sensor getDriveRightMotorEncoder() {

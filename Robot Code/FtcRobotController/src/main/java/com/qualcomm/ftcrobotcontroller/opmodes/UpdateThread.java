@@ -21,12 +21,12 @@ public abstract class UpdateThread extends OpMode {
 	protected Class<? extends LogicThread> logicThread;
 	private Thread t;
 	
-	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper;
+	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper, conveyor;
 	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight;
 	private GyroSensor gyro;
     private ColorSensor colorSensor;
 	
-	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor;
+	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor, vConveyorMotor;
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo;
     private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
@@ -46,6 +46,7 @@ public abstract class UpdateThread extends OpMode {
         armLeftMotor = hardwareMap.dcMotor.get("armLeftMotor");
         armRightMotor = hardwareMap.dcMotor.get("armRightMotor");
         reaper = hardwareMap.dcMotor.get("reaper");
+        conveyor = hardwareMap.dcMotor.get("conveyor");
 
         //SERVO SETUP
         armLeft = hardwareMap.servo.get("armLeft");
@@ -76,6 +77,7 @@ public abstract class UpdateThread extends OpMode {
         vArmLeftMotor = robot.getArmLeftMotor();
         vArmRightMotor = robot.getArmRightMotor();
         vReaperMotor = robot.getReaperMotor();
+        vConveyorMotor = robot.getConveyorMotor();
 
         vDriveLeftMotorEncoder = robot.getDriveLeftMotorEncoder();
         vDriveRightMotorEncoder = robot.getDriveRightMotorEncoder();
@@ -132,6 +134,7 @@ public abstract class UpdateThread extends OpMode {
         double armLeftPower = vArmLeftMotor.getPower();
         double armRightPower = vArmRightMotor.getPower();
         double reaperPower = vReaperMotor.getPower();
+        double conveyorPower = vConveyorMotor.getPower();
 		
 		// Update
 		
@@ -166,6 +169,7 @@ public abstract class UpdateThread extends OpMode {
         armRightMotor.setPower(armRightPower);
 
         reaper.setPower(reaperPower);
+        conveyor.setPower(conveyorPower);
 
         gateLeft.setPosition(vGateLeftServo.getPosition());
         gateRight.setPosition(vGateRightServo.getPosition());
