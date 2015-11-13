@@ -84,16 +84,16 @@ public class Competition extends ParseObject {
         return getString(NAME);
     }
 
-    public static final String DATE = "Date";
-    public static final String HOSTING_TEAM_ID = "HostingTeamID";
-    public static final String TYPE = "Type";
-    public static final String MATCH = "Match";
-    public static final String TEAM = "Team";
-    public static final String NAME = "Name";
+    public static final String DATE = "date";
+    public static final String HOSTING_TEAM_ID = "hostingTeamID";
+    public static final String TYPE = "type";
+    public static final String MATCH = "match";
+    public static final String TEAM = "team";
+    public static final String NAME = "name";
 
-    public static final String QUALIFIER = "Qualifier";
-    public static final String MEET = "Meet";
-    public static final String CHAMPIONSHIP = "Championship";
+    public static final String QUALIFIER = "qualifier";
+    public static final String MEET = "meet";
+    public static final String CHAMPIONSHIP = "championship";
 
     public static final Set<String> tournamentType = new HashSet<String>();
 }

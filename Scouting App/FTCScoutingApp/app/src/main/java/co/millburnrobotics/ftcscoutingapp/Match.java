@@ -125,13 +125,13 @@ public class Match extends ParseObject {
     }
 
 
-    public static final String COMPETITION_NAME = "Competition Name";
-    public static final String COMPETITION_DATE = "Competition Date";
-    public static final String MATCH_DATA = "Match Data";
-    public static final String MATCH_NUMBER = "Match Number";
-    public static final String NOTES = "Notes";
-    public static final String BLUE_ALLIANCE_RAW_SCORE = "Blue Alliance Raw Score";
-    public static final String BLUE_ALLIANCE_PENALTY = "Blue Alliance Penalty";
-    public static final String RED_ALLIANCE_RAW_SCORE = "Red Alliance Raw Score";
-    public static final String RED_ALLIANCE_PENALTY = "Red Alliance Penalty";
+    public static final String COMPETITION_NAME = "competitionName";
+    public static final String COMPETITION_DATE = "competitionDate";
+    public static final String MATCH_DATA = "matchData";
+    public static final String MATCH_NUMBER = "matchNumber";
+    public static final String NOTES = "notes";
+    public static final String BLUE_ALLIANCE_RAW_SCORE = "blueAllianceRawScore";
+    public static final String BLUE_ALLIANCE_PENALTY = "blueAlliancePenalty";
+    public static final String RED_ALLIANCE_RAW_SCORE = "redAllianceRawScore";
+    public static final String RED_ALLIANCE_PENALTY = "redAlliancePenalty";
 }

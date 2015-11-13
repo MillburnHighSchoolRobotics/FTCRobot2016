@@ -72,10 +72,10 @@ public class Team extends ParseObject {
         return getRelation(MATCH_DATA);
     }
 
-    public static final String NUMBER = "Number";
-    public static final String NAME = "Name";
-    public static final String COMPETITION = "Competition";
-    public static final String MATCH = "Match";
-    public static final String MATCH_DATA = "Match Data";
+    public static final String NUMBER = "number";
+    public static final String NAME = "name";
+    public static final String COMPETITION = "competition";
+    public static final String MATCH = "match";
+    public static final String MATCH_DATA = "matchData";
 
 }

@@ -250,24 +250,24 @@ public class MatchData extends ParseObject {
 
     //}
 
-    public static final String COMPETITION_NAME = "Competition Name";
-    public static final String COMPETITION_DATE = "Competition Date";
-    public static final String MATCH_NUMBER = "Match Number";
-    public static final String TEAM_NUMBER = "Team Number";
-    public static final String ALLIANCE_COLOR = "Alliance Color";
+    public static final String COMPETITION_NAME = "competitionName";
+    public static final String COMPETITION_DATE = "competitionDate";
+    public static final String MATCH_NUMBER = "matchNumber";
+    public static final String TEAM_NUMBER = "teamNumber";
+    public static final String ALLIANCE_COLOR = "allianceColor";
 
-    public static final String AUTO_CLIMBER_IN_SHELTER = "Auto Climber in Shelter";
-    public static final String AUTO_BEACON = "Auto Beacon";
-    public static final String AUTO_PARKING = "Auto Parking";
+    public static final String AUTO_CLIMBER_IN_SHELTER = "autoClimberinShelter";
+    public static final String AUTO_BEACON = "autoBeacon";
+    public static final String AUTO_PARKING = "autoParking";
 
-    public static final String TELEOP_CLIMBER_IN_SHELTER = "Teleop Climber in Shelter";
-    public static final String TELEOP_PARKING = "Teleop Parking";
-    public static final String TELEOP_CLIMBER_ZIP_LINE = "Teleop Climber Zip Line";
-    public static final String TELEOP_FLOOR_GOAL = "Teleop Floor Goal";
-    public static final String TELEOP_LOW_GOAL = "Teleop Low Goal";
-    public static final String TELEOP_MID_GOAL = "Teleop Mid Goal";
-    public static final String TELEOP_HIGH_GOAL = "Teleop High Goal";
-    public static final String TELEOP_ALL_CLEAR = "Teleop All Clear";
+    public static final String TELEOP_CLIMBER_IN_SHELTER = "teleopClimberinShelter";
+    public static final String TELEOP_PARKING = "teleopParking";
+    public static final String TELEOP_CLIMBER_ZIP_LINE = "teleopClimberZipLine";
+    public static final String TELEOP_FLOOR_GOAL = "teleopFloorGoal";
+    public static final String TELEOP_LOW_GOAL = "teleopLowGoal";
+    public static final String TELEOP_MID_GOAL = "teleopMidGoal";
+    public static final String TELEOP_HIGH_GOAL = "teleopHighGoal";
+    public static final String TELEOP_ALL_CLEAR = "teleopAllClear";
 
     public static final String FLOOR = "Floor";
     public static final String LOW = "Low";

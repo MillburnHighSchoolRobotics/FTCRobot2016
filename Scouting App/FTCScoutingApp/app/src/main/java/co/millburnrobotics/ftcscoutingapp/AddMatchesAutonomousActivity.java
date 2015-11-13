@@ -3,7 +3,6 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,9 +28,6 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_matches_autonomous);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent incoming = getIntent();
         selectedCompetition = incoming.getStringExtra("SelectedCompetition");
@@ -142,87 +138,134 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
         final String[] climbersSelected = {"", "", "", ""};
         final String[] parkingSelected = {"", "", "", ""};
 
-        team1Beacon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team1Beacon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 beaconSelected[0] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent){
+                beaconSelected[0]= "";
+            }
         });
 
-        team2Beacon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team2Beacon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 beaconSelected[1] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent){
+                beaconSelected[1]= "";
+            }
         });
 
-        team3Beacon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team3Beacon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 beaconSelected[2] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent){
+                beaconSelected[2] = "";
+            }
         });
 
-        team4Beacon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team4Beacon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 beaconSelected[3] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                beaconSelected[3] = "";
+            }
         });
 
-        team1ClimbersAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team1ClimbersAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 climbersSelected[0] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                climbersSelected[0] = "";
+            }
         });
 
-        team2ClimbersAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team2ClimbersAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 climbersSelected[1] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                climbersSelected[1] = "";
+            }
         });
 
-        team3ClimbersAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team3ClimbersAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 climbersSelected[2] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                climbersSelected[2] = "";
+            }
         });
 
-        team4ClimbersAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team4ClimbersAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 climbersSelected[3] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                climbersSelected[3] = "";
+            }
         });
 
-        team1ParkingAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team1ParkingAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 parkingSelected[0] = (String) parent.getItemAtPosition(position);
             }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                parkingSelected[0] = "";
+            }
         });
 
-        team2ParkingAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team2ParkingAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 parkingSelected[1] = (String) parent.getItemAtPosition(position);
             }
-        });
 
-        team3ParkingAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                parkingSelected[2] = (String) parent.getItemAtPosition(position);
+            public void onNothingSelected(AdapterView<?> parent) {
+                parkingSelected[1] = "";
             }
         });
 
-        team4ParkingAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team3ParkingAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                parkingSelected[2] = (String) parent.getItemAtPosition(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                parkingSelected[2] = "";
+            }
+        });
+
+        team4ParkingAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 parkingSelected[3] = (String) parent.getItemAtPosition(position);
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                parkingSelected[3] = "";
             }
         });
 

@@ -91,7 +91,7 @@ public class Teleop1Logic extends LogicThread {
                     if (!joystick.isDown(JoystickController.BUTTON_X) && joystick.isDown(JoystickController.BUTTON_Y)) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
                         if (enc >= 0 && enc <= 3500){
-                            robot.getArmLeft-Motor().setPower(0.5);
+                            robot.getArmLeftMotor().setPower(0.5);
                             robot.getArmRightMotor().setPower(-0.5);
                         }
                     }
