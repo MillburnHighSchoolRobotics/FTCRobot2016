@@ -10,7 +10,7 @@ public class AutonomousRobot {
     private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
     private Sensor angleSensor, colorSensor;
 
-    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo;
+    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo;
     private ContinuousRotationServo spinnerServo;
 
     private JoystickController joystickController;
@@ -36,6 +36,9 @@ public class AutonomousRobot {
         gateRightServo = new Servo();
 
         spinnerServo = new ContinuousRotationServo();
+
+        blockerLeftServo = new Servo();
+        blockerRightServo = new Servo();
 
         joystickController = new JoystickController();
     }
@@ -102,6 +105,14 @@ public class AutonomousRobot {
 
     public synchronized ContinuousRotationServo getSpinnerServo() {
         return spinnerServo;
+    }
+
+    public synchronized Servo getBlockerLeftServo() {
+        return blockerLeftServo;
+    }
+
+    public synchronized Servo getBlockerRightServo() {
+        return blockerRightServo;
     }
 
     public synchronized JoystickController getJoystickController() {

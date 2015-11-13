@@ -1,7 +1,5 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import android.util.Log;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -10,7 +8,6 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import virtualRobot.AutonomousRobot;
-import virtualRobot.AutonomousTest1Logic;
 import virtualRobot.Command;
 import virtualRobot.ContinuousRotationServo;
 import virtualRobot.JoystickController;
@@ -25,14 +22,15 @@ public abstract class UpdateThread extends OpMode {
 	private Thread t;
 	
 	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper;
-	private Servo armLeft, armRight, gateLeft, gateRight, spinner;
+	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight;
 	private GyroSensor gyro;
     private ColorSensor colorSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor;
-	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo;
+	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo;
     private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
+
 
     private JoystickController vGamepad;
 
@@ -40,6 +38,7 @@ public abstract class UpdateThread extends OpMode {
 	
 	@Override
 	public void init() {
+        //MOTOR SETUP
 		rightTop = hardwareMap.dcMotor.get("rightTop");
 		rightBottom = hardwareMap.dcMotor.get("rightBottom");
 		leftTop = hardwareMap.dcMotor.get("leftTop");
@@ -48,21 +47,30 @@ public abstract class UpdateThread extends OpMode {
         armRightMotor = hardwareMap.dcMotor.get("armRightMotor");
         reaper = hardwareMap.dcMotor.get("reaper");
 
+        //SERVO SETUP
         armLeft = hardwareMap.servo.get("armLeft");
         armRight = hardwareMap.servo.get("armRight");
         gateLeft = hardwareMap.servo.get("gateLeft");
         gateRight = hardwareMap.servo.get("gateRight");
         spinner = hardwareMap.servo.get("spinner");
+		blockerLeft = hardwareMap.servo.get("blockerLeft");
+		blockerRight = hardwareMap.servo.get("blockerRight");
 
+        //REVERSE RIGHT SIDE
+        blockerRight.setDirection(Servo.Direction.REVERSE);
+        gateRight.setDirection(Servo.Direction.REVERSE);
 		rightTop.setDirection(DcMotor.Direction.REVERSE);
 		rightBottom.setDirection(DcMotor.Direction.REVERSE);
         armRight.setDirection(Servo.Direction.REVERSE);
 
+        //SENSOR SETUP
 		gyro = hardwareMap.gyroSensor.get("gyro");
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
-				
+
+        //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.robot;
 
+        //FETCH VIRTUAL COMPONENTS OF VIRTUAL ROBOT
         vDriveLeftMotor = robot.getDriveLeftMotor();
         vDriveRightMotor = robot.getDriveRightMotor();
         vArmLeftMotor = robot.getArmLeftMotor();
@@ -81,6 +89,8 @@ public abstract class UpdateThread extends OpMode {
         vGateLeftServo = robot.getGateLeftServo();
         vGateRightServo = robot.getGateRightServo();
         vSpinnerServo = robot.getSpinnerServo();
+		vBlockerLeftServo = robot.getBlockerLeftServo();
+		vBlockerRightServo = robot.getBlockerRightServo();
 
         vGamepad = robot.getJoystickController();
 
@@ -162,6 +172,8 @@ public abstract class UpdateThread extends OpMode {
         armLeft.setPosition(vArmLeftServo.getPosition());
         armRight.setPosition(vArmRightServo.getPosition());
         spinner.setPosition(vSpinnerServo.getPosition());
+		blockerLeft.setPosition(vBlockerLeftServo.getPosition());
+		blockerRight.setPosition(vBlockerRightServo.getPosition());
 
 		telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
 		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
