@@ -3,7 +3,7 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,8 +16,6 @@ import com.parse.SaveCallback;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddCompetitionActivity extends AppCompatActivity {
 
@@ -27,10 +25,8 @@ public class AddCompetitionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_add_competition);
+
         //INSERT PARSE INIT STUFF HERE
 
         Intent incoming = getIntent();
@@ -40,22 +36,24 @@ public class AddCompetitionActivity extends AppCompatActivity {
         final EditText teamNumber = (EditText) findViewById(R.id.teamnumber);
         final Spinner typeSpinner = (Spinner) findViewById(R.id.type_spinner);
         final EditText compName = (EditText) findViewById(R.id.compname);
+        Log.e("qqq", Boolean.toString(typeSpinner == null));
 
-        List<String> spinnerOptions = new ArrayList<String>();
-        spinnerOptions.add(Competition.QUALIFIER);
-        spinnerOptions.add(Competition.MEET);
-        spinnerOptions.add(Competition.CHAMPIONSHIP);
+        String[] spinneroptions ={Competition.QUALIFIER,Competition.MEET, Competition.CHAMPIONSHIP};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, spinnerOptions);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, spinneroptions);
 
         typeSpinner.setAdapter(adapter);
 
         final String[] spinnerSelected = {""};
 
-        typeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerSelected[0] = (String) parent.getItemAtPosition(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent){
+                spinnerSelected[0]= "";
             }
         });
 

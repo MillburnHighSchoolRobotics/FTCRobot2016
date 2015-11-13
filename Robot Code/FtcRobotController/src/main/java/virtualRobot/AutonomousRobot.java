@@ -6,11 +6,11 @@ package virtualRobot;
  */
 public class AutonomousRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor;
+    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor, conveyorMotor;
     private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
-    private Sensor angleSensor, colorSensor;
+    private Sensor angleSensor, colorSensor, tiltSensor, ultrasoundSensor;
 
-    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo;
+    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo;
     private ContinuousRotationServo spinnerServo;
 
     private JoystickController joystickController;
@@ -21,6 +21,7 @@ public class AutonomousRobot {
         armLeftMotor = new Motor();
         armRightMotor = new Motor();
         reaperMotor = new Motor();
+        conveyorMotor = new Motor();
 
         driveLeftMotorEncoder = new Sensor();
         driveRightMotorEncoder = new Sensor();
@@ -29,6 +30,8 @@ public class AutonomousRobot {
 
         angleSensor = new Sensor();
         colorSensor = new Sensor();
+        tiltSensor = new Sensor();
+        ultrasoundSensor = new Sensor();
 
         armLeftServo = new Servo();
         armRightServo = new Servo();
@@ -36,6 +39,9 @@ public class AutonomousRobot {
         gateRightServo = new Servo();
 
         spinnerServo = new ContinuousRotationServo();
+
+        blockerLeftServo = new Servo();
+        blockerRightServo = new Servo();
 
         joystickController = new JoystickController();
     }
@@ -58,6 +64,10 @@ public class AutonomousRobot {
 
     public synchronized Motor getReaperMotor() {
         return reaperMotor;
+    }
+
+    public synchronized Motor getConveyorMotor() {
+        return conveyorMotor;
     }
 
     public synchronized Sensor getDriveRightMotorEncoder() {
@@ -84,6 +94,14 @@ public class AutonomousRobot {
         return colorSensor;
     }
 
+    public synchronized Sensor getTiltSensor() {
+        return tiltSensor;
+    }
+
+    public synchronized Sensor getUltrasoundSensor() {
+        return ultrasoundSensor;
+    }
+
     public synchronized Servo getArmLeftServo() {
         return armLeftServo;
     }
@@ -102,6 +120,14 @@ public class AutonomousRobot {
 
     public synchronized ContinuousRotationServo getSpinnerServo() {
         return spinnerServo;
+    }
+
+    public synchronized Servo getBlockerLeftServo() {
+        return blockerLeftServo;
+    }
+
+    public synchronized Servo getBlockerRightServo() {
+        return blockerRightServo;
     }
 
     public synchronized JoystickController getJoystickController() {

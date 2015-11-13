@@ -85,7 +85,7 @@ public class Competition extends ParseObject {
     }
 
     public static final String DATE = "Date";
-    public static final String HOSTING_TEAM_ID = "Hosting Team ID";
+    public static final String HOSTING_TEAM_ID = "HostingTeamID";
     public static final String TYPE = "Type";
     public static final String MATCH = "Match";
     public static final String TEAM = "Team";
