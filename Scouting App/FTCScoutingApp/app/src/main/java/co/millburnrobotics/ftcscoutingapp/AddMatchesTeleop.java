@@ -71,7 +71,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
         teamNumbers[3] = (TextView) findViewById(R.id.T4TXT);
 
         for (int i = 0; i < teamNumbers.length; i++) {
-            teamNumbers[i].setText(Integer.toString(md[0].getTeamNumber()));
+            teamNumbers[i].setText(Integer.toString(md[i].getTeamNumber()));
         }
 
         final EditText[] floorGoals = new EditText[4];

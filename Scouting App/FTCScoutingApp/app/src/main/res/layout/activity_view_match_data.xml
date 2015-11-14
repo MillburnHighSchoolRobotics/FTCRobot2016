@@ -25,10 +25,9 @@
             android:orientation="vertical">
 
 
-            <EditText
-                android:layout_width="wrap_content"
+            <Spinner
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:hint="team#"
                 android:id="@+id/teamnumber"
                 android:layout_gravity="center_horizontal"/>
             <Button

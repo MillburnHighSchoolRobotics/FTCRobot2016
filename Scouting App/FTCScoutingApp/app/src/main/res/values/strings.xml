@@ -9,4 +9,5 @@
     <string name="title_activity_view_match_data">VIewMatchDataActivity</string>
     <string name="title_activity_add_matches_teleop">AddMatchesTeleop</string>
     <string name="title_activity_view_match_data_team">ViewMatchDataTeamActivity</string>
+    <string name="title_activity_view_match_data_match">ViewMatchDataMatchActivity</string>
 </resources>
