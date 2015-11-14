@@ -46,6 +46,14 @@
             android:label="@string/title_activity_add_matches"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+
+    <activity
+        android:name=".AddMatchesAutonomousActivity"
+        android:label="AddMatchesAutonomousActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+
+    </activity>
         <activity
             android:name=".ViewMatchDataActivity"
             android:label="@string/title_activity_view_match_data"

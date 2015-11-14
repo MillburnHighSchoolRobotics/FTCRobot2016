@@ -3,6 +3,7 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -264,6 +265,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 parkingSelected[3] = (String) parent.getItemAtPosition(position);
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
                 parkingSelected[3] = "";
             }
@@ -273,6 +275,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
         next.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("qqq", "test1");
                 if (beaconSelected[0].equals("Yes")) {
                     md1.setAutoBeacon(true);
                 } else {
@@ -306,16 +309,18 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
                 md2.setAutoParking(parkingSelected[1]);
                 md3.setAutoParking(parkingSelected[2]);
                 md4.setAutoParking(parkingSelected[3]);
-
+                Log.e("qqq", "saving");
                 try {
                     md1.save();
                     md2.save();
                     md3.save();
                     md4.save();
                 } catch (ParseException e) {
+                    Log.e("qqq", e.toString());
                     return;
                 }
 
+                Log.e("qqq", "we here" );
                 Intent toTeleop = new Intent(v.getContext(), AddMatchesTeleop.class);
                 toTeleop.putExtra("SelectedCompetition", selectedCompetition);
                 toTeleop.putExtra("SelectedMatch", selectedMatch);

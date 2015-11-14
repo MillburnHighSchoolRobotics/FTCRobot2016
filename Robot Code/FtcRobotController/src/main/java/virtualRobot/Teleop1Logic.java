@@ -29,13 +29,13 @@ public class Teleop1Logic extends LogicThread {
                     double currentPos = robot.getArmLeftServo().getPosition();
                     //SHIELDS
                     if (joystick.isDpadDown()) { //ONE BUTTON TO LOWER THE SHIELDS
-                        robot.getBlockerLeftServo().setPosition(0);
-                        robot.getBlockerRightServo().setPosition(0);
+                        robot.getBlockerLeftServo().setPosition(1);
+                        robot.getBlockerRightServo().setPosition(1);
                     }
 
                     if (joystick.isDpadUp()) { //ONE BUTTON TO RAISE THEM
-                        robot.getBlockerLeftServo().setPosition(1);
-                        robot.getBlockerRightServo().setPosition(1);
+                        robot.getBlockerLeftServo().setPosition(0);
+                        robot.getBlockerRightServo().setPosition(0);
                     }
 
                     if (joystick.isDpadLeft()) {
@@ -50,13 +50,20 @@ public class Teleop1Logic extends LogicThread {
 
                     //CONVEYOR BELT + GATE
                     if (joystick.isDown(JoystickController.BUTTON_LB) && !joystick.isDown(JoystickController.BUTTON_RB)) {
-                        robot.getGateRightServo().setPosition(0); //TO CALIBRATE
-                        robot.getConveyorMotor().setPower(1); //TO CALIBRATE
+                        robot.getGateLeftServo().setPosition(1); //TO CALIBRATE
+                        robot.getGateRightServo().setPosition(0.5);
+                        robot.getConveyorMotor().setPower(-1); //TO CALIBRATE
                     }
 
-                    if (!joystick.isDown(JoystickController.BUTTON_LB) && joystick.isDown(JoystickController.BUTTON_RB)) {
+                    else if (!joystick.isDown(JoystickController.BUTTON_LB) && joystick.isDown(JoystickController.BUTTON_RB)) {
                         robot.getGateRightServo().setPosition(1); //TO CALIBRATE
-                        robot.getConveyorMotor().setPower(0); //TO CALIBRATE
+                        robot.getGateLeftServo().setPosition(0);
+                        robot.getConveyorMotor().setPower(1); //TO CALIBRATE
+                    }
+                    else {
+                        robot.getConveyorMotor().setPower(0);
+                        robot.getGateRightServo().setPosition(0);
+                        robot.getGateLeftServo().setPosition(0);
                     }
 
                     //REAPER
@@ -64,7 +71,10 @@ public class Teleop1Logic extends LogicThread {
                         robot.getReaperMotor().setPower(1);
                     }
 
-                    if (!joystick.isDown(JoystickController.BUTTON_LT) && joystick.isDown(JoystickController.BUTTON_RT)) {
+                    else if (!joystick.isDown(JoystickController.BUTTON_LT) && joystick.isDown(JoystickController.BUTTON_RT)) {
+                        robot.getReaperMotor().setPower(-1);
+                    }
+                    else {
                         robot.getReaperMotor().setPower(0);
                     }
 
@@ -72,29 +82,37 @@ public class Teleop1Logic extends LogicThread {
                     if (joystick.isDown(JoystickController.BUTTON_A) && !joystick.isDown(JoystickController.BUTTON_B)) {
                         if (currentPos >= ARM_TOP_CAP && currentPos <= ARM_BOTTOM_CAP) {
                             currentPos += servoDelta;
+                            robot.getArmLeftServo().setPosition(currentPos);
+                            robot.getArmRightServo().setPosition(currentPos);
                         }
                     }
                     if (!joystick.isDown(JoystickController.BUTTON_A) && joystick.isDown(JoystickController.BUTTON_B)) {
                         if (currentPos >= ARM_TOP_CAP && currentPos <= ARM_BOTTOM_CAP) {
                             currentPos -= servoDelta;
+                            robot.getArmLeftServo().setPosition(currentPos);
+                            robot.getArmRightServo().setPosition(currentPos);
                         }
                     }
 
                     //ARM EXTENSION
                     if (joystick.isDown(JoystickController.BUTTON_X) && !joystick.isDown(JoystickController.BUTTON_Y)) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
-                        if (enc >= 0 && enc <= 3500){
-                            robot.getArmLeftMotor().setPower(0.5);
-                            robot.getArmRightMotor().setPower(0.5);
-                        }
+                        robot.getArmLeftMotor().setPower(0.5);
+                        robot.getArmRightMotor().setPower(0.5);
                     }
-                    if (!joystick.isDown(JoystickController.BUTTON_X) && joystick.isDown(JoystickController.BUTTON_Y)) {
+                    else if (!joystick.isDown(JoystickController.BUTTON_X) && joystick.isDown(JoystickController.BUTTON_Y)) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
-                        if (enc >= 0 && enc <= 3500){
-                            robot.getArmLeftMotor().setPower(0.5);
-                            robot.getArmRightMotor().setPower(-0.5);
-                        }
+
+                        robot.getArmLeftMotor().setPower(-0.5);
+                        robot.getArmRightMotor().setPower(-0.5);
                     }
+
+                    else {
+                        robot.getArmLeftMotor().setPower(0);
+                        robot.getArmRightMotor().setPower(0);
+                    }
+
+
 
 
                 }
