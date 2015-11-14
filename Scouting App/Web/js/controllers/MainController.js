@@ -93,17 +93,18 @@ app.controller('MainController', ['$scope', function($scope) {
 
 			var MatchData = Parse.Object.extend("MatchData");
 			var mdquery = new Parse.Query(MatchData);
-			//mdquery.equalTo("teamNumber", parseInt($scope.teamData.number));
-			//mdquery.equalTo("competitionName", parseInt($scope.q.competition));
+			mdquery.equalTo("teamNumber", parseInt($scope.teamData.number));
+			mdquery.equalTo("competitionName", $scope.q.competition);
 			mdquery.find({
 				success: function(results) {
 					if (results.length == 0) {
 						console.log("This team did not compete in this competition.");
-						return;
+						$scope.teamData.matches = results;
 					}
 					$scope.$apply(function() {
 						$scope.teamData.matches = results;
 					});
+					return;
 				},
 				error: function(error) {
 					return;
