@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Scout | Millburn FTC 8405</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
+
+</head>
+
+<body class="main" ng-app="app" ng-controller="MainController">
+
+	<header>
+		<h3>millburn robotics</h3>
+		<h1>Scouting Data Viewer</h1>
+		<ul id="search-elements">
+			<li>
+				<p>Competition</p>
+				<ul id="competitions">
+					<li ng-repeat="competition in competitions">{{ competition.attributes.name }}</li>
+				</ul>
+			</li>
+			<li>
+				<p>Team or Match Number</p>
+				<img class="search-icon" src="img/search.png">
+				<input id="tmnumber" placeholder="e.g. 8405 or 1"></input>
+			</li>
+		</ul>
+		
+	</header>
+
+	<div class="container">
+		<div id="match-dw" class="data-window">
+			<h1>Match {{ matchData.number }}</h1>
+			<div class="content">
+				<p><b>Competition Name:</b> {{ getQueryCompetition() }}</p>
+				<p><b>Competition Date:</b> {{ matchData.date }}</p>
+				
+				<table>
+					<tr class="header">
+						<td>Team Number</td>
+						<td>Alliance Color</td>
+						<td>Auto Climber in Shelter</td>
+						<td>Auto Beacon</td>
+						<td>Auto Parking</td>
+						<td>Teleop Climber in Shelter</td>
+						<td>Teleop Parking</td>
+						<td>Teleop Climber Zipline</td>
+						<td>Teleop Floor Goal</td>
+						<td>Teleop Mid Goal</td>
+						<td>Teleop High Goal</td>
+						<td>Teleop All Clear</td>
+					</tr>
+					<tr ng-repeat="row in matchData.data">
+						<td>{{ row.attributes.teamNumber }}</td>
+						<td>{{ row.attributes.allianceColor }}</td>
+						<td>{{ row.attributes.autoClimberInShelter }}</td>
+						<td>{{ row.attributes.autoBeacon }}</td>
+						<td>{{ row.attributes.autoParking }}</td>
+						<td>{{ row.attributes.teleopClimberInShelter }}</td>
+						<td>{{ row.attributes.teleopParking }}</td>
+						<td>{{ row.attributes.teleopClimberZipline }}</td>
+						<td>{{ row.attributes.teleopFloorGoal }}</td>
+						<td>{{ row.attributes.teleopMidGoal }}</td>
+						<td>{{ row.attributes.teleopHighGoal }}</td>
+						<td>{{ row.attributes.teleopAllClear }}</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+		<div id="team-dw" class="data-window">
+			<h1>Team {{ teamData.number }}</h1>
+			<i><h3>{{ teamData.name }}</h3></i>
+			<div class="content">
+			<p><b>Competition Name:</b> {{ getQueryCompetition() }}</p>
+			<table>
+				<tr class="header">
+					<td>Match Number</td>
+					<td>Alliance Color</td>
+					<td>Auto Climber in Shelter</td>
+					<td>Auto Beacon</td>
+					<td>Auto Parking</td>
+					<td>Teleop Climber in Shelter</td>
+					<td>Teleop Parking</td>
+					<td>Teleop Climber Zipline</td>
+					<td>Teleop Floor Goal</td>
+					<td>Teleop Mid Goal</td>
+					<td>Teleop High Goal</td>
+					<td>Teleop All Clear</td>
+				</tr>
+				<tr ng-repeat="match in teamData.matches">
+					<td>{{ match.attributes.matchNumber }}</td>
+					<td>{{ match.attributes.allianceColor }}</td>
+					<td>{{ match.attributes.autoClimberInShelter }}</td>
+					<td>{{ match.attributes.autoBeacon }}</td>
+					<td>{{ match.attributes.autoParking }}</td>
+					<td>{{ match.attributes.teleopClimberInShelter }}</td>
+					<td>{{ match.attributes.teleopParking }}</td>
+					<td>{{ match.attributes.teleopClimberZipline }}</td>
+					<td>{{ match.attributes.teleopFloorGoal }}</td>
+					<td>{{ match.attributes.teleopMidGoal }}</td>
+					<td>{{ match.attributes.teleopHighGoal }}</td>
+					<td>{{ match.attributes.teleopAllClear }}</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+		<div id="no-data" class="data-window">
+			<h1>No data found</h1>
+		</div>
+	</div>
+
+	<!-- Angular -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers/MainController.js"></script>
+
+</body>
+</html>
