@@ -3,8 +3,7 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,8 +36,7 @@ public class SelectCompetitionActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_competition);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         Intent incoming = getIntent();
         selectedCompetition = incoming.getStringExtra("SelectedCompetition");
@@ -62,6 +60,7 @@ public class SelectCompetitionActivity extends AppCompatActivity {
 
         for (Competition c: compList) {
 
+            Log.e("qqq", sdf.format(c.getDate()));
             String idString = sdf.format(c.getDate()) + " - " + c.getName();
 
             compNames.add(idString);
@@ -73,10 +72,14 @@ public class SelectCompetitionActivity extends AppCompatActivity {
 
         final String[] selectResult = {""};
 
-        selectCompetition.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        selectCompetition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectResult[0] = (String) parent.getItemAtPosition(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectResult[0] = "";
             }
         });
 
@@ -85,7 +88,7 @@ public class SelectCompetitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                selectedCompetition = compMap.get(selectResult).getObjectId();
+                selectedCompetition = compMap.get(selectResult[0]).getObjectId();
                 onBackPressed();
             }
         });

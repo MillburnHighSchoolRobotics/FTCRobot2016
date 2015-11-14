@@ -3,7 +3,6 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,9 +25,10 @@ public class AddMatchesTeleop extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_matches_teleop);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
         Intent incoming = getIntent();
+
         final String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
         final String selectedMatch = incoming.getStringExtra("SelectedMatch");
 
@@ -165,31 +165,47 @@ public class AddMatchesTeleop extends AppCompatActivity {
             parkings[i[0]].setAdapter(parkingsAdapter);
             allClears[i[0]].setAdapter(allClearsAdapter);
 
-            climbers[i[0]].setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            climbers[i[0]].setOnItemSelectedListener(new MyOnItemSelectedListener(i[0]) {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    climbersSelected[i[0]] = (String) parent.getItemAtPosition(position);
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    climbersSelected[myID] = (String) parent.getItemAtPosition(position);
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                    climbersSelected[myID] = "";
                 }
             });
 
-            zipLines[i[0]].setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            zipLines[i[0]].setOnItemSelectedListener(new MyOnItemSelectedListener(i[0]) {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    zipLinesSelected[i[0]] = (String) parent.getItemAtPosition(position);
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    zipLinesSelected[myID] = (String) parent.getItemAtPosition(position);
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                    zipLinesSelected[myID] = "";
                 }
             });
 
-            parkings[i[0]].setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            parkings[i[0]].setOnItemSelectedListener(new MyOnItemSelectedListener(i[0]) {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    parkingsSelected[i[0]] = (String) parent.getItemAtPosition(position);
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    parkingsSelected[myID] = (String) parent.getItemAtPosition(position);
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                    parkingsSelected[myID] = "";
                 }
             });
 
-            allClears[i[0]].setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            allClears[i[0]].setOnItemSelectedListener(new MyOnItemSelectedListener(i[0]) {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    allClearsSelected[i[0]] = (String) parent.getItemAtPosition(position);
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    allClearsSelected[myID] = (String) parent.getItemAtPosition(position);
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                    allClearsSelected[myID] = "";
                 }
             });
         }

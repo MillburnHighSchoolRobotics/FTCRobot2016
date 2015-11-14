@@ -21,9 +21,7 @@ public class AddTeamActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_team);
-       /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+
         //INSERT PARSE INIT STUFF HE2RE
 
         Intent incoming = getIntent();

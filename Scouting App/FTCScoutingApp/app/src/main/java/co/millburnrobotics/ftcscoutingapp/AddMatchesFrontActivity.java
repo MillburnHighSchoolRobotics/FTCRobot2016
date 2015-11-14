@@ -3,7 +3,6 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,9 +12,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.*;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AddMatchesFrontActivity extends AppCompatActivity {
 
@@ -26,9 +29,7 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_matches_front);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         Intent incoming = getIntent();
         selectedCompetition = incoming.getStringExtra("SelectedCompetition");
@@ -74,31 +75,44 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
 
         final String[] selectedIDs = {"", "", "", ""};
 
-        team1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedIDs[0] = (String) parent.getItemAtPosition(position);
             }
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedIDs[0] = "";
+            }
         });
 
-        team2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedIDs[1] = (String) parent.getItemAtPosition(position);
             }
-        });
-
-        team3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedIDs[2] = (String) parent.getItemAtPosition(position);
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedIDs[1] = "";
             }
         });
 
-        team4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        team3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedIDs[2] = (String) parent.getItemAtPosition(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedIDs[2] = "";
+            }
+        });
+
+        team4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedIDs[3] = (String) parent.getItemAtPosition(position);
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedIDs[3] = "";
             }
         });
 
