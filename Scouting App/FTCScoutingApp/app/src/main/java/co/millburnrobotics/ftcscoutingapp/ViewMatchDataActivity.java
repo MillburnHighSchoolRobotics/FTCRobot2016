@@ -23,7 +23,7 @@ public class ViewMatchDataActivity extends AppCompatActivity {
         viewByTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewTeam = new Intent(view.getContext(), MenuActivity.class);
+                Intent viewTeam = new Intent(view.getContext(), ViewMatchDataTeamActivity.class);
                 viewTeam.putExtra("TeamNumber", Integer.parseInt(((EditText) findViewById(R.id.teamnumber)).getText().toString()));
                 viewTeam.putExtra("SelectedCompetition", selectedCompetition);
                 startActivity(viewTeam);

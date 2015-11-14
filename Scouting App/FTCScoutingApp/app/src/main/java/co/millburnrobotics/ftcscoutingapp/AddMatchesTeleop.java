@@ -234,7 +234,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
 
                     md[i].setTeleopClimberInShelter(Integer.parseInt(climbersSelected[i]));
                     md[i].setTeleopClimberZipLine(Integer.parseInt(zipLinesSelected[i]));
-                    md[i].setTeleopParking(zipLinesSelected[i]);
+                    md[i].setTeleopParking(parkingsSelected[i]);
 
                     if (allClearsSelected[i].equals("Yes")) {
                         md[i].setTeleopAllClear(true);
