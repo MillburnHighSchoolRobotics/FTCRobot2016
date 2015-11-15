@@ -15,10 +15,13 @@ public abstract class LogicThread implements Runnable {
     List<Thread> children;
     AutonomousRobot robot;
 
+    double startTime, elapsedTime;
+
     @Override
     public void run(){
 
         loadCommands();
+        startTime = System.currentTimeMillis();
 
         while (!Thread.currentThread().isInterrupted() && (commands.size() != 0)) {
            boolean isInterrupted = false;
@@ -36,6 +39,8 @@ public abstract class LogicThread implements Runnable {
                    children.add(t);
                }
            }
+
+            elapsedTime = System.currentTimeMillis() - startTime;
 
            
            if (isInterrupted) 
