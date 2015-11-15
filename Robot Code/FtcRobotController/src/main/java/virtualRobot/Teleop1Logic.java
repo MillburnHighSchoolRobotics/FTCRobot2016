@@ -28,46 +28,46 @@ public class Teleop1Logic extends LogicThread {
         commands.add(new Command() {
             @Override
             public boolean changeRobotState() {
-                JoystickController joystick = robot.getJoystickController();
+                JoystickEvent joystick = robot.getJoystickController();
                 robot.getArmRightMotorEncoder().clearValue();
                 boolean reaperForwardsOn = false;
                 boolean reaperBackwardOn = false;
 
                 while (true) {
-
-                    joystick.logicalRefresh();
-
+                    joystick = robot.getJoystickController();
+                    if (joystick == null) continue;
+                    
                     double currentPos = robot.getArmRightServo().getPosition();
                     //SHIELDS
-                    if (joystick.isDpadDown()) { //ONE BUTTON TO LOWER THE SHIELDS
+                    if (joystick.dpad_up) { //ONE BUTTON TO LOWER THE SHIELDS
                         robot.getBlockerLeftServo().setPosition(.8);
                         robot.getBlockerRightServo().setPosition(.8);
                         robot.getRampLift().setPosition(0);
                     }
 
-                    if (joystick.isDpadUp()) { //ONE BUTTON TO RAISE THEM
+                    if (joystick.dpad_down) { //ONE BUTTON TO RAISE THEM
                         robot.getBlockerLeftServo().setPosition(0);
                         robot.getBlockerRightServo().setPosition(0);
                         robot.getRampLift().setPosition(1);
                     }
 
-                    if (joystick.isDpadRight()) {
+                    if (joystick.dpad_right) {
                         //ONE BUTTON TO RULE THEM ALL
                         //AND IN THE DARKNESS BIND THEM
                     }
 
                     //DRIVE
-                    robot.getDriveLeftMotor().setPower(joystick.getValue(JoystickController.Y_1));
-                    robot.getDriveRightMotor().setPower(joystick.getValue(JoystickController.Y_2));
+                    robot.getDriveLeftMotor().setPower(joystick.stickValues[JoystickController.Y_1]);
+                    robot.getDriveRightMotor().setPower(joystick.stickValues[JoystickController.Y_2]);
 
                     //CONVEYOR BELT + GATE
-                    if (!joystick.isDown(JoystickController.BUTTON_LB) && joystick.isDown(JoystickController.BUTTON_RB)) {
+                    if (!joystick.buttonStates[JoystickController.BUTTON_LB] && joystick.buttonStates[JoystickController.BUTTON_RB]) {
                         //DEPOSIT TO THE LEFT
                         robot.getGateLeftServo().setPosition(LEFT_GATE_DEPOSIT);
                         robot.getGateRightServo().setPosition(RIGHT_GATE_CLOSED);
                         robot.getConveyorMotor().setPower(-1.0);
                     }
-                    else if (joystick.isDown(JoystickController.BUTTON_LB) && !joystick.isDown(JoystickController.BUTTON_RB)) {
+                    else if (joystick.buttonStates[JoystickController.BUTTON_LB] && !joystick.buttonStates[JoystickController.BUTTON_RB]) {
                         //DEPOSIT TO THE RIGHT
                         robot.getGateLeftServo().setPosition(LEFT_GATE_CLOSED);
                         robot.getGateRightServo().setPosition(RIGHT_GATE_DEPOSIT);
@@ -75,11 +75,11 @@ public class Teleop1Logic extends LogicThread {
                     }
 
                     //HIT THE ZIPLINE
-                    else if (joystick.isDpadRight()) {
+                    else if (joystick.dpad_right) {
                         robot.getGateLeftServo().setPosition(LEFT_GATE_ZIPLINE);
                     }
 
-                    else if (joystick.isDpadLeft()) {
+                    else if (joystick.dpad_left) {
                         robot.getGateRightServo().setPosition(RIGHT_GATE_ZIPLINE);
                     }
 
@@ -88,7 +88,7 @@ public class Teleop1Logic extends LogicThread {
                         robot.getGateRightServo().setPosition(RIGHT_GATE_CLOSED);
                         robot.getGateLeftServo().setPosition(LEFT_GATE_CLOSED);
                     }
-
+/*
                     //REAPER
                     if (reaperForwardsOn && !reaperBackwardOn) {
                         robot.getReaperMotor().setPower(-1);
@@ -100,7 +100,7 @@ public class Teleop1Logic extends LogicThread {
 
                     if (!reaperForwardsOn && !reaperBackwardOn) {
                         robot.getReaperMotor().setPower(0);
-                    }
+                    }*/
 
                     /*if (reaperForwardsOn || reaperBackwardOn)
                         robot.getReaperMotor().setPower(reaperForwardsOn ? 1: -1);
@@ -108,29 +108,23 @@ public class Teleop1Logic extends LogicThread {
                     else{robot.getReaperMotor().setPower(0);}
                     */
 
-                    if (!joystick.isPressed(JoystickController.BUTTON_LT) && joystick.isPressed(JoystickController.BUTTON_RT)){
-                        if (reaperBackwardOn) {
-                            reaperBackwardOn = false;
-                        }
-                        reaperForwardsOn = !reaperForwardsOn;
-
-                        //robot.getReaperMotor().setPower(1);
+                    if (!joystick.buttonStates[JoystickController.BUTTON_LT] && joystick.buttonStates[JoystickController.BUTTON_RT]){
+                        robot.getReaperMotor().setPower(1);
                     }
 
-                    else if (joystick.isPressed(JoystickController.BUTTON_LT) && !joystick.isPressed(JoystickController.BUTTON_RT)) {
-                        if (reaperForwardsOn){
-                            reaperForwardsOn = false;
-                        }
-                        reaperBackwardOn = !reaperBackwardOn;
+                    else if (joystick.buttonStates[JoystickController.BUTTON_LT] && !joystick.buttonStates[JoystickController.BUTTON_RT]) {
+                       robot.getReaperMotor().setPower(-1);
+                    }
 
-                        //robot.getReaperMotor().setPower(-1);
+                    else {
+                        robot.getReaperMotor().setPower(0);
                     }
 
 
 
 
                     //ARM ROTATION
-                    if (!joystick.isDown(JoystickController.BUTTON_A) && joystick.isDown(JoystickController.BUTTON_B)) {
+                    if (!joystick.buttonStates[JoystickController.BUTTON_A] && joystick.buttonStates[JoystickController.BUTTON_B]) {
                         currentPos += servoDelta;
 
                         if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
@@ -140,7 +134,7 @@ public class Teleop1Logic extends LogicThread {
                         robot.getArmRightServo().setPosition(currentPos);
 
                     }
-                    if (joystick.isDown(JoystickController.BUTTON_A) && !joystick.isDown(JoystickController.BUTTON_B)) {
+                    if (joystick.buttonStates[JoystickController.BUTTON_A] && !joystick.buttonStates[JoystickController.BUTTON_B]) {
                         currentPos -= servoDelta;
 
                         if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
@@ -152,13 +146,13 @@ public class Teleop1Logic extends LogicThread {
                     }
 
                     //ARM EXTENSION
-                    if (!joystick.isDown(JoystickController.BUTTON_X) && joystick.isDown(JoystickController.BUTTON_Y)) {
+                    if (!joystick.buttonStates[JoystickController.BUTTON_X] && joystick.buttonStates[JoystickController.BUTTON_Y]) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
 
                         robot.getArmLeftMotor().setPower(0.75);
                         robot.getArmRightMotor().setPower(0.75);
                     }
-                    else if (joystick.isDown(JoystickController.BUTTON_X) && !joystick.isDown(JoystickController.BUTTON_Y)) {
+                    else if (joystick.buttonStates[JoystickController.BUTTON_X] && !joystick.buttonStates[JoystickController.BUTTON_Y]) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
 
                         robot.getArmLeftMotor().setPower(-0.75);

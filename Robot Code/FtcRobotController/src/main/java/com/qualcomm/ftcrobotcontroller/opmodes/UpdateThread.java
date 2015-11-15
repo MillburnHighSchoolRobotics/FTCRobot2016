@@ -13,6 +13,7 @@ import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
 import virtualRobot.Motor;
 import virtualRobot.Sensor;
+import virtualRobot.*;
 
 public abstract class UpdateThread extends OpMode {
 	
@@ -29,9 +30,6 @@ public abstract class UpdateThread extends OpMode {
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
     //private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
-
-
-    private JoystickController vGamepad;
 
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
 	
@@ -97,8 +95,6 @@ public abstract class UpdateThread extends OpMode {
 		vBlockerRightServo = robot.getBlockerRightServo();
 		vRampLift = robot.getRampLift();
 
-        vGamepad = robot.getJoystickController();
-
         setLogicThread();
 
 		try {
@@ -139,17 +135,22 @@ public abstract class UpdateThread extends OpMode {
         double reaperPower = vReaperMotor.getPower();
         double conveyorPower = vConveyorMotor.getPower();
 
-		telemetry.addData("conveyorPower", Double.toString(conveyorPower));
+		//telemetry.addData("conveyorPower", Double.toString(conveyorPower));
 		
 		// Update
 		
 		curTime = System.currentTimeMillis();
 		curRot = gyro.getRotation()-gyroOffset;
+		telemetry.addData("le gyro", curRot);
 		
 		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
 		if (curRot < 2) {
 			delta = 0;
 		}
+        telemetry.addData("le curRot", curRot);
+        telemetry.addData("le curTime", curTime);
+        telemetry.addData("le prevTime", prevTime);
+		telemetry.addData("le offset", delta);
 		vAngleSensor.setRawValue(vAngleSensor.getRawValue() + delta);
 
         vColorSensor.setRawValue(colorSensor.argb());
@@ -159,12 +160,8 @@ public abstract class UpdateThread extends OpMode {
         vArmLeftMotorEncoder.setRawValue(-armLeftMotor.getCurrentPosition());
         vArmRightMotorEncoder.setRawValue(-armRightMotor.getCurrentPosition());
 
-        try {
-            vGamepad.copyStates(gamepad1);
-        } catch (RobotCoreException e) {
-            e.printStackTrace();
-        }
-
+      	JoystickEvent curState = new JoystickEvent(gamepad1);
+		robot.setJoystickController(curState);
         // Copy State
 		
 		leftTop.setPower(leftPower);

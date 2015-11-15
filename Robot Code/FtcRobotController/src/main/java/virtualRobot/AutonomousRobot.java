@@ -13,7 +13,7 @@ public class AutonomousRobot {
     private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo, rampLift;
     //private ContinuousRotationServo spinnerServo;
 
-    private JoystickController joystickController;
+    private JoystickEvent joystickController;
 
     public AutonomousRobot() {
         driveLeftMotor = new Motor();
@@ -45,7 +45,7 @@ public class AutonomousRobot {
 
         rampLift = new Servo();
 
-        joystickController = new JoystickController();
+        joystickController = null;
 
         armLeftServo.setPosition(0.63);
         armRightServo.setPosition(0.63);
@@ -139,7 +139,11 @@ public class AutonomousRobot {
         return rampLift;
     }
 
-    public synchronized JoystickController getJoystickController() {
+    public synchronized void setJoystickController(JoystickEvent joystickController) {
+        this.joystickController = joystickController;
+    }
+
+    public synchronized JoystickEvent getJoystickController() {
         return joystickController;
     }
 }

@@ -30,7 +30,7 @@ public class Rotate implements Command {
 
     public Rotate (double target) {
         this();
-        this.angleInDegrees = angleInDegrees;
+        this.angleInDegrees = target;
         
         pidController.setTarget(target);
     }
