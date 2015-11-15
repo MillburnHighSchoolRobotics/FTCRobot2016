@@ -2,9 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import virtualRobot.AutonomousRobot;
@@ -22,13 +20,13 @@ public abstract class UpdateThread extends OpMode {
 	
 	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper, conveyor;
 	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight, rampLift;
-	private GyroSensor gyro;
-    private ColorSensor colorSensor;
+	//private GyroSensor gyro;
+    //private ColorSensor colorSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor, vConveyorMotor;
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
     //private ContinuousRotationServo vSpinnerServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder; //vAngleSensor, vColorSensor;
 
 
     private JoystickController vGamepad;
@@ -67,9 +65,9 @@ public abstract class UpdateThread extends OpMode {
 		armRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         //SENSOR SETUP
-		gyro = hardwareMap.gyroSensor.get("gyro");
+		/*gyro = hardwareMap.gyroSensor.get("gyro");
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
-
+		*/
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.robot;
 
@@ -85,8 +83,8 @@ public abstract class UpdateThread extends OpMode {
         vDriveRightMotorEncoder = robot.getDriveRightMotorEncoder();
         vArmLeftMotorEncoder = robot.getArmLeftMotorEncoder();
         vArmRightMotorEncoder = robot.getArmRightMotorEncoder();
-        vAngleSensor = robot.getAngleSensor();
-        vColorSensor = robot.getColorSensor();
+        //vAngleSensor = robot.getAngleSensor();
+        //vColorSensor = robot.getColorSensor();
 
         vArmLeftServo = robot.getArmLeftServo();
         vArmRightServo = robot.getArmRightServo();
@@ -109,7 +107,7 @@ public abstract class UpdateThread extends OpMode {
 			return;
 		}
 
-		gyroOffset = gyro.getRotation();
+		//gyroOffset = gyro.getRotation();
 	}
 	
 	public void start() {
@@ -117,10 +115,10 @@ public abstract class UpdateThread extends OpMode {
 		curTime = System.currentTimeMillis();
 		prevTime = System.currentTimeMillis();
 		
-		curRot = gyro.getRotation()-gyroOffset;
-		prevRot = gyro.getRotation()-gyroOffset;
+		//curRot = gyro.getRotation()-gyroOffset;
+		//prevRot = gyro.getRotation()-gyroOffset;
 		
-		vAngleSensor.setRawValue(0);
+		//vAngleSensor.setRawValue(0);
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
@@ -144,15 +142,15 @@ public abstract class UpdateThread extends OpMode {
 		// Update
 		
 		curTime = System.currentTimeMillis();
-		curRot = gyro.getRotation()-gyroOffset;
+		//curRot = gyro.getRotation()-gyroOffset;
 		
 		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
 		if (curRot < 2) {
 			delta = 0;
 		}
-		vAngleSensor.setRawValue(vAngleSensor.getRawValue() + delta);
+		//vAngleSensor.setRawValue(vAngleSensor.getRawValue() + delta);
 
-        vColorSensor.setRawValue(colorSensor.argb());
+        //vColorSensor.setRawValue(colorSensor.argb());
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
@@ -196,7 +194,7 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("rightArmPosition", Double.toString(armRight.getPosition()));
 		telemetry.addData("leftArmPosition", Double.toString(armLeft.getPosition()));*/
 
-		telemetry.addData("angleSensor", Double.toString(vAngleSensor.getValue()));
+		//telemetry.addData("angleSensor", Double.toString(vAngleSensor.getValue()));
 
 		prevTime = curTime;
 		prevRot = curRot;
