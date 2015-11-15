@@ -1,13 +1,14 @@
 package co.millburnrobotics.ftcscoutingapp;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -16,23 +17,32 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-public class ViewMatchDataTeamActivity extends AppCompatActivity {
-ListView mainListView;
-ArrayAdapter<String> listAdapter;
+public class ViewMatchDataMatchActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_match_data_team);
+        setContentView(R.layout.activity_view_match_data_match);
 
         Intent incoming = getIntent();
-        int teamNumber = incoming.getIntExtra("TeamNumber", -1);
+        int matchNumber = incoming.getIntExtra("MatchNumber", -1);
         String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
-        ((TextView) findViewById(R.id.title)).setText("Showing all matches for Team " + teamNumber);
 
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText("\"Showing Match " + matchNumber);
+
+        ParseQuery cQuery = ParseQuery.getQuery(Competition.class);
+        Competition curComp = null;
+        try {
+            curComp = (Competition) cQuery.get(selectedCompetition);
+        } catch (ParseException e) {
+            return;
+        }
         ParseQuery<MatchData> mdQuery = ParseQuery.getQuery(MatchData.class);
-        mdQuery.whereEqualTo(MatchData.TEAM_NUMBER, teamNumber);
-        mdQuery.orderByAscending(MatchData.MATCH_NUMBER);
+        mdQuery.whereEqualTo(MatchData.COMPETITION_NAME, curComp.getName());
+        mdQuery.whereEqualTo(MatchData.MATCH_NUMBER, matchNumber);
+
         List<MatchData> matches = null;
         try {
             matches = mdQuery.find();
@@ -45,6 +55,7 @@ ArrayAdapter<String> listAdapter;
         for (int i = 0; i < matches.size(); i++) {
             TableLayout toAdd = (TableLayout) LayoutInflater.from(this).inflate(R.layout.matchdata_layout, listOfMatches, false);
             MatchData md = matches.get(i);
+
             TextView nTeam = (TextView) toAdd.findViewById(R.id.team_number);
             TextView nMatch = (TextView) toAdd.findViewById(R.id.match_number);
 
@@ -88,6 +99,7 @@ ArrayAdapter<String> listAdapter;
             listOfMatches.addView(toAdd);
 
         }
+
     }
 
     private String coupleData(String str1, int str2) {

@@ -71,7 +71,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
         teamNumbers[3] = (TextView) findViewById(R.id.T4TXT);
 
         for (int i = 0; i < teamNumbers.length; i++) {
-            teamNumbers[i].setText(Integer.toString(md[0].getTeamNumber()));
+            teamNumbers[i].setText(Integer.toString(md[i].getTeamNumber()));
         }
 
         final EditText[] floorGoals = new EditText[4];
@@ -234,7 +234,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
 
                     md[i].setTeleopClimberInShelter(Integer.parseInt(climbersSelected[i]));
                     md[i].setTeleopClimberZipLine(Integer.parseInt(zipLinesSelected[i]));
-                    md[i].setTeleopParking(zipLinesSelected[i]);
+                    md[i].setTeleopParking(parkingsSelected[i]);
 
                     if (allClearsSelected[i].equals("Yes")) {
                         md[i].setTeleopAllClear(true);

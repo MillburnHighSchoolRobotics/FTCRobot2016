@@ -150,6 +150,11 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
                 md3.setCompetitionDate(competition.getDate());
                 md4.setCompetitionDate(competition.getDate());
 
+                md1.setMatchNumber(match.getMatchNumber());
+                md2.setMatchNumber(match.getMatchNumber());
+                md3.setMatchNumber(match.getMatchNumber());
+                md4.setMatchNumber(match.getMatchNumber());
+
                 md1.setTeamNumber(teamMap.get(selectedIDs[0]).getNumber());
                 md2.setTeamNumber(teamMap.get(selectedIDs[1]).getNumber());
                 md3.setTeamNumber(teamMap.get(selectedIDs[2]).getNumber());
