@@ -113,7 +113,7 @@ public class JoystickController {
         }
 
         x2 = radius2 * Math.cos(angle2) * SQRT_2 * 0.5;
-        y2 = radius1 * Math.sin(angle2) * SQRT_2 * 0.5;
+        y2 = radius2 * Math.sin(angle2) * SQRT_2 * 0.5;
 
         stickValues.set(X_1, x1);
         stickValues.set(Y_1, y1);

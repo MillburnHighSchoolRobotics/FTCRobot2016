@@ -22,12 +22,12 @@ public abstract class UpdateThread extends OpMode {
 	private Thread t;
 	
 	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper, conveyor;
-	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight;
+	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight, rampLift;
 	private GyroSensor gyro;
     private ColorSensor colorSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor, vConveyorMotor;
-	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo;
+	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
     private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
 
@@ -48,6 +48,7 @@ public abstract class UpdateThread extends OpMode {
         reaper = hardwareMap.dcMotor.get("reaper");
         conveyor = hardwareMap.dcMotor.get("conveyor");
 
+
         //SERVO SETUP
         armLeft = hardwareMap.servo.get("armLeft");
         armRight = hardwareMap.servo.get("armRight");
@@ -56,6 +57,7 @@ public abstract class UpdateThread extends OpMode {
         spinner = hardwareMap.servo.get("spinner");
 		blockerLeft = hardwareMap.servo.get("blockerLeft");
 		blockerRight = hardwareMap.servo.get("blockerRight");
+		rampLift = hardwareMap.servo.get("rampLift");
 
         //REVERSE RIGHT SIDE
         blockerRight.setDirection(Servo.Direction.REVERSE);
@@ -63,6 +65,7 @@ public abstract class UpdateThread extends OpMode {
 		rightTop.setDirection(DcMotor.Direction.REVERSE);
 		rightBottom.setDirection(DcMotor.Direction.REVERSE);
         armRight.setDirection(Servo.Direction.REVERSE);
+		armRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         //SENSOR SETUP
 		gyro = hardwareMap.gyroSensor.get("gyro");
@@ -93,6 +96,7 @@ public abstract class UpdateThread extends OpMode {
         vSpinnerServo = robot.getSpinnerServo();
 		vBlockerLeftServo = robot.getBlockerLeftServo();
 		vBlockerRightServo = robot.getBlockerRightServo();
+		vRampLift = robot.getRampLift();
 
         vGamepad = robot.getJoystickController();
 
@@ -178,12 +182,15 @@ public abstract class UpdateThread extends OpMode {
         spinner.setPosition(vSpinnerServo.getPosition());
 		blockerLeft.setPosition(vBlockerLeftServo.getPosition());
 		blockerRight.setPosition(vBlockerRightServo.getPosition());
+		rampLift.setPosition(vRampLift.getPosition());
 
 		telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
 		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
 		telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
 		telemetry.addData("rightEncoder", Double.toString(vDriveRightMotorEncoder.getRawValue()));
         telemetry.addData("color", String.format("%06x", (int) vColorSensor.getRawValue()));
+		telemetry.addData("rightArmPosition", Double.toString(armRight.getPosition()));
+		telemetry.addData("leftArmPosition", Double.toString(armLeft.getPosition()));
 	}
 	
 	public void stop() {
