@@ -1,13 +1,12 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import virtualRobot.AutonomousRobot;
 import virtualRobot.Command;
-import virtualRobot.JoystickController;
+import virtualRobot.JoystickEvent;
 import virtualRobot.LogicThread;
 import virtualRobot.Motor;
 import virtualRobot.Sensor;
@@ -19,7 +18,7 @@ public abstract class UpdateThread extends OpMode {
 	private Thread t;
 	
 	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper, conveyor;
-	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight, rampLift;
+	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight; //rampLift;
 	//private GyroSensor gyro;
     //private ColorSensor colorSensor;
 	
@@ -27,9 +26,6 @@ public abstract class UpdateThread extends OpMode {
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
     //private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder; //vAngleSensor, vColorSensor;
-
-
-    private JoystickController vGamepad;
 
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
 	
@@ -54,7 +50,7 @@ public abstract class UpdateThread extends OpMode {
         //spinner = hardwareMap.servo.get("spinner");
 		blockerLeft = hardwareMap.servo.get("blockerLeft");
 		blockerRight = hardwareMap.servo.get("blockerRight");
-		rampLift = hardwareMap.servo.get("rampLift");
+		//rampLift = hardwareMap.servo.get("rampLift");
 
         //REVERSE RIGHT SIDE
         blockerRight.setDirection(Servo.Direction.REVERSE);
@@ -93,9 +89,7 @@ public abstract class UpdateThread extends OpMode {
         //vSpinnerServo = robot.getSpinnerServo();
 		vBlockerLeftServo = robot.getBlockerLeftServo();
 		vBlockerRightServo = robot.getBlockerRightServo();
-		vRampLift = robot.getRampLift();
-
-        vGamepad = robot.getJoystickController();
+		//vRampLift = robot.getRampLift();
 
         setLogicThread();
 
@@ -137,13 +131,14 @@ public abstract class UpdateThread extends OpMode {
         double reaperPower = vReaperMotor.getPower();
         double conveyorPower = vConveyorMotor.getPower();
 
-		telemetry.addData("conveyorPower", Double.toString(conveyorPower));
+		//telemetry.addData("conveyorPower", Double.toString(conveyorPower));
 		
 		// Update
 		
 		curTime = System.currentTimeMillis();
+
 		//curRot = gyro.getRotation()-gyroOffset;
-		
+
 		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
 		if (curRot < 2) {
 			delta = 0;
@@ -157,12 +152,8 @@ public abstract class UpdateThread extends OpMode {
         vArmLeftMotorEncoder.setRawValue(-armLeftMotor.getCurrentPosition());
         vArmRightMotorEncoder.setRawValue(-armRightMotor.getCurrentPosition());
 
-        try {
-            vGamepad.copyStates(gamepad1);
-        } catch (RobotCoreException e) {
-            e.printStackTrace();
-        }
-
+      	JoystickEvent curState = new JoystickEvent(gamepad1);
+		robot.setJoystickController(curState);
         // Copy State
 		
 		leftTop.setPower(leftPower);
@@ -184,7 +175,7 @@ public abstract class UpdateThread extends OpMode {
         //spinner.setPosition(vSpinnerServo.getPosition());
 		blockerLeft.setPosition(vBlockerLeftServo.getPosition());
 		blockerRight.setPosition(vBlockerRightServo.getPosition());
-		rampLift.setPosition(vRampLift.getPosition());
+		//rampLift.setPosition(vRampLift.getPosition());
 
 		/*telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
 		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));

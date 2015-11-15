@@ -7,8 +7,8 @@ public class AutonomousTest1Logic extends LogicThread {
 
     @Override
     public void loadCommands() {
-        commands.add(new Translate(5000, Translate.Direction.FORWARD));
-        commands.add(new Rotate(45));
+        commands.add(new Translate(14000, Translate.Direction.FORWARD));
+        /*commands.add(new Rotate(45));
         commands.add(new Translate(10000, Translate.Direction.BACKWARD));
         commands.add(new Rotate(0));
 
@@ -112,5 +112,6 @@ public class AutonomousTest1Logic extends LogicThread {
             }
         });
         commands.add(moveUntilTilted);
+        */
     }
 }
