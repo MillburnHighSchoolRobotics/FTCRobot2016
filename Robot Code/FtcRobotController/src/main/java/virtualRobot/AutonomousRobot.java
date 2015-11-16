@@ -10,10 +10,10 @@ public class AutonomousRobot {
     private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
     private Sensor angleSensor, colorSensor, tiltSensor, ultrasoundSensor;
 
-    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo;
-    private ContinuousRotationServo spinnerServo;
+    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo, rampLift;
+    //private ContinuousRotationServo spinnerServo;
 
-    private JoystickController joystickController;
+    private JoystickEvent joystickController;
 
     public AutonomousRobot() {
         driveLeftMotor = new Motor();
@@ -28,22 +28,27 @@ public class AutonomousRobot {
         armLeftMotorEncoder = new Sensor();
         armRightMotorEncoder = new Sensor();
 
-        angleSensor = new Sensor();
+        /*angleSensor = new Sensor();
         colorSensor = new Sensor();
         tiltSensor = new Sensor();
-        ultrasoundSensor = new Sensor();
+        ultrasoundSensor = new Sensor();*/
 
         armLeftServo = new Servo();
         armRightServo = new Servo();
         gateLeftServo = new Servo();
         gateRightServo = new Servo();
 
-        spinnerServo = new ContinuousRotationServo();
+        //spinnerServo = new ContinuousRotationServo();
 
         blockerLeftServo = new Servo();
         blockerRightServo = new Servo();
 
-        joystickController = new JoystickController();
+        //rampLift = new Servo();
+
+        joystickController = null;
+
+        armLeftServo.setPosition(0.63);
+        armRightServo.setPosition(0.63);
     }
 
     public synchronized Motor getDriveRightMotor() {
@@ -118,9 +123,9 @@ public class AutonomousRobot {
         return gateRightServo;
     }
 
-    public synchronized ContinuousRotationServo getSpinnerServo() {
+    /*public synchronized ContinuousRotationServo getSpinnerServo() {
         return spinnerServo;
-    }
+    }*/
 
     public synchronized Servo getBlockerLeftServo() {
         return blockerLeftServo;
@@ -130,7 +135,15 @@ public class AutonomousRobot {
         return blockerRightServo;
     }
 
-    public synchronized JoystickController getJoystickController() {
+    public synchronized Servo getRampLift() {
+        return rampLift;
+    }
+
+    public synchronized void setJoystickController(JoystickEvent joystickController) {
+        this.joystickController = joystickController;
+    }
+
+    public synchronized JoystickEvent getJoystickController() {
         return joystickController;
     }
 }

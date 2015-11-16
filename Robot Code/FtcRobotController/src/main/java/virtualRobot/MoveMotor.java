@@ -1,7 +1,5 @@
 package virtualRobot;
 
-import java.util.ArrayList;
-
 /**
  * Created by shant on 11/5/2015.
  */
@@ -190,6 +188,8 @@ public class MoveMotor implements Command {
 		default:
 			break;
 		}
+
+		motor.setPower(0);
 
 		return isInterrupted;
 	}
