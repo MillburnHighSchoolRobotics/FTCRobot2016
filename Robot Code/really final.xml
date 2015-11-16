@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot>
+    <MotorController name="arm motor controller" serialNumber="AL00XQN4">
+        <Motor name="armLeftMotor" port="1" />
+        <Motor name="armRightMotor" port="2" />
+    </MotorController>
+    
+    <!--<MotorController name="arm motor controller" serialNumber="AL00VLVZ">
+        <Motor name="armLeftMotor" port="1" />
+        <Motor name="armRightMotor" port="2" />
+    </MotorController>-->
+    
+    <MotorController name="right drive" serialNumber="AL00YBQR">
+        <Motor name="rightTop" port="1" />
+        <Motor name="rightBottom" port="2" />
+    </MotorController>
+    <MotorController name="reaper cont" serialNumber="AL00XTUJ">
+        <Motor name="reaper" port="1" />
+        <Motor name="conveyor" port="2" />
+    </MotorController>
+    <MotorController name="left drive" serialNumber="AL00VW3T">
+        <Motor name="leftTop" port="1" />
+        <Motor name="leftBottom" port="2" />
+    </MotorController>
+    <!--<LegacyModuleController name="Legacy Module 5" serialNumber="AL00VBNC">
+        <Gyro name="gyro" port="2" />
+        <ColorSensor name="colorSensor" port="3" />
+        <Gyro name="tilt" port="4" />
+    </LegacyModuleController>-->
+    <!--
+    <ServoController name="assorted others" serialNumber="AL00VE2J">
+        <Servo name="rampLift" port="1" />
+        <Servo name="gateRight" port="2" />
+        <Servo name="spinner" port="3" />
+        <Servo name="gateLeft" port="4" />
+        <Servo name="blockerLeft" port="5" />
+        <Servo name="blockerRight" port="6" />
+    </ServoController>
+-->
+    <!--<ServoController name="assorted others" serialNumber="AL00QU0H">
+        <Servo name="rampLift" port="1" />
+        <Servo name="gateRight" port="2" />
+        <Servo name="spinner" port="3" />
+        <Servo name="gateLeft" port="4" />
+        <Servo name="blockerLeft" port="5" />
+        <Servo name="blockerRight" port="6" />
+    </ServoController>-->
+    <ServoController name="arm servo" serialNumber="AL00YALC">        
+        <Servo name="blockerLeft" port="1" />
+        <Servo name="blockerRight" port="6" />
+        <Servo name="armRight" port="2" />
+        <Servo name="armLeft" port="3" />
+        <Servo name="gateLeft" port="4" />
+        <Servo name="gateRight" port="5" />
+        
+    </ServoController>
+</Robot>
