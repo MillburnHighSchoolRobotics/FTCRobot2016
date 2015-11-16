@@ -7,15 +7,17 @@ import android.view.Surface;
 /**
  * Created by Alex on 11/14/2015.
  */
-public class AutoPicture extends DavidClass {
-    public final void takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, Camera.PictureCallback postview, Camera.PictureCallback jpeg){
-
-    }
-    public final void unlockCamera()
+public class AutoPicture{
+    public final void open(1);
+    public final void takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, Camera.PictureCallback postview, Camera.PictureCallback jpeg)
     {
+        getParameters(shutter, raw, pastview, jpeg);
+        setParameters(Camera.Parameters);
+        
 
     }
-    // this makes sure the camera picture is at the correct orientation of the phone position
+
+    // this makes sure the camera picture is at the correct orientation of the phone position if it is moved in any way
     public static void setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cameraId, info);
@@ -31,8 +33,7 @@ public class AutoPicture extends DavidClass {
         int result;
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
             result = (info.orientation - degrees + 360) % 360;
-
             camera.setDisplayOrientation(result);
-        }
+
     }
-        }
+        }}

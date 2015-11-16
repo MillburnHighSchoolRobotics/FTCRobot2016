@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< HEAD
   <component name="ChangeListManager">
-<<<<<<< HEAD
     <list default="true" id="dbe9826f-9fc0-439a-8c2c-85a6693da739" name="Default" comment="" />
-=======
+
     <list default="true" id="d131c481-21f6-4a2b-b102-4075d057268e" name="Default" comment="" />
-=======
-<<<<<<< HEAD
+
   <component name="AndroidLayouts">
     <shared>
       <config />
@@ -16,12 +13,10 @@
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
-=======
->>>>>>> 993cb24c97bdd24621c579b243007c6027778b62
+
   <component name="ChangeListManager">
     <list default="true" id="3298f9c1-ac8d-4b39-9454-cb14ef3e58e0" name="Default" comment="" />
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
->>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
+
     <ignored path="Robot Code.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,24 +43,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-<<<<<<< HEAD
+
       <file leaf-file-name="AutonomousRobot.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/AutonomousRobot.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="Motor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Motor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="K9TankDrive.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/K9TankDrive.java">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
+
             <state vertical-scroll-proportion="0.44925123">
               <caret line="18" column="5" selection-start-line="16" selection-start-column="16" selection-end-line="18" selection-end-column="5" />
               <folding>
@@ -78,116 +71,104 @@
         </entry>
       </file>
       <file leaf-file-name="motor.java" pinned="false" current-in-tab="false">
-=======
             <state vertical-scroll-proportion="0.0">
               <caret line="239" column="23" selection-start-line="239" selection-start-column="23" selection-end-line="239" selection-end-column="23" />
-=======
+
       <file leaf-file-name="motor.java" pinned="false" current-in-tab="true">
->>>>>>> 134d6d2b42d4657f39f2ecbee19f836b5dc6d7f0
+
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/motor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.086513996">
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
+
               <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
->>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
+
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
+
       <file leaf-file-name="ContinuousRotationServo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/ContinuousRotationServo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="13" selection-end-column="30" />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="Command.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Command.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-=======
+
       <file leaf-file-name="TankTreadTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/TankTreadTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
->>>>>>> 993cb24c97bdd24621c579b243007c6027778b62
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
->>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
+
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
+
       <file leaf-file-name="LogicThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/LogicThread.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="NullOp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/NullOp.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="87" column="42" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
-=======
+
       <file leaf-file-name="AutonomousRobot.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/AutonomousRobot.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
->>>>>>> 993cb24c97bdd24621c579b243007c6027778b62
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
+
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="FtcOpModeRegister.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/FtcOpModeRegister.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="57" column="19" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
-=======
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
+
       <file leaf-file-name="ContinuousRotationServo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/ContinuousRotationServo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-<<<<<<< HEAD
+
               <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-=======
+
               <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
->>>>>>> 993cb24c97bdd24621c579b243007c6027778b62
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
+
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
+
       <file leaf-file-name="motor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/motor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.42461538">
               <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="LinearI2cAddressChange.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/LinearI2cAddressChange.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.6289855">
               <caret line="199" column="5" selection-start-line="199" selection-start-column="5" selection-end-line="199" selection-end-column="5" />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="AutonomousRobot.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/AutonomousRobot.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -197,62 +178,56 @@
                 <element signature="e#184#191#0" expanded="true" />
                 <element signature="e#240#247#0" expanded="true" />
               </folding>
-=======
+
       <file leaf-file-name="Command.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Command.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
->>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
+
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
+
       <file leaf-file-name="Sensor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Sensor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="AutonomousRobot.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/AutonomousRobot.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding />
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="Servo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Servo.java">
-=======
+
       <file leaf-file-name="MoveServo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/MoveServo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
->>>>>>> bae0c566d25540dddae9abeb92a4cb3a123fd744
+
               <folding />
->>>>>>> 993cb24c97bdd24621c579b243007c6027778b62
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
+
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+
       <file leaf-file-name="MotorEncoder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/MotorEncoder.java">
->>>>>>> 134d6d2b42d4657f39f2ecbee19f836b5dc6d7f0
+
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-<<<<<<< HEAD
+
               <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-=======
+
               <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
               <folding>
                 <element signature="e#157#158#0" expanded="true" />
@@ -262,19 +237,19 @@
                 <element signature="e#371#372#0" expanded="true" />
                 <element signature="e#412#413#0" expanded="true" />
               </folding>
-=======
+
       <file leaf-file-name="LogicThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/LogicThread.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
->>>>>>> 993cb24c97bdd24621c579b243007c6027778b62
+
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
+
       <file leaf-file-name="Sensor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Sensor.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -287,8 +262,7 @@
                 <element signature="e#514#515#0" expanded="true" />
                 <element signature="e#614#615#0" expanded="true" />
               </folding>
-=======
->>>>>>> 40802f0b36436d678be2e5f7c22fbded8d86c27d
+
       <file leaf-file-name="Sensor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FtcRobotController/src/main/java/virtualRobot/Sensor.java">
           <provider selected="true" editor-type-id="text-editor">

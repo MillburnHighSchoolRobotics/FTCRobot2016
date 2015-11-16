@@ -60,6 +60,9 @@ public class AddCompetitionActivity extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         final Button submit = (Button) findViewById(R.id.competition);
+
+
+
         submit.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -77,6 +80,7 @@ public class AddCompetitionActivity extends AppCompatActivity {
                 competition.setHostingTeamID(Integer.parseInt(teamNumber.getText().toString()));
 
                 competition.saveInBackground(new SaveCallback() {
+
                     @Override
                     public void done(com.parse.ParseException e) {
                         if (e == null) {
