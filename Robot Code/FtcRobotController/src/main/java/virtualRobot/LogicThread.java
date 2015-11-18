@@ -11,11 +11,11 @@ import java.util.List;
  * exits when the thread is interrupted or when custom ExitCondition is met
  */
 public abstract class LogicThread implements Runnable {
-    List<Command> commands;
-    List<Thread> children;
-    AutonomousRobot robot;
+    protected List<Command> commands;
+    protected List<Thread> children;
+    protected AutonomousRobot robot;
 
-    double startTime, elapsedTime;
+    protected double startTime, elapsedTime;
 
     @Override
     public void run(){
