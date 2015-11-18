@@ -43,7 +43,7 @@ public class AutonomousRobot {
         blockerLeftServo = new Servo();
         blockerRightServo = new Servo();
 
-        //rampLift = new Servo();
+        rampLift = new Servo();
 
         joystickController = null;
 
