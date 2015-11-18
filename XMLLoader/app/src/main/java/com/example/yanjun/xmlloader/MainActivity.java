@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,11 +62,12 @@ public class MainActivity extends AppCompatActivity {
                         fis.close();
                         fos.close();
 
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Toast.makeText(v.getContext(), "Import Not Successful", Toast.LENGTH_LONG).show();
+                        return;
                     }
+
+                    Toast.makeText(v.getContext(), "Import Successful", Toast.LENGTH_LONG).show();
 
                 }
             }
