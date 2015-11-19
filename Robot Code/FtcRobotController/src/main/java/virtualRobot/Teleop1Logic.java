@@ -10,7 +10,8 @@ package virtualRobot;
 /**
  * Created by shant on 11/12/2015.
  */
-public class Teleop1Logic extends LogicThread {
+public class Teleop1Logic extends LogicThread<TeleopRobot> {
+
     @Override
     public void loadCommands() {
 
@@ -28,46 +29,46 @@ public class Teleop1Logic extends LogicThread {
         commands.add(new Command() {
             @Override
             public boolean changeRobotState() {
-                JoystickEvent joystick = robot.getJoystickController();
+                JoystickController joystick1 = robot.getJoystickController1();
+                JoystickController joystick2 = robot.getJoystickController2();
                 robot.getArmRightMotorEncoder().clearValue();
                 boolean reaperForwardsOn = false;
                 boolean reaperBackwardOn = false;
 
                 while (true) {
-                    joystick = robot.getJoystickController();
-                    if (joystick == null) continue;
-                    
-                    double currentPos = robot.getArmRightServo().getPosition();
+
+                    joystick1.logicalRefresh();
+
                     //SHIELDS
-                    if (joystick.dpad_up) { //ONE BUTTON TO LOWER THE SHIELDS
+                    if (joystick1.isDpadUp()) { //ONE BUTTON TO LOWER THE SHIELDS
                         robot.getBlockerLeftServo().setPosition(.8);
                         robot.getBlockerRightServo().setPosition(.8);
                         robot.getRampLift().setPosition(0);
                     }
 
-                    if (joystick.dpad_down) { //ONE BUTTON TO RAISE THEM
+                    if (joystick1.isDpadDown()) { //ONE BUTTON TO RAISE THEM
                         robot.getBlockerLeftServo().setPosition(0);
                         robot.getBlockerRightServo().setPosition(0);
                         robot.getRampLift().setPosition(1);
                     }
 
-                    if (joystick.dpad_right) {
+                    if (joystick1.isDpadRight()) {
                         //ONE BUTTON TO RULE THEM ALL
                         //AND IN THE DARKNESS BIND THEM
                     }
 
                     //DRIVE
-                    robot.getDriveLeftMotor().setPower(joystick.stickValues[JoystickController.Y_1]);
-                    robot.getDriveRightMotor().setPower(joystick.stickValues[JoystickController.Y_2]);
+                    robot.getDriveLeftMotor().setPower(joystick1.getValue(JoystickController.Y_1));
+                    robot.getDriveRightMotor().setPower(joystick1.getValue(JoystickController.Y_2));
 
                     //CONVEYOR BELT + GATE
-                    if (!joystick.buttonStates[JoystickController.BUTTON_LB] && joystick.buttonStates[JoystickController.BUTTON_RB]) {
+                    if (!joystick1.isDown(JoystickController.BUTTON_LB) && joystick1.isDown(JoystickController.BUTTON_RB)) {
                         //DEPOSIT TO THE LEFT
                         robot.getGateLeftServo().setPosition(LEFT_GATE_DEPOSIT);
                         robot.getGateRightServo().setPosition(RIGHT_GATE_CLOSED);
                         robot.getConveyorMotor().setPower(-1.0);
                     }
-                    else if (joystick.buttonStates[JoystickController.BUTTON_LB] && !joystick.buttonStates[JoystickController.BUTTON_RB]) {
+                    else if (joystick1.isDown(JoystickController.BUTTON_LB) && !joystick1.isDown(JoystickController.BUTTON_RB)) {
                         //DEPOSIT TO THE RIGHT
                         robot.getGateLeftServo().setPosition(LEFT_GATE_CLOSED);
                         robot.getGateRightServo().setPosition(RIGHT_GATE_DEPOSIT);
@@ -75,11 +76,11 @@ public class Teleop1Logic extends LogicThread {
                     }
 
                     //HIT THE ZIPLINE
-                    else if (joystick.dpad_right) {
+                    else if (joystick1.isDpadRight()) {
                         robot.getGateLeftServo().setPosition(LEFT_GATE_ZIPLINE);
                     }
 
-                    else if (joystick.dpad_left) {
+                    else if (joystick1.isDpadRight()) {
                         robot.getGateRightServo().setPosition(RIGHT_GATE_ZIPLINE);
                     }
 
@@ -108,11 +109,11 @@ public class Teleop1Logic extends LogicThread {
                     else{robot.getReaperMotor().setPower(0);}
                     */
 
-                    if (!joystick.buttonStates[JoystickController.BUTTON_LT] && joystick.buttonStates[JoystickController.BUTTON_RT]){
+                    if (!joystick1.isPressed(JoystickController.BUTTON_LT) && joystick1.isPressed(JoystickController.BUTTON_RT)){
                         robot.getReaperMotor().setPower(1);
                     }
 
-                    else if (joystick.buttonStates[JoystickController.BUTTON_LT] && !joystick.buttonStates[JoystickController.BUTTON_RT]) {
+                    else if (joystick1.isPressed(JoystickController.BUTTON_LT) && !joystick1.isPressed(JoystickController.BUTTON_RT)) {
                        robot.getReaperMotor().setPower(-1);
                     }
 
@@ -121,10 +122,10 @@ public class Teleop1Logic extends LogicThread {
                     }
 
 
-
+                    /*
 
                     //ARM ROTATION
-                    if (!joystick.buttonStates[JoystickController.BUTTON_A] && joystick.buttonStates[JoystickController.BUTTON_B]) {
+                    if (!joystick1.isDown(JoystickController.BUTTON_A) && joystick1.isDown(JoystickController.BUTTON_B)) {
                         currentPos += servoDelta;
 
                         if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
@@ -134,7 +135,7 @@ public class Teleop1Logic extends LogicThread {
                         robot.getArmRightServo().setPosition(currentPos);
 
                     }
-                    if (joystick.buttonStates[JoystickController.BUTTON_A] && !joystick.buttonStates[JoystickController.BUTTON_B]) {
+                    if (joystick1.isDown(JoystickController.BUTTON_A) && !joystick1.isDown(JoystickController.BUTTON_B)) {
                         currentPos -= servoDelta;
 
                         if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
@@ -146,13 +147,13 @@ public class Teleop1Logic extends LogicThread {
                     }
 
                     //ARM EXTENSION
-                    if (!joystick.buttonStates[JoystickController.BUTTON_X] && joystick.buttonStates[JoystickController.BUTTON_Y]) {
+                    if (!joystick1.isDown(JoystickController.BUTTON_X) && joystick1.isDown(JoystickController.BUTTON_Y)) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
 
                         robot.getArmLeftMotor().setPower(0.75);
                         robot.getArmRightMotor().setPower(0.75);
                     }
-                    else if (joystick.buttonStates[JoystickController.BUTTON_X] && !joystick.buttonStates[JoystickController.BUTTON_Y]) {
+                    else if (joystick1.isDown(JoystickController.BUTTON_X) && !joystick1.isDown(JoystickController.BUTTON_Y)) {
                         double enc = robot.getArmRightMotorEncoder().getValue();
 
                         robot.getArmLeftMotor().setPower(-0.75);
@@ -164,9 +165,50 @@ public class Teleop1Logic extends LogicThread {
                         robot.getArmRightMotor().setPower(0);
                     }
 
+                    */
+
+                    robot.getArmLeftMotor().setPower(joystick2.getValue(JoystickController.Y_2));
+                    robot.getArmRightMotor().setPower(joystick2.getValue(JoystickController.Y_1));
+
+                    if (joystick2.isDown(JoystickController.BUTTON_LT) && !joystick2.isDown(JoystickController.BUTTON_LB)) {
+                        double currentPos = robot.getArmRightServo().getPosition();
+                        currentPos -= servoDelta;
+
+                        if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
+                        if (currentPos >= ARM_BOTTOM_CAP) currentPos = ARM_BOTTOM_CAP;
+
+                        robot.getArmRightServo().setPosition(currentPos);
+                    } else if (!joystick2.isDown(JoystickController.BUTTON_LT) && joystick2.isDown(JoystickController.BUTTON_LB)) {
+                        double currentPos = robot.getArmRightServo().getPosition();
+                        currentPos += servoDelta;
+
+                        if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
+                        if (currentPos >= ARM_BOTTOM_CAP) currentPos = ARM_BOTTOM_CAP;
+
+                        robot.getArmRightServo().setPosition(currentPos);
+                    }
+
+                    if (joystick2.isDown(JoystickController.BUTTON_RT) && !joystick2.isDown(JoystickController.BUTTON_RB)) {
+                        double currentPos = robot.getArmLeftServo().getPosition();
+                        currentPos -= servoDelta;
+
+                        if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
+                        if (currentPos >= ARM_BOTTOM_CAP) currentPos = ARM_BOTTOM_CAP;
+
+                        robot.getArmLeftServo().setPosition(currentPos);
+                    } else if (!joystick2.isDown(JoystickController.BUTTON_RT) && joystick2.isDown(JoystickController.BUTTON_RB)) {
+                        double currentPos = robot.getArmLeftServo().getPosition();
+                        currentPos += servoDelta;
+
+                        if (currentPos <= ARM_TOP_CAP) currentPos = ARM_TOP_CAP;
+                        if (currentPos >= ARM_BOTTOM_CAP) currentPos = ARM_BOTTOM_CAP;
+
+                        robot.getArmLeftServo().setPosition(currentPos);
+                    }
+
 
                     try {
-                        Thread.currentThread().sleep(50);
+                        Thread.currentThread().sleep(30);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

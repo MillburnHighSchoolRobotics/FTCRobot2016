@@ -10,10 +10,10 @@ import java.util.List;
  * Implements Runnable, which contains a loop that executes commands and
  * exits when the thread is interrupted or when custom ExitCondition is met
  */
-public abstract class LogicThread implements Runnable {
+public abstract class LogicThread<T extends AutonomousRobot> implements Runnable {
     protected List<Command> commands;
     protected List<Thread> children;
-    protected AutonomousRobot robot;
+    protected T robot;
 
     protected double startTime, elapsedTime;
 
@@ -55,7 +55,7 @@ public abstract class LogicThread implements Runnable {
     }
     
     public LogicThread() {
-    	robot = Command.robot;
+    	robot = (T) Command.ROBOT;
     	commands = new ArrayList<Command>();
     	children = new ArrayList<Thread>();
     }

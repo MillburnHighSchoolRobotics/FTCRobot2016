@@ -58,9 +58,9 @@ uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:27:3
 MERGED from :FtcCommon-release::14:5
 	android:required
-		ADDED from AndroidManifest.xml:29:5
+		ADDED from AndroidManifest.xml:29:7
 	android:name
-		ADDED from AndroidManifest.xml:28:5
+		ADDED from AndroidManifest.xml:28:7
 uses-permission#android.permission.WRITE_SETTINGS
 ADDED from AndroidManifest.xml:30:3
 MERGED from :FtcCommon-release::17:5

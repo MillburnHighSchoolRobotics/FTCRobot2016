@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by shant on 11/14/2015.
  */
-public class TeleopClimbingSupport2Logic extends LogicThread {
+public class TeleopClimbingSupport2Logic extends LogicThread<TeleopRobot> {
 
     @Override
     public void loadCommands() {

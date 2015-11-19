@@ -18,6 +18,8 @@ public class Translate implements Command {
     private double currentValue;
     private double multiplier;
 
+    private static AutonomousRobot robot = Command.AUTO_ROBOT;
+
     public Translate() {
         exitCondition = new ExitCondition() {
             @Override

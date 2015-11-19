@@ -1,149 +1,53 @@
 package virtualRobot;
 
 /**
- * Created by DOSullivan on 10/5/15.
- * Can be accesed by
+ * Created by Yanjun on 11/18/2015.
  */
-public class AutonomousRobot {
+public interface AutonomousRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor, conveyorMotor;
-    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
-    private Sensor angleSensor, colorSensor, tiltSensor, ultrasoundSensor;
+    Motor getDriveRightMotor();
 
-    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo, rampLift;
-    //private ContinuousRotationServo spinnerServo;
+    Motor getDriveLeftMotor();
 
-    private JoystickEvent joystickController;
+    Motor getArmLeftMotor();
 
-    public AutonomousRobot() {
-        driveLeftMotor = new Motor();
-        driveRightMotor = new Motor();
-        armLeftMotor = new Motor();
-        armRightMotor = new Motor();
-        reaperMotor = new Motor();
-        conveyorMotor = new Motor();
+    Motor getArmRightMotor();
 
-        driveLeftMotorEncoder = new Sensor();
-        driveRightMotorEncoder = new Sensor();
-        armLeftMotorEncoder = new Sensor();
-        armRightMotorEncoder = new Sensor();
+    Motor getReaperMotor();
 
-        /*angleSensor = new Sensor();
-        colorSensor = new Sensor();
-        tiltSensor = new Sensor();
-        ultrasoundSensor = new Sensor();*/
+    Motor getConveyorMotor();
 
-        armLeftServo = new Servo();
-        armRightServo = new Servo();
-        gateLeftServo = new Servo();
-        gateRightServo = new Servo();
+    Sensor getDriveRightMotorEncoder();
 
-        //spinnerServo = new ContinuousRotationServo();
+    Sensor getDriveLeftMotorEncoder();
 
-        blockerLeftServo = new Servo();
-        blockerRightServo = new Servo();
+    Sensor getArmLeftMotorEncoder();
 
-        //rampLift = new Servo();
+    Sensor getArmRightMotorEncoder();
 
-        joystickController = null;
+    Sensor getAngleSensor();
 
-        armLeftServo.setPosition(0.63);
-        armRightServo.setPosition(0.63);
-    }
+    Sensor getColorSensor();
 
-    public synchronized Motor getDriveRightMotor() {
-        return driveRightMotor;
-    }
+    Sensor getTiltSensor();
 
-    public synchronized Motor getDriveLeftMotor() {
-        return driveLeftMotor;
-    }
+    Sensor getUltrasoundSensor();
 
-    public synchronized Motor getArmLeftMotor() {
-        return armLeftMotor;
-    }
+    Servo getArmLeftServo();
 
-    public synchronized Motor getArmRightMotor() {
-        return armRightMotor;
-    }
+    Servo getArmRightServo();
 
-    public synchronized Motor getReaperMotor() {
-        return reaperMotor;
-    }
+    Servo getGateLeftServo();
 
-    public synchronized Motor getConveyorMotor() {
-        return conveyorMotor;
-    }
+    Servo getGateRightServo();
 
-    public synchronized Sensor getDriveRightMotorEncoder() {
-        return driveRightMotorEncoder;
-    }
+  /* ContinuousRotationServo getSpinnerServo() {
+    return spinnerServo;
+  }*/
 
-    public synchronized Sensor getDriveLeftMotorEncoder() {
-        return driveLeftMotorEncoder;
-    }
+    Servo getBlockerLeftServo();
 
-    public synchronized Sensor getArmLeftMotorEncoder() {
-        return armLeftMotorEncoder;
-    }
+    Servo getBlockerRightServo();
 
-    public synchronized Sensor getArmRightMotorEncoder() {
-        return armRightMotorEncoder;
-    }
-
-    public synchronized Sensor getAngleSensor() {
-        return angleSensor;
-    }
-
-    public synchronized Sensor getColorSensor() {
-        return colorSensor;
-    }
-
-    public synchronized Sensor getTiltSensor() {
-        return tiltSensor;
-    }
-
-    public synchronized Sensor getUltrasoundSensor() {
-        return ultrasoundSensor;
-    }
-
-    public synchronized Servo getArmLeftServo() {
-        return armLeftServo;
-    }
-
-    public synchronized Servo getArmRightServo() {
-        return armRightServo;
-    }
-
-    public synchronized Servo getGateLeftServo() {
-        return gateLeftServo;
-    }
-
-    public synchronized Servo getGateRightServo() {
-        return gateRightServo;
-    }
-
-    /*public synchronized ContinuousRotationServo getSpinnerServo() {
-        return spinnerServo;
-    }*/
-
-    public synchronized Servo getBlockerLeftServo() {
-        return blockerLeftServo;
-    }
-
-    public synchronized Servo getBlockerRightServo() {
-        return blockerRightServo;
-    }
-
-    public synchronized Servo getRampLift() {
-        return rampLift;
-    }
-
-    public synchronized void setJoystickController(JoystickEvent joystickController) {
-        this.joystickController = joystickController;
-    }
-
-    public synchronized JoystickEvent getJoystickController() {
-        return joystickController;
-    }
+    Servo getRampLift();
 }

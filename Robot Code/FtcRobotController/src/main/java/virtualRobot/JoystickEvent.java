@@ -13,6 +13,8 @@ public class JoystickEvent {
     
     public JoystickEvent(Gamepad gamepad) {
 
+        double x1, y1, x2, y2;
+
         synchronized (gamepad) {
             buttonStates[BUTTON_X] = gamepad.x;
             buttonStates[BUTTON_A] = gamepad.a;
@@ -29,12 +31,14 @@ public class JoystickEvent {
             buttonStates[BUTTON_BACK] = gamepad.back;
             buttonStates[BUTTON_LEFT_STICK] = gamepad.left_stick_button;
             buttonStates[BUTTON_RIGHT_STICK] = gamepad.right_stick_button;
-        }
 
-        double x1 = gamepad.left_stick_x;
-        double y1 = -gamepad.left_stick_y;
-        double x2 = gamepad.right_stick_x;
-        double y2 = -gamepad.right_stick_y;
+
+            x1 = gamepad.left_stick_x;
+            y1 = -gamepad.left_stick_y;
+            x2 = gamepad.right_stick_x;
+            y2 = -gamepad.right_stick_y;
+
+        }
 
         double SQRT_2 = Math.sqrt(2);
         double radius1 = Math.sqrt(x1*x1+y1*y1);
