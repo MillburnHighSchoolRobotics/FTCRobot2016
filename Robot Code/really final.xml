@@ -22,12 +22,12 @@
         <Motor name="leftTop" port="1" />
         <Motor name="leftBottom" port="2" />
     </MotorController>
-    <!--<LegacyModuleController name="Legacy Module 5" serialNumber="AL00VBNC">
+    <LegacyModuleController name="Legacy Module 5" serialNumber="AL00VBNC">
         <Gyro name="gyro" port="2" />
         <ColorSensor name="colorSensor" port="3" />
         <Gyro name="tilt" port="4" />
-    </LegacyModuleController>-->
-    <!--
+    </LegacyModuleController>
+
     <ServoController name="assorted others" serialNumber="AL00VE2J">
         <Servo name="rampLift" port="1" />
         <Servo name="gateRight" port="2" />
@@ -36,7 +36,7 @@
         <Servo name="blockerLeft" port="5" />
         <Servo name="blockerRight" port="6" />
     </ServoController>
--->
+
     <!--<ServoController name="assorted others" serialNumber="AL00QU0H">
         <Servo name="rampLift" port="1" />
         <Servo name="gateRight" port="2" />
@@ -45,13 +45,9 @@
         <Servo name="blockerLeft" port="5" />
         <Servo name="blockerRight" port="6" />
     </ServoController>-->
-    <ServoController name="arm servo" serialNumber="AL00YALC">        
-        <Servo name="blockerLeft" port="1" />
-        <Servo name="blockerRight" port="6" />
+    <ServoController name="arm servo" serialNumber="AL00YALC">
         <Servo name="armRight" port="2" />
         <Servo name="armLeft" port="3" />
-        <Servo name="gateLeft" port="4" />
-        <Servo name="gateRight" port="5" />
         
     </ServoController>
 </Robot>

@@ -1,19 +1,20 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import virtualRobot.AutonomousRobot;
 import virtualRobot.Command;
-import virtualRobot.JoystickEvent;
+import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
 import virtualRobot.Motor;
+import virtualRobot.SallyJoeBot;
 import virtualRobot.Sensor;
 
 public abstract class UpdateThread extends OpMode {
 	
-	private AutonomousRobot robot;
+	private SallyJoeBot robot;
 	protected Class<? extends LogicThread> logicThread;
 	private Thread t;
 	
@@ -27,6 +28,7 @@ public abstract class UpdateThread extends OpMode {
     //private ContinuousRotationServo vSpinnerServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder; //vAngleSensor, vColorSensor;
 
+	private JoystickController vJoystickController1, vJoystickController2;
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
 	
 	@Override
@@ -65,7 +67,7 @@ public abstract class UpdateThread extends OpMode {
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		*/
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
-		robot = Command.robot;
+		robot = Command.ROBOT;
 
         //FETCH VIRTUAL COMPONENTS OF VIRTUAL ROBOT
         vDriveLeftMotor = robot.getDriveLeftMotor();
@@ -90,6 +92,9 @@ public abstract class UpdateThread extends OpMode {
 		vBlockerLeftServo = robot.getBlockerLeftServo();
 		vBlockerRightServo = robot.getBlockerRightServo();
 		//vRampLift = robot.getRampLift();
+
+        vJoystickController1 = robot.getJoystickController1();
+        vJoystickController2 = robot.getJoystickController2();
 
         setLogicThread();
 
@@ -152,8 +157,12 @@ public abstract class UpdateThread extends OpMode {
         vArmLeftMotorEncoder.setRawValue(-armLeftMotor.getCurrentPosition());
         vArmRightMotorEncoder.setRawValue(-armRightMotor.getCurrentPosition());
 
-      	JoystickEvent curState = new JoystickEvent(gamepad1);
-		robot.setJoystickController(curState);
+        try {
+            vJoystickController1.copyStates(gamepad1);
+            vJoystickController2.copyStates(gamepad2);
+        } catch (RobotCoreException e) {
+            e.printStackTrace();
+        }
         // Copy State
 		
 		leftTop.setPower(leftPower);

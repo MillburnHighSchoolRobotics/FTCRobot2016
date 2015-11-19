@@ -14,6 +14,8 @@ public class Rotate implements Command {
     
     private PIDController pidController;
 
+    private static AutonomousRobot robot = Command.AUTO_ROBOT;
+
     public Rotate () {
     	
     	power = 1;

@@ -7,22 +7,21 @@ package virtualRobot;
  */
 public class Servo {
 
-
-    int servoPos;
-
     private volatile double position;
-    //0-180
-
 
     public synchronized double getPosition() {
-
-        return position;
+    	double retVal = 0;
+    	synchronized (this) {
+    		retVal = position;
+    	}
+        return retVal;
     }
 
 
     public synchronized void setPosition(double position) {
-
-        this.position = position;
+    	synchronized (this) {
+    		this.position = position;
+    	}
     }
 
 }

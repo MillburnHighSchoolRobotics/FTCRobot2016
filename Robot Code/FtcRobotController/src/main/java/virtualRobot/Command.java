@@ -9,5 +9,7 @@ public interface Command  {
      */
     boolean changeRobotState () throws InterruptedException;
 
-    AutonomousRobot robot = new AutonomousRobot();
+    SallyJoeBot ROBOT = new SallyJoeBot();
+    AutonomousRobot AUTO_ROBOT = ROBOT;
+    TeleopRobot TELEOP_ROBOT = ROBOT;
 }

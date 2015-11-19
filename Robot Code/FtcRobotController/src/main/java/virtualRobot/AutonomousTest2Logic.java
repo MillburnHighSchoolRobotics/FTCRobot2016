@@ -3,7 +3,7 @@ package virtualRobot;
 /**
  * Created by Yanjun on 11/10/2015.
  */
-public class AutonomousTest2Logic extends LogicThread {
+public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
         /*commands.add(new Translate(5000, Translate.Direction.FORWARD));
