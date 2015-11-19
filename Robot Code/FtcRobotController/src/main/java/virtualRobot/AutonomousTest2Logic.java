@@ -6,9 +6,10 @@ package virtualRobot;
 public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
-        /*commands.add(new Translate(5000, Translate.Direction.FORWARD));
-        commands.add(new Rotate(45));
-        commands.add(new Translate(10000, Translate.Direction.BACKWARD));
+        
+        commands.add(new Translate(5000, Translate.Direction.FORWARD));
+        commands.add(new Rotate(-135));
+        commands.add(new Translate(10000, Translate.Direction.FORWARD));
         commands.add(new Rotate(0));
 
         Translate moveUntilLine = new Translate();
@@ -18,7 +19,7 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
         moveUntilLine.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                AutonomousRobot robot = Command.robot;
+                AutonomousRobot robot = Command.ROBOT;
 
                 int hexColor = (int) robot.getColorSensor().getValue();
                 int red = (hexColor & 0xff0000) >> 16;
@@ -44,7 +45,7 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
         moveUntilClose.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                AutonomousRobot robot = Command.robot;
+                AutonomousRobot robot = Command.ROBOT;
 
                 Sensor ultrasound = robot.getUltrasoundSensor();
 
@@ -99,7 +100,7 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
         moveUntilTilted.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                AutonomousRobot robot = Command.robot;
+                AutonomousRobot robot = Command.ROBOT;
 
                 Sensor tiltSensor = robot.getTiltSensor();
 
@@ -111,7 +112,5 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
             }
         });
         commands.add(moveUntilTilted);
-
-        */
     }
 }

@@ -31,6 +31,7 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
             public boolean changeRobotState() {
                 JoystickController joystick1 = robot.getJoystickController1();
                 JoystickController joystick2 = robot.getJoystickController2();
+
                 robot.getArmRightMotorEncoder().clearValue();
                 boolean reaperForwardsOn = false;
                 boolean reaperBackwardOn = false;
@@ -38,6 +39,7 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                 while (true) {
 
                     joystick1.logicalRefresh();
+                    joystick2.logicalRefresh();
 
                     //SHIELDS
                     if (joystick1.isDpadUp()) { //ONE BUTTON TO LOWER THE SHIELDS
@@ -110,14 +112,20 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                     */
 
                     if (!joystick1.isPressed(JoystickController.BUTTON_LT) && joystick1.isPressed(JoystickController.BUTTON_RT)){
-                        robot.getReaperMotor().setPower(1);
+                        reaperForwardsOn = !reaperForwardsOn;
+                        reaperBackwardOn = false;
                     }
 
                     else if (joystick1.isPressed(JoystickController.BUTTON_LT) && !joystick1.isPressed(JoystickController.BUTTON_RT)) {
-                       robot.getReaperMotor().setPower(-1);
+                        reaperBackwardOn = !reaperBackwardOn;
+                        reaperForwardsOn = false;
                     }
 
-                    else {
+                    if (reaperForwardsOn) {
+                        robot.getReaperMotor().setPower(1);
+                    } else if (reaperBackwardOn) {
+                        robot.getReaperMotor().setPower(-1);
+                    } else {
                         robot.getReaperMotor().setPower(0);
                     }
 

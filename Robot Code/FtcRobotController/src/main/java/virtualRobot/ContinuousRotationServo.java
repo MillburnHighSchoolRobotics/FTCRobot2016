@@ -8,7 +8,7 @@ public class ContinuousRotationServo extends Servo {
     public synchronized double getSpeed () {
     	double retVal = 0;
     	synchronized (this) {
-    		retVal = (getPosition() - 90) / 90.0
+    		retVal = (getPosition() - 90) / 90.0;
     	}
         return retVal;
     }
