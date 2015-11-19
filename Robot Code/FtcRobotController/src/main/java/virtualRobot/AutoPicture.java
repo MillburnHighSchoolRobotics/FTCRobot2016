@@ -8,13 +8,13 @@ import android.view.Surface;
  * Created by Alex on 11/14/2015.
  */
 public class AutoPicture{
+    // **IMPORTANT NOTE THIS IS BEING PUT INTO A SEPARATE APP AND BEING CONVERTED TO THE CAMERA2 API**
     public final void open(1);
     public final void takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, Camera.PictureCallback postview, Camera.PictureCallback jpeg)
     {
-        getParameters(shutter, raw, pastview, jpeg);
+        getParameters(shutter, raw, postview, jpeg);
         setParameters(Camera.Parameters);
-        
-
+        setCamera();
     }
 
     // this makes sure the camera picture is at the correct orientation of the phone position if it is moved in any way
