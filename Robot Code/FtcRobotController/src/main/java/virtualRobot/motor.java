@@ -10,18 +10,26 @@ public class Motor {
     }
 
     public synchronized double getPower () {
-        return power;
+    	double retVal = 0;
+    	synchronized (this) {
+    		retVal = power;
+    	}
+        return retVal;
     }
 
     public synchronized void setPower(double newPower) {
-        power = newPower;
-        if (power > 1) {
-            power = 1;
-        }
-
-        if (power < -1) {
-            power = -1;
-        }
+    	
+    	synchronized (this) {
+    	
+	        power = newPower;
+	        if (power > 1) {
+	            power = 1;
+	        }
+	
+	        if (power < -1) {
+	            power = -1;
+	        }
+    	}
     }
 
 }

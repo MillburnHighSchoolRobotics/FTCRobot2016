@@ -58,36 +58,42 @@ public class JoystickController {
         if (eventQueue.size() != 0 && newEvent.equals(eventQueue.get(eventQueue.size()-1))) {
             return;
         }
-
-        eventQueue.add(newEvent);
+        
+        synchronized (this) {
+        	eventQueue.add(newEvent);
+        }
     }
 
     public synchronized void logicalRefresh() {
-        if (eventQueue.size() == 0) {
-            curEvent = prevEvent;
-        } else {
-
-            prevEvent = curEvent;
-            curEvent = eventQueue.remove(0);
-        }
-
-        if (prevEvent != null && curEvent != null) {
-
-            for (int i = 0; i < 12; i++) {
-                pressed.set(i, !prevEvent.buttonStates[i] && curEvent.buttonStates[i]);
-                released.set(i, prevEvent.buttonStates[i] && !curEvent.buttonStates[i]);
-                down.set(i, curEvent.buttonStates[i]);
-            }
-
-            for (int i = 0; i < 8; i++) {
-                stickValues.set(i, curEvent.stickValues[i]);
-            }
-
-            dpad_up.set(curEvent.dpad_up);
-            dpad_down.set(curEvent.dpad_down);
-            dpad_left.set(curEvent.dpad_left);
-            dpad_right.set(curEvent.dpad_right);
-        }
+    	
+    	synchronized (this) {
+    	
+	        if (eventQueue.size() == 0) {
+	            curEvent = prevEvent;
+	        } else {
+	
+	            prevEvent = curEvent;
+	            curEvent = eventQueue.remove(0);
+	        }
+	
+	        if (prevEvent != null && curEvent != null) {
+	
+	            for (int i = 0; i < 12; i++) {
+	                pressed.set(i, !prevEvent.buttonStates[i] && curEvent.buttonStates[i]);
+	                released.set(i, prevEvent.buttonStates[i] && !curEvent.buttonStates[i]);
+	                down.set(i, curEvent.buttonStates[i]);
+	            }
+	
+	            for (int i = 0; i < 8; i++) {
+	                stickValues.set(i, curEvent.stickValues[i]);
+	            }
+	
+	            dpad_up.set(curEvent.dpad_up);
+	            dpad_down.set(curEvent.dpad_down);
+	            dpad_left.set(curEvent.dpad_left);
+	            dpad_right.set(curEvent.dpad_right);
+	        }
+    	}
     }
 
     public synchronized boolean isDown(int buttonID) {
