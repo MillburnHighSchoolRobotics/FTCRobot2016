@@ -77,8 +77,8 @@ public class Rotate implements Command {
         	
         	double adjustedPower = pidController.getPIDOutput(robot.getAngleSensor().getValue()) * power;
 
-            robot.getDriveLeftMotor().setPower(-adjustedPower);
-            robot.getDriveRightMotor().setPower(adjustedPower);
+            robot.getDriveLeftMotor().setPower(adjustedPower);
+            robot.getDriveRightMotor().setPower(-adjustedPower);
 
             if (Thread.currentThread().isInterrupted()) {
             	isInterrupted = true;

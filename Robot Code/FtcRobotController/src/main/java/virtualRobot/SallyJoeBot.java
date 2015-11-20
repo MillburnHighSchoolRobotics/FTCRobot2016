@@ -28,11 +28,10 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         armLeftMotorEncoder = new Sensor();
         armRightMotorEncoder = new Sensor();
 
-        /*angleSensor = new Sensor();
+        angleSensor = new Sensor();
         colorSensor = new Sensor();
         tiltSensor = new Sensor();
-        ultrasoundSensor = new Sensor();*/
-
+        ultrasoundSensor = new Sensor();
         armLeftServo = new Servo();
         armRightServo = new Servo();
         gateLeftServo = new Servo();
