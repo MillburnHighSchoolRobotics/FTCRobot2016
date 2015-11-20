@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 
@@ -60,7 +61,7 @@ public class TakePicture extends Activity //implements SurfaceHolder.Callback
         mCamera = Camera.open();
         takePic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 //get camera parameters
                 parameters = mCamera.getParameters();
 
@@ -79,6 +80,8 @@ public class TakePicture extends Activity //implements SurfaceHolder.Callback
                         //decode the data obtained by the camera into a Bitmap
                         bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
                         iv_image.setImageBitmap(bmp);
+                        boolean redisLeft = DavidClass.analyzePic(bmp);
+                        Toast.makeText(v.getContext(), Boolean.toString(redisLeft), Toast.LENGTH_LONG).show();
                     }
                 };
 
