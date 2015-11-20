@@ -3,9 +3,11 @@ package com.electrasoft.autonomouscameraforrobot;
 /**
  * Created by DOSullivan on 11/20/15.
  */
-import java.io.*;
-import android.graphics.*;
-import java.util.*;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by DOSullivan on 11/4/15.
@@ -19,9 +21,9 @@ public class DavidClass {
     public static boolean analyzePic(Bitmap bmp) {
         Bitmap image;
        image = bmp;
-        int[] pixels = null;
+        int[] pixels = new int[image.getWidth() * image.getHeight()];
         int height = image.getHeight(), width = image.getWidth();
-        image.getPixels(pixels, 0, image.getWidth(), 0, 0, image.getHeight(), image.getWidth()); //gets pixels in pixel array
+        image.getPixels(pixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight()); //gets pixels in pixel array
 
         int Midx = roundUp(width, 2)-1, Midy = roundUp(height,2)-1;
         int Q1x = roundUp(Midx, 2), Q3x = roundUp(Midx+width, 2), Q1y = roundUp(Midy,2), Q3y = roundUp(Midy+height,2);
