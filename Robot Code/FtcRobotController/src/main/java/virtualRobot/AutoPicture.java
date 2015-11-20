@@ -1,14 +1,10 @@
 package virtualRobot;
 
-import android.app.Activity;
-import android.hardware.Camera;
-import android.view.Surface;
-
 /**
  * Created by Alex on 11/14/2015.
  */
 public class AutoPicture{
-    // **IMPORTANT NOTE THIS IS BEING PUT INTO A SEPARATE APP AND BEING CONVERTED TO THE CAMERA2 API**
+    /*// **IMPORTANT NOTE THIS IS BEING PUT INTO A SEPARATE APP AND BEING CONVERTED TO THE CAMERA2 API**
     public final void open(1);
     public final void takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, Camera.PictureCallback postview, Camera.PictureCallback jpeg)
     {
@@ -36,4 +32,6 @@ public class AutoPicture{
             camera.setDisplayOrientation(result);
 
     }
-        }}
+        }
+        */
+        }
