@@ -18,9 +18,9 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
         final double servoDelta = 0.0023; //0.00115
         final double ARM_TOP_CAP = 0.3;
         final double ARM_BOTTOM_CAP = 0.63;
-        final double RIGHT_GATE_CLOSED = 0; //0.5
-        final double RIGHT_GATE_DEPOSIT = 0.5;
-        final double RIGHT_GATE_ZIPLINE = 0.75;
+        final double RIGHT_GATE_CLOSED = 0.17; //0.5
+        final double RIGHT_GATE_DEPOSIT = 0.7;
+        final double RIGHT_GATE_ZIPLINE = 0.8;
         final double LEFT_GATE_CLOSED = 0.15; //0.12
         final double LEFT_GATE_DEPOSIT = 0.65;
         final double LEFT_GATE_ZIPLINE = 0.85;
@@ -54,10 +54,10 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                         robot.getRampLift().setPosition(1);
                     }
 
-                    if (joystick1.isDpadRight()) {
+                    /*if (joystick1.isDpadRight()) {
                         //ONE BUTTON TO RULE THEM ALL
                         //AND IN THE DARKNESS BIND THEM
-                    }
+                    }*/
 
                     //DRIVE
                     robot.getDriveLeftMotor().setPower(joystick1.getValue(JoystickController.Y_1));
@@ -82,7 +82,7 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                         robot.getGateLeftServo().setPosition(LEFT_GATE_ZIPLINE);
                     }
 
-                    else if (joystick1.isDpadRight()) {
+                    else if (joystick1.isDpadLeft()) {
                         robot.getGateRightServo().setPosition(RIGHT_GATE_ZIPLINE);
                     }
 
