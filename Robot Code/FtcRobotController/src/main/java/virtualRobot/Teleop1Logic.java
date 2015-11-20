@@ -35,8 +35,8 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                 robot.getArmRightMotorEncoder().clearValue();
                 boolean reaperForwardsOn = false;
                 boolean reaperBackwardOn = false;
-
-                while (true) {
+                boolean isInterrupted = false;
+                while (!isInterrupted) {
 
                     joystick1.logicalRefresh();
                     joystick2.logicalRefresh();
@@ -218,10 +218,14 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                     try {
                         Thread.currentThread().sleep(30);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        isInterrupted = true;
                     }
 
+
                 }
+
+                return isInterrupted;
+
             }
 
         });
