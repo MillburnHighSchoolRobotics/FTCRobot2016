@@ -22,7 +22,7 @@ import java.util.logging.Handler;
  */
 public abstract class CameraTakePicture {
 
-    //THIS IS ALL GOING TO BE CHANGED
+    /*//THIS IS ALL GOING TO BE CHANGED
     Intent beaconPic = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -35,12 +35,12 @@ public abstract class CameraTakePicture {
             protected void onActivityResult(int requestCode, int resultCode, Intent data)
             {
                 if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-                    Bundle extras = data.getExtras();
+                    Bundle extras = beaconPic.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    mImageView.setImageBitmap(imageBitmap);
+                    beaconPic.setImageBitmap(imageBitmap);
                 }
             }
-        }
+        }*/
     }
 
 
