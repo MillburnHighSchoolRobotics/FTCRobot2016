@@ -42,16 +42,16 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                     joystick2.logicalRefresh();
 
                     //SHIELDS
-                    if (joystick1.isDpadUp()) { //ONE BUTTON TO LOWER THE SHIELDS
+                    if (joystick1.isDpadDown()) { //ONE BUTTON TO LOWER THE SHIELDS
                         robot.getBlockerLeftServo().setPosition(.8);
                         robot.getBlockerRightServo().setPosition(.8);
                         robot.getRampLift().setPosition(0);
                     }
 
-                    if (joystick1.isDpadDown()) { //ONE BUTTON TO RAISE THEM
+                    if (joystick1.isDpadUp()) { //ONE BUTTON TO RAISE THEM
                         robot.getBlockerLeftServo().setPosition(0);
                         robot.getBlockerRightServo().setPosition(0);
-                        robot.getRampLift().setPosition(1);
+                        robot.getRampLift().setPosition(0.85);
                     }
 
                     /*if (joystick1.isDpadRight()) {

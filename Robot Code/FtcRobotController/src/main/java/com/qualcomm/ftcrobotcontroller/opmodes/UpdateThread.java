@@ -193,7 +193,7 @@ public abstract class UpdateThread extends OpMode {
 		blockerRight.setPosition(vBlockerRightServo.getPosition());
 		rampLift.setPosition(vRampLift.getPosition());
 
-		telemetry.addData("FU ALL", vJoystickController2.getValue(JoystickController.Y_1));
+		telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 
 		/*telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
 		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
