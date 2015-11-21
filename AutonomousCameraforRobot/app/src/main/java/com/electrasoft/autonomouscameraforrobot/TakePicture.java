@@ -79,7 +79,8 @@ public class TakePicture extends Activity //implements SurfaceHolder.Callback
 
                         //decode the data obtained by the camera into a Bitmap
                         bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        iv_image.setImageBitmap(bmp);
+
+                        iv_image.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth()/2, bmp.getHeight()/2, false));
                         boolean redisLeft = DavidClass.analyzePic(bmp);
                         Toast.makeText(v.getContext(), Boolean.toString(redisLeft), Toast.LENGTH_LONG).show();
                     }
