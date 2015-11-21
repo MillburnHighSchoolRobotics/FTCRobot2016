@@ -3,18 +3,22 @@ package com.electrasoft.autonomouscameraforrobot;
 /**
  * Created by DOSullivan on 11/20/15.
  */
-        import java.io.IOException;
 
-        import android.app.Activity;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.hardware.Camera;
-        import android.hardware.Camera.Parameters;
-        import android.os.Bundle;
-        import android.view.SurfaceHolder;
-        import android.view.SurfaceView;
-        import android.widget.ImageView;
-public class TakePicture extends Activity implements SurfaceHolder.Callback
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
+import android.os.Bundle;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+
+
+public class TakePicture extends Activity //implements SurfaceHolder.Callback
 {
     //a variable to store a reference to the Image View at the main.xml file
     private ImageView iv_image;
@@ -26,7 +30,7 @@ public class TakePicture extends Activity implements SurfaceHolder.Callback
 
     //Camera variables
     //a surface holder
-    private SurfaceHolder sHolder;
+   // private SurfaceHolder sHolder;
     //a variable to control the camera
     private Camera mCamera;
     //the camera parameters
@@ -43,42 +47,102 @@ public class TakePicture extends Activity implements SurfaceHolder.Callback
         iv_image = (ImageView) findViewById(R.id.imageView);
 
         //get the Surface View at the main.xml file
-        sv = (SurfaceView) findViewById(R.id.surfaceView);
 
         //Get a surface
-        sHolder = sv.getHolder();
+        //sHolder = sv.getHolder();
 
         //add the callback interface methods defined below as the Surface View callbacks
-        sHolder.addCallback(this);
+        //sHolder.addCallback(this);
 
         //tells Android that this surface will have its data constantly replaced
-        sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        //sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        Button takePic = (Button) findViewById(R.id.takeButton);
+        mCamera = Camera.open();
+        takePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                //get camera parameters
+                parameters = mCamera.getParameters();
+
+                //set camera parameters
+                mCamera.setParameters(parameters);
+                mCamera.startPreview();
+
+                //sets what code should be executed after the picture is taken
+                Camera.PictureCallback mCall = new Camera.PictureCallback()
+                {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera)
+                    {
+
+
+                        //decode the data obtained by the camera into a Bitmap
+                        bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+
+                        iv_image.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth()/2, bmp.getHeight()/2, false));
+                        boolean redisLeft = DavidClass.analyzePic(bmp);
+                        Toast.makeText(v.getContext(), Boolean.toString(redisLeft), Toast.LENGTH_LONG).show();
+                    }
+                };
+
+                mCamera.takePicture(null, null, mCall);
+            }
+        });
+    }
+
+
+
+    public void onStart() {
+        super.onStart();
+
+        mCamera.lock();
+    }
+
+    public void onRestart() {
+        super.onRestart();
+
+        mCamera.lock();
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        mCamera.lock();
+    }
+
+    public void onPause() {
+        super.onPause();
+
+        mCamera.release();
+    }
+
+    public void onStop() {
+        super.onStop();
+
+        mCamera.release();
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+
+        mCamera.release();
+    }
+
+
+
+/*
+    public static Bitmap RotateBitmap(Bitmap source, float angle)
+    {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
     {
-        //get camera parameters
-        parameters = mCamera.getParameters();
 
-        //set camera parameters
-        mCamera.setParameters(parameters);
-        mCamera.startPreview();
-
-        //sets what code should be executed after the picture is taken
-        Camera.PictureCallback mCall = new Camera.PictureCallback()
-        {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera)
-            {
-                //decode the data obtained by the camera into a Bitmap
-                bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                //set the iv_image
-                iv_image.setImageBitmap(bmp);
-            }
-        };
-
-        mCamera.takePicture(null, null, mCall);
     }
 
     @Override
@@ -105,5 +169,5 @@ public class TakePicture extends Activity implements SurfaceHolder.Callback
         mCamera.release();
         //unbind the camera from this object
         mCamera = null;
-    }
+    }*/
 }
