@@ -5,6 +5,8 @@ package com.electrasoft.autonomouscameraforrobot;
  */
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +21,19 @@ public class DavidClass {
     //returns true if left is red (right is blue)
     //returns false if left if blue (right is red)
     public static boolean analyzePic(Bitmap bmp) {
-        Bitmap image;
-       image = bmp;
+        Log.d("zzz", Long.toString(RED));
+        Bitmap image= bmp;
+        image= Bitmap.createScaledBitmap(bmp,image.getWidth()/2, image.getHeight()/2, true );
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(), true);
+       image = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
         int[] pixels = new int[image.getWidth() * image.getHeight()];
+
         int height = image.getHeight(), width = image.getWidth();
         image.getPixels(pixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight()); //gets pixels in pixel array
 
+       
         int Midx = roundUp(width, 2)-1, Midy = roundUp(height,2)-1;
         int Q1x = roundUp(Midx, 2), Q3x = roundUp(Midx+width, 2), Q1y = roundUp(Midy,2), Q3y = roundUp(Midy+height,2);
         List<Integer> leftPixels = new ArrayList<Integer>(), rightPixels = new ArrayList<Integer>();
@@ -50,7 +59,9 @@ public class DavidClass {
         }
         lAvg = roundUp(lSum, lNum);
         rAvg = roundUp(rSum, rNum);
-        return (lAvg-RED > rAvg-RED);
+        Log.d("qqq", Long.toString(lAvg) + " " + Long.toString(rAvg));
+       return (lAvg-RED > rAvg-RED);
+
 
 
 
@@ -63,6 +74,7 @@ public class DavidClass {
     private static long roundUp(long num, long divisor) {
         return (num + divisor - 1) / divisor;
     }
+
 
 }
 /* NON-ANDROID VERSION: (USES IMAGEIO)
