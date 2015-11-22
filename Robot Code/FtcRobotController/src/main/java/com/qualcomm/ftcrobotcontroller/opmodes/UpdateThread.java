@@ -6,6 +6,10 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
@@ -24,14 +28,17 @@ public abstract class UpdateThread extends OpMode {
 	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight, rampLift;
 	private GyroSensor gyro;
     private ColorSensor colorSensor;
+	private UltrasonicSensor ultrasonicSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor, vConveyorMotor;
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
     //private ContinuousRotationServo vSpinnerServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor, vUltrasonicSensor;
 
 	private JoystickController vJoystickController1, vJoystickController2;
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
+
+	private ArrayList<Integer> gyroReadings;
 	
 	@Override
 	public void init() {
@@ -67,6 +74,7 @@ public abstract class UpdateThread extends OpMode {
         //SENSOR SETUP
 		gyro = hardwareMap.gyroSensor.get("gyro");
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
+		ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
 
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.ROBOT;
@@ -95,6 +103,8 @@ public abstract class UpdateThread extends OpMode {
 		vBlockerRightServo = robot.getBlockerRightServo();
 		vRampLift = robot.getRampLift();
 
+		vUltrasonicSensor = robot.getUltrasoundSensor();
+
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
 
@@ -108,10 +118,17 @@ public abstract class UpdateThread extends OpMode {
 			return;
 		}
 
-		gyroOffset = gyro.getRotation();
+		gyroReadings = new ArrayList<Integer>();
+	}
+
+	public void init_loop() {
+		gyroReadings.add((int)gyro.getRotation());
 	}
 	
 	public void start() {
+
+		Collections.sort(gyroReadings);
+		gyroOffset = gyroReadings.get(gyroReadings.size() / 2);
 		
 		curTime = System.currentTimeMillis();
 		prevTime = System.currentTimeMillis();
@@ -150,14 +167,16 @@ public abstract class UpdateThread extends OpMode {
 		if (Math.abs(curRot) < 2) {
 			delta = 0;
 		}
-		vAngleSensor.setRawValue(vAngleSensor.getRawValue() + delta);
+		vAngleSensor.incrementRawValue(delta);
 
         vColorSensor.setRawValue(colorSensor.argb());
 
-		telemetry.addData("le gyro", curRot);
+		vUltrasonicSensor.setRawValue(ultrasonicSensor.getUltrasonicLevel());
+		telemetry.addData("le gyro", vAngleSensor.getValue());
 		telemetry.addData("le avg gyro", (curRot + prevRot) * 0.5);
 		telemetry.addData("le time", curTime - prevTime);
 		telemetry.addData("le delta", delta);
+
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
@@ -195,13 +214,14 @@ public abstract class UpdateThread extends OpMode {
 
 		telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 
-		/*telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
-		telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
-		telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
-		telemetry.addData("rightEncoder", Double.toString(vDriveRightMotorEncoder.getRawValue()));
+		//telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
+		//telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
+		//telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
+		//telemetry.addData("rightEncoder", Double.toString(vDriveRightMotorEncoder.getRawValue()));
         telemetry.addData("color", String.format("%06x", (int) vColorSensor.getRawValue()));
-		telemetry.addData("rightArmPosition", Double.toString(armRight.getPosition()));
-		telemetry.addData("leftArmPosition", Double.toString(armLeft.getPosition()));*/
+		telemetry.addData("ultrasound", Double.toString(vUltrasonicSensor.getValue()));
+		//telemetry.addData("rightArmPosition", Double.toString(armRight.getPosition()));
+		//telemetry.addData("leftArmPosition", Double.toString(armLeft.getPosition()));
 
 		//telemetry.addData("angleSensor", Double.toString(vAngleSensor.getValue()));
 

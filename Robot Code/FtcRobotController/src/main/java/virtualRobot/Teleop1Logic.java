@@ -10,6 +10,12 @@ package virtualRobot;
 /**
  * Created by shant on 11/12/2015.
  */
+
+/*
+To Do List:
+Wire bumper servos
+FIX THE FUCKING SERVO SCREW
+ */
 public class Teleop1Logic extends LogicThread<TeleopRobot> {
 
     @Override

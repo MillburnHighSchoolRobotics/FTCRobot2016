@@ -6,15 +6,58 @@ package virtualRobot;
 public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
-        
-        commands.add(new Translate(5000, Translate.Direction.FORWARD));
-        commands.add(new Rotate(-135));
-        commands.add(new Translate(10000, Translate.Direction.FORWARD));
-        commands.add(new Rotate(0));
+        commands.add(
+                new MoveServo(
+                        new Servo[]{
+                                robot.getBlockerLeftServo(),
+                                robot.getBlockerRightServo(),
+                                robot.getRampLift()
+                        },
+                        new double[]{
+                                0.8,
+                                0.8,
+                                0
+                        }
+                )
+        );
+        commands.add(new Translate(4500, Translate.Direction.FORWARD));
+        commands.add(new Rotate(1850, 0.75));
+        commands.add(new Translate(11500, Translate.Direction.FORWARD));
+        commands.add(new Rotate(-1850, 0.75));
+        commands.add(new Translate(1900, Translate.Direction.FORWARD));
+        commands.add(new Rotate(2200, -0.75));
+        commands.add(new Translate(1800, Translate.Direction.BACKWARD));
+        commands.add(
+                new MoveServo(
+                        new Servo[]{
 
+                                robot.getArmRightServo()
+                        },
+                        new double[]{
+
+                                0.4
+                        }
+                )
+        );
+
+        commands.add(new Pause(2500));
+        commands.add(
+                new MoveServo(
+                        new Servo[]{
+
+                                robot.getArmRightServo()
+                        },
+                        new double[]{
+
+                                0.63
+                        }
+                )
+        );
+        commands.add(new Pause(2500));
+        /*
         Translate moveUntilLine = new Translate();
         moveUntilLine.setRunMode(Translate.RunMode.CUSTOM);
-        moveUntilLine.setDirection(Translate.Direction.BACKWARD);
+        moveUntilLine.setDirection(Translate.Direction.FORWARD);
         moveUntilLine.setMaxPower(0.3);
         moveUntilLine.setExitCondition(new ExitCondition() {
             @Override
@@ -36,7 +79,7 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
 
         commands.add(moveUntilLine);
 
-        commands.add(new Rotate(90));
+        commands.add(new Rotate(-90));
 
         Translate moveUntilClose = new Translate();
         moveUntilClose.setRunMode(Translate.RunMode.CUSTOM);
@@ -112,5 +155,6 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
             }
         });
         commands.add(moveUntilTilted);
+        */
     }
 }

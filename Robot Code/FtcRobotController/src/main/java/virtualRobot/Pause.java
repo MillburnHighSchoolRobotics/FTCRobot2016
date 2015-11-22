@@ -13,7 +13,7 @@ public class Pause implements Command {
 
     @Override
     public boolean changeRobotState() throws InterruptedException {
-        boolean isInterrupted = true;
+        boolean isInterrupted = false;
 
         try {
             Thread.currentThread().sleep(nMillis);
