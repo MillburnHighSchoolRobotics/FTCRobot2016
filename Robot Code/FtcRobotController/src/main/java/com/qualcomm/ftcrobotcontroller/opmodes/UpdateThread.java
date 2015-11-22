@@ -2,14 +2,10 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
@@ -26,14 +22,14 @@ public abstract class UpdateThread extends OpMode {
 	
 	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper, conveyor;
 	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight, rampLift;
-	private GyroSensor gyro;
-    private ColorSensor colorSensor;
-	private UltrasonicSensor ultrasonicSensor;
+	//private GyroSensor gyro;
+    //private ColorSensor colorSensor;
+	//private UltrasonicSensor ultrasonicSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor, vConveyorMotor;
 	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
     //private ContinuousRotationServo vSpinnerServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder, vAngleSensor, vColorSensor, vUltrasonicSensor;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder; //vAngleSensor, vColorSensor, vUltrasonicSensor;
 
 	private JoystickController vJoystickController1, vJoystickController2;
 	double curTime, prevTime, curRot, prevRot, gyroOffset;
@@ -72,10 +68,10 @@ public abstract class UpdateThread extends OpMode {
 		armRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         //SENSOR SETUP
-		gyro = hardwareMap.gyroSensor.get("gyro");
+		/*gyro = hardwareMap.gyroSensor.get("gyro");
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
-
+*/
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.ROBOT;
 
@@ -91,8 +87,8 @@ public abstract class UpdateThread extends OpMode {
         vDriveRightMotorEncoder = robot.getDriveRightMotorEncoder();
         vArmLeftMotorEncoder = robot.getArmLeftMotorEncoder();
         vArmRightMotorEncoder = robot.getArmRightMotorEncoder();
-        vAngleSensor = robot.getAngleSensor();
-		vColorSensor = robot.getColorSensor();
+        //vAngleSensor = robot.getAngleSensor();
+		//vColorSensor = robot.getColorSensor();
 
         vArmLeftServo = robot.getArmLeftServo();
         vArmRightServo = robot.getArmRightServo();
@@ -103,7 +99,7 @@ public abstract class UpdateThread extends OpMode {
 		vBlockerRightServo = robot.getBlockerRightServo();
 		vRampLift = robot.getRampLift();
 
-		vUltrasonicSensor = robot.getUltrasoundSensor();
+		//vUltrasonicSensor = robot.getUltrasoundSensor();
 
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
@@ -122,12 +118,12 @@ public abstract class UpdateThread extends OpMode {
 	}
 
 	public void init_loop() {
-		gyroReadings.add((int)gyro.getRotation());
+		//gyroReadings.add((int)gyro.getRotation());
 	}
 	
 	public void start() {
 
-		Collections.sort(gyroReadings);
+		/*Collections.sort(gyroReadings);
 		gyroOffset = gyroReadings.get(gyroReadings.size() / 2);
 		
 		curTime = System.currentTimeMillis();
@@ -137,7 +133,7 @@ public abstract class UpdateThread extends OpMode {
 		prevRot = gyro.getRotation()-gyroOffset;
 		
 		vAngleSensor.setRawValue(0);
-		
+		*/
 		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
 		
@@ -161,7 +157,7 @@ public abstract class UpdateThread extends OpMode {
 		
 		curTime = System.currentTimeMillis();
 
-		curRot = gyro.getRotation()-gyroOffset;
+		/*curRot = gyro.getRotation()-gyroOffset;
 
 		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
 		if (Math.abs(curRot) < 2) {
@@ -176,7 +172,7 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("le avg gyro", (curRot + prevRot) * 0.5);
 		telemetry.addData("le time", curTime - prevTime);
 		telemetry.addData("le delta", delta);
-
+*/
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
@@ -218,8 +214,8 @@ public abstract class UpdateThread extends OpMode {
 		//telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
 		//telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
 		//telemetry.addData("rightEncoder", Double.toString(vDriveRightMotorEncoder.getRawValue()));
-        telemetry.addData("color", String.format("%06x", (int) vColorSensor.getRawValue()));
-		telemetry.addData("ultrasound", Double.toString(vUltrasonicSensor.getValue()));
+        //telemetry.addData("color", String.format("%06x", (int) vColorSensor.getRawValue()));
+		//telemetry.addData("ultrasound", Double.toString(vUltrasonicSensor.getValue()));
 		//telemetry.addData("rightArmPosition", Double.toString(armRight.getPosition()));
 		//telemetry.addData("leftArmPosition", Double.toString(armLeft.getPosition()));
 

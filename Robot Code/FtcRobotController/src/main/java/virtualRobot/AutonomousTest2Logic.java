@@ -1,11 +1,15 @@
 package virtualRobot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Yanjun on 11/10/2015.
  */
 public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
+
         commands.add(
                 new MoveServo(
                         new Servo[]{
@@ -20,6 +24,23 @@ public class AutonomousTest2Logic extends LogicThread<AutonomousRobot> {
                         }
                 )
         );
+
+        final MoveMotor moveReaper = new MoveMotor(robot.getReaperMotor(), 1);
+        moveReaper.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                return false;
+            }
+        });
+        List<LogicThread> moveReaperList = new ArrayList<LogicThread>();
+        moveReaperList.add(new LogicThread() {
+
+            @Override
+            public void loadCommands() {
+                commands.add(moveReaper);
+            }
+        });
+        commands.add(new SpawnNewThread(moveReaperList));
         commands.add(new Translate(4500, Translate.Direction.FORWARD));
         commands.add(new Rotate(1850, 0.75));
         commands.add(new Translate(11500, Translate.Direction.FORWARD));

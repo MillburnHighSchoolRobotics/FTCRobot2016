@@ -51,13 +51,13 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                     if (joystick1.isDpadDown()) { //ONE BUTTON TO LOWER THE SHIELDS
                         robot.getBlockerLeftServo().setPosition(.8);
                         robot.getBlockerRightServo().setPosition(.8);
-                        robot.getRampLift().setPosition(0);
+                        robot.getRampLift().setPosition(0.85);
                     }
 
                     if (joystick1.isDpadUp()) { //ONE BUTTON TO RAISE THEM
                         robot.getBlockerLeftServo().setPosition(0);
                         robot.getBlockerRightServo().setPosition(0);
-                        robot.getRampLift().setPosition(0.85);
+                        robot.getRampLift().setPosition(0);
                     }
 
                     /*if (joystick1.isDpadRight()) {
@@ -84,11 +84,11 @@ public class Teleop1Logic extends LogicThread<TeleopRobot> {
                     }
 
                     //HIT THE ZIPLINE
-                    else if (joystick1.isDpadRight()) {
+                    else if (joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK) && !joystick1.isDown(JoystickController.BUTTON_LEFT_STICK)) {
                         robot.getGateLeftServo().setPosition(LEFT_GATE_ZIPLINE);
                     }
 
-                    else if (joystick1.isDpadLeft()) {
+                    else if (!joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK) && joystick1.isDown(JoystickController.BUTTON_LEFT_STICK)) {
                         robot.getGateRightServo().setPosition(RIGHT_GATE_ZIPLINE);
                     }
 

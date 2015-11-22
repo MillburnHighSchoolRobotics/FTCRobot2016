@@ -34,7 +34,7 @@ public class SpawnNewThread implements Command {
         boolean isInterrupted = false;
         
         while (!exitCondition.isConditionMet() && i < logic.size()) {
-        	Thread temp = new Thread(logic.get(i));
+        	Thread temp = new Thread(logic.get(i++));
         	temp.start();
         	t.add(temp);
         	

@@ -56,8 +56,9 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("Autonomous Test 1", AutonomousTest1Update.class);
-    manager.register("Autonomous Test 2", AutonomousTest2Update.class);
-      manager.register("Autonomous Test 3", AutonomousTest3Update.class);
+    manager.register("Blue Climber Dump Auto", AutonomousTest2Update.class);
+    manager.register("Red Climber Dump Auto", RedAutonomousUpdate.class);
+    manager.register("Autonomous Test 3", AutonomousTest3Update.class);
     manager.register("Arm Test", ArmTest.class);
     manager.register("Teleop 1 Test", Teleop1Update.class);
   }
