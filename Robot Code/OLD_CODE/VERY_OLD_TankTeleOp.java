@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by shant on 10/17/2015.
  */
-public class TankTeleOp extends OpMode {
+public class VERY_OLD_TankTeleOp extends OpMode {
     DcMotor rightTop;
     DcMotor rightBottom;
     DcMotor leftTop;

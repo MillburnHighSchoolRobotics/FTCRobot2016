@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by shant on 10/22/2015.
  */
-public class AutonomousTemplate extends LinearOpMode {
+public class VERY_OLD_AutonomousTemplate extends LinearOpMode {
     DcMotor rightTop;
     DcMotor rightBottom;
     DcMotor leftTop;

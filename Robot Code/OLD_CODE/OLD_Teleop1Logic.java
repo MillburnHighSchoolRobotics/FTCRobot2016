@@ -1,21 +1,10 @@
 package virtualRobot;
-/**
- * TO-DO
- * 1. Setup the Conveyor Belt Motor in the config file
- * 2. Wire the Arm Motor and Encoder
- * 3. Calibrate EVERYTHING
- */
-
 
 /**
  * Created by shant on 11/12/2015.
  */
 
-/*
-To Do List:
-Wire bumper servos
-FIX THE FUCKING SERVO SCREW
- */
+
 public class Teleop1Logic extends LogicThread<TeleopRobot> {
 
     @Override
