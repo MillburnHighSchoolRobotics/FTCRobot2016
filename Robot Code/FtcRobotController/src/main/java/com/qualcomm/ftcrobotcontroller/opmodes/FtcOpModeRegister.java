@@ -56,5 +56,6 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("Diagnostic Op Mode", DiagnosticsOpMode.class);
+    manager.register("IMU Test", IMUTest.class);
   }
 }

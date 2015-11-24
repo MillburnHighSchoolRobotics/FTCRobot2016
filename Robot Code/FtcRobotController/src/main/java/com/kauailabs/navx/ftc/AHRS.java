@@ -143,9 +143,9 @@ public class AHRS {
         public byte  selftest_status;
     }
 
-    private static AHRS instance = null;
+    protected static AHRS instance = null;
     private static boolean enable_logging = false;
-    private static final int NAVX_DEFAULT_UPDATE_RATE_HZ = 50;
+    protected static final int NAVX_DEFAULT_UPDATE_RATE_HZ = 50;
 
     private DeviceInterfaceModule dim = null;
     private navXIOThread io_thread_obj;
