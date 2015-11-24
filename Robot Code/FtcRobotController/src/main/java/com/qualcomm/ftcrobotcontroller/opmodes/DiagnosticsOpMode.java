@@ -101,11 +101,22 @@ public class DiagnosticsOpMode extends OpMode {
             servo6Val -= SERVO_DELTA;
         }
 
-        servo1.setPosition(min(max(servo1Val, 0), 1));
-        servo2.setPosition(min(max(servo2Val, 0), 1));
-        servo3.setPosition(min(max(servo3Val, 0), 1));
-        servo4.setPosition(min(max(servo4Val, 0), 1));
-        servo5.setPosition(min(max(servo5Val, 0), 1));
-        servo6.setPosition(min(max(servo6Val, 0), 1));
+        servo1Val = (min(max(servo1Val, 0), 1));
+        servo2Val = (min(max(servo2Val, 0), 1));
+        servo3Val = (min(max(servo3Val, 0), 1));
+        servo4Val = (min(max(servo4Val, 0), 1));
+        servo5Val = (min(max(servo5Val, 0), 1));
+        servo6Val = (min(max(servo6Val, 0), 1));
+
+        servo1.setPosition(servo1Val);
+        servo2.setPosition(servo2Val);
+        servo3.setPosition(servo3Val);
+        servo4.setPosition(servo4Val);
+        servo5.setPosition(servo5Val);
+        servo6.setPosition(servo6Val);
+
+        int a = 4;
+        a += 5.2;
+        a = a + 5.2;
     }
 }
