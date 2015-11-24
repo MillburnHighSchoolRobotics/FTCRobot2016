@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by shant on 10/12/2015.
  */
-public class TankTreadTest extends OpMode {
+public class VERY_OLD_TankTreadTest extends OpMode {
     DcMotor rightTop;
     DcMotor rightBottom;
     DcMotor leftTop;

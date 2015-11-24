@@ -21,7 +21,8 @@ import static java.lang.Math.*;
  *
  * Juniors coders, see Shantanu if you are reading this and don't know what i'm talking about
  *
- * also remember: college isn't for everyone.
+ * also remember: college isn't for
+ * everyone.
  */
 public class DiagnosticsOpMode extends OpMode {
 
