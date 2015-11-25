@@ -9,8 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import java.util.ArrayList;
-
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;

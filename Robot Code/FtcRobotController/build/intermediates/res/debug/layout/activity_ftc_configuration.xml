@@ -140,4 +140,8 @@
   </LinearLayout>
 
 </RelativeLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/tom/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/activity_ftc_configuration.xml --><!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/activity_ftc_configuration.xml -->
+=======
+<!-- From: file:/Users/tom/Documents/workspace/ftc_sdk/lib/FtcCommon/src/main/res/layout/activity_ftc_configuration.xml --><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/layout/activity_ftc_configuration.xml -->
+>>>>>>> 2dee56375e88650302f3b5f9e36de5a6e8f02d7d
