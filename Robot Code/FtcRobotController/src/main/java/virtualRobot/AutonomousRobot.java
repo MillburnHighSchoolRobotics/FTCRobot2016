@@ -9,23 +9,19 @@ public interface AutonomousRobot {
 
     Motor getDriveLeftMotor();
 
-    Motor getArmLeftMotor();
+    Motor getTapeMeasureLeftMotor();
 
-    Motor getArmRightMotor();
-
-    Motor getReaperMotor();
-
-    Motor getConveyorMotor();
+    Motor getTapeMeasureRightMotor();
 
     Sensor getDriveRightMotorEncoder();
 
     Sensor getDriveLeftMotorEncoder();
 
-    Sensor getArmLeftMotorEncoder();
+    Sensor getTapeMeasureLeftMotorEncoder();
 
-    Sensor getArmRightMotorEncoder();
+    Sensor getTapeMeasureRightMotorEncoder();
 
-    Sensor getAngleSensor();
+    Sensor getHeadingSensor();
 
     Sensor getColorSensor();
 
@@ -33,21 +29,19 @@ public interface AutonomousRobot {
 
     Sensor getUltrasoundSensor();
 
-    Servo getArmLeftServo();
+    Servo getFlipperLeftServo();
 
-    Servo getArmRightServo();
+    Servo getFlipperRightServo();
 
-    Servo getGateLeftServo();
+    Servo getSnowPlowServo();
 
-    Servo getGateRightServo();
+    Servo getBackShieldServo();
 
-  /* ContinuousRotationServo getSpinnerServo() {
-    return spinnerServo;
-  }*/
+    Servo getTapeMeasureLeftServo();
 
-    Servo getBlockerLeftServo();
+    Servo getTapeMeasureRightServo();
 
-    Servo getBlockerRightServo();
+    Servo getDumperServo();
 
-    Servo getRampLift();
+    Servo getButtonPusherServo();
 }

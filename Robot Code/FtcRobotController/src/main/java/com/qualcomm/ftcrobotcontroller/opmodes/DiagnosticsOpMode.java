@@ -114,9 +114,5 @@ public class DiagnosticsOpMode extends OpMode {
         servo4.setPosition(servo4Val);
         servo5.setPosition(servo5Val);
         servo6.setPosition(servo6Val);
-
-        int a = 4;
-        a += 5.2;
-        a = a + 5.2;
     }
 }
