@@ -3,7 +3,7 @@ package virtualRobot;
 /**
  * Created by Yanjun on 11/12/2015.
  */
-public class Pause implements Command {
+public class  Pause implements Command {
 
     private int nMillis;
 
