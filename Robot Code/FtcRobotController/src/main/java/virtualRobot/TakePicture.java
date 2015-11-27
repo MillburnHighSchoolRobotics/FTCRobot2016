@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.view.SurfaceView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -51,12 +50,9 @@ public class TakePicture implements Command {
 
 
         final ImageView finalIv_image = iv_image;
-        Camera.PictureCallback mCall = new Camera.PictureCallback()
-        {
+        Camera.PictureCallback mCall = new Camera.PictureCallback() {
             @Override
-            public void onPictureTaken(byte[] data, Camera camera)
-            {
-
+            public void onPictureTaken(byte[] data, Camera camera) {
 
 
                 bmp[0] = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -85,8 +81,10 @@ public class TakePicture implements Command {
             }
         }
 
+        mCamera.release();
 
+        return isInterrupted;
     }
-    }
+}
 
 
