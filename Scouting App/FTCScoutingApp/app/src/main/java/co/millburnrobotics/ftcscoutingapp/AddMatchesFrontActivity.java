@@ -122,6 +122,11 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 Match match = new Match();
+                if(matchNumber.getText().toString().length() == 0){
+                    Toast.makeText(v.getContext(),"no match available",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 match.setMatchNumber(Integer.parseInt(matchNumber.getText().toString()));
 
                 ParseQuery<Competition> query = ParseQuery.getQuery(Competition.class);

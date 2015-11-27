@@ -45,6 +45,10 @@ public class AddTeamActivity extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 String szTeamNumber = teamName.getText().toString();
+                if(szTeamNumber.length() == 0){
+                    Toast.makeText(v.getContext(),"No team available", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int nTeamNumber = Integer.parseInt(teamNumber.getText().toString());
 
                 Team team = new Team();
