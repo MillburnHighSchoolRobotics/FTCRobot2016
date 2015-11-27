@@ -128,6 +128,38 @@ public class AddMatchesTeleop extends AppCompatActivity {
         List<String> zipLinesList = new ArrayList<String>();
         List<String> parkingsList = new ArrayList<String>();
         List<String> allClearsList = new ArrayList<String>();
+       int a = 0;
+        int c =0;
+        int b = 0;
+        int d = 0;
+       while(a < 4) {
+
+           if (floorGoals[a] != null && floorGoals[a].length() > 0) {
+               floorGoals[a].setText("0");
+           }
+           a++;
+       }
+        while(b < 4) {
+
+            if (lowGoals[b] != null && lowGoals[b].length() > 0) {
+                lowGoals[b].setText("0");
+            }
+            b++;
+        }
+        while(c < 4) {
+
+            if (midGoals[c] != null && midGoals[c].length() > 0) {
+                midGoals[c].setText("0");
+            }
+            c++;
+        }
+        while(d < 4) {
+
+            if (highGoals[d] != null && highGoals[d].length() > 0) {
+                highGoals[d].setText("0");
+            }
+            d++;
+        }
 
         climbersList.add("0");
         climbersList.add("1");
@@ -143,9 +175,9 @@ public class AddMatchesTeleop extends AppCompatActivity {
         parkingsList.add(MatchData.MID);
         parkingsList.add(MatchData.HIGH);
         parkingsList.add(MatchData.PULL_UP);
-
-        allClearsList.add("Yes");
         allClearsList.add("No");
+        allClearsList.add("Yes");
+
 
         ArrayAdapter<String> climbersAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, climbersList);
         ArrayAdapter<String> zipLinesAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, zipLinesList);
