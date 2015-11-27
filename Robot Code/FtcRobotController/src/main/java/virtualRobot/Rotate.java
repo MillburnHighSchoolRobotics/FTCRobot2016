@@ -5,12 +5,13 @@ package virtualRobot;
  */
 public class Rotate implements Command {
     private ExitCondition exitCondition;
-    private double THRESHOLD = 0.2;
-    private double KP = 0.1;
+    private double THRESHOLD = 1;
+    private double KP = 0.3;
     private double KI = 0;
     private double KD = 0;
     private double power;
     private double angleInDegrees;
+    private RunMode runMode;
     
     private PIDController pidController;
 
@@ -28,6 +29,8 @@ public class Rotate implements Command {
         };
         
         pidController = new PIDController(KP, KI, KD, THRESHOLD);
+
+        runMode = RunMode.WITH_ENCODER;
     }
 
     public Rotate (double target) {
@@ -72,20 +75,39 @@ public class Rotate implements Command {
     @Override
     public boolean changeRobotState() throws InterruptedException{
     	boolean isInterrupted = false;
-    	
-        while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor().getValue()) > THRESHOLD) {
-        	
-        	double adjustedPower = pidController.getPIDOutput(robot.getAngleSensor().getValue()) * power;
 
-            robot.getDriveLeftMotor().setPower(adjustedPower);
-            robot.getDriveRightMotor().setPower(-adjustedPower);
+        switch (runMode) {
+            case WITH_ANGLE_SENSOR:
+                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD) {
 
-            if (Thread.currentThread().isInterrupted()) {
-            	isInterrupted = true;
-            	break;
-            }
-            
-            Thread.currentThread().sleep(10);
+                    double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue()) * power;
+
+                    robot.getDriveLeftMotor().setPower(adjustedPower);
+                    robot.getDriveRightMotor().setPower(-adjustedPower);
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        isInterrupted = true;
+                        break;
+                    }
+
+                    Thread.currentThread().sleep(10);
+                }
+                break;
+            case WITH_ENCODER:
+                robot.getDriveLeftMotorEncoder().clearValue();
+                robot.getDriveRightMotorEncoder().clearValue();
+                while (!exitCondition.isConditionMet() && Math.abs(Math.abs(pidController.getTarget()) - (Math.abs(robot.getDriveLeftMotorEncoder().getValue()) + Math.abs(robot.getDriveRightMotorEncoder().getValue())) / 2) > 20){
+                    robot.getDriveLeftMotor().setPower(Math.signum(angleInDegrees)*power);
+                    robot.getDriveRightMotor().setPower(-Math.signum(angleInDegrees)*power);
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        isInterrupted = true;
+                        break;
+                    }
+
+                    Thread.currentThread().sleep(10);
+                }
+                break;
         }
 
     	robot.getDriveRightMotor().setPower(0);
@@ -93,5 +115,10 @@ public class Rotate implements Command {
         
         return isInterrupted;
         
+    }
+
+    public enum RunMode {
+        WITH_ANGLE_SENSOR,
+        WITH_ENCODER
     }
 }

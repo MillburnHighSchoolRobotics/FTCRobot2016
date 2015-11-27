@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\src\androidTest\res"/><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\build\generated\res\rs\androidTest\debug"/><source path="C:\Users\Alex\Documents\FTC Robot 2015-16\Robot Code\FtcRobotController\build\generated\res\generated\androidTest\debug"/></dataSet><mergedItems/></merger>
+=======
+<<<<<<< HEAD
+<merger version="3"><dataSet config="main"><source path="/Users/DOSullivan/FTCRobot2015/Robot Code/FtcRobotController/src/androidTest/res"/><source path="/Users/DOSullivan/FTCRobot2015/Robot Code/FtcRobotController/build/generated/res/rs/androidTest/debug"/><source path="/Users/DOSullivan/FTCRobot2015/Robot Code/FtcRobotController/build/generated/res/generated/androidTest/debug"/></dataSet><mergedItems/></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="C:\Users\shant\Documents\FTCRobot2015\Robot Code\FtcRobotController\src\androidTest\res"/><source path="C:\Users\shant\Documents\FTCRobot2015\Robot Code\FtcRobotController\build\generated\res\rs\androidTest\debug"/><source path="C:\Users\shant\Documents\FTCRobot2015\Robot Code\FtcRobotController\build\generated\res\generated\androidTest\debug"/></dataSet><mergedItems/></merger>
+>>>>>>> 2dee56375e88650302f3b5f9e36de5a6e8f02d7d
+>>>>>>> 851b8d78ec4ae65123eacf06684477005a5f6f88
