@@ -1,11 +1,13 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.kauailabs.navx.ftc.MPU9250;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import java.util.ArrayList;
 
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
@@ -20,86 +22,83 @@ public abstract class UpdateThread extends OpMode {
 	protected Class<? extends LogicThread> logicThread;
 	private Thread t;
 	
-	private DcMotor rightTop, rightBottom, leftTop, leftBottom, armLeftMotor, armRightMotor, reaper, conveyor;
-	private Servo armLeft, armRight, gateLeft, gateRight, spinner, blockerLeft, blockerRight, rampLift;
-	//private GyroSensor gyro;
-    //private ColorSensor colorSensor;
-	//private UltrasonicSensor ultrasonicSensor;
+	private DcMotor rightFront, rightBack, leftFront, leftBack, tapeMeasureLeftMotor, tapeMeasureRightMotor;
+	private Servo tapeMeasureLeft, tapeMeasureRight, flipperLeft, flipperRight, dumper, snowPlowLeft, snowPlowRight, backShieldLeft, backShieldRight, buttonPusher;
+	private MPU9250 imu;
+	private AnalogInput ultrasound;
+	private ColorSensor colorSensor;
+	private DigitalChannel colorSensorLed;
 	
-	private Motor vDriveLeftMotor, vDriveRightMotor, vArmLeftMotor, vArmRightMotor, vReaperMotor, vConveyorMotor;
-	private virtualRobot.Servo vArmLeftServo, vArmRightServo, vGateLeftServo, vGateRightServo, vBlockerLeftServo, vBlockerRightServo, vRampLift;
-    //private ContinuousRotationServo vSpinnerServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vArmLeftMotorEncoder, vArmRightMotorEncoder; //vAngleSensor, vColorSensor, vUltrasonicSensor;
+	private Motor vDriveLeftMotor, vDriveRightMotor, vTapeMeasureLeftMotor, vTapeMeasureRightMotor;
+	private virtualRobot.Servo vTapeMeasureLeftServo, vTapeMeasureRightServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vSnowPlowServo, vButtonPusherServo;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureLeftMotorEncoder, vTapeMeasureRightMotorEncoder, vHeadingSensor, vColorSensor, vUltrasoundSensor, vTiltSensor;
 
 	private JoystickController vJoystickController1, vJoystickController2;
-	double curTime, prevTime, curRot, prevRot, gyroOffset;
-
-	private ArrayList<Integer> gyroReadings;
 	
 	@Override
 	public void init() {
         //MOTOR SETUP
-		rightTop = hardwareMap.dcMotor.get("rightTop");
-		rightBottom = hardwareMap.dcMotor.get("rightBottom");
-		leftTop = hardwareMap.dcMotor.get("leftTop");
-		leftBottom = hardwareMap.dcMotor.get("leftBottom");
-        armLeftMotor = hardwareMap.dcMotor.get("armLeftMotor");
-        armRightMotor = hardwareMap.dcMotor.get("armRightMotor");
-        reaper = hardwareMap.dcMotor.get("reaper");
-        conveyor = hardwareMap.dcMotor.get("conveyor");
-
+		rightFront = hardwareMap.dcMotor.get("rightFront");
+		rightBack = hardwareMap.dcMotor.get("rightBack");
+		leftFront = hardwareMap.dcMotor.get("leftFront");
+		leftBack = hardwareMap.dcMotor.get("leftBack");
+        tapeMeasureLeftMotor = hardwareMap.dcMotor.get("tapeMeasureLeftMotor");
+        tapeMeasureRightMotor = hardwareMap.dcMotor.get("tapeMeasureRightMotor");
 
         //SERVO SETUP
-        armLeft = hardwareMap.servo.get("armLeft");
-        armRight = hardwareMap.servo.get("armRight");
-        gateLeft = hardwareMap.servo.get("gateLeft");
-        gateRight = hardwareMap.servo.get("gateRight");
-        //spinner = hardwareMap.servo.get("spinner");
-		blockerLeft = hardwareMap.servo.get("blockerLeft");
-		blockerRight = hardwareMap.servo.get("blockerRight");
-		rampLift = hardwareMap.servo.get("rampLift");
+        tapeMeasureLeft = hardwareMap.servo.get("tapeMeasureLeft");
+        tapeMeasureRight = hardwareMap.servo.get("tapeMeasureRight");
+        flipperLeft = hardwareMap.servo.get("flipperLeft");
+        flipperRight = hardwareMap.servo.get("flipperRight");
+		dumper = hardwareMap.servo.get("dumper");
+		backShieldLeft = hardwareMap.servo.get("backShieldLeft");
+        backShieldRight = hardwareMap.servo.get("backShieldRight");
+		snowPlowLeft = hardwareMap.servo.get("snowPlowLeft");
+        snowPlowRight = hardwareMap.servo.get("snowPlowRight");
+		buttonPusher = hardwareMap.servo.get("buttonPusher");
 
         //REVERSE RIGHT SIDE
-        blockerRight.setDirection(Servo.Direction.REVERSE);
-        gateRight.setDirection(Servo.Direction.REVERSE);
-		rightTop.setDirection(DcMotor.Direction.REVERSE);
-		rightBottom.setDirection(DcMotor.Direction.REVERSE);
-        armRight.setDirection(Servo.Direction.REVERSE);
-		armRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        backShieldRight.setDirection(Servo.Direction.REVERSE);
+        snowPlowRight.setDirection(Servo.Direction.REVERSE);
+        flipperRight.setDirection(Servo.Direction.REVERSE);
+		rightFront.setDirection(DcMotor.Direction.REVERSE);
+		rightBack.setDirection(DcMotor.Direction.REVERSE);
+        tapeMeasureRight.setDirection(Servo.Direction.REVERSE);
+		tapeMeasureRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         //SENSOR SETUP
-		/*gyro = hardwareMap.gyroSensor.get("gyro");
-        colorSensor = hardwareMap.colorSensor.get("colorSensor");
-		ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
-*/
+		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 0);
+		colorSensor = hardwareMap.colorSensor.get("colorSensor");
+		colorSensorLed = hardwareMap.digitalChannel.get("colorSensorLed");
+		ultrasound = hardwareMap.analogInput.get("ultrasound");
+
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.ROBOT;
 
         //FETCH VIRTUAL COMPONENTS OF VIRTUAL ROBOT
         vDriveLeftMotor = robot.getDriveLeftMotor();
         vDriveRightMotor = robot.getDriveRightMotor();
-        vArmLeftMotor = robot.getArmLeftMotor();
-        vArmRightMotor = robot.getArmRightMotor();
-        vReaperMotor = robot.getReaperMotor();
-        vConveyorMotor = robot.getConveyorMotor();
+        vTapeMeasureLeftMotor = robot.getTapeMeasureLeftMotor();
+        vTapeMeasureRightMotor = robot.getTapeMeasureRightMotor();
 
         vDriveLeftMotorEncoder = robot.getDriveLeftMotorEncoder();
         vDriveRightMotorEncoder = robot.getDriveRightMotorEncoder();
-        vArmLeftMotorEncoder = robot.getArmLeftMotorEncoder();
-        vArmRightMotorEncoder = robot.getArmRightMotorEncoder();
-        //vAngleSensor = robot.getAngleSensor();
-		//vColorSensor = robot.getColorSensor();
+        vTapeMeasureLeftMotorEncoder = robot.getTapeMeasureLeftMotorEncoder();
+        vTapeMeasureRightMotorEncoder = robot.getTapeMeasureRightMotorEncoder();
+        vHeadingSensor = robot.getHeadingSensor();
+		vColorSensor = robot.getColorSensor();
+		vTiltSensor = robot.getTiltSensor();
 
-        vArmLeftServo = robot.getArmLeftServo();
-        vArmRightServo = robot.getArmRightServo();
-        vGateLeftServo = robot.getGateLeftServo();
-        vGateRightServo = robot.getGateRightServo();
-        //vSpinnerServo = robot.getSpinnerServo();
-		vBlockerLeftServo = robot.getBlockerLeftServo();
-		vBlockerRightServo = robot.getBlockerRightServo();
-		vRampLift = robot.getRampLift();
+        vTapeMeasureLeftServo = robot.getTapeMeasureLeftServo();
+        vTapeMeasureRightServo = robot.getTapeMeasureRightServo();
+        vFlipperLeftServo = robot.getFlipperLeftServo();
+        vFlipperRightServo = robot.getFlipperRightServo();
+		vDumperServo = robot.getDumperServo();
+		vBackShieldServo = robot.getBackShieldServo();
+		vSnowPlowServo = robot.getSnowPlowServo();
+		vButtonPusherServo = robot.getButtonPusherServo();
 
-		//vUltrasonicSensor = robot.getUltrasoundSensor();
+		vUltrasoundSensor = robot.getUltrasoundSensor();
 
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
@@ -114,28 +113,17 @@ public abstract class UpdateThread extends OpMode {
 			return;
 		}
 
-		gyroReadings = new ArrayList<Integer>();
 	}
 
-	public void init_loop() {
-		//gyroReadings.add((int)gyro.getRotation());
-	}
-	
 	public void start() {
 
-		/*Collections.sort(gyroReadings);
-		gyroOffset = gyroReadings.get(gyroReadings.size() / 2);
-		
-		curTime = System.currentTimeMillis();
-		prevTime = System.currentTimeMillis();
-		
-		curRot = gyro.getRotation()-gyroOffset;
-		prevRot = gyro.getRotation()-gyroOffset;
-		
-		vAngleSensor.setRawValue(0);
-		*/
-		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
-		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
+		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
+        vTapeMeasureLeftMotorEncoder.setRawValue(-tapeMeasureLeftMotor.getCurrentPosition());
+        vTapeMeasureRightMotorEncoder.setRawValue(-tapeMeasureRightMotor.getCurrentPosition());
+
+        imu.zeroYaw();
+        colorSensorLed.setState(true);
 		
 		t.start();
 	}
@@ -146,38 +134,20 @@ public abstract class UpdateThread extends OpMode {
 		
 		double leftPower = vDriveLeftMotor.getPower();
 		double rightPower = vDriveRightMotor.getPower();
-        double armLeftPower = vArmLeftMotor.getPower();
-        double armRightPower = vArmRightMotor.getPower();
-        double reaperPower = vReaperMotor.getPower();
-        double conveyorPower = vConveyorMotor.getPower();
-
-		//telemetry.addData("conveyorPower", Double.toString(conveyorPower));
+        double tapeMeasureLeftPower = vTapeMeasureLeftMotor.getPower();
+        double tapeMeasureRightPower = vTapeMeasureRightMotor.getPower();
 		
 		// Update
-		
-		curTime = System.currentTimeMillis();
 
-		/*curRot = gyro.getRotation()-gyroOffset;
-
-		double delta = (curRot + prevRot) * 0.5 * (curTime - prevTime) * 0.001;
-		if (Math.abs(curRot) < 2) {
-			delta = 0;
-		}
-		vAngleSensor.incrementRawValue(delta);
-
+		vTiltSensor.setRawValue(imu.getIntegratedPitch());
+        vHeadingSensor.setRawValue(imu.getIntegratedYaw());
         vColorSensor.setRawValue(colorSensor.argb());
-
-		vUltrasonicSensor.setRawValue(ultrasonicSensor.getUltrasonicLevel());
-		telemetry.addData("le gyro", vAngleSensor.getValue());
-		telemetry.addData("le avg gyro", (curRot + prevRot) * 0.5);
-		telemetry.addData("le time", curTime - prevTime);
-		telemetry.addData("le delta", delta);
-*/
+        vUltrasoundSensor.setRawValue(ultrasound.getValue());
 		
-		vDriveLeftMotorEncoder.setRawValue(-leftTop.getCurrentPosition());
-		vDriveRightMotorEncoder.setRawValue(-rightTop.getCurrentPosition());
-        vArmLeftMotorEncoder.setRawValue(-armLeftMotor.getCurrentPosition());
-        vArmRightMotorEncoder.setRawValue(-armRightMotor.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
+		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
+        vTapeMeasureLeftMotorEncoder.setRawValue(-tapeMeasureLeftMotor.getCurrentPosition());
+        vTapeMeasureRightMotorEncoder.setRawValue(-tapeMeasureRightMotor.getCurrentPosition());
 
         try {
             vJoystickController1.copyStates(gamepad1);
@@ -185,44 +155,41 @@ public abstract class UpdateThread extends OpMode {
         } catch (RobotCoreException e) {
             e.printStackTrace();
         }
+
         // Copy State
 		
-		leftTop.setPower(leftPower);
-		leftBottom.setPower(leftPower);
+		leftFront.setPower(leftPower);
+		leftBack.setPower(leftPower);
 		
-		rightTop.setPower(rightPower);
-		rightBottom.setPower(rightPower);
+		rightFront.setPower(rightPower);
+		rightBack.setPower(rightPower);
 
-        armLeftMotor.setPower(armLeftPower);
-        armRightMotor.setPower(armRightPower);
+        tapeMeasureLeftMotor.setPower(tapeMeasureLeftPower);
+        tapeMeasureRightMotor.setPower(tapeMeasureRightPower);
 
-        reaper.setPower(reaperPower);
-        conveyor.setPower(conveyorPower);
-
-        gateLeft.setPosition(vGateLeftServo.getPosition());
-        gateRight.setPosition(vGateRightServo.getPosition());
-        armLeft.setPosition(vArmLeftServo.getPosition());
-        armRight.setPosition(vArmRightServo.getPosition());
-        //spinner.setPosition(vSpinnerServo.getPosition());
-		blockerLeft.setPosition(vBlockerLeftServo.getPosition());
-		blockerRight.setPosition(vBlockerRightServo.getPosition());
-		rampLift.setPosition(vRampLift.getPosition());
+        flipperLeft.setPosition(vFlipperLeftServo.getPosition());
+        flipperRight.setPosition(vFlipperRightServo.getPosition());
+        tapeMeasureLeft.setPosition(vTapeMeasureLeftServo.getPosition());
+        tapeMeasureRight.setPosition(vTapeMeasureRightServo.getPosition());
+		dumper.setPosition(vDumperServo.getPosition());
+		backShieldLeft.setPosition(vBackShieldServo.getPosition());
+        backShieldRight.setPosition(vBackShieldServo.getPosition());
+		snowPlowLeft.setPosition(vSnowPlowServo.getPosition());
+        snowPlowRight.setPosition(vSnowPlowServo.getPosition());
+        buttonPusher.setPosition(vButtonPusherServo.getPosition());
 
 		telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 
-		//telemetry.addData("leftRawEncoder", Double.toString(leftTop.getCurrentPosition()));
-		//telemetry.addData("rightRawEncoder", Double.toString(rightTop.getCurrentPosition()));
+		//telemetry.addData("leftRawEncoder", Double.toString(leftFront.getCurrentPosition()));
+		//telemetry.addData("rightRawEncoder", Double.toString(rightFront.getCurrentPosition()));
 		//telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
 		//telemetry.addData("rightEncoder", Double.toString(vDriveRightMotorEncoder.getRawValue()));
         //telemetry.addData("color", String.format("%06x", (int) vColorSensor.getRawValue()));
 		//telemetry.addData("ultrasound", Double.toString(vUltrasonicSensor.getValue()));
-		//telemetry.addData("rightArmPosition", Double.toString(armRight.getPosition()));
-		//telemetry.addData("leftArmPosition", Double.toString(armLeft.getPosition()));
+		//telemetry.addData("rightTapeMeasurePosition", Double.toString(tapeMeasureRight.getPosition()));
+		//telemetry.addData("leftTapeMeasurePosition", Double.toString(tapeMeasureLeft.getPosition()));
 
-		//telemetry.addData("angleSensor", Double.toString(vAngleSensor.getValue()));
-
-		prevTime = curTime;
-		prevRot = curRot;
+		//telemetry.addData("angleSensor", Double.toString(vHeadingSensor.getValue()));
 	}
 	
 	public void stop() {

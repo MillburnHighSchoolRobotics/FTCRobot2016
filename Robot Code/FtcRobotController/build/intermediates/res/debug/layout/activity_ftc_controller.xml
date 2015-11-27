@@ -148,4 +148,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:text="" />
 
   </RelativeLayout>
-</LinearLayout><!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/src/main/res/layout/activity_ftc_controller.xml -->
+<<<<<<< HEAD
+</LinearLayout><!-- From: file:/Users/DOSullivan/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/layout/activity_ftc_controller.xml -->
+=======
+</LinearLayout><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/layout/activity_ftc_controller.xml -->
+>>>>>>> 2dee56375e88650302f3b5f9e36de5a6e8f02d7d

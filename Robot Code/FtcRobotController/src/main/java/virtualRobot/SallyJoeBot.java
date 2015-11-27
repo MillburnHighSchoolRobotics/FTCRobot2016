@@ -6,49 +6,44 @@ package virtualRobot;
  */
 public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, armLeftMotor, armRightMotor, reaperMotor, conveyorMotor;
-    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, armLeftMotorEncoder, armRightMotorEncoder;
-    private Sensor angleSensor, colorSensor, tiltSensor, ultrasoundSensor;
+    private Motor driveLeftMotor, driveRightMotor, tapeMeasureLeftMotor, tapeMeasureRightMotor;
+    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureLeftMotorEncoder, tapeMeasureRightMotorEncoder;
+    private Sensor headingSensor, colorSensor, tiltSensor, ultrasoundSensor;
 
-    private Servo armLeftServo, armRightServo, gateLeftServo, gateRightServo, blockerLeftServo, blockerRightServo, rampLift;
-    //private ContinuousRotationServo spinnerServo;
+    private Servo tapeMeasureLeftServo, tapeMeasureRightServo, flipperLeftServo, flipperRightServo, snowPlowServo, backShieldServo, dumperServo, buttonPusherServo;
 
     private JoystickController joystickController1, joystickController2;
 
     public SallyJoeBot() {
         driveLeftMotor = new Motor();
         driveRightMotor = new Motor();
-        armLeftMotor = new Motor();
-        armRightMotor = new Motor();
-        reaperMotor = new Motor();
-        conveyorMotor = new Motor();
+        tapeMeasureLeftMotor = new Motor();
+        tapeMeasureRightMotor = new Motor();
 
         driveLeftMotorEncoder = new Sensor();
         driveRightMotorEncoder = new Sensor();
-        armLeftMotorEncoder = new Sensor();
-        armRightMotorEncoder = new Sensor();
+        tapeMeasureLeftMotorEncoder = new Sensor();
+        tapeMeasureRightMotorEncoder = new Sensor();
 
-        angleSensor = new Sensor();
+        headingSensor = new Sensor();
         colorSensor = new Sensor();
         tiltSensor = new Sensor();
         ultrasoundSensor = new Sensor();
-        armLeftServo = new Servo();
-        armRightServo = new Servo();
-        gateLeftServo = new Servo();
-        gateRightServo = new Servo();
-
-        //spinnerServo = new ContinuousRotationServo();
-
-        blockerLeftServo = new Servo();
-        blockerRightServo = new Servo();
-
-        rampLift = new Servo();
+        
+        tapeMeasureLeftServo = new Servo();
+        tapeMeasureRightServo = new Servo();
+        flipperLeftServo = new Servo();
+        flipperRightServo = new Servo();
+        snowPlowServo = new Servo();
+        backShieldServo = new Servo();
+        dumperServo = new Servo();
+        buttonPusherServo = new Servo();
 
         joystickController1 = new JoystickController();
         joystickController2 = new JoystickController();
 
-        armLeftServo.setPosition(0.63);
-        armRightServo.setPosition(0.63);
+        tapeMeasureLeftServo.setPosition(0.63);
+        tapeMeasureRightServo.setPosition(0.63);
     }
 
     public synchronized Motor getDriveRightMotor() {
@@ -59,20 +54,12 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return driveLeftMotor;
     }
 
-    public synchronized Motor getArmLeftMotor() {
-        return armLeftMotor;
+    public synchronized Motor getTapeMeasureLeftMotor() {
+        return tapeMeasureLeftMotor;
     }
 
-    public synchronized Motor getArmRightMotor() {
-        return armRightMotor;
-    }
-
-    public synchronized Motor getReaperMotor() {
-        return reaperMotor;
-    }
-
-    public synchronized Motor getConveyorMotor() {
-        return conveyorMotor;
+    public synchronized Motor getTapeMeasureRightMotor() {
+        return tapeMeasureRightMotor;
     }
 
     public synchronized Sensor getDriveRightMotorEncoder() {
@@ -83,16 +70,16 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return driveLeftMotorEncoder;
     }
 
-    public synchronized Sensor getArmLeftMotorEncoder() {
-        return armLeftMotorEncoder;
+    public synchronized Sensor getTapeMeasureLeftMotorEncoder() {
+        return tapeMeasureLeftMotorEncoder;
     }
 
-    public synchronized Sensor getArmRightMotorEncoder() {
-        return armRightMotorEncoder;
+    public synchronized Sensor getTapeMeasureRightMotorEncoder() {
+        return tapeMeasureRightMotorEncoder;
     }
 
-    public synchronized Sensor getAngleSensor() {
-        return angleSensor;
+    public synchronized Sensor getHeadingSensor() {
+        return headingSensor;
     }
 
     public synchronized Sensor getColorSensor() {
@@ -107,36 +94,36 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return ultrasoundSensor;
     }
 
-    public synchronized Servo getArmLeftServo() {
-        return armLeftServo;
+    public synchronized Servo getTapeMeasureLeftServo() {
+        return tapeMeasureLeftServo;
     }
 
-    public synchronized Servo getArmRightServo() {
-        return armRightServo;
+    public synchronized Servo getTapeMeasureRightServo() {
+        return tapeMeasureRightServo;
     }
 
-    public synchronized Servo getGateLeftServo() {
-        return gateLeftServo;
+    public synchronized Servo getFlipperLeftServo() {
+        return flipperLeftServo;
     }
 
-    public synchronized Servo getGateRightServo() {
-        return gateRightServo;
+    public synchronized Servo getFlipperRightServo() {
+        return flipperRightServo;
     }
 
-    /*public synchronized ContinuousRotationServo getSpinnerServo() {
-        return spinnerServo;
-    }*/
-
-    public synchronized Servo getBlockerLeftServo() {
-        return blockerLeftServo;
+    public synchronized Servo getSnowPlowServo() {
+        return snowPlowServo;
     }
 
-    public synchronized Servo getBlockerRightServo() {
-        return blockerRightServo;
+    public synchronized Servo getBackShieldServo() {
+        return backShieldServo;
     }
 
-    public synchronized Servo getRampLift() {
-        return rampLift;
+    public synchronized Servo getDumperServo() {
+        return dumperServo;
+    }
+
+    public synchronized Servo getButtonPusherServo() {
+        return buttonPusherServo;
     }
 
     public synchronized JoystickController getJoystickController1() {

@@ -78,9 +78,9 @@ public class Rotate implements Command {
 
         switch (runMode) {
             case WITH_ANGLE_SENSOR:
-                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getAngleSensor().getValue()) > THRESHOLD) {
+                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD) {
 
-                    double adjustedPower = pidController.getPIDOutput(robot.getAngleSensor().getValue()) * power;
+                    double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue()) * power;
 
                     robot.getDriveLeftMotor().setPower(adjustedPower);
                     robot.getDriveRightMotor().setPower(-adjustedPower);
