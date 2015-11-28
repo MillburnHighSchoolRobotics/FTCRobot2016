@@ -197,9 +197,9 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static double KP = 0.0045;
+    public static double KP = 0.0111;
     public static double KI = 0.0000;
-    public static double KD = 0.010125;
+    public static double KD = 0.047175;
     public static double THRESHOLD = 1000;
 
     public static int HEADING_KP = 0;
@@ -207,5 +207,5 @@ public class Translate implements Command {
     public static int HEADING_KD = 0;
     public static int HEADING_THRESHOLD = 0;
     
-    public static int TOLERANCE = 20;
+    public static int TOLERANCE = 12;
 }

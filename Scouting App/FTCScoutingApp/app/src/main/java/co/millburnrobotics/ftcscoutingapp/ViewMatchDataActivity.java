@@ -30,7 +30,15 @@ public class ViewMatchDataActivity extends AppCompatActivity {
 
         final Spinner teamNumber = (Spinner) findViewById(R.id.teamnumber);
 
-        ParseQuery<Team> query = ParseQuery.getQuery(Team.class);
+        Competition comp = null;
+        try {
+            comp = ParseQuery.getQuery(Competition.class).get(selectedCompetition);
+        } catch (ParseException e){
+            Toast.makeText(this, "cannot find competition", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ParseQuery<Team> query = comp.getTeams().getQuery();
         query.orderByAscending(Team.NUMBER);
         List<Team> teamList = null;
         try {

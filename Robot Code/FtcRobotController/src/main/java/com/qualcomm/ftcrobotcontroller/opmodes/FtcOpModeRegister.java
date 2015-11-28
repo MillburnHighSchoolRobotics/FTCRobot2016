@@ -59,5 +59,6 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("Drive Test", TeleopUpdate.class);
     manager.register("IMU Test", IMUTest.class);
+    manager.register("PIDTester", PIDTesterUpdate.class);
   }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -30,7 +31,7 @@ public class ViewMatchDataMatchActivity extends AppCompatActivity {
         String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
 
         TextView title = (TextView) findViewById(R.id.title);
-        title.setText("\"Showing Match " + matchNumber);
+        title.setText("Showing Match " + matchNumber);
 
         ParseQuery cQuery = ParseQuery.getQuery(Competition.class);
         Competition curComp = null;
@@ -39,9 +40,20 @@ public class ViewMatchDataMatchActivity extends AppCompatActivity {
         } catch (ParseException e) {
             return;
         }
-        ParseQuery<MatchData> mdQuery = ParseQuery.getQuery(MatchData.class);
-        mdQuery.whereEqualTo(MatchData.COMPETITION_NAME, curComp.getName());
-        mdQuery.whereEqualTo(MatchData.MATCH_NUMBER, matchNumber);
+        ParseQuery<Match> mQuery = curComp.getMatches().getQuery();
+        mQuery.whereEqualTo(MatchData.MATCH_NUMBER, matchNumber);
+
+        List<Match> match = null;
+        try {
+            match = mQuery.find();
+        } catch (ParseException e) {
+            Toast.makeText(this, "cannot find match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (match.size() == 0) return;
+
+        ParseQuery<MatchData> mdQuery = match.get(0).getMatchDataz().getQuery();
 
         List<MatchData> matches = null;
         try {

@@ -41,6 +41,14 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/addTeamToCompeition"
+                android:text="Add Team -> Competition"
+                android:layout_margin="8dp"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/pickCompetition"
                 android:text="Select Competition"
                 android:layout_margin="8dp"/>

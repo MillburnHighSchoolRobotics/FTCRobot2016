@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot>
+    <MotorController name="right drive" serialNumber="AL00YBQR">
+        <Motor name="rightFront" port="1" />
+        <Motor name="rightBack" port="2" />
+    </MotorController>
+    <MotorController name="left drive" serialNumber="AL00VW3T">
+        <Motor name="tapeMeasureFrontM" port="1" />
+        <Motor name="leftBack" port="2" />
+    </MotorController>
+    <ServoController name="Servo Controller 2" serialNumber="AL00YALC">
+        <Servo name="flipperLeft" port="1" />
+        <Servo name="dumper" port="2" />
+        <Servo name="tapeMeasureRight" port="3" />
+        <Servo name="tapeMeasureLeft" port="5" />
+    </ServoController>
+    <DeviceInterfaceModule name="Device Interface Module 2" serialNumber="AL00VC28">
+        <I2cDevice name="dim" port="5" />
+    </DeviceInterfaceModule>
+    <MotorController name="Motor Controller 1" serialNumber="AL00XQN4">
+        <Motor name="leftFront" port="1" />
+        <Motor name="tapeMeasureBackMotor" port="2" />
+    </MotorController>
+    <ServoController name="servo controller" serialNumber="AL00VE2J">
+        <Servo name="frontShield" port="1" />
+        <Servo name="buttonPusher" port="2" />
+        <Servo name="backShieldLeft" port="3" />
+        <Servo name="flipperRight" port="4" />
+        <Servo name="backShieldRight" port="5" />
+    </ServoController>
+</Robot>

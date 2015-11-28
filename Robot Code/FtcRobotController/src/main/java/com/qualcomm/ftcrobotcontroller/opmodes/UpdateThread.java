@@ -27,7 +27,7 @@ public abstract class UpdateThread extends OpMode {
 	private Servo frontShield, backShieldLeft, backShieldRight;
 
 	//tape measure system
-	private DcMotor tapeMeasureFrontMotor, tapeMeasureBackMotor;
+	private DcMotor tapeMeasureFrontM, tapeMeasureBackMotor;
 	private Servo tapeMeasureLeft, tapeMeasureRight;
 
 	//misc
@@ -52,7 +52,7 @@ public abstract class UpdateThread extends OpMode {
 		rightBack = hardwareMap.dcMotor.get("rightBack");
 		leftFront = hardwareMap.dcMotor.get("leftFront");
 		leftBack = hardwareMap.dcMotor.get("leftBack");
-        tapeMeasureFrontMotor = hardwareMap.dcMotor.get("tapeMeasureFrontMotor");
+        tapeMeasureFrontM = hardwareMap.dcMotor.get("tapeMeasureFrontM");
         tapeMeasureBackMotor = hardwareMap.dcMotor.get("tapeMeasureBackMotor");
 
         //SERVO SETUP
@@ -75,7 +75,7 @@ public abstract class UpdateThread extends OpMode {
 
 
         //SENSOR SETUP
-		//imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
+		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
 		//colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		//colorSensorLed = hardwareMap.digitalChannel.get("colorSensorLed");
 		//ultrasound = hardwareMap.analogInput.get("ultrasound");
@@ -122,15 +122,18 @@ public abstract class UpdateThread extends OpMode {
 
 	}
 
+	public void init_loop() {
+		imu.zeroYaw();
+	}
+
 	public void start() {
 
 		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
         vTapeMeasureBackMotorEncoder.setRawValue(-tapeMeasureBackMotor.getCurrentPosition());
-        vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontMotor.getCurrentPosition());
+        vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
 		tapeMeasureLeft.setPosition(0.485);
 		tapeMeasureRight.setPosition(0.485);
-        //imu.zeroYaw();
         //colorSensorLed.setState(true);
 		
 		t.start();
@@ -148,13 +151,13 @@ public abstract class UpdateThread extends OpMode {
 		// Update
 
 		//vTiltSensor.setRawValue(imu.getIntegratedPitch());
-        //vHeadingSensor.setRawValue(imu.getIntegratedYaw());
+        vHeadingSensor.setRawValue(imu.getIntegratedYaw());
         //vColorSensor.setRawValue(colorSensor.argb());
         //vUltrasoundSensor.setRawValue(ultrasound.getValue());
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
-		vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontMotor.getCurrentPosition());
+		vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
         vTapeMeasureBackMotorEncoder.setRawValue(-tapeMeasureBackMotor.getCurrentPosition());
 
         try {
@@ -172,8 +175,12 @@ public abstract class UpdateThread extends OpMode {
 		rightFront.setPower(rightPower);
 		rightBack.setPower(rightPower);
 
-       	tapeMeasureFrontMotor.setPower(tapeMeasureFrontPower);
+       	tapeMeasureFrontM.setPower(tapeMeasureFrontPower);
         tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
+
+		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
+		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("angle", vHeadingSensor.getRawValue());
 
         flipperLeft.setPosition(vFlipperLeftServo.getPosition());
         flipperRight.setPosition(vFlipperRightServo.getPosition());
@@ -185,8 +192,8 @@ public abstract class UpdateThread extends OpMode {
 		frontShield.setPosition(vFrontShieldServo.getPosition());
         buttonPusher.setPosition(vButtonPusherServo.getPosition());
 
-		telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
-		telemetry.addData("servo Value", tapeMeasureLeft.getPosition());
+		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
+		//telemetry.addData("servo Value", tapeMeasureLeft.getPosition());
 		//telemetry.addData("leftRawEncoder", Double.toString(leftFront.getCurrentPosition()));
 		//telemetry.addData("rightRawEncoder", Double.toString(rightFront.getCurrentPosition()));
 		//telemetry.addData("leftEncoder", Double.toString(vDriveLeftMotorEncoder.getRawValue()));
