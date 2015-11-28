@@ -133,6 +133,8 @@ public class Translate implements Command {
                     currentValue = Math.abs((left + right) / 2);
 
                     double pidOutput = translateController.getPIDOutput(currentValue);
+                    pidOutput = Math.min(Math.max(pidOutput, -1), 1);
+                    pidOutput *= maxPower;
 
                     Log.d("pidoutput", Double.toString(pidOutput));
 
