@@ -40,6 +40,16 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        final Button addTeamToCompetition = (Button) findViewById(R.id.addTeamToCompeition);
+        addTeamToCompetition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toAddTeamToCompetition = new Intent(v.getContext(), AddTeamToCompetitionActivity.class);
+                toAddTeamToCompetition.putExtra("SelectedCompetition", selectedCompetition);
+                startActivity(toAddTeamToCompetition);
+            }
+        });
+
         final Button pickCompetition = (Button) findViewById(R.id.pickCompetition);
         pickCompetition.setOnClickListener(new View.OnClickListener() {
             @Override

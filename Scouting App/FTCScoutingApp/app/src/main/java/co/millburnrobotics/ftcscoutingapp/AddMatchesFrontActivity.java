@@ -49,7 +49,15 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
         final Spinner team3 = (Spinner) findViewById(R.id.team3);
         final Spinner team4 = (Spinner) findViewById(R.id.team4);
 
-        ParseQuery<Team> query = ParseQuery.getQuery(Team.class);
+        final Competition[] comp = new Competition[1];
+        try {
+            comp[0] = ParseQuery.getQuery(Competition.class).get(selectedCompetition);
+        } catch (ParseException e) {
+            Toast.makeText(this, "cannot find competition", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ParseQuery<Team> query = comp[0].getTeams().getQuery();
         query.orderByAscending(Team.NUMBER);
         List<Team> teamList = null;
         try {
@@ -186,6 +194,14 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
 
                 try {
                     match.save();
+                } catch (ParseException e) {
+                    return;
+                }
+
+                comp[0].getMatches().add(match);
+
+                try {
+                    comp[0].save();
                 } catch (ParseException e) {
                     return;
                 }

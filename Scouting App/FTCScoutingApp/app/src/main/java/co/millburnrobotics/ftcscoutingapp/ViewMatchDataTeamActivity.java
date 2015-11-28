@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -30,8 +31,18 @@ ArrayAdapter<String> listAdapter;
         String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
         ((TextView) findViewById(R.id.title)).setText("Showing all matches for Team " + teamNumber);
 
+        Competition comp = null;
+        try {
+            comp = ParseQuery.getQuery(Competition.class).get(selectedCompetition);
+        } catch (ParseException e) {
+            Toast.makeText(this, "cannot find competition", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ParseQuery<MatchData> mdQuery = ParseQuery.getQuery(MatchData.class);
         mdQuery.whereEqualTo(MatchData.TEAM_NUMBER, teamNumber);
+        mdQuery.whereEqualTo(MatchData.COMPETITION_NAME, comp.getName());
+        mdQuery.whereEqualTo(MatchData.COMPETITION_DATE, comp.getDate());
         mdQuery.orderByAscending(MatchData.MATCH_NUMBER);
         List<MatchData> matches = null;
         try {
