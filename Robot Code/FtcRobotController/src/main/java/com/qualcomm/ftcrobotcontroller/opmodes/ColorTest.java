@@ -19,7 +19,6 @@ public class ColorTest extends OpMode {
         led = hardwareMap.digitalChannel.get("led");
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
         AdafruitI2cColorSensor colorSensor2 = (AdafruitI2cColorSensor) hardwareMap.colorSensor.get("colorSensor");
-        ModernRoboticsI2cGyro
         led.setMode(DigitalChannelController.Mode.OUTPUT);
     }
 
