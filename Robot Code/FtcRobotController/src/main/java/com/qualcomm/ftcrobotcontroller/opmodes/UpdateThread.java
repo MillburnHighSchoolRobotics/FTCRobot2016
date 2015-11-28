@@ -75,7 +75,7 @@ public abstract class UpdateThread extends OpMode {
 
 
         //SENSOR SETUP
-		//imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
+		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
 		//colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		//colorSensorLed = hardwareMap.digitalChannel.get("colorSensorLed");
 		//ultrasound = hardwareMap.analogInput.get("ultrasound");
@@ -122,6 +122,10 @@ public abstract class UpdateThread extends OpMode {
 
 	}
 
+	public void init_loop() {
+		imu.zeroYaw();
+	}
+
 	public void start() {
 
 		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
@@ -130,7 +134,6 @@ public abstract class UpdateThread extends OpMode {
         vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
 		tapeMeasureLeft.setPosition(0.485);
 		tapeMeasureRight.setPosition(0.485);
-        //imu.zeroYaw();
         //colorSensorLed.setState(true);
 		
 		t.start();
@@ -148,7 +151,7 @@ public abstract class UpdateThread extends OpMode {
 		// Update
 
 		//vTiltSensor.setRawValue(imu.getIntegratedPitch());
-        //vHeadingSensor.setRawValue(imu.getIntegratedYaw());
+        vHeadingSensor.setRawValue(imu.getIntegratedYaw());
         //vColorSensor.setRawValue(colorSensor.argb());
         //vUltrasoundSensor.setRawValue(ultrasound.getValue());
 		
@@ -177,6 +180,7 @@ public abstract class UpdateThread extends OpMode {
 
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
 		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("angle", vHeadingSensor.getRawValue());
 
         flipperLeft.setPosition(vFlipperLeftServo.getPosition());
         flipperRight.setPosition(vFlipperRightServo.getPosition());

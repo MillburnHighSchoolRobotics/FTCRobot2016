@@ -1,14 +1,16 @@
 package virtualRobot;
 
+import android.util.Log;
+
 /**
  * Created by shant on 10/27/2015.
  */
 public class Rotate implements Command {
     private ExitCondition exitCondition;
-    private double THRESHOLD = 1;
-    private double KP = 0.3;
+    private double THRESHOLD = 0.2;
+    private double KP = 0.156;
     private double KI = 0;
-    private double KD = 0;
+    private double KD = 0.741;
     private double power;
     private double angleInDegrees;
     private RunMode runMode;
@@ -30,7 +32,7 @@ public class Rotate implements Command {
         
         pidController = new PIDController(KP, KI, KD, THRESHOLD);
 
-        runMode = RunMode.WITH_ENCODER;
+        runMode = RunMode.WITH_ANGLE_SENSOR;
     }
 
     public Rotate (double target) {
@@ -80,7 +82,9 @@ public class Rotate implements Command {
             case WITH_ANGLE_SENSOR:
                 while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD) {
 
-                    double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue()) * power;
+                    double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
+                    adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
+                    adjustedPower *= power;
 
                     robot.getDriveLeftMotor().setPower(adjustedPower);
                     robot.getDriveRightMotor().setPower(-adjustedPower);
@@ -89,6 +93,8 @@ public class Rotate implements Command {
                         isInterrupted = true;
                         break;
                     }
+
+                    Log.e("pidoutput", Double.toString(adjustedPower));
 
                     Thread.currentThread().sleep(10);
                 }
