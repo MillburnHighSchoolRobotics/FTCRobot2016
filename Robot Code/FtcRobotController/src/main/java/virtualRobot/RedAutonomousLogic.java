@@ -8,6 +8,9 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
         //put shields down
+
+        Translate.setGlobalMaxPower(maxPower);
+        Rotate.setGlobalMaxPower(maxPower);
         commands.add(
                 new MoveServo(
                         new Servo[]{
@@ -16,7 +19,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
                         },
                         new double[]{
                                 0.99,
-                                0
+                                0.0
                         }
 
                 )

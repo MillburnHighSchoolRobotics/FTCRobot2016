@@ -16,7 +16,7 @@ public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
                         },
                         new double [] {
                                 0.99,
-                                0
+                                0.0
                         }
 
                 )

@@ -73,24 +73,24 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     //FLIPPING THE PEOPLE OFF
                     if (!joystick1.isDown(JoystickController.BUTTON_LEFT_STICK) && joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK)) {
                         if (FLIPPED){
-                            robot.getFlipperLeftServo().setPosition(1);
+                            robot.getFlipperLeftServo().setPosition(0.8);
                         }
                         else {
-                            robot.getFlipperRightServo().setPosition(1);
+                            robot.getFlipperRightServo().setPosition(0.92);
                         }
                     }
                     else if (joystick1.isDown(JoystickController.BUTTON_LEFT_STICK) && !joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK)) {
                         if (FLIPPED){
-                            robot.getFlipperRightServo().setPosition(1);
+                            robot.getFlipperRightServo().setPosition(0.92);
                         }
                         else {
-                            robot.getFlipperLeftServo().setPosition(1);
+                            robot.getFlipperLeftServo().setPosition(0.8);
                         }
                     }
 
                     else {
-                        robot.getFlipperLeftServo().setPosition(0.5);
-                        robot.getFlipperRightServo().setPosition(0.5);
+                        robot.getFlipperLeftServo().setPosition(0.2);
+                        robot.getFlipperRightServo().setPosition(0.4);
                     }
 
 
@@ -150,8 +150,8 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getTapeMeasureServo().setPosition(tapeMeasureCurrentPos);
                     }
 
-                    robot.getTapeMeasureFrontMotor().setPower(joystick2.getValue(JoystickController.Y_1));
-                    robot.getTapeMeasureBackMotor().setPower(joystick2.getValue(JoystickController.Y_2));
+                    robot.getTapeMeasureFrontMotor().setPower(-joystick2.getValue(JoystickController.Y_1));
+                    robot.getTapeMeasureBackMotor().setPower(-joystick2.getValue(JoystickController.Y_2));
 
 
 

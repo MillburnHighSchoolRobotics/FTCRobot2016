@@ -14,14 +14,22 @@ public class Rotate implements Command {
     private double power;
     private double angleInDegrees;
     private RunMode runMode;
+    private static double globalMaxPower = 1;
+
+    private static double time;
+    private static double timeLimit;
     
     private PIDController pidController;
 
     private static AutonomousRobot robot = Command.AUTO_ROBOT;
 
+    public static void setGlobalMaxPower(double p) {
+        globalMaxPower = p;
+    }
+
     public Rotate () {
     	
-    	power = 1;
+    	power = globalMaxPower;
     	
         exitCondition = new ExitCondition() {
             @Override
@@ -33,6 +41,8 @@ public class Rotate implements Command {
         pidController = new PIDController(KP, KI, KD, THRESHOLD);
 
         runMode = RunMode.WITH_ANGLE_SENSOR;
+
+        timeLimit = -1;
     }
 
     public Rotate (double target) {
@@ -45,6 +55,15 @@ public class Rotate implements Command {
     public Rotate (double angleInDegrees, double power) {
         this(angleInDegrees);
         this.power = power;
+    }
+
+    private Rotate(double angleInDegrees, double power, double timeLimit) {
+        this(angleInDegrees, power);
+        this.timeLimit = timeLimit;
+    }
+
+    public void setTimeLimit(double timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
 
@@ -77,10 +96,10 @@ public class Rotate implements Command {
     @Override
     public boolean changeRobotState() throws InterruptedException{
     	boolean isInterrupted = false;
-
+        time = System.currentTimeMillis();
         switch (runMode) {
             case WITH_ANGLE_SENSOR:
-                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD) {
+                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
                     adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
