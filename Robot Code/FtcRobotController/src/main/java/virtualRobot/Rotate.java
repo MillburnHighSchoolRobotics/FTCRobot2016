@@ -7,10 +7,17 @@ import android.util.Log;
  */
 public class Rotate implements Command {
     private ExitCondition exitCondition;
+<<<<<<< HEAD
     private double THRESHOLD = 2;
     private double KP = 0.26;
     private double KI = 0;
     private double KD = 0;
+=======
+    private double THRESHOLD = 2.3;
+    private double KP = 0.147;
+    private double KI = 0;
+    private double KD = 0.687;
+>>>>>>> b7f965d0074695a113c10a3051ca45e6d0d9e28b
     private double power;
     private double angleInDegrees;
     private RunMode runMode;

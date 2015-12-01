@@ -178,7 +178,14 @@ public abstract class UpdateThread extends OpMode {
        	tapeMeasureFrontM.setPower(tapeMeasureFrontPower);
         tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
 
+<<<<<<< HEAD
 
+=======
+		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
+		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("angle", vHeadingSensor.getRawValue());
+		telemetry.addData("aangle", imu.getIntegratedYaw());
+>>>>>>> b7f965d0074695a113c10a3051ca45e6d0d9e28b
 
         flipperLeft.setPosition(vFlipperLeftServo.getPosition());
         flipperRight.setPosition(vFlipperRightServo.getPosition());

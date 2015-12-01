@@ -6,6 +6,7 @@ package virtualRobot;
 public class PIDTester extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
-        commands.add(new Rotate(90, 0.6));
+        Rotate.setGlobalMaxPower(0.6);
+        commands.add(new Rotate(3600));
     }
 }
