@@ -36,7 +36,7 @@ public class MPU9250 extends AHRS {
     }
 
     public double getIntegratedYaw() {
-        if (Math.abs(getYaw() - prevYaw) > 320) {
+        if (Math.abs(getYaw() - prevYaw) > 200) {
             if (getYaw() < prevYaw) {
                 yawOffset += 360;
             }
@@ -51,7 +51,7 @@ public class MPU9250 extends AHRS {
     }
     
     public double getIntegratedPitch() {
-        if (Math.abs(getPitch() - prevPitch) > 320) {
+        if (Math.abs(getPitch() - prevPitch) > 200) {
             if (getPitch() < prevPitch) {
                 pitchOffset += 360;
             }
@@ -66,7 +66,7 @@ public class MPU9250 extends AHRS {
     }
 
     public double getIntegratedRoll() {
-        if (Math.abs(getRoll() - prevRoll) > 320) {
+        if (Math.abs(getRoll() - prevRoll) > 200) {
             if (getRoll() < prevRoll) {
                 rollOffset += 360;
             }

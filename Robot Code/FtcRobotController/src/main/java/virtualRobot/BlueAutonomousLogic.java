@@ -4,7 +4,7 @@ package virtualRobot;
  * Created by shant on 11/28/2015.
  */
 public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
-    double maxPower = 0.6;
+    double maxPower = 0.7;
     @Override
     public void loadCommands() {
         //put shields down
