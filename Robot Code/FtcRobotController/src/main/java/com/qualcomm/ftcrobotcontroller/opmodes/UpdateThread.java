@@ -178,9 +178,7 @@ public abstract class UpdateThread extends OpMode {
        	tapeMeasureFrontM.setPower(tapeMeasureFrontPower);
         tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
 
-		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
-		telemetry.addData("tape measure backj", tapeMeasureBackPower);
-		telemetry.addData("angle", vHeadingSensor.getRawValue());
+
 
         flipperLeft.setPosition(vFlipperLeftServo.getPosition());
         flipperRight.setPosition(vFlipperRightServo.getPosition());
@@ -191,6 +189,11 @@ public abstract class UpdateThread extends OpMode {
         backShieldRight.setPosition(vBackShieldServo.getPosition());
 		frontShield.setPosition(vFrontShieldServo.getPosition());
         buttonPusher.setPosition(vButtonPusherServo.getPosition());
+
+		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
+		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("raw angle", imu.getIntegratedYaw());
+		telemetry.addData("virtual angle", vHeadingSensor.getRawValue());
 
 		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 		//telemetry.addData("servo Value", tapeMeasureLeft.getPosition());

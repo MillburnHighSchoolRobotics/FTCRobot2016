@@ -8,9 +8,9 @@ import android.util.Log;
 public class Rotate implements Command {
     private ExitCondition exitCondition;
     private double THRESHOLD = 2;
-    private double KP = 0.156;
+    private double KP = 0.26;
     private double KI = 0;
-    private double KD = 0.741;
+    private double KD = 0;
     private double power;
     private double angleInDegrees;
     private RunMode runMode;
@@ -99,7 +99,7 @@ public class Rotate implements Command {
         time = System.currentTimeMillis();
         switch (runMode) {
             case WITH_ANGLE_SENSOR:
-                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+                while (!exitCondition.isConditionMet() /*&& Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD*/ && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
                     adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
@@ -113,7 +113,7 @@ public class Rotate implements Command {
                         break;
                     }
 
-                    Log.e("pidoutput", Double.toString(adjustedPower));
+                    Log.e("PIDOUTPUT", "PID OUTPUT: " + Double.toString(adjustedPower));
 
                     Thread.currentThread().sleep(10);
                 }
