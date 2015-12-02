@@ -5,6 +5,8 @@ package virtualRobot;
  */
 public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
     double maxPower = 0.7;
+    commands.add (new Translate (4500, Translate.Direction.FORWARD, maxPower));
+
     @Override
     public void loadCommands() {
         //put shields down
@@ -39,8 +41,6 @@ public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
         commands.add (new Pause(1500));
 
         //Move into corner
-        commands.add (new Translate (4500, Translate.Direction.FORWARD, maxPower));
-
         robot.addToProgress("Moved into corner");
 
         commands.add (new Pause (1500));
