@@ -208,13 +208,9 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
 		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
 
-		if (robot.getProgress().size() != 0) {
-			robotProgress.add(robot.getProgress().get(0));
-			robot.getProgress().remove(0);
-		}
 
 		for (int i = 0; i < robot.getProgress().size(); i++) {
-			telemetry.addData("robot progress" + i, robot.getProgress().get(i));
+			telemetry.addData("robot progress " + i, robot.getProgress().get(i));
 		}
 
 		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
