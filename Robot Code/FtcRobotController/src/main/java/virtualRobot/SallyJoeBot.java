@@ -6,35 +6,34 @@ package virtualRobot;
  */
 public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, tapeMeasureLeftMotor, tapeMeasureRightMotor;
-    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureLeftMotorEncoder, tapeMeasureRightMotorEncoder;
+    private Motor driveLeftMotor, driveRightMotor, tapeMeasureBackMotor, tapeMeasureFrontMotor;
+    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureFrontMotorEncoder, tapeMeasureBackMotorEncoder;
     private Sensor headingSensor, colorSensor, tiltSensor, ultrasoundSensor;
 
-    private Servo tapeMeasureLeftServo, tapeMeasureRightServo, flipperLeftServo, flipperRightServo, snowPlowServo, backShieldServo, dumperServo, buttonPusherServo;
+    private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, frontShieldServo, backShieldServo, dumperServo, buttonPusherServo;
 
     private JoystickController joystickController1, joystickController2;
 
     public SallyJoeBot() {
         driveLeftMotor = new Motor();
         driveRightMotor = new Motor();
-        tapeMeasureLeftMotor = new Motor();
-        tapeMeasureRightMotor = new Motor();
+        tapeMeasureBackMotor = new Motor();
+        tapeMeasureFrontMotor = new Motor();
 
         driveLeftMotorEncoder = new Sensor();
         driveRightMotorEncoder = new Sensor();
-        tapeMeasureLeftMotorEncoder = new Sensor();
-        tapeMeasureRightMotorEncoder = new Sensor();
+        tapeMeasureFrontMotorEncoder = new Sensor();
+        tapeMeasureBackMotorEncoder = new Sensor();
 
         headingSensor = new Sensor();
         colorSensor = new Sensor();
         tiltSensor = new Sensor();
         ultrasoundSensor = new Sensor();
         
-        tapeMeasureLeftServo = new Servo();
-        tapeMeasureRightServo = new Servo();
+        tapeMeasureServo = new Servo();
         flipperLeftServo = new Servo();
         flipperRightServo = new Servo();
-        snowPlowServo = new Servo();
+        frontShieldServo = new Servo();
         backShieldServo = new Servo();
         dumperServo = new Servo();
         buttonPusherServo = new Servo();
@@ -42,8 +41,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         joystickController1 = new JoystickController();
         joystickController2 = new JoystickController();
 
-        tapeMeasureLeftServo.setPosition(0.63);
-        tapeMeasureRightServo.setPosition(0.63);
+        tapeMeasureServo.setPosition(0.485);
     }
 
     public synchronized Motor getDriveRightMotor() {
@@ -54,12 +52,12 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return driveLeftMotor;
     }
 
-    public synchronized Motor getTapeMeasureLeftMotor() {
-        return tapeMeasureLeftMotor;
+    public synchronized Motor getTapeMeasureBackMotor() {
+        return tapeMeasureBackMotor;
     }
 
-    public synchronized Motor getTapeMeasureRightMotor() {
-        return tapeMeasureRightMotor;
+    public synchronized Motor getTapeMeasureFrontMotor() {
+        return tapeMeasureFrontMotor;
     }
 
     public synchronized Sensor getDriveRightMotorEncoder() {
@@ -70,12 +68,12 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return driveLeftMotorEncoder;
     }
 
-    public synchronized Sensor getTapeMeasureLeftMotorEncoder() {
-        return tapeMeasureLeftMotorEncoder;
+    public synchronized Sensor getTapeMeasureFrontMotorEncoder() {
+        return tapeMeasureFrontMotorEncoder;
     }
 
-    public synchronized Sensor getTapeMeasureRightMotorEncoder() {
-        return tapeMeasureRightMotorEncoder;
+    public synchronized Sensor getTapeMeasureBackMotorEncoder() {
+        return tapeMeasureBackMotorEncoder;
     }
 
     public synchronized Sensor getHeadingSensor() {
@@ -94,12 +92,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return ultrasoundSensor;
     }
 
-    public synchronized Servo getTapeMeasureLeftServo() {
-        return tapeMeasureLeftServo;
-    }
-
-    public synchronized Servo getTapeMeasureRightServo() {
-        return tapeMeasureRightServo;
+    public synchronized Servo getTapeMeasureServo() {
+        return tapeMeasureServo;
     }
 
     public synchronized Servo getFlipperLeftServo() {
@@ -110,8 +104,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return flipperRightServo;
     }
 
-    public synchronized Servo getSnowPlowServo() {
-        return snowPlowServo;
+    public synchronized Servo getFrontShieldServo() {
+        return frontShieldServo;
     }
 
     public synchronized Servo getBackShieldServo() {

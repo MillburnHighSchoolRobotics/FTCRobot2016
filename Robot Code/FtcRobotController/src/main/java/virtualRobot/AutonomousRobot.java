@@ -9,17 +9,17 @@ public interface AutonomousRobot {
 
     Motor getDriveLeftMotor();
 
-    Motor getTapeMeasureLeftMotor();
+    Motor getTapeMeasureFrontMotor();
 
-    Motor getTapeMeasureRightMotor();
+    Motor getTapeMeasureBackMotor();
 
     Sensor getDriveRightMotorEncoder();
 
     Sensor getDriveLeftMotorEncoder();
 
-    Sensor getTapeMeasureLeftMotorEncoder();
+    Sensor getTapeMeasureFrontMotorEncoder();
 
-    Sensor getTapeMeasureRightMotorEncoder();
+    Sensor getTapeMeasureBackMotorEncoder();
 
     Sensor getHeadingSensor();
 
@@ -33,13 +33,11 @@ public interface AutonomousRobot {
 
     Servo getFlipperRightServo();
 
-    Servo getSnowPlowServo();
+    Servo getFrontShieldServo();
 
     Servo getBackShieldServo();
 
-    Servo getTapeMeasureLeftServo();
-
-    Servo getTapeMeasureRightServo();
+    Servo getTapeMeasureServo();
 
     Servo getDumperServo();
 

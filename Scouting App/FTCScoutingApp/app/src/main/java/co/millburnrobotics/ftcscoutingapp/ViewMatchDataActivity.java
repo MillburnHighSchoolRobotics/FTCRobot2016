@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -29,7 +30,15 @@ public class ViewMatchDataActivity extends AppCompatActivity {
 
         final Spinner teamNumber = (Spinner) findViewById(R.id.teamnumber);
 
-        ParseQuery<Team> query = ParseQuery.getQuery(Team.class);
+        Competition comp = null;
+        try {
+            comp = ParseQuery.getQuery(Competition.class).get(selectedCompetition);
+        } catch (ParseException e){
+            Toast.makeText(this, "cannot find competition", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ParseQuery<Team> query = comp.getTeams().getQuery();
         query.orderByAscending(Team.NUMBER);
         List<Team> teamList = null;
         try {
@@ -73,6 +82,10 @@ public class ViewMatchDataActivity extends AppCompatActivity {
         viewByMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(((EditText) findViewById(R.id.matchnumber)).getText().toString().length() == 0){
+                    Toast.makeText(view.getContext(), "no match available",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent viewMatch = new Intent(view.getContext(), ViewMatchDataMatchActivity.class);
                 viewMatch.putExtra("MatchNumber", Integer.parseInt(((EditText) findViewById(R.id.matchnumber)).getText().toString()));
                 viewMatch.putExtra("SelectedCompetition", selectedCompetition);

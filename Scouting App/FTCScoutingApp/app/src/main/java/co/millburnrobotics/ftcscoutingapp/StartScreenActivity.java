@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class StartScreenActivity extends AppCompatActivity {
 
     @Override
@@ -14,8 +17,12 @@ public class StartScreenActivity extends AppCompatActivity {
 
         //INSERT PARSE INIT STUFF HERE
 
-        Intent goToMenu = new Intent(this, MenuActivity.class);
-        startActivity(goToMenu);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                startActivity(new Intent(StartScreenActivity.this, MenuActivity.class));
+            }
+        }, 1500);
     }
 
     @Override

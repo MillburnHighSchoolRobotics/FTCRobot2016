@@ -67,6 +67,11 @@ public class AddCompetitionActivity extends AppCompatActivity {
 
             @Override
             public void onClick(final View v) {
+                if(compName.getText().toString().length() == 0 || date.getText().toString().length()==0 || teamNumber.getText().toString().length() == 0 ){
+                    Toast.makeText(v.getContext(),"no competition available ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Competition competition = new Competition();
 
                 competition.setName(compName.getText().toString());
