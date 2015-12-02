@@ -1,5 +1,7 @@
 package virtualRobot;
 
+import java.util.ArrayList;
+
 /**
  * Created by DOSullivan on 10/5/15.
  * Can be accesed by
@@ -13,6 +15,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
     private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, frontShieldServo, backShieldServo, dumperServo, buttonPusherServo;
 
     private JoystickController joystickController1, joystickController2;
+
+    private ArrayList<String> robotProgress;
 
     public SallyJoeBot() {
         driveLeftMotor = new Motor();
@@ -40,6 +44,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
         joystickController1 = new JoystickController();
         joystickController2 = new JoystickController();
+
+        robotProgress = new ArrayList<String>();
 
         tapeMeasureServo.setPosition(0.485);
     }
@@ -120,11 +126,21 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return buttonPusherServo;
     }
 
+
+
     public synchronized JoystickController getJoystickController1() {
         return joystickController1;
     }
 
     public synchronized JoystickController getJoystickController2() {
         return joystickController2;
+    }
+
+    public synchronized void addToProgress (String s) {
+        robotProgress.add(s);
+    }
+
+    public synchronized ArrayList<String> getProgress () {
+        return robotProgress;
     }
 }

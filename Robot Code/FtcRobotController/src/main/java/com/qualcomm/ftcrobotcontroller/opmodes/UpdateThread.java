@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.ArrayList;
+
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
@@ -44,6 +46,8 @@ public abstract class UpdateThread extends OpMode {
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vColorSensor, vUltrasoundSensor, vTiltSensor;
 
 	private JoystickController vJoystickController1, vJoystickController2;
+
+	private ArrayList<String> robotProgress;
 	
 	@Override
 	public void init() {
@@ -109,6 +113,8 @@ public abstract class UpdateThread extends OpMode {
 
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
+
+		robotProgress = new ArrayList<String>();
 
         setLogicThread();
 
@@ -202,6 +208,14 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
 		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
 
+		if (robot.getProgress().size() != 0) {
+			robotProgress.add(robot.getProgress().get(0));
+			robot.getProgress().remove(0);
+		}
+
+		for (int i = 0; i < robot.getProgress().size(); i++) {
+			telemetry.addData("robot progress" + i, robot.getProgress().get(i));
+		}
 
 		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 		//telemetry.addData("servo Value", tapeMeasureLeft.getPosition());

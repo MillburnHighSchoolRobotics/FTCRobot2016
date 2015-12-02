@@ -1,5 +1,7 @@
 package virtualRobot;
 
+import java.util.ArrayList;
+
 /**
  * Created by Yanjun on 11/18/2015.
  */
@@ -42,4 +44,8 @@ public interface AutonomousRobot {
     Servo getDumperServo();
 
     Servo getButtonPusherServo();
+
+    void addToProgress(String s);
+
+    ArrayList<String> getProgress();
 }
