@@ -1,7 +1,5 @@
 package com.kauailabs.navx.ftc;
 
-import com.kauailabs.navx.AHRSProtocol;
-import com.kauailabs.navx.IMUProtocol;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 
 /**

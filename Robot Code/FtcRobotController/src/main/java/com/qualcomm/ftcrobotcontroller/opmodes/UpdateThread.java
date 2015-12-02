@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.ArrayList;
+
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
@@ -44,6 +46,8 @@ public abstract class UpdateThread extends OpMode {
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vColorSensor, vUltrasoundSensor, vTiltSensor;
 
 	private JoystickController vJoystickController1, vJoystickController2;
+
+	private ArrayList<String> robotProgress;
 	
 	@Override
 	public void init() {
@@ -110,6 +114,8 @@ public abstract class UpdateThread extends OpMode {
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
 
+		robotProgress = new ArrayList<String>();
+
         setLogicThread();
 
 		try {
@@ -128,8 +134,8 @@ public abstract class UpdateThread extends OpMode {
 
 	public void start() {
 
-		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
-		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
+		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
         vTapeMeasureBackMotorEncoder.setRawValue(-tapeMeasureBackMotor.getCurrentPosition());
         vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
 		tapeMeasureLeft.setPosition(0.485);
@@ -176,22 +182,40 @@ public abstract class UpdateThread extends OpMode {
 		rightBack.setPower(rightPower);
 
        	tapeMeasureFrontM.setPower(tapeMeasureFrontPower);
-        tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
+		tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
+
 
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
-		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("tape measure back", tapeMeasureBackPower);
 		telemetry.addData("angle", vHeadingSensor.getRawValue());
 		telemetry.addData("aangle", imu.getIntegratedYaw());
 
-        flipperLeft.setPosition(vFlipperLeftServo.getPosition());
-        flipperRight.setPosition(vFlipperRightServo.getPosition());
+		flipperLeft.setPosition(vFlipperLeftServo.getPosition());
+		flipperRight.setPosition(vFlipperRightServo.getPosition());
         tapeMeasureLeft.setPosition(vTapeMeasureServo.getPosition());
         tapeMeasureRight.setPosition(vTapeMeasureServo.getPosition());
 		dumper.setPosition(vDumperServo.getPosition());
 		backShieldLeft.setPosition(vBackShieldServo.getPosition());
         backShieldRight.setPosition(vBackShieldServo.getPosition());
 		frontShield.setPosition(vFrontShieldServo.getPosition());
-        buttonPusher.setPosition(vButtonPusherServo.getPosition());
+		buttonPusher.setPosition(vButtonPusherServo.getPosition());
+
+		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
+		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("raw angle", imu.getIntegratedYaw());
+		telemetry.addData("virtual angle", vHeadingSensor.getRawValue());
+		telemetry.addData("real right encoders", rightFront.getCurrentPosition() + "  " + rightBack.getCurrentPosition());
+		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
+		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
+
+		if (robot.getProgress().size() != 0) {
+			robotProgress.add(robot.getProgress().get(0));
+			robot.getProgress().remove(0);
+		}
+
+		for (int i = 0; i < robot.getProgress().size(); i++) {
+			telemetry.addData("robot progress" + i, robot.getProgress().get(i));
+		}
 
 		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 		//telemetry.addData("servo Value", tapeMeasureLeft.getPosition());

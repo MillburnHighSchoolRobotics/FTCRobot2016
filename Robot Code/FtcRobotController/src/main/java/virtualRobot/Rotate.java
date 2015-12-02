@@ -7,10 +7,12 @@ import android.util.Log;
  */
 public class Rotate implements Command {
     private ExitCondition exitCondition;
+
     private double THRESHOLD = 2.3;
     private double KP = 0.147;
     private double KI = 0;
     private double KD = 0.687;
+
     private double power;
     private double angleInDegrees;
     private RunMode runMode;
@@ -113,7 +115,7 @@ public class Rotate implements Command {
                         break;
                     }
 
-                    Log.e("pidoutput", Double.toString(adjustedPower));
+                    Log.e("PIDOUTPUT", "PID OUTPUT: " + Double.toString(adjustedPower));
 
                     Thread.currentThread().sleep(10);
                 }
