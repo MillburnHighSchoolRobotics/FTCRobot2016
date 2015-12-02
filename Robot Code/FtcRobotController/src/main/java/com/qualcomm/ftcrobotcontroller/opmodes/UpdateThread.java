@@ -128,8 +128,8 @@ public abstract class UpdateThread extends OpMode {
 
 	public void start() {
 
-		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
-		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
+		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
         vTapeMeasureBackMotorEncoder.setRawValue(-tapeMeasureBackMotor.getCurrentPosition());
         vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
 		tapeMeasureLeft.setPosition(0.485);
@@ -176,31 +176,32 @@ public abstract class UpdateThread extends OpMode {
 		rightBack.setPower(rightPower);
 
        	tapeMeasureFrontM.setPower(tapeMeasureFrontPower);
-        tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
+		tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
 
-<<<<<<< HEAD
 
-=======
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
-		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("tape measure back", tapeMeasureBackPower);
 		telemetry.addData("angle", vHeadingSensor.getRawValue());
 		telemetry.addData("aangle", imu.getIntegratedYaw());
->>>>>>> b7f965d0074695a113c10a3051ca45e6d0d9e28b
 
-        flipperLeft.setPosition(vFlipperLeftServo.getPosition());
-        flipperRight.setPosition(vFlipperRightServo.getPosition());
+		flipperLeft.setPosition(vFlipperLeftServo.getPosition());
+		flipperRight.setPosition(vFlipperRightServo.getPosition());
         tapeMeasureLeft.setPosition(vTapeMeasureServo.getPosition());
         tapeMeasureRight.setPosition(vTapeMeasureServo.getPosition());
 		dumper.setPosition(vDumperServo.getPosition());
 		backShieldLeft.setPosition(vBackShieldServo.getPosition());
         backShieldRight.setPosition(vBackShieldServo.getPosition());
 		frontShield.setPosition(vFrontShieldServo.getPosition());
-        buttonPusher.setPosition(vButtonPusherServo.getPosition());
+		buttonPusher.setPosition(vButtonPusherServo.getPosition());
 
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
 		telemetry.addData("tape measure backj", tapeMeasureBackPower);
 		telemetry.addData("raw angle", imu.getIntegratedYaw());
 		telemetry.addData("virtual angle", vHeadingSensor.getRawValue());
+		telemetry.addData("real right encoders", rightFront.getCurrentPosition() + "  " + rightBack.getCurrentPosition());
+		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
+		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
+
 
 		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 		//telemetry.addData("servo Value", tapeMeasureLeft.getPosition());
