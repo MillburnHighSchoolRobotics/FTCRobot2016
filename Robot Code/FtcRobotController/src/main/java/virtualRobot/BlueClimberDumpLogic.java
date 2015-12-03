@@ -3,7 +3,7 @@ package virtualRobot;
 /**
  * Created by shant on 11/28/2015.
  */
-public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
+public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double maxPower = 0.7;
     commands.add (new Translate (4500, Translate.Direction.FORWARD, maxPower));
 
@@ -13,12 +13,16 @@ public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
         commands.add (
                 new MoveServo (
                         new Servo [] {
-                             robot.getFrontShieldServo(),
-                                robot.getBackShieldServo()
+                                robot.getFrontShieldServo(),
+                                robot.getBackShieldServo(),
+                                robot.getFlipperLeftServo(),
+                                robot.getFlipperRightServo()
                         },
                         new double [] {
                                 0.99,
-                                0.0
+                                0.0,
+                                0.2,
+                                0.4
                         }
 
                 )
@@ -41,9 +45,14 @@ public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
         commands.add (new Pause(1500));
 
         //Move into corner
+<<<<<<< HEAD:Robot Code/FtcRobotController/src/main/java/virtualRobot/BlueAutonomousLogic.java
+=======
+        commands.add(new Translate(4500, Translate.Direction.FORWARD, maxPower));
+
+>>>>>>> 9390546876724917b68e29174f35886dd1a09fb8:Robot Code/FtcRobotController/src/main/java/virtualRobot/BlueClimberDumpLogic.java
         robot.addToProgress("Moved into corner");
 
-        commands.add (new Pause (1500));
+        commands.add(new Pause(1500));
         //Turn to face backwards
         commands.add (new Rotate (0, maxPower));
 
@@ -51,11 +60,11 @@ public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
 
         commands.add (new Pause (1500));
 
-        commands.add (new Translate (1500, Translate.Direction.BACKWARD, maxPower));
+        commands.add(new Translate(1500, Translate.Direction.BACKWARD, maxPower));
 
         robot.addToProgress("moved backward");
 
-        commands.add (new Pause (1500));
+        commands.add(new Pause(1500));
 
         commands.add (new Translate (600, Translate.Direction.FORWARD, maxPower));
 
@@ -63,11 +72,11 @@ public class BlueAutonomousLogic extends LogicThread <AutonomousRobot> {
 
         commands.add (new Pause (1500));
 
-        commands.add (new Rotate (90, maxPower));
+        commands.add(new Rotate(90, maxPower));
 
         robot.addToProgress("rotated");
 
-        commands.add (new Translate (275, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Translate(275, Translate.Direction.FORWARD, maxPower));
 
 
         commands.add (
