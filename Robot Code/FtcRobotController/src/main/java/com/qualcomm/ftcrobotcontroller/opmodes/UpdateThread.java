@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.ArrayList;
+
 import virtualRobot.Command;
 import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
@@ -24,7 +26,7 @@ public abstract class UpdateThread extends OpMode {
 
 	//drive and shields
 	private DcMotor rightFront, rightBack, leftFront, leftBack;
-	private Servo frontShield, backShieldLeft, backShieldRight;
+	private Servo frontShieldRight, frontShieldLeft, backShieldLeft, backShieldRight;
 
 	//tape measure system
 	private DcMotor tapeMeasureFrontM, tapeMeasureBackMotor;
@@ -44,6 +46,8 @@ public abstract class UpdateThread extends OpMode {
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vColorSensor, vUltrasoundSensor, vTiltSensor;
 
 	private JoystickController vJoystickController1, vJoystickController2;
+
+	private ArrayList<String> robotProgress;
 	
 	@Override
 	public void init() {
@@ -63,7 +67,8 @@ public abstract class UpdateThread extends OpMode {
 		dumper = hardwareMap.servo.get("dumper");
 		backShieldLeft = hardwareMap.servo.get("backShieldLeft");
         backShieldRight = hardwareMap.servo.get("backShieldRight");
-		frontShield = hardwareMap.servo.get("frontShield");
+		frontShieldRight = hardwareMap.servo.get("frontShieldRight");
+		frontShieldLeft = hardwareMap.servo.get("frontShieldLeft");
 		buttonPusher = hardwareMap.servo.get("buttonPusher");
 
         //REVERSE RIGHT SIDE
@@ -72,10 +77,11 @@ public abstract class UpdateThread extends OpMode {
 		rightFront.setDirection(DcMotor.Direction.REVERSE);
 		rightBack.setDirection(DcMotor.Direction.REVERSE);
         tapeMeasureRight.setDirection(Servo.Direction.REVERSE);
+		frontShieldRight.setDirection(Servo.Direction.REVERSE);
 
 
         //SENSOR SETUP
-		//imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
+		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
 		//colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		//colorSensorLed = hardwareMap.digitalChannel.get("colorSensorLed");
 		//ultrasound = hardwareMap.analogInput.get("ultrasound");
@@ -110,6 +116,8 @@ public abstract class UpdateThread extends OpMode {
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
 
+		robotProgress = new ArrayList<String>();
+
         setLogicThread();
 
 		try {
@@ -122,15 +130,18 @@ public abstract class UpdateThread extends OpMode {
 
 	}
 
+	public void init_loop() {
+		imu.zeroYaw();
+	}
+
 	public void start() {
 
-		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
-		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
+		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
+		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
         vTapeMeasureBackMotorEncoder.setRawValue(-tapeMeasureBackMotor.getCurrentPosition());
         vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
 		tapeMeasureLeft.setPosition(0.485);
 		tapeMeasureRight.setPosition(0.485);
-        //imu.zeroYaw();
         //colorSensorLed.setState(true);
 		
 		t.start();
@@ -148,7 +159,7 @@ public abstract class UpdateThread extends OpMode {
 		// Update
 
 		//vTiltSensor.setRawValue(imu.getIntegratedPitch());
-        //vHeadingSensor.setRawValue(imu.getIntegratedYaw());
+        vHeadingSensor.setRawValue(imu.getIntegratedYaw());
         //vColorSensor.setRawValue(colorSensor.argb());
         //vUltrasoundSensor.setRawValue(ultrasound.getValue());
 		
@@ -173,20 +184,37 @@ public abstract class UpdateThread extends OpMode {
 		rightBack.setPower(rightPower);
 
        	tapeMeasureFrontM.setPower(tapeMeasureFrontPower);
-        tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
+		tapeMeasureBackMotor.setPower(tapeMeasureBackPower);
+
 
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
-		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("tape measure back", tapeMeasureBackPower);
+		telemetry.addData("angle", vHeadingSensor.getRawValue());
+		telemetry.addData("aangle", imu.getIntegratedYaw());
 
-        flipperLeft.setPosition(vFlipperLeftServo.getPosition());
-        flipperRight.setPosition(vFlipperRightServo.getPosition());
+		flipperLeft.setPosition(vFlipperLeftServo.getPosition());
+		flipperRight.setPosition(vFlipperRightServo.getPosition());
         tapeMeasureLeft.setPosition(vTapeMeasureServo.getPosition());
         tapeMeasureRight.setPosition(vTapeMeasureServo.getPosition());
 		dumper.setPosition(vDumperServo.getPosition());
 		backShieldLeft.setPosition(vBackShieldServo.getPosition());
         backShieldRight.setPosition(vBackShieldServo.getPosition());
-		frontShield.setPosition(vFrontShieldServo.getPosition());
-        buttonPusher.setPosition(vButtonPusherServo.getPosition());
+		frontShieldRight.setPosition(vFrontShieldServo.getPosition());
+		frontShieldLeft.setPosition(vFrontShieldServo.getPosition());
+		buttonPusher.setPosition(vButtonPusherServo.getPosition());
+
+		telemetry.addData("button pusher servo", vButtonPusherServo.getPosition());
+		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
+		telemetry.addData("tape measure backj", tapeMeasureBackPower);
+		telemetry.addData("raw angle", imu.getIntegratedYaw());
+		telemetry.addData("virtual angle", vHeadingSensor.getRawValue());
+		telemetry.addData("real right encoders", rightFront.getCurrentPosition() + "  " + rightBack.getCurrentPosition());
+		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
+		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
+
+		for (int i = 0; i < robot.getProgress().size(); i++) {
+			telemetry.addData("robot progress " + i, robot.getProgress().get(i));
+		}
 
 		//telemetry.addData("le joystick", vJoystickController2.getValue(JoystickController.Y_1));
 		//telemetry.addData("servo Value", tapeMeasureLeft.getPosition());
@@ -203,6 +231,7 @@ public abstract class UpdateThread extends OpMode {
 	}
 	
 	public void stop() {
+		imu.close();
 		t.interrupt();
 	}
 

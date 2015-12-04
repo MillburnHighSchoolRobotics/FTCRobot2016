@@ -7,7 +7,7 @@ import android.util.Log;
  */
 public class Translate implements Command {
     private ExitCondition exitCondition;
-    static final int MAX = 100;
+    private static double globalMaxPower = 1;
     private RunMode runMode;
     private Direction direction;
 
@@ -18,7 +18,14 @@ public class Translate implements Command {
     private double currentValue;
     private double multiplier;
 
+    private double time;
+    private double timeLimit;
+
     private static AutonomousRobot robot = Command.AUTO_ROBOT;
+
+    public static void setGlobalMaxPower(double p) {
+        globalMaxPower = p;
+    }
 
     public Translate() {
         exitCondition = new ExitCondition() {
@@ -33,10 +40,11 @@ public class Translate implements Command {
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
         headingController = new PIDController(HEADING_KP, HEADING_KI, HEADING_KD, HEADING_THRESHOLD);
 
-        maxPower = 1;
+        maxPower = globalMaxPower;
         currentValue = 0;
         direction = Direction.FORWARD;
         multiplier = 1;
+        timeLimit = -1;
     }
 
     public Translate(double target) {
@@ -59,6 +67,15 @@ public class Translate implements Command {
     	multiplier = (direction == Direction.FORWARD ? 1 : -1);
     }
 
+    public Translate(double target, Direction direction, double maxPower, double timeLimit) {
+        this(target, direction, maxPower);
+        this.timeLimit = timeLimit;
+    }
+
+    public void setTimeLimit(double timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
     public void setExitCondition (ExitCondition e) {
         exitCondition = e;
     }
@@ -71,6 +88,7 @@ public class Translate implements Command {
     public boolean changeRobotState() throws InterruptedException {
     	
     	boolean isInterrupted = false;
+        time = System.currentTimeMillis();
     	
         switch (runMode) {
             case CUSTOM:
@@ -78,7 +96,7 @@ public class Translate implements Command {
             	robot.getDriveLeftMotor().setPower(maxPower * multiplier);
             	robot.getDriveRightMotor().setPower(maxPower * multiplier);
 
-                while (!exitCondition.isConditionMet()) {
+                while (!exitCondition.isConditionMet() && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
                 	
                 	if (Thread.currentThread().isInterrupted()) {
                 		isInterrupted = true;
@@ -102,7 +120,7 @@ public class Translate implements Command {
             	robot.getDriveLeftMotor().setPower(maxPower * multiplier);
             	robot.getDriveRightMotor().setPower(maxPower * multiplier);
             	
-            	while (!exitCondition.isConditionMet() && currentValue < translateController.getTarget()) {
+            	while (!exitCondition.isConditionMet() && currentValue < translateController.getTarget() && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
             		
             		currentValue = Math.abs((Math.abs(robot.getDriveLeftMotorEncoder().getValue()) + Math.abs(robot.getDriveRightMotorEncoder().getValue())) / 2);
             		
@@ -125,7 +143,7 @@ public class Translate implements Command {
             	robot.getDriveLeftMotorEncoder().clearValue();
             	robot.getDriveRightMotorEncoder().clearValue();
 
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE) {
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
                    
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
                     double right = Math.abs(robot.getDriveRightMotorEncoder().getValue());
@@ -133,6 +151,8 @@ public class Translate implements Command {
                     currentValue = Math.abs((left + right) / 2);
 
                     double pidOutput = translateController.getPIDOutput(currentValue);
+                    pidOutput = Math.min(Math.max(pidOutput, -1), 1);
+                    pidOutput *= maxPower;
 
                     Log.d("pidoutput", Double.toString(pidOutput));
 
@@ -197,9 +217,9 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static double KP = 0.0045;
+    public static double KP = 0.0111;
     public static double KI = 0.0000;
-    public static double KD = 0.010125;
+    public static double KD = 0.047175;
     public static double THRESHOLD = 1000;
 
     public static int HEADING_KP = 0;
@@ -207,5 +227,5 @@ public class Translate implements Command {
     public static int HEADING_KD = 0;
     public static int HEADING_THRESHOLD = 0;
     
-    public static int TOLERANCE = 20;
+    public static int TOLERANCE = 12;
 }

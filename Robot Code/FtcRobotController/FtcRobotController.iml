@@ -101,6 +101,10 @@
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
     <orderEntry type="library" exported="" name="Hardware-release-" level="project" />
     <orderEntry type="library" exported="" name="FtcCommon-release-" level="project" />
+<<<<<<< HEAD
+    <orderEntry type="library" exported="" name="android-Google Inc.:Google APIs:19" level="project" />
+=======
+>>>>>>> a3197efa38163e104c81a12379734e19f871e2ab
     <orderEntry type="library" exported="" name="usb-Google Inc.:Google APIs:19" level="project" />
     <orderEntry type="library" exported="" name="effects-Google Inc.:Google APIs:19" level="project" />
     <orderEntry type="library" exported="" name="maps-Google Inc.:Google APIs:19" level="project" />
