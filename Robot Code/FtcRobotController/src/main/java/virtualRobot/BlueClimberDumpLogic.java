@@ -9,6 +9,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double maxPower = 0.7;
     final double BUTTON_PUSHER_LEFT = 0.05;
     final double BUTTON_PUSHER_RIGHT = 0.45;
+    final AtomicBoolean redIsLeft = new AtomicBoolean(true);
     @Override
     public void loadCommands() {
 
@@ -16,6 +17,19 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         robot.getProgress().clear();
         Rotate.setGlobalMaxPower(0.6);
         Translate.setGlobalMaxPower(0.6);
+
+        robot.addToProgress("Servos Moved");
+        robot.addToProgress("Moved Forward");
+        robot.addToProgress("Turned 45 Degrees");
+        robot.addToProgress("Moved into corner");
+        robot.addToProgress("Rotated");
+        robot.addToProgress("moved backward");
+        robot.addToProgress("moved forward");
+        robot.addToProgress("rotated");
+        robot.addToProgress("dumped people");
+        robot.addToProgress("pushed button");
+
+
         commands.add(
                 new MoveServo(
                         new Servo[]{
@@ -37,52 +51,46 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         );
 
 
-        robot.addToProgress("Servos Moved");
 
-        commands.add (new Pause(1500));
+        commands.add(new Pause(1500));
 
-        commands.add (new Translate (1200, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Translate(2400, Translate.Direction.FORWARD, maxPower));
 
-        robot.addToProgress("Moved Forward");
 
-        commands.add (new Pause (1500));
 
-        commands.add (new Rotate(45, maxPower));
+        commands.add(new Pause(1500));
 
-        robot.addToProgress("Turned 45 Degrees");
+        commands.add(new Rotate(45, maxPower));
 
-        commands.add (new Pause(1500));
+
+        commands.add(new Pause(1500));
+
 
         //Move into corner
-        commands.add(new Translate(4500, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Translate(9000, Translate.Direction.FORWARD, maxPower));
 
-        robot.addToProgress("Moved into corner");
 
         commands.add(new Pause(1500));
         //Turn to face backwards
-        commands.add (new Rotate (0, maxPower));
+        commands.add(new Rotate(0, maxPower));
 
-        robot.addToProgress("Rotated");
-
-        commands.add (new Pause (1500));
-
-        commands.add(new Translate(1500, Translate.Direction.BACKWARD, maxPower));
-
-        robot.addToProgress("moved backward");
 
         commands.add(new Pause(1500));
 
-        commands.add (new Translate (600, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Translate(3000, Translate.Direction.BACKWARD, maxPower));
 
-        robot.addToProgress("moved forward");
 
-        commands.add (new Pause (1500));
+        commands.add(new Pause(1500));
+
+        commands.add(new Translate(1450, Translate.Direction.FORWARD, maxPower));
+
+
+        commands.add(new Pause(1500));
 
         commands.add(new Rotate(90, maxPower));
 
-        robot.addToProgress("rotated");
 
-        commands.add(new Translate(275, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Translate(500, Translate.Direction.FORWARD, maxPower));
 
 
         commands.add (
@@ -97,23 +105,23 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         );
 
         commands.add(new Pause(1500));
-        commands.add (new MoveServo (
+        commands.add(new MoveServo(
                         new Servo[]{
                                 robot.getDumperServo()
                         },
-                        new double[] {
+                        new double[]{
                                 0
                         }
 
                 )
 
         );
-        robot.addToProgress("dumped people");
 
-        AtomicBoolean redIsLeft = new AtomicBoolean(true);
-        TakePicture takePicture = new TakePicture(redIsLeft);
+        //commands.add(new Translate(100, Translate.Direction.FORWARD));
 
-        commands.add (takePicture);
+        //TakePicture takePicture = new TakePicture(redIsLeft);
+
+        //commands.add (takePicture);
 
 
         commands.add (new MoveServo(
@@ -121,18 +129,37 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                         robot.getButtonPusherServo()
                 },
                 new double[] {
-                        redIsLeft.get() ? BUTTON_PUSHER_RIGHT : BUTTON_PUSHER_LEFT
+                        BUTTON_PUSHER_RIGHT
+                }
+                /*new ExitCondition() {
+                    public boolean isConditionMet() {
+                        return redIsLeft.get();
+                    }
+                }*/
+        ));
+        /*commands.add(new MoveServo(
+                new Servo[]{
+                        robot.getButtonPusherServo()
+                },
+                new double[]{
+                        BUTTON_PUSHER_LEFT
+                },
+                new ExitCondition() {
+                    public boolean isConditionMet() {
+                        return !redIsLeft.get();
+                    }
                 }
         ));
-
-        robot.addToProgress("pushed button");
+*/
 
         commands.add(new Pause(1500));
+
+
         /*
         commands.add (new Translate (
                 500, Translate.Direction.BACKWARD));
 
-        commands.add (new Rotate (135, maxPower));
+        commands.add (new Rotate (135, maxPower));e
 
         commands.add (new Translate (2000, Translate.Direction.FORWARD));
         */

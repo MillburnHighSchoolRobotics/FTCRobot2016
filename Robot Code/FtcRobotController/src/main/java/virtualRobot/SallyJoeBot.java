@@ -16,6 +16,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
     private JoystickController joystickController1, joystickController2;
 
+    private ArrayList<String> commands;
     private ArrayList<String> robotProgress;
 
     public SallyJoeBot() {
@@ -46,6 +47,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         joystickController2 = new JoystickController();
 
         robotProgress = new ArrayList<String>();
+        commands = new ArrayList<String>();
 
         tapeMeasureServo.setPosition(0.485);
     }
@@ -142,5 +144,14 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
     public synchronized ArrayList<String> getProgress () {
         return robotProgress;
+    }
+
+    @Override
+    public void addToCommands(String s) {
+        commands.add (s);
+    }
+
+    public ArrayList<String> getCommands() {
+        return commands;
     }
 }
