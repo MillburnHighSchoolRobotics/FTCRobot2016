@@ -117,7 +117,12 @@ public class Rotate implements Command {
 
                     Log.e("PIDOUTPUT", "PID OUTPUT: " + Double.toString(adjustedPower));
 
-                    Thread.currentThread().sleep(10);
+                    try {
+                        Thread.currentThread().sleep(10);
+                    } catch (InterruptedException e) {
+                        isInterrupted = true;
+                        break;
+                    }
                 }
                 break;
             case WITH_ENCODER:

@@ -26,7 +26,9 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                 boolean FLIPPED = false;
                 boolean isInterrupted = false;
                 double dumperCurrentPos = 0;
-                double buttonCurrentPos = 0;
+                double buttonCurrentPos = 0.5;
+                final double BUTTON_PUSHER_LEFT = 0.05;
+                final double BUTTON_PUSHER_RIGHT = 0.45;
                 double tapeMeasureCurrentPos = 0.485;
                 final double servoDelta = 0.0023; //0.00115
                 final double ARM_BOTTOM_CAP = 0.485;
@@ -73,24 +75,24 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     //FLIPPING THE PEOPLE OFF
                     if (!joystick1.isDown(JoystickController.BUTTON_LEFT_STICK) && joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK)) {
                         if (FLIPPED){
-                            robot.getFlipperLeftServo().setPosition(0.8);
+                            robot.getFlipperLeftServo().setPosition(0);
                         }
                         else {
-                            robot.getFlipperRightServo().setPosition(0.92);
+                            robot.getFlipperRightServo().setPosition(0);
                         }
                     }
                     else if (joystick1.isDown(JoystickController.BUTTON_LEFT_STICK) && !joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK)) {
                         if (FLIPPED){
-                            robot.getFlipperRightServo().setPosition(0.92);
+                            robot.getFlipperRightServo().setPosition(0);
                         }
                         else {
-                            robot.getFlipperLeftServo().setPosition(0.8);
+                            robot.getFlipperLeftServo().setPosition(0);
                         }
                     }
 
                     else {
-                        robot.getFlipperLeftServo().setPosition(0.2);
-                        robot.getFlipperRightServo().setPosition(0.4);
+                        robot.getFlipperLeftServo().setPosition(0.5);
+                        robot.getFlipperRightServo().setPosition(0.5);
                     }
 
 
@@ -111,17 +113,28 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getDumperServo().setPosition(dumperCurrentPos);
                     }
 
-                    /*
+
                     //Button Pusher
                     if (!joystick1.isDown(JoystickController.BUTTON_LB) && joystick1.isDown(JoystickController.BUTTON_LT)) {
-                        buttonCurrentPos += 0.05;
-                        if (buttonCurrentPos > .2) buttonCurrentPos = 0.2;
-                        if (buttonCurrentPos < 0) buttonCurrentPos = 0;
+                        buttonCurrentPos += 0.01;
+                        if (buttonCurrentPos > BUTTON_PUSHER_RIGHT) buttonCurrentPos = BUTTON_PUSHER_RIGHT;
+                        if (buttonCurrentPos < BUTTON_PUSHER_LEFT) buttonCurrentPos = BUTTON_PUSHER_LEFT;
 
                         robot.getButtonPusherServo().setPosition(buttonCurrentPos);
 
                     }
-                    */
+
+                    else if (joystick1.isDown(JoystickController.BUTTON_LB) && !joystick1.isDown(JoystickController.BUTTON_LT)) {
+                        buttonCurrentPos -= 0.01;
+                        if (buttonCurrentPos > BUTTON_PUSHER_RIGHT) buttonCurrentPos = BUTTON_PUSHER_RIGHT;
+                        if (buttonCurrentPos < BUTTON_PUSHER_LEFT) buttonCurrentPos = BUTTON_PUSHER_LEFT;
+
+                        robot.getButtonPusherServo().setPosition(buttonCurrentPos);
+
+                    }
+
+
+
 
 
 

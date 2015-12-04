@@ -1,30 +1,41 @@
 package virtualRobot;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Created by shant on 11/28/2015.
  */
 public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double maxPower = 0.7;
+    final double BUTTON_PUSHER_LEFT = 0.05;
+    final double BUTTON_PUSHER_RIGHT = 0.45;
     @Override
     public void loadCommands() {
-        //put shields down
-        commands.add (
-                new MoveServo (
-                        new Servo [] {
+
+
+        robot.getProgress().clear();
+        Rotate.setGlobalMaxPower(0.6);
+        Translate.setGlobalMaxPower(0.6);
+        commands.add(
+                new MoveServo(
+                        new Servo[]{
                                 robot.getFrontShieldServo(),
                                 robot.getBackShieldServo(),
                                 robot.getFlipperLeftServo(),
-                                robot.getFlipperRightServo()
+                                robot.getFlipperRightServo(),
+                                robot.getButtonPusherServo()
                         },
-                        new double [] {
+                        new double[]{
                                 0.99,
                                 0.0,
-                                0.2,
-                                0.4
+                                0.5,
+                                0.5,
+                                0.25
                         }
 
                 )
         );
+
 
         robot.addToProgress("Servos Moved");
 
@@ -97,6 +108,24 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                 )
 
         );
+        robot.addToProgress("dumped people");
+
+        AtomicBoolean redIsLeft = new AtomicBoolean(true);
+        TakePicture takePicture = new TakePicture(redIsLeft);
+
+        commands.add (takePicture);
+
+
+        commands.add (new MoveServo(
+                new Servo[] {
+                        robot.getButtonPusherServo()
+                },
+                new double[] {
+                        redIsLeft.get() ? BUTTON_PUSHER_RIGHT : BUTTON_PUSHER_LEFT
+                }
+        ));
+
+        robot.addToProgress("pushed button");
 
         commands.add(new Pause(1500));
         /*

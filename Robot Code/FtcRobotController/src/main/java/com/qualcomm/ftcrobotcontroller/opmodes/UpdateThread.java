@@ -26,7 +26,7 @@ public abstract class UpdateThread extends OpMode {
 
 	//drive and shields
 	private DcMotor rightFront, rightBack, leftFront, leftBack;
-	private Servo frontShield, backShieldLeft, backShieldRight;
+	private Servo frontShieldRight, frontShieldLeft, backShieldLeft, backShieldRight;
 
 	//tape measure system
 	private DcMotor tapeMeasureFrontM, tapeMeasureBackMotor;
@@ -67,7 +67,8 @@ public abstract class UpdateThread extends OpMode {
 		dumper = hardwareMap.servo.get("dumper");
 		backShieldLeft = hardwareMap.servo.get("backShieldLeft");
         backShieldRight = hardwareMap.servo.get("backShieldRight");
-		frontShield = hardwareMap.servo.get("frontShield");
+		frontShieldRight = hardwareMap.servo.get("frontShieldRight");
+		frontShieldLeft = hardwareMap.servo.get("frontShieldLeft");
 		buttonPusher = hardwareMap.servo.get("buttonPusher");
 
         //REVERSE RIGHT SIDE
@@ -76,6 +77,7 @@ public abstract class UpdateThread extends OpMode {
 		rightFront.setDirection(DcMotor.Direction.REVERSE);
 		rightBack.setDirection(DcMotor.Direction.REVERSE);
         tapeMeasureRight.setDirection(Servo.Direction.REVERSE);
+		frontShieldRight.setDirection(Servo.Direction.REVERSE);
 
 
         //SENSOR SETUP
@@ -197,9 +199,11 @@ public abstract class UpdateThread extends OpMode {
 		dumper.setPosition(vDumperServo.getPosition());
 		backShieldLeft.setPosition(vBackShieldServo.getPosition());
         backShieldRight.setPosition(vBackShieldServo.getPosition());
-		frontShield.setPosition(vFrontShieldServo.getPosition());
+		frontShieldRight.setPosition(vFrontShieldServo.getPosition());
+		frontShieldLeft.setPosition(vFrontShieldServo.getPosition());
 		buttonPusher.setPosition(vButtonPusherServo.getPosition());
 
+		telemetry.addData("button pusher servo", vButtonPusherServo.getPosition());
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
 		telemetry.addData("tape measure backj", tapeMeasureBackPower);
 		telemetry.addData("raw angle", imu.getIntegratedYaw());
@@ -207,7 +211,6 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("real right encoders", rightFront.getCurrentPosition() + "  " + rightBack.getCurrentPosition());
 		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
 		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
-
 
 		for (int i = 0; i < robot.getProgress().size(); i++) {
 			telemetry.addData("robot progress " + i, robot.getProgress().get(i));
@@ -228,6 +231,7 @@ public abstract class UpdateThread extends OpMode {
 	}
 	
 	public void stop() {
+		imu.close();
 		t.interrupt();
 	}
 
