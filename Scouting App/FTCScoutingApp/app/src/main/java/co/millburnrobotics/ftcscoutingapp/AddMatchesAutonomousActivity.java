@@ -104,13 +104,15 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
         List<String> climbersList = new ArrayList<String>();
         List<String> parkingList = new ArrayList<String>();
 
-        beaconList.add("Yes");
         beaconList.add("No");
+        beaconList.add("Yes");
+
 
         climbersList.add("0");
         climbersList.add("1");
         climbersList.add("2");
 
+        parkingList.add("None");
         parkingList.add(MatchData.FLOOR);
         parkingList.add(MatchData.LOW);
         parkingList.add(MatchData.MID);
