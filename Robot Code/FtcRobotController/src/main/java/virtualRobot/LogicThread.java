@@ -26,7 +26,12 @@ public abstract class LogicThread<T extends AutonomousRobot> implements Runnable
         while (!Thread.currentThread().isInterrupted() && (commands.size() != 0)) {
            boolean isInterrupted = false;
            Command c = commands.remove(0);
-           //robot.addToProgress(robot.getCommands().remove(0));
+            if (c instanceof Rotate) {
+               if (((Rotate)c).getName() != null) robot.addToProgress(((Rotate)c).getName());
+            }
+            if (c instanceof Translate) {
+                if (((Translate)c).getName() != null) robot.addToProgress(((Translate)c).getName());
+            }
            try {
                isInterrupted = c.changeRobotState();
            }
