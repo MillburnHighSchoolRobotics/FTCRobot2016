@@ -8,15 +8,18 @@ import android.util.Log;
 public class Rotate implements Command {
     private ExitCondition exitCondition;
 
-    private double THRESHOLD = 2.3;
+    private double THRESHOLD = 1.0;
     private double KP = 0.147;
     private double KI = 0;
     private double KD = 0.687;
+
+
 
     private double power;
     private double angleInDegrees;
     private RunMode runMode;
     private static double globalMaxPower = 1;
+    private String name;
 
     private static double time;
     private static double timeLimit;
@@ -59,9 +62,27 @@ public class Rotate implements Command {
         this.power = power;
     }
 
+    public Rotate (double angleInDegrees, double power, String name) {
+        this (angleInDegrees, power);
+        this.name = name;
+    }
+
     private Rotate(double angleInDegrees, double power, double timeLimit) {
         this(angleInDegrees, power);
         this.timeLimit = timeLimit;
+    }
+
+    private Rotate (double angleInDegrees, double power, double timeLimit, String name) {
+        this(angleInDegrees, power, timeLimit);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setTimeLimit(double timeLimit) {
@@ -95,6 +116,10 @@ public class Rotate implements Command {
         return exitCondition;
     }
 
+    public void setTHRESHOLD (double THRESHOLD) {
+        this.THRESHOLD = THRESHOLD;
+    }
+
     @Override
     public boolean changeRobotState() throws InterruptedException{
     	boolean isInterrupted = false;
@@ -117,7 +142,12 @@ public class Rotate implements Command {
 
                     Log.e("PIDOUTPUT", "PID OUTPUT: " + Double.toString(adjustedPower));
 
-                    Thread.currentThread().sleep(10);
+                    try {
+                        Thread.currentThread().sleep(10);
+                    } catch (InterruptedException e) {
+                        isInterrupted = true;
+                        break;
+                    }
                 }
                 break;
             case WITH_ENCODER:

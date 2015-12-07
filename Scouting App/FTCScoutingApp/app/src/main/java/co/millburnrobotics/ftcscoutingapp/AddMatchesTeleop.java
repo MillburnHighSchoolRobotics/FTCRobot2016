@@ -139,6 +139,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
         zipLinesList.add("2");
         zipLinesList.add("3");
 
+        parkingsList.add("none");
         parkingsList.add(MatchData.FLOOR);
         parkingsList.add(MatchData.LOW);
         parkingsList.add(MatchData.MID);

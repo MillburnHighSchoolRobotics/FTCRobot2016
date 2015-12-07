@@ -18,6 +18,11 @@ public class MoveServo implements Command {
 
         servos = new ArrayList<Object[]>();
     }
+    public MoveServo(ExitCondition e) {
+        exitCondition = e;
+
+        servos = new ArrayList<Object[]>();
+    }
 
     public MoveServo(Servo[] servo, double[] newPosition) {
         this();
@@ -26,6 +31,15 @@ public class MoveServo implements Command {
             servos.add(new Object[] {servo[i], newPosition[i]});
         }
     }
+    public MoveServo(Servo[] servo, double[] newPosition, ExitCondition e) {
+        this(e);
+
+        for (int i = 0; i < servo.length; i++) {
+            servos.add(new Object[] {servo[i], newPosition[i]});
+        }
+
+    }
+
 
 
     public void addServoChange(Servo servo, double newPosition) {
