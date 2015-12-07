@@ -45,11 +45,9 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         commands.add (new Pause(1500));
 
         //Move into corner
-<<<<<<< HEAD:Robot Code/FtcRobotController/src/main/java/virtualRobot/BlueAutonomousLogic.java
-=======
+
         commands.add(new Translate(4500, Translate.Direction.FORWARD, maxPower));
 
->>>>>>> 9390546876724917b68e29174f35886dd1a09fb8:Robot Code/FtcRobotController/src/main/java/virtualRobot/BlueClimberDumpLogic.java
         robot.addToProgress("Moved into corner");
 
         commands.add(new Pause(1500));
