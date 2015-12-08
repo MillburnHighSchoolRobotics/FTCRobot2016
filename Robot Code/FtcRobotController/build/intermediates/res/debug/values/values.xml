@@ -66,6 +66,7 @@
     <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="black">#000000</color>
+    <color name="black_overlay">#66000000</color>
     <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_qcom_blue">#309EA4</color>
@@ -84,6 +85,7 @@
     <color name="transparent_color">#00000000</color>
     <color name="very_bright_red">#bf0510</color>
     <color name="white">#FFFFFF</color>
+    <declare-styleable name="ButtonBarContainerTheme"><attr format="reference" name="metaButtonBarStyle"/><attr format="reference" name="metaButtonBarButtonStyle"/></declare-styleable>
     <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -138,6 +140,12 @@
     <string name="device_info">Device Info</string>
     <string name="device_type">Device Types</string>
     <string name="done_button">Done</string>
+    <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/values/values.xml -->
+    <eat-comment/>
     <string name="edit_analog_input_devices_activity">Edit Analog Input Devices</string>
     <string name="edit_analog_output_devices_activity">Edit Analog Output Devices</string>
     <string name="edit_controller">Edit Controller</string>
@@ -237,6 +245,7 @@
     <string name="title_activity_load">Load Configuration File</string>
     <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_view_logs">View Logs</string>
     <string name="title_activity_wifi_channel_selector">Wifi Channel Selection</string>
     <!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/res/values/values.xml -->
@@ -273,6 +282,16 @@
     <item name="android:textColor">@color/white</item>
     <item name="android:windowBackground">@color/dark_red_background</item>
   </style>
+    <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
     <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
     <item name="android:fontFamily">sans-serif-light</item>
   </style>

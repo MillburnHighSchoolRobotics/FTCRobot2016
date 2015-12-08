@@ -32,7 +32,6 @@ public class TakePicture implements Command {
     }
     public boolean changeRobotState() throws InterruptedException {
 
-<<<<<<< HEAD
         final Bitmap[] bmp = new Bitmap[1];
 
         Camera mCamera = Camera.open();
@@ -40,15 +39,14 @@ public class TakePicture implements Command {
         parameters.setPictureSize(352, 288);
         mCamera.setParameters(parameters);
         mCamera.startPreview();
-=======
        // ImageView iv_image = null;
 
         SurfaceView sv;
 
 
-        final Bitmap[] bmp = new Bitmap[1];
+        final Bitmap[] bm2p = new Bitmap[1];
 
-        Camera mCamera;
+        //Camera mCamera;
 
         mCamera = Camera.open();
         Camera.Parameters params = mCamera.getParameters();
@@ -60,15 +58,12 @@ public class TakePicture implements Command {
         mCamera.setDisplayOrientation(90);
        mCamera.startPreview();
 
->>>>>>> 00c5ae89a5f1da0b87b15e95fbb9066c980c3c7c
-
+/*
         final AtomicBoolean pictureIsReady = new AtomicBoolean();
 
         pictureIsReady.set(false);
 
-<<<<<<< HEAD
         Camera.PictureCallback mCall = new Camera.PictureCallback() {
-=======
 
         //final ImageView finalIv_image = iv_image;
         /*Camera.PictureCallback mCall = new Camera.PictureCallback() {
@@ -95,12 +90,11 @@ public class TakePicture implements Command {
 
         mCamera.takePicture(null, null, mCall);
 =======
-        mCamera.takePicture(null, null, mCall);*/
+        mCamera.takePicture(null, null, mCall);
         bmp[0] = screenShot(sv);
-        redIsLeft.set(DavidClass.analyzePic(bmp[0]));
-        pictureIsReady.set(true);
->>>>>>> 00c5ae89a5f1da0b87b15e95fbb9066c980c3c7c
-        while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
+        //redIsLeft.set(DavidClass.analyzePic(bmp[0]));
+       // pictureIsReady.set(true);
+       // while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
 
             if (Thread.currentThread().isInterrupted()) {
                 isInterrupted = true;
@@ -114,6 +108,7 @@ public class TakePicture implements Command {
                 break;
             }
         }
+        */
 
         mCamera.release();
 

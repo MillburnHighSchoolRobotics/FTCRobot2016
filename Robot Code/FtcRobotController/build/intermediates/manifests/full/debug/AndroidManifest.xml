@@ -120,6 +120,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.qualcomm.ftcrobotcontroller.TestActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_test"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
             android:name="com.qualcomm.ftccommon.configuration.AutoConfigureActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
