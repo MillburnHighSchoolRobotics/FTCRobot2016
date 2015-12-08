@@ -13,7 +13,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     @Override
     public void loadCommands() {
 
-
+        /*
         robot.getProgress().clear();
         Rotate.setGlobalMaxPower(0.6);
         Translate.setGlobalMaxPower(0.6);
@@ -115,13 +115,13 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
                 )
 
-        );
+        );*/
 
         //commands.add(new Translate(100, Translate.Direction.FORWARD));
 
-        //TakePicture takePicture = new TakePicture(redIsLeft);
+        TakePicture takePicture = new TakePicture(redIsLeft);
 
-        //commands.add (takePicture);
+        commands.add (takePicture);
 
 
         commands.add (new MoveServo(
@@ -130,14 +130,14 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                 },
                 new double[] {
                         BUTTON_PUSHER_RIGHT
-                }
-                /*new ExitCondition() {
+                },
+                new ExitCondition() {
                     public boolean isConditionMet() {
                         return redIsLeft.get();
                     }
-                }*/
+                }
         ));
-        /*commands.add(new MoveServo(
+        commands.add(new MoveServo(
                 new Servo[]{
                         robot.getButtonPusherServo()
                 },
@@ -150,7 +150,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                     }
                 }
         ));
-*/
+
 
         commands.add(new Pause(1500));
 

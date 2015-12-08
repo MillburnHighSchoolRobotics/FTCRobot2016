@@ -64,10 +64,17 @@ public class TakePicture extends Activity //implements SurfaceHolder.Callback
             public void onClick(final View v) {
                 //get camera parameters
                 parameters = mCamera.getParameters();
-
+                parameters.setPictureSize(352, 288);
+                parameters.setFocusMode(Parameters.FOCUS_MODE_FIXED);
                 //set camera parameters
                 mCamera.setParameters(parameters);
                 mCamera.startPreview();
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 //sets what code should be executed after the picture is taken
                 Camera.PictureCallback mCall = new Camera.PictureCallback()
@@ -96,19 +103,19 @@ public class TakePicture extends Activity //implements SurfaceHolder.Callback
     public void onStart() {
         super.onStart();
 
-        mCamera.lock();
+        //mCamera.lock();
     }
 
     public void onRestart() {
         super.onRestart();
 
-        mCamera.lock();
+        //mCamera.lock();
     }
 
     public void onResume() {
         super.onResume();
 
-        mCamera.lock();
+        //mCamera.lock();
     }
 
     public void onPause() {

@@ -3,6 +3,7 @@ package virtualRobot;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.widget.ImageView;
 
@@ -30,17 +31,11 @@ public class TakePicture implements Command {
     }
     public boolean changeRobotState() throws InterruptedException {
 
-        ImageView iv_image = null;
-
-        SurfaceView sv;
-
-
         final Bitmap[] bmp = new Bitmap[1];
 
-        Camera mCamera;
-        mCamera = Camera.open();
-        Camera.Parameters parameters;
-        parameters = mCamera.getParameters();
+        Camera mCamera = Camera.open();
+        Camera.Parameters parameters = mCamera.getParameters();
+        parameters.setPictureSize(352, 288);
         mCamera.setParameters(parameters);
         mCamera.startPreview();
 
@@ -48,22 +43,21 @@ public class TakePicture implements Command {
 
         pictureIsReady.set(false);
 
-
-        final ImageView finalIv_image = iv_image;
         Camera.PictureCallback mCall = new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
 
-
                 bmp[0] = BitmapFactory.decodeByteArray(data, 0, data.length);
 
-                finalIv_image.setImageBitmap(Bitmap.createScaledBitmap(bmp[0], bmp[0].getWidth() / 2, bmp[0].getHeight() / 2, false));
                 redIsLeft.set(DavidClass.analyzePic(bmp[0]));
 
                 pictureIsReady.set(true);
 
             }
         };
+
+        Log.d("mCamera is null", Boolean.toString(mCamera == null));
+        Log.d("mCamera pic", "yup");
 
         mCamera.takePicture(null, null, mCall);
         while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
