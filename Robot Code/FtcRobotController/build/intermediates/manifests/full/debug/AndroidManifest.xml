@@ -9,6 +9,9 @@
         android:targetSdkVersion="19" />
 
     <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:required="true" />
+    <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
         android:required="true" />
     <uses-permission
@@ -22,9 +25,6 @@
         android:required="true" />
     <uses-permission
         android:name="android.permission.INTERNET"
-        android:required="true" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:required="true" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
@@ -118,6 +118,12 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.qualcomm.ftcrobotcontroller.TestActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_test"
+            android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
             android:name="com.qualcomm.ftccommon.configuration.AutoConfigureActivity"

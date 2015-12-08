@@ -46,6 +46,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +55,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,6 +115,7 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
     protected Camera mCamera;
     protected SurfaceHolder sHolder;
     protected SurfaceView sv;
+    protected ImageView iv;
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -218,11 +221,19 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
         sHolder.addCallback(this);
         sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+        iv = (ImageView) findViewById(R.id.imageView);
+
         sv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setDrawingCacheEnabled(true);
-                showToast(Toast.makeText(v.getContext(), Boolean.toString(DavidClass.analyzePic(v.getDrawingCache())), Toast.LENGTH_SHORT));
+                View root = v.getRootView();
+                root.setDrawingCacheEnabled(true);
+                Bitmap bitmap = root.getDrawingCache();
+                //root.setDrawingCacheEnabled(false);
+
+                iv.setImageBitmap(bitmap);
+
+                sv.
             }
         });
     }
