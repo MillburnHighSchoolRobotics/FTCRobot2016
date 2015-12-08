@@ -1,11 +1,12 @@
 package virtualRobot;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.hardware.Camera;
 import android.view.SurfaceView;
-import android.widget.ImageView;
+import android.view.View;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -38,19 +39,16 @@ public class TakePicture implements Command {
         final Bitmap[] bmp = new Bitmap[1];
 
         Camera mCamera;
-        sv = (SurfaceView)findViewById(R.id.preview);
-        sv.getHolder().addCallback(this);
-        sv.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         mCamera = Camera.open();
-        Camera.Parameters parameters = mCamera.getParameters();
+        Camera.Parameters params = mCamera.getParameters();
         List<Camera.Size> sizes = params.getSupportedPreviewSizes();
         Camera.Size selected = sizes.get(0);
-        params.setPreviewSize(selected.width,selected.height);
+        params.setPreviewSize(selected.width, selected.height);
         mCamera.setParameters(params);
 
         mCamera.setDisplayOrientation(90);
-        mCamera.startPreview();
+       mCamera.startPreview();
 
 
         final AtomicBoolean pictureIsReady = new AtomicBoolean();
@@ -99,7 +97,7 @@ public class TakePicture implements Command {
     }
     public Bitmap screenShot(View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
-                view.getHeight(), Config.ARGB_8888);
+                view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         return bitmap;
