@@ -30,7 +30,11 @@ public class TakePicture implements Command {
     }
     public boolean changeRobotState() throws InterruptedException {
 
+<<<<<<< HEAD
        // final Bitmap[] bmp = new Bitmap[1];
+=======
+        final Bitmap[] bmp = new Bitmap[1];
+>>>>>>> 083c60351aae2761c3ebb32f20e096f157cd7551
 
         Camera mCamera = Camera.open();
         Camera.Parameters parameters = mCamera.getParameters();
@@ -42,7 +46,7 @@ public class TakePicture implements Command {
         //SurfaceView sv = null;
 
 
-        final Bitmap[] bmp = new Bitmap[1];
+        final Bitmap[] bm2p = new Bitmap[1];
 
         //Camera mCamera;
 
@@ -56,12 +60,20 @@ public class TakePicture implements Command {
         mCamera.setDisplayOrientation(90);
         mCamera.startPreview();
 
+<<<<<<< HEAD
 
+=======
+/*
+>>>>>>> 083c60351aae2761c3ebb32f20e096f157cd7551
         final AtomicBoolean pictureIsReady = new AtomicBoolean();
 
         pictureIsReady.set(false);
 
+<<<<<<< HEAD
         //Camera.PictureCallback mCall = new Camera.PictureCallback() {
+=======
+        Camera.PictureCallback mCall = new Camera.PictureCallback() {
+>>>>>>> 083c60351aae2761c3ebb32f20e096f157cd7551
 
         //final ImageView finalIv_image = iv_image;
         /*Camera.PictureCallback mCall = new Camera.PictureCallback() {
@@ -88,11 +100,19 @@ public class TakePicture implements Command {
 
         mCamera.takePicture(null, null, mCall);
 =======
+<<<<<<< HEAD
         mCamera.takePicture(null, null, mCall);*/
         //bmp[0] = screenShot(sv);
         redIsLeft.set(DavidClass.analyzePic(bmp[0]));
         pictureIsReady.set(true);
             while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
+=======
+        mCamera.takePicture(null, null, mCall);
+        bmp[0] = screenShot(sv);
+        //redIsLeft.set(DavidClass.analyzePic(bmp[0]));
+       // pictureIsReady.set(true);
+       // while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
+>>>>>>> 083c60351aae2761c3ebb32f20e096f157cd7551
 
             if (Thread.currentThread().isInterrupted()) {
                 isInterrupted = true;
@@ -106,6 +126,7 @@ public class TakePicture implements Command {
                 break;
             }
         }
+        */
 
         mCamera.release();
 
