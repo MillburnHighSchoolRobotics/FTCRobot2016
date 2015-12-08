@@ -3,8 +3,6 @@ package virtualRobot;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.hardware.Camera;
-import android.util.Log;
-import android.view.SurfaceView;
 import android.view.View;
 
 import java.util.List;
@@ -32,23 +30,21 @@ public class TakePicture implements Command {
     }
     public boolean changeRobotState() throws InterruptedException {
 
-<<<<<<< HEAD
-        final Bitmap[] bmp = new Bitmap[1];
+       // final Bitmap[] bmp = new Bitmap[1];
 
         Camera mCamera = Camera.open();
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPictureSize(352, 288);
         mCamera.setParameters(parameters);
         mCamera.startPreview();
-=======
        // ImageView iv_image = null;
 
-        SurfaceView sv;
+        //SurfaceView sv = null;
 
 
         final Bitmap[] bmp = new Bitmap[1];
 
-        Camera mCamera;
+        //Camera mCamera;
 
         mCamera = Camera.open();
         Camera.Parameters params = mCamera.getParameters();
@@ -58,17 +54,14 @@ public class TakePicture implements Command {
         mCamera.setParameters(params);
 
         mCamera.setDisplayOrientation(90);
-       mCamera.startPreview();
+        mCamera.startPreview();
 
->>>>>>> 00c5ae89a5f1da0b87b15e95fbb9066c980c3c7c
 
         final AtomicBoolean pictureIsReady = new AtomicBoolean();
 
         pictureIsReady.set(false);
 
-<<<<<<< HEAD
-        Camera.PictureCallback mCall = new Camera.PictureCallback() {
-=======
+        //Camera.PictureCallback mCall = new Camera.PictureCallback() {
 
         //final ImageView finalIv_image = iv_image;
         /*Camera.PictureCallback mCall = new Camera.PictureCallback() {
@@ -96,11 +89,10 @@ public class TakePicture implements Command {
         mCamera.takePicture(null, null, mCall);
 =======
         mCamera.takePicture(null, null, mCall);*/
-        bmp[0] = screenShot(sv);
+        //bmp[0] = screenShot(sv);
         redIsLeft.set(DavidClass.analyzePic(bmp[0]));
         pictureIsReady.set(true);
->>>>>>> 00c5ae89a5f1da0b87b15e95fbb9066c980c3c7c
-        while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
+            while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
 
             if (Thread.currentThread().isInterrupted()) {
                 isInterrupted = true;
@@ -119,7 +111,7 @@ public class TakePicture implements Command {
 
         return isInterrupted;
     }
-    public Bitmap screenShot(View view) {
+    public static Bitmap screenShot(View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
                 view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
