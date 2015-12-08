@@ -5,6 +5,7 @@
     android:versionCode="5"
     android:versionName="1.25">
 
+<<<<<<< HEAD
 
     <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
@@ -30,6 +31,33 @@
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         android:required="true" />
+=======
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission
+    android:name="android.permission.ACCESS_WIFI_STATE"
+    android:required="true" />
+  <uses-permission
+    android:name="android.permission.CHANGE_WIFI_STATE"
+    android:required="true" />
+  <uses-permission
+    android:name="android.permission.ACCESS_NETWORK_STATE"
+    android:required="true" />
+  <uses-permission
+    android:name="android.permission.CHANGE_NETWORK_STATE"
+    android:required="true" />
+  <uses-permission
+    android:name="android.permission.INTERNET"
+    android:required="true" />
+  <uses-permission
+    android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    android:required="true" />
+  <uses-permission
+      android:name="android.permission.READ_EXTERNAL_STORAGE"
+      android:required="true" />
+  <uses-permission
+    android:name="android.permission.WRITE_SETTINGS"
+    android:required="true" />
+>>>>>>> 00c5ae89a5f1da0b87b15e95fbb9066c980c3c7c
 
     <uses-feature android:name="android.hardware.usb.accessory" />
 

@@ -10,6 +10,7 @@ public class Translate implements Command {
     private static double globalMaxPower = 1;
     private RunMode runMode;
     private Direction direction;
+    private String name;
 
     private PIDController translateController;
     private PIDController headingController;
@@ -58,6 +59,11 @@ public class Translate implements Command {
 
         this.maxPower = maxPower;
     }
+
+    public Translate(double target, Direction direction, double maxPower, String name) {
+        this (target, direction, maxPower);
+        this.name = name;
+    }
     
     public Translate(double target, Direction direction) {
     	this(target);
@@ -82,6 +88,14 @@ public class Translate implements Command {
 
     public ExitCondition getExitCondition () {
         return exitCondition;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
