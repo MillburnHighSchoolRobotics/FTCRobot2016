@@ -40,13 +40,13 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.hardware.Camera;
 import android.hardware.usb.UsbManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,12 +75,14 @@ import com.qualcomm.robotcore.util.ImmersiveMode;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.wifi.WifiDirectAssistant;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 
-import virtualRobot.DavidClass;
 public class FtcRobotControllerActivity extends Activity implements SurfaceHolder.Callback {
 
     private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
@@ -232,7 +234,7 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
 
                 iv.setImageBitmap(bitmap);
 
-                sv.
+
             }
         });
     }

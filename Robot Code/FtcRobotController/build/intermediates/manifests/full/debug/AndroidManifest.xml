@@ -32,7 +32,7 @@
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         android:required="true" />
-
+    android:versionName="1.25" >
     <uses-feature android:name="android.hardware.usb.accessory" />
 
     <uses-permission android:name="android.permission.CAMERA" />

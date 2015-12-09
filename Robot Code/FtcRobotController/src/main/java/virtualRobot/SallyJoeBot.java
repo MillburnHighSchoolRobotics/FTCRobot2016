@@ -96,7 +96,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return tiltSensor;
     }
 
-    public synchronized Sensor getUltrasoudSensor() {
+
+    public synchronized Sensor getUltrasoundSensor() {
         return ultrasoundSensor;
     }
 

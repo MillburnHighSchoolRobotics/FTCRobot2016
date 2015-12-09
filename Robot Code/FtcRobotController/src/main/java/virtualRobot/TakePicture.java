@@ -1,11 +1,9 @@
 package virtualRobot;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.hardware.Camera;
-import android.view.View;
 
-import java.util.List;
+import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**

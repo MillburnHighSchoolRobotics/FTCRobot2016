@@ -7,15 +7,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double maxPower = 0.7;
-<<<<<<< HEAD
-    commands.add (new Translate (4500, Translate.Direction.FORWARD, maxPower));
 
-=======
     double accurateRotatePower = 0.65;
     final double BUTTON_PUSHER_LEFT = 0.05;
     final double BUTTON_PUSHER_RIGHT = 0.45;
     final AtomicBoolean redIsLeft = new AtomicBoolean(true);
->>>>>>> 7320157799a433b20925ddf9c2a4899423cd955e
     @Override
     public void loadCommands() {
 

@@ -111,7 +111,7 @@ public abstract class UpdateThread extends OpMode {
 		vFrontShieldServo = robot.getFrontShieldServo();
 		vButtonPusherServo = robot.getButtonPusherServo();
 
-		vUltrasoundSensor = robot.getUltrasoundSensor();
+		//vUltrasoundSensor = robot.getUltrasoundSensor();
 
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
