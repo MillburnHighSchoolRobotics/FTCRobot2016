@@ -32,7 +32,7 @@ public class TakePicture implements Command {
 
 
         final Bitmap[] bmp = new Bitmap[1];
-        Camera mCamera = Camera.open();
+       /* Camera mCamera = Camera.open();
         Camera.Parameters params = mCamera.getParameters();
         params.setPictureSize(352, 288);
         List<Camera.Size> sizes = params.getSupportedPreviewSizes();
@@ -41,9 +41,10 @@ public class TakePicture implements Command {
         mCamera.setParameters(params);
 
         mCamera.setDisplayOrientation(90);
-        mCamera.startPreview();
+        mCamera.startPreview();*/
+       FtcRobotControllerActivity.this.takeScreenshot();
+        bmp[0] = FtcRobotControllerActivity.this.openScreenshot();
 
-        
         redIsLeft.set(DavidClass.analyzePic(bmp[0]));
         pictureIsReady.set(true);
             while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {

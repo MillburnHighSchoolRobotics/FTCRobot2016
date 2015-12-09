@@ -81,14 +81,13 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import virtualRobot.DavidClass;
-
 public class FtcRobotControllerActivity extends Activity implements SurfaceHolder.Callback {
 
     private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
     private static final boolean USE_DEVICE_EMULATION = false;
     private static final int NUM_GAMEPADS = 2;
 
-    public static final String CONFIGURE_FILENAME = "CONFIGURE_FILENAME";
+    public static  final String CONFIGURE_FILENAME = "CONFIGURE_FILENAME";
 
     protected SharedPreferences preferences;
 
@@ -444,5 +443,40 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
                 toast.show();
             }
         });
+    }
+    public void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or OOM
+            e.printStackTrace();
+        }
+    }
+    public void openScreenshot(File imageFile) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(imageFile);
+        intent.setDataAndType(uri, "image/*");
+        startActivity(intent);
     }
 }
