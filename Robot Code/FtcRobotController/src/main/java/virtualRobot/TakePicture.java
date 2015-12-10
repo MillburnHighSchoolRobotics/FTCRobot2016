@@ -40,7 +40,7 @@ public class TakePicture implements Command {
 
         mCamera.setDisplayOrientation(90);
         mCamera.startPreview();*/
-       FtcRobotControllerActivity.this.takeScreenshot();
+       /*FtcRobotControllerActivity.this.takeScreenshot();
         bmp[0] = FtcRobotControllerActivity.this.openScreenshot();
 
         redIsLeft.set(DavidClass.analyzePic(bmp[0]));
@@ -63,7 +63,9 @@ public class TakePicture implements Command {
 
         mCamera.release();
 
-        return isInterrupted;
+        return isInterrupted;*/
+        return false;
+
     }
 
 }
