@@ -13,7 +13,7 @@ public class Rotate implements Command {
     private double KI = 0;
     private double KD = 0.687;
 
-
+    private double TOLERANCE = 1.0;
 
     private double power;
     private double angleInDegrees;
@@ -126,7 +126,7 @@ public class Rotate implements Command {
         time = System.currentTimeMillis();
         switch (runMode) {
             case WITH_ANGLE_SENSOR:
-                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > THRESHOLD && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
                     adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
@@ -140,7 +140,7 @@ public class Rotate implements Command {
                         break;
                     }
 
-                    Log.e("PIDOUTPUT", "PID OUTPUT: " + Double.toString(adjustedPower));
+                    Log.e("PIDOUTPUT", "PID OUTPUT: " + Double.toString(adjustedPower) + "HEADING: " + Double.toString(robot.getHeadingSensor().getValue()));
 
                     try {
                         Thread.currentThread().sleep(10);
