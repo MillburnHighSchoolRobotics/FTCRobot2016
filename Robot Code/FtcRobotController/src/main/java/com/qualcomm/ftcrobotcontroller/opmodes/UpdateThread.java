@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
 import java.util.ArrayList;
 
@@ -37,14 +38,16 @@ public abstract class UpdateThread extends OpMode {
 	private Servo dumper, buttonPusher;
 
 	private MPU9250 imu;
+	private UltrasonicSensor ultrasonicSensor;
 	private AnalogInput ultrasound;
 	private ColorSensor colorSensor;
 	private DigitalChannel colorSensorLed;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vTapeMeasureBackMotor, vTapeMeasureFrontMotor;
 	private virtualRobot.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vColorSensor, vUltrasoundSensor, vTiltSensor;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vUltrasoundSensor, vTiltSensor;
 
+	private virtualRobot.ColorSensor vColorSensor;
 	private JoystickController vJoystickController1, vJoystickController2;
 
 	private ArrayList<String> robotProgress;
@@ -85,6 +88,7 @@ public abstract class UpdateThread extends OpMode {
 		//colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		//colorSensorLed = hardwareMap.digitalChannel.get("colorSensorLed");
 		//ultrasound = hardwareMap.analogInput.get("ultrasound");
+		ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
 
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.ROBOT;
@@ -111,7 +115,7 @@ public abstract class UpdateThread extends OpMode {
 		vFrontShieldServo = robot.getFrontShieldServo();
 		vButtonPusherServo = robot.getButtonPusherServo();
 
-		//vUltrasoundSensor = robot.getUltrasoundSensor();
+		vUltrasoundSensor = robot.getUltrasoundSensor();
 
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
@@ -160,7 +164,10 @@ public abstract class UpdateThread extends OpMode {
 
 		//vTiltSensor.setRawValue(imu.getIntegratedPitch());
         vHeadingSensor.setRawValue(imu.getIntegratedYaw());
-        //vColorSensor.setRawValue(colorSensor.argb());
+        vColorSensor.setRed(colorSensor.red());
+		vColorSensor.setAlpha(colorSensor.alpha());
+		vColorSensor.setBlue(colorSensor.blue());
+		vColorSensor.setGreen(colorSensor.green());
         //vUltrasoundSensor.setRawValue(ultrasound.getValue());
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
@@ -211,6 +218,7 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("real right encoders", rightFront.getCurrentPosition() + "  " + rightBack.getCurrentPosition());
 		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
 		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
+		//telemetry.a
 
 		for (int i = 0; i < robot.getProgress().size(); i++) {
 			telemetry.addData("robot progress " + i, robot.getProgress().get(i));

@@ -25,7 +25,7 @@ public interface AutonomousRobot {
 
     Sensor getHeadingSensor();
 
-    Sensor getColorSensor();
+    ColorSensor getColorSensor();
 
     Sensor getTiltSensor();
 

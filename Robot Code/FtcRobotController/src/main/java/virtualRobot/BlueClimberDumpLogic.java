@@ -7,7 +7,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double maxPower = 0.7;
-
+    int sonarCap = 13;
+    int whiteTape = 5;
+    int blueTape = 1;
     double accurateRotatePower = 0.65;
     final double BUTTON_PUSHER_LEFT = 0.05;
     final double BUTTON_PUSHER_RIGHT = 0.45;
@@ -118,7 +120,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                 )
 
         );*/
-
+        /*
         commands.add (new Pause (1500));
 
         commands.add(new Translate(75, Translate.Direction.FORWARD));
@@ -158,7 +160,18 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
 
         commands.add(new Pause(1500));
+        */
 
+        Translate moveToLine = new Translate (1500, Translate.Direction.FORWARD, 0.3, "move To Line");
+        moveToLine.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getColorSensor().getRed() >= whiteTape && robot.getColorSensor().getBlue() >= whiteTape && robot.getColorSensor().getGreen() >= whiteTape) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 }

@@ -9,9 +9,9 @@ public class Rotate implements Command {
     private ExitCondition exitCondition;
 
     private double THRESHOLD = 1.0;
-    private double KP = 0.147;
+    private double KP = 0.2;
     private double KI = 0;
-    private double KD = 0.687;
+    private double KD = 0;
 
     private double TOLERANCE = 1.0;
 
@@ -126,7 +126,7 @@ public class Rotate implements Command {
         time = System.currentTimeMillis();
         switch (runMode) {
             case WITH_ANGLE_SENSOR:
-                while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+                while (!exitCondition.isConditionMet() /*&& Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > TOLERANCE*/ && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
                     adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
