@@ -40,6 +40,9 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
@@ -47,6 +50,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,6 +79,7 @@ import com.qualcomm.robotcore.util.ImmersiveMode;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.wifi.WifiDirectAssistant;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -82,6 +87,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class FtcRobotControllerActivity extends Activity implements SurfaceHolder.Callback {
 
@@ -116,7 +123,10 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
     protected Camera mCamera;
     protected SurfaceHolder sHolder;
     protected SurfaceView sv;
-    protected ImageView iv;
+
+    public static byte[] imageByteData;
+    public static Lock imageLock;
+    public static Camera.Parameters imageParameters;
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -127,6 +137,18 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
             mCamera.release();
             mCamera = null;
         }
+
+        imageParameters = mCamera.getParameters();
+
+        mCamera.setPreviewCallback(new Camera.PreviewCallback() {
+
+            @Override
+            public void onPreviewFrame(byte[] data, Camera camera) {
+                imageLock.lock();
+                imageByteData = data;
+                imageLock.unlock();
+            }
+        });
 
         mCamera.startPreview();
     }
@@ -217,26 +239,30 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
             HardwareFactory.enableDeviceEmulation();
         }
 
+        imageLock = new ReentrantLock();
+
         sv = (SurfaceView) findViewById(R.id.surfaceView);
         sHolder = sv.getHolder();
         sHolder.addCallback(this);
         sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        iv = (ImageView) findViewById(R.id.imageView);
-
+        /*
         sv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View root = v.getRootView();
-                root.setDrawingCacheEnabled(true);
-                Bitmap bitmap = root.getDrawingCache();
-                //root.setDrawingCacheEnabled(false);
-
-                iv.setImageBitmap(bitmap);
-
-
+                imageLock.lock();
+                YuvImage yuvImage = new YuvImage(imageByteData, mCamera.getParameters().getPreviewFormat(), mCamera.getParameters().getPreviewSize().width, mCamera.getParameters().getPreviewSize().height, null);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                Rect rect = new Rect(0, 0, mCamera.getParameters().getPreviewSize().width, mCamera.getParameters().getPreviewSize().height);
+                yuvImage.compressToJpeg(rect, 75, byteArrayOutputStream);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPurgeable = true;
+                options.inInputShareable = true;
+                Bitmap mBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
+                imageLock.unlock();
             }
         });
+        */
     }
 
     @Override

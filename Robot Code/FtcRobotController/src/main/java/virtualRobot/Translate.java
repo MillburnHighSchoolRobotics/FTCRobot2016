@@ -13,7 +13,6 @@ public class Translate implements Command {
     private String name;
 
     private PIDController translateController;
-    private PIDController headingController;
 
     private double maxPower;
     private double currentValue;
@@ -22,7 +21,7 @@ public class Translate implements Command {
     private double time;
     private double timeLimit;
 
-    private static AutonomousRobot robot = Command.AUTO_ROBOT;
+    private static final AutonomousRobot robot = Command.AUTO_ROBOT;
 
     public static void setGlobalMaxPower(double p) {
         globalMaxPower = p;
@@ -39,7 +38,6 @@ public class Translate implements Command {
         runMode = RunMode.WITH_PID;
 
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
-        headingController = new PIDController(HEADING_KP, HEADING_KI, HEADING_KD, HEADING_THRESHOLD);
 
         maxPower = globalMaxPower;
         currentValue = 0;
@@ -231,15 +229,10 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static double KP = 0.00615;
-    public static double KI = 0.0000;
-    public static double KD = 0.000;
-    public static double THRESHOLD = 1000;
-
-    public static int HEADING_KP = 0;
-    public static int HEADING_KI = 0;
-    public static int HEADING_KD = 0;
-    public static int HEADING_THRESHOLD = 0;
+    public static final double KP = 0.00615;
+    public static final double KI = 0.0000;
+    public static final double KD = 0.000;
+    public static final double THRESHOLD = 1000;
     
-    public static int TOLERANCE = 12;
+    public static final double TOLERANCE = 12;
 }

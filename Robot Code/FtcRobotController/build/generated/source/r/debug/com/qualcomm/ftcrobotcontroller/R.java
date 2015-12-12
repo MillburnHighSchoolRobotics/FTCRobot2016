@@ -128,7 +128,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int horizontalButtons=0x7f0b0066;
         public static final int i2c_devices_cancelButton=0x7f0b0074;
         public static final int i2c_devices_saveButton=0x7f0b0073;
-        public static final int imageView=0x7f0b0020;
+        public static final int imageView=0x7f0b001f;
         public static final int imgview=0x7f0b002d;
         public static final int included_header=0x7f0b0001;
         public static final int inclusionlayout=0x7f0b0029;
@@ -250,8 +250,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int textAdbLogs=0x7f0b002f;
         public static final int textDeviceName=0x7f0b0017;
         public static final int textErrorMessage=0x7f0b001d;
-        public static final int textGamepad1=0x7f0b001f;
-        public static final int textGamepad2=0x7f0b0021;
+        public static final int textGamepad1=0x7f0b0021;
+        public static final int textGamepad2=0x7f0b0020;
         public static final int textOpMode=0x7f0b001c;
         public static final int textRobotStatus=0x7f0b001b;
         public static final int textView=0x7f0b0006;

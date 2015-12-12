@@ -134,18 +134,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:layout_height="wrap_content"
         android:id="@+id/surfaceView"
         android:layout_below="@+id/textErrorMessage"
-        android:layout_above="@+id/textGamepad1"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_alignTop="@+id/textGamepad1"
         android:layout_alignParentStart="true"
+        android:layout_above="@+id/textGamepad2"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/textGamepad2" />
+        android:layout_below="@+id/surfaceView" />
 
     <TextView
       android:id="@+id/textGamepad1"
@@ -166,4 +164,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:text="" />
 
   </RelativeLayout>
-</LinearLayout><!-- From: file:/C:/Users/shant/Documents/FTCRobot2015/Robot%20Code/FtcRobotController/src/main/res/layout/activity_ftc_controller.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Yanjun/Documents/FTCRobot2015_2/Robot%20Code/FtcRobotController/src/main/res/layout/activity_ftc_controller.xml -->

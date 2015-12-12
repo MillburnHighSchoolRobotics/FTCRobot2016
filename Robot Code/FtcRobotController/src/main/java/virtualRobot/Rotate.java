@@ -8,12 +8,12 @@ import android.util.Log;
 public class Rotate implements Command {
     private ExitCondition exitCondition;
 
-    private double THRESHOLD = 1.0;
-    private double KP = 0.2;
-    private double KI = 0;
-    private double KD = 0;
+    public static final double THRESHOLD = 1.0;
+    public static final double KP = 0.2;
+    public static final double KI = 0;
+    public static final double KD = 0;
 
-    private double TOLERANCE = 1.0;
+    public static final double TOLERANCE = 1.0;
 
     private double power;
     private double angleInDegrees;
@@ -21,8 +21,8 @@ public class Rotate implements Command {
     private static double globalMaxPower = 1;
     private String name;
 
-    private static double time;
-    private static double timeLimit;
+    private double time;
+    private double timeLimit;
     
     private PIDController pidController;
 
@@ -32,7 +32,7 @@ public class Rotate implements Command {
         globalMaxPower = p;
     }
 
-    public Rotate () {
+    public Rotate() {
     	
     	power = globalMaxPower;
     	
@@ -117,7 +117,7 @@ public class Rotate implements Command {
     }
 
     public void setTHRESHOLD (double THRESHOLD) {
-        this.THRESHOLD = THRESHOLD;
+
     }
 
     @Override

@@ -1,10 +1,16 @@
 package virtualRobot;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
+import android.hardware.Camera;
 
-import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
+import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.*;
 
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 
 /**
  * Created by DOSullivan on 11/25/15.
@@ -15,59 +21,38 @@ public class TakePicture implements Command {
     private ExitCondition exitCondition;
     private boolean isInterrupted;
     public TakePicture(AtomicBoolean redIsLeft) {
+        
         exitCondition = new ExitCondition() {
             @Override
             public boolean isConditionMet() {
                 return false;
             }
         };
-          this.redIsLeft = redIsLeft;
-        }
+        
+        this.redIsLeft = redIsLeft;
+    }
     public void setExitCondition (ExitCondition e) {
         exitCondition = e;
     }
     public boolean changeRobotState() throws InterruptedException {
+        
+        imageLock.lock();
 
+        YuvImage yuvImage = new YuvImage(imageByteData, imageParameters.getPreviewFormat(), imageParameters.getPreviewSize().width, imageParameters.getPreviewSize().height, null);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Rect rect = new Rect(0, 0, imageParameters.getPreviewSize().width, imageParameters.getPreviewSize().height);
+        yuvImage.compressToJpeg(rect, 75, byteArrayOutputStream);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPurgeable = true;
+        options.inInputShareable = true;
+        Bitmap mBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
 
-        final Bitmap[] bmp = new Bitmap[1];
-       /* Camera mCamera = Camera.open();
-        Camera.Parameters params = mCamera.getParameters();
-        params.setPictureSize(352, 288);
-        List<Camera.Size> sizes = params.getSupportedPreviewSizes();
-        Camera.Size selected = sizes.get(0);
-        params.setPreviewSize(selected.width, selected.height);
-        mCamera.setParameters(params);
-
-        mCamera.setDisplayOrientation(90);
-        mCamera.startPreview();*/
-       /*FtcRobotControllerActivity.this.takeScreenshot();
-        bmp[0] = FtcRobotControllerActivity.this.openScreenshot();
-
-        redIsLeft.set(DavidClass.analyzePic(bmp[0]));
-        pictureIsReady.set(true);
-            while (!exitCondition.isConditionMet() && !pictureIsReady.get()) {
-
-            if (Thread.currentThread().isInterrupted()) {
-                isInterrupted = true;
-                break;
-            }
-
-            try {
-                Thread.currentThread().sleep(10);
-            } catch (InterruptedException e) {
-                isInterrupted = true;
-                break;
-            }
-        }
-
-
-        mCamera.release();
-
-        return isInterrupted;*/
+        redIsLeft.set(DavidClass.analyzePic(mBitmap));
+        
+        imageLock.unlock();
+        
         return false;
-
     }
-
 }
 
 

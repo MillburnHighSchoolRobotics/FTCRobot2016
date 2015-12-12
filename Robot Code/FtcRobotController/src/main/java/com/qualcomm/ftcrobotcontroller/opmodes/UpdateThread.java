@@ -3,10 +3,8 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.kauailabs.navx.ftc.MPU9250;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
@@ -39,9 +37,7 @@ public abstract class UpdateThread extends OpMode {
 
 	private MPU9250 imu;
 	private UltrasonicSensor ultrasonicSensor;
-	private AnalogInput ultrasound;
 	private ColorSensor colorSensor;
-	private DigitalChannel colorSensorLed;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vTapeMeasureBackMotor, vTapeMeasureFrontMotor;
 	private virtualRobot.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo;
@@ -85,9 +81,7 @@ public abstract class UpdateThread extends OpMode {
 
         //SENSOR SETUP
 		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
-		//colorSensor = hardwareMap.colorSensor.get("colorSensor");
-		//colorSensorLed = hardwareMap.digitalChannel.get("colorSensorLed");
-		//ultrasound = hardwareMap.analogInput.get("ultrasound");
+		colorSensor = hardwareMap.colorSensor.get("colorSensor");
 		ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
 
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
@@ -146,7 +140,6 @@ public abstract class UpdateThread extends OpMode {
         vTapeMeasureFrontMotorEncoder.setRawValue(-tapeMeasureFrontM.getCurrentPosition());
 		tapeMeasureLeft.setPosition(0.485);
 		tapeMeasureRight.setPosition(0.485);
-        //colorSensorLed.setState(true);
 		
 		t.start();
 	}
@@ -162,13 +155,10 @@ public abstract class UpdateThread extends OpMode {
 		
 		// Update
 
-		//vTiltSensor.setRawValue(imu.getIntegratedPitch());
+		vTiltSensor.setRawValue(imu.getIntegratedPitch());
         vHeadingSensor.setRawValue(imu.getIntegratedYaw());
-        vColorSensor.setRed(colorSensor.red());
-		vColorSensor.setAlpha(colorSensor.alpha());
-		vColorSensor.setBlue(colorSensor.blue());
-		vColorSensor.setGreen(colorSensor.green());
-        //vUltrasoundSensor.setRawValue(ultrasound.getValue());
+        vColorSensor.setRawValue(colorSensor.argb());
+        vUltrasoundSensor.setRawValue(ultrasonicSensor.getUltrasonicLevel());
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
