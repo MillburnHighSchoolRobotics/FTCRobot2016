@@ -16,7 +16,7 @@ public class SonarTest extends OpMode {
     @Override
     public void init() {
         //sonar = hardwareMap.analogInput.get("sonar");
-        ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasound");
+        ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
         colorSensor = hardwareMap.colorSensor.get("color");
     }
 

@@ -202,16 +202,6 @@ category#android.intent.category.DEFAULT
 ADDED from AndroidManifest.xml:92:17
 	android:name
 		ADDED from AndroidManifest.xml:92:27
-activity#com.qualcomm.ftcrobotcontroller.TestActivity
-ADDED from AndroidManifest.xml:95:9
-	android:label
-		ADDED from AndroidManifest.xml:98:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:97:13
-	android:theme
-		ADDED from AndroidManifest.xml:99:13
-	android:name
-		ADDED from AndroidManifest.xml:96:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from :RobotCore-release::5:5

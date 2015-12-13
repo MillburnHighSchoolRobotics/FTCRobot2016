@@ -27,9 +27,11 @@ public abstract class UpdateThread extends OpMode {
 	private DcMotor rightFront, rightBack, leftFront, leftBack;
 	private Servo frontShieldRight, frontShieldLeft, backShieldLeft, backShieldRight;
 
+
 	//tape measure system
 	private DcMotor tapeMeasureFrontM, tapeMeasureBackMotor;
 	private Servo tapeMeasureLeft, tapeMeasureRight;
+	private Servo hangRight, hangLeft;
 
 	//misc
 	private Servo flipperLeft, flipperRight;
@@ -40,7 +42,7 @@ public abstract class UpdateThread extends OpMode {
 	private ColorSensor colorSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vTapeMeasureBackMotor, vTapeMeasureFrontMotor;
-	private virtualRobot.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo;
+	private virtualRobot.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo, vHangServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vUltrasoundSensor, vTiltSensor;
 
 	private virtualRobot.ColorSensor vColorSensor;
@@ -69,6 +71,8 @@ public abstract class UpdateThread extends OpMode {
 		frontShieldRight = hardwareMap.servo.get("frontShieldRight");
 		frontShieldLeft = hardwareMap.servo.get("frontShieldLeft");
 		buttonPusher = hardwareMap.servo.get("buttonPusher");
+		hangLeft = hardwareMap.servo.get("leftHang");
+		hangRight = hardwareMap.servo.get("rightHang");
 
         //REVERSE RIGHT SIDE
         backShieldRight.setDirection(Servo.Direction.REVERSE);
@@ -77,11 +81,12 @@ public abstract class UpdateThread extends OpMode {
 		rightBack.setDirection(DcMotor.Direction.REVERSE);
         tapeMeasureRight.setDirection(Servo.Direction.REVERSE);
 		frontShieldRight.setDirection(Servo.Direction.REVERSE);
+		hangRight.setDirection(Servo.Direction.REVERSE);
 
 
         //SENSOR SETUP
 		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
-		colorSensor = hardwareMap.colorSensor.get("colorSensor");
+		colorSensor = hardwareMap.colorSensor.get("color");
 		ultrasonicSensor = hardwareMap.ultrasonicSensor.get("ultrasonic");
 
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
@@ -108,6 +113,7 @@ public abstract class UpdateThread extends OpMode {
 		vBackShieldServo = robot.getBackShieldServo();
 		vFrontShieldServo = robot.getFrontShieldServo();
 		vButtonPusherServo = robot.getButtonPusherServo();
+		vHangServo = robot.getHangServo();
 
 		vUltrasoundSensor = robot.getUltrasoundSensor();
 
@@ -158,7 +164,10 @@ public abstract class UpdateThread extends OpMode {
 		vTiltSensor.setRawValue(imu.getIntegratedPitch());
         vHeadingSensor.setRawValue(imu.getIntegratedYaw());
         vColorSensor.setRawValue(colorSensor.argb());
-        vUltrasoundSensor.setRawValue(ultrasonicSensor.getUltrasonicLevel());
+		if (ultrasonicSensor.getUltrasonicLevel() > 0) {
+			vUltrasoundSensor.setRawValue(ultrasonicSensor.getUltrasonicLevel());
+		}
+		else { /*don't update*/ }
 		
 		vDriveLeftMotorEncoder.setRawValue(-leftFront.getCurrentPosition());
 		vDriveRightMotorEncoder.setRawValue(-rightFront.getCurrentPosition());
@@ -199,6 +208,8 @@ public abstract class UpdateThread extends OpMode {
 		frontShieldRight.setPosition(vFrontShieldServo.getPosition());
 		frontShieldLeft.setPosition(vFrontShieldServo.getPosition());
 		buttonPusher.setPosition(vButtonPusherServo.getPosition());
+		hangLeft.setPosition(vHangServo.getPosition());
+		hangRight.setPosition(vHangServo.getPosition());
 
 		telemetry.addData("button pusher servo", vButtonPusherServo.getPosition());
 		telemetry.addData("tape Measure front", tapeMeasureFrontPower);
@@ -208,6 +219,8 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("real right encoders", rightFront.getCurrentPosition() + "  " + rightBack.getCurrentPosition());
 		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
 		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
+		telemetry.addData("sonar value", vUltrasoundSensor.getValue());
+
 		//telemetry.a
 
 		for (int i = 0; i < robot.getProgress().size(); i++) {

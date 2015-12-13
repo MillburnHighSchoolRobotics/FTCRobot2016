@@ -12,7 +12,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
     private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureFrontMotorEncoder, tapeMeasureBackMotorEncoder;
     private Sensor headingSensor, tiltSensor, ultrasoundSensor;
     private ColorSensor colorSensor;
-    private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, frontShieldServo, backShieldServo, dumperServo, buttonPusherServo;
+    private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, frontShieldServo, backShieldServo, dumperServo, buttonPusherServo, hangServo;
 
     private JoystickController joystickController1, joystickController2;
 
@@ -42,6 +42,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         backShieldServo = new Servo();
         dumperServo = new Servo();
         buttonPusherServo = new Servo();
+        hangServo = new Servo();
 
         joystickController1 = new JoystickController();
         joystickController2 = new JoystickController();
@@ -129,7 +130,9 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return buttonPusherServo;
     }
 
-
+    public synchronized Servo getHangServo() {
+        return hangServo;
+    }
 
     public synchronized JoystickController getJoystickController1() {
         return joystickController1;

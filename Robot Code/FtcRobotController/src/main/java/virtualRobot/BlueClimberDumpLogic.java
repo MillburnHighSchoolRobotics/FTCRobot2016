@@ -11,15 +11,16 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     int whiteTape = 5;
     int blueTape = 1;
     double accurateRotatePower = 0.65;
-    final double BUTTON_PUSHER_LEFT = 0.05;
-    final double BUTTON_PUSHER_RIGHT = 0.45;
-    final AtomicBoolean redIsLeft = new AtomicBoolean(true);
+    final double BUTTON_PUSHER_RIGHT = 0.05;
+    final double BUTTON_PUSHER_LEFT = 0.45;
+    final double slowSpeed = 0.2;
+    final AtomicBoolean redIsLeft = new AtomicBoolean(false);
     @Override
     public void loadCommands() {
 
-        /*
+
         robot.getProgress().clear();
-        Rotate.setGlobalMaxPower(0.6);
+        Rotate.setGlobalMaxPower(0.4);
         Translate.setGlobalMaxPower(0.5);
 
 
@@ -45,57 +46,82 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
 
 
-        commands.add(new Pause(1500));
+        commands.add(new Pause(500));
 
         commands.add(new Translate(2400, Translate.Direction.FORWARD, maxPower, "moving towards center"));
 
         //robot.addToProgress("moved back");
 
-        commands.add(new Pause(1500));
+        commands.add(new Pause(500));
 
         commands.add(new Rotate(45, maxPower, "Rotated #1"));
 
-        commands.add(new Pause(1500));
+        commands.add(new Pause(500));
 
         commands.add(new AccurateRotate(45, accurateRotatePower, "Accurate Rotate"));
 
 
         //Move into corner
-<<<<<<< HEAD
 
-        commands.add(new Translate(4500, Translate.Direction.FORWARD, maxPower));
-=======
         commands.add(new Translate(9000, Translate.Direction.FORWARD, maxPower, "moved into corner"));
->>>>>>> 7320157799a433b20925ddf9c2a4899423cd955e
 
 
-        commands.add(new Pause(1500));
+        commands.add(new Pause(500));
         //Turn to face backwards
         commands.add(new Rotate(0, maxPower, "face backwards"));
 
 
-        commands.add(new Pause(1500));
+        commands.add(new Pause(500));
 
         commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
         commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, "clear beacon area"));
 
 
-        commands.add(new Pause(1500));
+        commands.add(new Pause(500));
 
-        commands.add (new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
-        commands.add(new Translate(1300, Translate.Direction.FORWARD, 0.3, "come back to dump people"));
-        //TODO adjust to get into the right place
+        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
-        commands.add(new Pause(1500));
+        Translate moveToLine = new Translate (5000, Translate.Direction.FORWARD, slowSpeed, "move To Line");
+        moveToLine.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getColorSensor().getRed() >= whiteTape && robot.getColorSensor().getBlue() >= whiteTape && robot.getColorSensor().getGreen() >= whiteTape) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        commands.add (new Translate (100, Translate.Direction.FORWARD, slowSpeed, "go more forward"));
+
+        commands.add(moveToLine);
+
+        commands.add(new Pause(500));
 
         commands.add(new Rotate(90, maxPower, "turn to dump people"));
+        //TODO change this back
+       // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
 
-        commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
+        commands.add (new Translate (50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
+        TakePicture takePicture = new TakePicture(redIsLeft);
 
+        commands.add (takePicture);
 
-        commands.add(new Translate(350, Translate.Direction.FORWARD, maxPower, "Move towards beacon"));
-        //TODO adjust for a good length
+        commands.add(new Pause(500));
+        Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till to dump RedisLeft: " + redIsLeft.toString());
+        moveDump.setRunMode(Translate.RunMode.CUSTOM);
+        moveDump.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getUltrasoundSensor().getValue() < 13) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        commands.add(moveDump);
 
         commands.add (
                 new MoveServo (
@@ -119,16 +145,25 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
                 )
 
-        );*/
-        /*
-        commands.add (new Pause (1500));
+        );
 
-        commands.add(new Translate(75, Translate.Direction.FORWARD));
-        //TODO adjust this
+        commands.add(new Pause(1500));
 
-        TakePicture takePicture = new TakePicture(redIsLeft);
+        Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
+        movePress.setRunMode(Translate.RunMode.CUSTOM);
+        movePress.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getUltrasoundSensor().getValue() < 11) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
-        commands.add (takePicture);
+        commands.add(movePress);
+
+
 
 
         commands.add (new MoveServo(
@@ -159,19 +194,12 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         ));
 
 
-        commands.add(new Pause(1500));
-        */
+        commands.add(new Pause(500));
 
-        Translate moveToLine = new Translate (1500, Translate.Direction.FORWARD, 0.3, "move To Line");
-        moveToLine.setExitCondition(new ExitCondition() {
-            @Override
-            public boolean isConditionMet() {
-                if (robot.getColorSensor().getRed() >= whiteTape && robot.getColorSensor().getBlue() >= whiteTape && robot.getColorSensor().getGreen() >= whiteTape) {
-                    return true;
-                }
-                return false;
-            }
-        });
+        commands.add(new Translate (50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
+
+
+
 
     }
 }

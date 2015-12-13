@@ -45,6 +45,8 @@ public interface AutonomousRobot {
 
     Servo getButtonPusherServo();
 
+    Servo getHangServo();
+
     void addToProgress(String s);
 
     ArrayList<String> getProgress();

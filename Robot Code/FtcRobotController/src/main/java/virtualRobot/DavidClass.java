@@ -1,9 +1,10 @@
 package virtualRobot;
-import java.io.*;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by DOSullivan on 11/4/15.
@@ -18,10 +19,10 @@ public class DavidClass {
         Log.d("zzz", Long.toString(RED));
         Bitmap image= bmp;
         image= Bitmap.createScaledBitmap(bmp,image.getWidth()/2, image.getHeight()/2, true );
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(), true);
-        image = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+        //Matrix matrix = new Matrix();
+        //matrix.postRotate(90);
+        //Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(), true);
+        //image = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
         int[] pixels = new int[image.getWidth() * image.getHeight()];
 
         int height = image.getHeight(), width = image.getWidth();

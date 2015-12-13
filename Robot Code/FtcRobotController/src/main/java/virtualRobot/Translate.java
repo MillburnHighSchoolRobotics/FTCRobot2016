@@ -155,7 +155,7 @@ public class Translate implements Command {
             	robot.getDriveLeftMotorEncoder().clearValue();
             	robot.getDriveRightMotorEncoder().clearValue();
 
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() /*&& Math.abs(currentValue - translateController.getTarget()) > TOLERANCE*/ && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
                    
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
                     double right = Math.abs(robot.getDriveRightMotorEncoder().getValue());
@@ -229,10 +229,10 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static final double KP = 0.00615;
+    public static final double KP = 0.00744;
     public static final double KI = 0.0000;
-    public static final double KD = 0.000;
+    public static final double KD = 0.03255;
     public static final double THRESHOLD = 1000;
     
-    public static final double TOLERANCE = 12;
+    public static final double TOLERANCE = 10;
 }

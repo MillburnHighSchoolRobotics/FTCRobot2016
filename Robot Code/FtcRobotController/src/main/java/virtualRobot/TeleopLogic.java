@@ -27,12 +27,15 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                 boolean isInterrupted = false;
                 double dumperCurrentPos = 0;
                 double buttonCurrentPos = 0.5;
+                double hangCurrentPos = 0;
                 final double BUTTON_PUSHER_LEFT = 0.05;
                 final double BUTTON_PUSHER_RIGHT = 0.45;
-                double tapeMeasureCurrentPos = 0.485;
+                double tapeMeasureCurrentPos = 0.63;
                 final double servoDelta = 0.0023; //0.00115
                 final double ARM_BOTTOM_CAP = 0.485;
                 final double ARM_TOP_CAP = 0.725;
+                boolean isRightFlipperDown = false;
+                boolean isLeftFlipperDown = false;
                 while (!isInterrupted) {
 
                     joystick1.logicalRefresh();
@@ -73,46 +76,46 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
 
                     //FLIPPING THE PEOPLE OFF
-                    if (!joystick1.isDown(JoystickController.BUTTON_LEFT_STICK) && joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK)) {
+                    if (!joystick1.isPressed(JoystickController.BUTTON_LEFT_STICK) && joystick1.isPressed(JoystickController.BUTTON_RIGHT_STICK)) {
                         if (FLIPPED){
-                            robot.getFlipperLeftServo().setPosition(0);
+                            isLeftFlipperDown = !isLeftFlipperDown;
+                            //robot.getFlipperLeftServo().setPosition(0);
                         }
                         else {
-                            robot.getFlipperRightServo().setPosition(0);
+                            isRightFlipperDown = !isRightFlipperDown;
+                            //robot.getFlipperRightServo().setPosition(0);
                         }
                     }
-                    else if (joystick1.isDown(JoystickController.BUTTON_LEFT_STICK) && !joystick1.isDown(JoystickController.BUTTON_RIGHT_STICK)) {
+                    else if (joystick1.isPressed(JoystickController.BUTTON_LEFT_STICK) && !joystick1.isPressed(JoystickController.BUTTON_RIGHT_STICK)) {
                         if (FLIPPED){
-                            robot.getFlipperRightServo().setPosition(0);
+                            isRightFlipperDown = !isRightFlipperDown;
+                            //robot.getFlipperRightServo().setPosition(0);
                         }
                         else {
-                            robot.getFlipperLeftServo().setPosition(0);
+                            isLeftFlipperDown = !isLeftFlipperDown;
+                            //robot.getFlipperLeftServo().setPosition(0);
                         }
                     }
 
-                    else {
-                        robot.getFlipperLeftServo().setPosition(0.5);
-                        robot.getFlipperRightServo().setPosition(0.5);
-                    }
+
+                        robot.getFlipperLeftServo().setPosition(isLeftFlipperDown ? 0 : 0.5);
+                        robot.getFlipperRightServo().setPosition(isRightFlipperDown ? 0 : 0.5);
+
 
 
                     //Dumping the People
-                    if (!joystick1.isDown(JoystickController.BUTTON_RB) && joystick1.isDown(JoystickController.BUTTON_RT)){
-                        dumperCurrentPos += 0.05;
-                        if (dumperCurrentPos > 1) dumperCurrentPos = 1;
-                        if (dumperCurrentPos < 0) dumperCurrentPos = 0;
+                    if (joystick2.isDpadDown()){
 
-                        robot.getDumperServo().setPosition(dumperCurrentPos);
+
+                        robot.getDumperServo().setPosition(0);
                     }
 
-                    if (joystick1.isDown(JoystickController.BUTTON_RB) && !joystick1.isDown(JoystickController.BUTTON_RT)){
-                        dumperCurrentPos -= 0.05;
-                        if (dumperCurrentPos > 1) dumperCurrentPos = 1;
-                        if (dumperCurrentPos < 0) dumperCurrentPos = 0;
+                    if (joystick2.isDpadUp()){
 
-                        robot.getDumperServo().setPosition(dumperCurrentPos);
+                        robot.getDumperServo().setPosition(1);
                     }
 
+                    /*JUST FOR TESTING AUTONOMOUS
 
                     //Button Pusher
                     if (!joystick1.isDown(JoystickController.BUTTON_LB) && joystick1.isDown(JoystickController.BUTTON_LT)) {
@@ -145,9 +148,9 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                         robot.getButtonPusherServo().setPosition(buttonCurrentPos);
                     }
-
-                    //TAPE MEASURE
-                    if ((joystick2.isDown(JoystickController.BUTTON_RB)) && (!joystick2.isDown(JoystickController.BUTTON_RT))) {
+                    */
+                    //TAPE MEASURE PLATFORM
+                    if ((joystick2.isDown(JoystickController.BUTTON_RB)) && (!joystick2.isDown(JoystickController.BUTTON_LB))) {
                         tapeMeasureCurrentPos += servoDelta;
                         if (tapeMeasureCurrentPos > ARM_TOP_CAP) tapeMeasureCurrentPos = ARM_TOP_CAP;
                         if (tapeMeasureCurrentPos < ARM_BOTTOM_CAP) tapeMeasureCurrentPos = ARM_BOTTOM_CAP;
@@ -155,7 +158,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getTapeMeasureServo().setPosition(tapeMeasureCurrentPos);
                     }
 
-                    if ((!joystick2.isDown(JoystickController.BUTTON_RB)) && (joystick2.isDown(JoystickController.BUTTON_RT))) {
+                    if ((!joystick2.isDown(JoystickController.BUTTON_RB)) && (joystick2.isDown(JoystickController.BUTTON_LB))) {
                         tapeMeasureCurrentPos -= servoDelta;
                         if (tapeMeasureCurrentPos > ARM_TOP_CAP) tapeMeasureCurrentPos = ARM_TOP_CAP;
                         if (tapeMeasureCurrentPos < ARM_BOTTOM_CAP) tapeMeasureCurrentPos = ARM_BOTTOM_CAP;
@@ -163,8 +166,45 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getTapeMeasureServo().setPosition(tapeMeasureCurrentPos);
                     }
 
-                    robot.getTapeMeasureFrontMotor().setPower(-joystick2.getValue(JoystickController.Y_1));
-                    robot.getTapeMeasureBackMotor().setPower(-joystick2.getValue(JoystickController.Y_2));
+                    //TAPE Measures
+                    if ((!joystick1.isDown(JoystickController.BUTTON_LT)) && (joystick1.isDown(JoystickController.BUTTON_LB))) {
+                        robot.getTapeMeasureBackMotor().setPower(1);
+                    }
+                    else if ((joystick1.isDown(JoystickController.BUTTON_LT)) && (!joystick1.isDown(JoystickController.BUTTON_LB))) {
+                        robot.getTapeMeasureBackMotor().setPower(-1);
+                    }
+                    else {
+                        robot.getTapeMeasureBackMotor().setPower(0);
+                    }
+
+                    if ((!joystick1.isDown(JoystickController.BUTTON_RT)) && (joystick1.isDown(JoystickController.BUTTON_RB))) {
+                        robot.getTapeMeasureFrontMotor().setPower(1);
+                    }
+                    else if ((joystick1.isDown(JoystickController.BUTTON_RT)) && (!joystick1.isDown(JoystickController.BUTTON_RB))) {
+                        robot.getTapeMeasureFrontMotor().setPower(-1);
+                    }
+                    else {
+                        robot.getTapeMeasureFrontMotor().setPower(0);
+                    }
+
+
+
+                    //permanent hang servos
+                    if ((!joystick2.isDown(JoystickController.BUTTON_LT)) && (joystick2.isDown(JoystickController.BUTTON_RT))) {
+                        hangCurrentPos += 0.05;
+                        if (hangCurrentPos > .5) hangCurrentPos = .5;
+                        if (hangCurrentPos < 0) hangCurrentPos = 0;
+
+                        robot.getHangServo().setPosition(hangCurrentPos);
+                    }
+
+                    if ((joystick2.isDown(JoystickController.BUTTON_LT)) && (!joystick2.isDown(JoystickController.BUTTON_RT))) {
+                        hangCurrentPos -= 0.05;
+                        if (hangCurrentPos > .5) hangCurrentPos = .5;
+                        if (hangCurrentPos < 0) hangCurrentPos = 0;
+
+                        robot.getHangServo().setPosition(hangCurrentPos);
+                    }
 
 
 

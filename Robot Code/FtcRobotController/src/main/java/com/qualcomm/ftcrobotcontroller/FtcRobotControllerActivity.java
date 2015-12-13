@@ -40,9 +40,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
-import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
@@ -50,7 +47,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +55,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,7 +74,6 @@ import com.qualcomm.robotcore.util.ImmersiveMode;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.wifi.WifiDirectAssistant;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -120,9 +114,9 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
     protected FtcRobotControllerService controllerService;
 
     protected FtcEventLoop eventLoop;
-    protected Camera mCamera;
-    protected SurfaceHolder sHolder;
-    protected SurfaceView sv;
+    public static Camera mCamera;
+    public static SurfaceHolder sHolder;
+    public static SurfaceView sv;
 
     public static byte[] imageByteData;
     public static Lock imageLock;
@@ -139,18 +133,6 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
         }
 
         imageParameters = mCamera.getParameters();
-
-        mCamera.setPreviewCallback(new Camera.PreviewCallback() {
-
-            @Override
-            public void onPreviewFrame(byte[] data, Camera camera) {
-                imageLock.lock();
-                imageByteData = data;
-                imageLock.unlock();
-            }
-        });
-
-        mCamera.startPreview();
     }
 
     @Override

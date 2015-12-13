@@ -6,10 +6,13 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 
-import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.*;
-
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageByteData;
+import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageLock;
+import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageParameters;
+import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.mCamera;
 
 
 /**
@@ -38,6 +41,28 @@ public class TakePicture implements Command {
         
         imageLock.lock();
 
+        mCamera.setPreviewCallback(new Camera.PreviewCallback() {
+
+            @Override
+            public void onPreviewFrame(byte[] data, Camera camera) {
+                imageLock.lock();
+                imageByteData = data;
+                imageLock.unlock();
+            }
+        });
+
+        mCamera.startPreview();
+
+        imageLock.unlock();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            return true;
+        }
+
+        imageLock.lock();
+
         YuvImage yuvImage = new YuvImage(imageByteData, imageParameters.getPreviewFormat(), imageParameters.getPreviewSize().width, imageParameters.getPreviewSize().height, null);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         Rect rect = new Rect(0, 0, imageParameters.getPreviewSize().width, imageParameters.getPreviewSize().height);
@@ -50,6 +75,8 @@ public class TakePicture implements Command {
         redIsLeft.set(DavidClass.analyzePic(mBitmap));
         
         imageLock.unlock();
+
+        mCamera.stopPreview();
         
         return false;
     }
