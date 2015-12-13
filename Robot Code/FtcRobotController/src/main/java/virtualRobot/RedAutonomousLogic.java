@@ -1,49 +1,127 @@
 package virtualRobot;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Created by shant on 11/28/2015.
  */
 public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
-    double maxPower = 0.6;
+    double maxPower = 0.7;
+    int sonarCap = 13;
+    int whiteTape = 5;
+    int blueTape = 1;
+    double accurateRotatePower = 0.65;
+    final double BUTTON_PUSHER_RIGHT = 0.05;
+    final double BUTTON_PUSHER_LEFT = 0.45;
+    final double slowSpeed = 0.2;
+    final AtomicBoolean redIsLeft = new AtomicBoolean(false);
+
     @Override
     public void loadCommands() {
-        //put shields down
 
-        Translate.setGlobalMaxPower(maxPower);
-        Rotate.setGlobalMaxPower(maxPower);
+
+        robot.getProgress().clear();
+        Rotate.setGlobalMaxPower(0.4);
+        Translate.setGlobalMaxPower(0.5);
+
+
         commands.add(
                 new MoveServo(
                         new Servo[]{
                                 robot.getFrontShieldServo(),
-                                robot.getBackShieldServo()
+                                robot.getBackShieldServo(),
+                                robot.getFlipperLeftServo(),
+                                robot.getFlipperRightServo(),
+                                robot.getButtonPusherServo()
                         },
                         new double[]{
                                 0.99,
-                                0.0
+                                0.0,
+                                0.5,
+                                0.5,
+                                0.25
                         }
 
                 )
         );
 
-        commands.add(new Pause(1500));
 
-        commands.add(new Translate(1200, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Pause(500));
 
-        commands.add(new Rotate(-45, maxPower));
+        commands.add(new Translate(2400, Translate.Direction.FORWARD, maxPower, "moving towards center"));
+
+        //robot.addToProgress("moved back");
+
+        commands.add(new Pause(500));
+
+        commands.add(new Rotate(-45, maxPower, "Rotated #1"));
+
+        commands.add(new Pause(500));
+
+        commands.add(new AccurateRotate(-45, accurateRotatePower, "Accurate Rotate"));
+
 
         //Move into corner
-        commands.add(new Translate(4500, Translate.Direction.FORWARD, maxPower));
+
+        commands.add(new Translate(9000, Translate.Direction.FORWARD, maxPower, "moved into corner"));
+
+
+        commands.add(new Pause(500));
         //Turn to face backwards
-        commands.add(new Rotate(0, maxPower));
+        commands.add(new Rotate(0, maxPower, "face backwards"));
 
-        commands.add(new Translate(1500, Translate.Direction.BACKWARD, maxPower));
 
-        commands.add(new Translate(600, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Pause(500));
 
-        commands.add(new Rotate(-90, maxPower));
+        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
-        commands.add(new Translate(275, Translate.Direction.FORWARD, maxPower));
+        commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, "clear beacon area"));
 
+
+        commands.add(new Pause(500));
+
+        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
+
+        Translate moveToLine = new Translate(5000, Translate.Direction.FORWARD, slowSpeed, "move To Line");
+        moveToLine.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getColorSensor().getRed() >= whiteTape && robot.getColorSensor().getBlue() >= whiteTape && robot.getColorSensor().getGreen() >= whiteTape) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        commands.add(new Translate(100, Translate.Direction.FORWARD, slowSpeed, "go more forward"));
+
+        commands.add(moveToLine);
+
+        commands.add(new Pause(500));
+
+        commands.add(new Rotate(-90, maxPower, "turn to dump people"));
+        //TODO change this back
+        // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
+
+        commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
+        TakePicture takePicture = new TakePicture(redIsLeft);
+
+        commands.add(takePicture);
+
+        commands.add(new Pause(500));
+        Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till to dump RedisLeft: " + redIsLeft.toString());
+        moveDump.setRunMode(Translate.RunMode.CUSTOM);
+        moveDump.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getUltrasoundSensor().getValue() < 13) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        commands.add(moveDump);
 
         commands.add(
                 new MoveServo(
@@ -70,5 +148,54 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
         );
 
         commands.add(new Pause(1500));
+
+        Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
+        movePress.setRunMode(Translate.RunMode.CUSTOM);
+        movePress.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getUltrasoundSensor().getValue() < 11) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        commands.add(movePress);
+
+
+        commands.add(new MoveServo(
+                new Servo[]{
+                        robot.getButtonPusherServo()
+                },
+                new double[]{
+                        BUTTON_PUSHER_RIGHT
+                },
+                new ExitCondition() {
+                    public boolean isConditionMet() {
+                        return redIsLeft.get();
+                    }
+                }
+        ));
+        commands.add(new MoveServo(
+                new Servo[]{
+                        robot.getButtonPusherServo()
+                },
+                new double[]{
+                        BUTTON_PUSHER_LEFT
+                },
+                new ExitCondition() {
+                    public boolean isConditionMet() {
+                        return !redIsLeft.get();
+                    }
+                }
+        ));
+
+
+        commands.add(new Pause(500));
+
+        commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
+
+
     }
 }
