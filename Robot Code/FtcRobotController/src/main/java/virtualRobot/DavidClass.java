@@ -32,13 +32,23 @@ public class DavidClass {
         int Midx = roundUp(width, 2)-1, Midy = roundUp(height,2)-1;
         int Q1x = roundUp(Midx, 2), Q3x = roundUp(Midx+width, 2), Q1y = roundUp(Midy,2), Q3y = roundUp(Midy+height,2);
         List<Integer> leftPixels = new ArrayList<Integer>(), rightPixels = new ArrayList<Integer>();
-        for (int i = Q1y; i < Q1y+Q3y; i++){
+        /*for (int i = Q1y; i < Q1y+Q3y; i++){
             int z1 = (width * i)+1;
             int z2 = (width*i)+Midx+1;
             for (int x = z1; x<(z1+Q1x); x++){
                 leftPixels.add(pixels[x]);
             }
             for (int x = z2; x<(z2+(width-Q3x));x++) {
+                rightPixels.add(pixels[x]);
+            }
+        }*/
+        for (int i = Q1y; i < Q1y+Q3y; i++) {
+            int z1 = (width * i) +1;
+            int z2 = (width*i)+Midx+1;
+           for (int x = z1; x < (z1+Midx); x++) {
+                leftPixels.add(pixels[x]);
+            }
+            for (int x = z2; x < (z2+(width-Midx-1)); x++) {
                 rightPixels.add(pixels[x]);
             }
         }

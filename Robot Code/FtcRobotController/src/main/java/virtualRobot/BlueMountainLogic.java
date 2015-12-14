@@ -135,9 +135,9 @@ public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
 
         robot.addToCommands("dumped people");
 
-        TakePicture takePicture = new TakePicture(redIsLeft);
+       // TakePicture takePicture = new TakePicture(redIsLeft);
 
-        commands.add (takePicture);
+       // commands.add (takePicture);
 
         commands.add (new Pause(1500));
 

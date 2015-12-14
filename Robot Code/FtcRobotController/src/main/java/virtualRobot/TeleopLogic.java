@@ -62,12 +62,12 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                     //SHIELDS
                     if (joystick1.isDpadDown()) {
-                        robot.getFrontShieldServo().setPosition(1);
+                        robot.getFrontShieldServo().setPosition(0.85);
                         robot.getBackShieldServo().setPosition(0);
                     }
 
                     if (joystick1.isDpadUp()) {
-                        robot.getFrontShieldServo().setPosition(0.4);
+                        robot.getFrontShieldServo().setPosition(0.1);
                         robot.getBackShieldServo().setPosition(1);
                     }
 

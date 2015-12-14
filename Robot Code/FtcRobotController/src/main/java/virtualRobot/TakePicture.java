@@ -7,7 +7,7 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 
 import java.io.ByteArrayOutputStream;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
 
 import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageByteData;
 import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageLock;
@@ -19,11 +19,13 @@ import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.mCamera
  * Created by DOSullivan on 11/25/15.
  */
 public class TakePicture implements Command {
-    final AtomicBoolean redIsLeft;
+     boolean[] redIsLeft;
+    ArrayList<Command> commands;
+    boolean isRed;
 
     private ExitCondition exitCondition;
     private boolean isInterrupted;
-    public TakePicture(AtomicBoolean redIsLeft) {
+    public TakePicture(ArrayList<Command> commands, String color) {
         
         exitCondition = new ExitCondition() {
             @Override
@@ -32,7 +34,9 @@ public class TakePicture implements Command {
             }
         };
         
-        this.redIsLeft = redIsLeft;
+        this.commands = commands;
+
+        isRed = color.equals("red");
     }
     public void setExitCondition (ExitCondition e) {
         exitCondition = e;
@@ -72,7 +76,27 @@ public class TakePicture implements Command {
         options.inInputShareable = true;
         Bitmap mBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
 
-        redIsLeft.set(DavidClass.analyzePic(mBitmap));
+        boolean redL = DavidClass.analyzePic(mBitmap);
+
+        if ((redL && isRed) || (!redL && !isRed)) {
+            commands.add(new MoveServo(
+                    new Servo[]{
+                            AUTO_ROBOT.getButtonPusherServo()
+                    },
+                    new double[]{
+                            0.45
+                    }
+            ));
+        } else {
+            commands.add(new MoveServo(
+                    new Servo[]{
+                            AUTO_ROBOT.getButtonPusherServo()
+                    },
+                    new double[]{
+                            0.05
+                    }
+            ));
+        }
         
         imageLock.unlock();
 

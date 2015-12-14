@@ -1,7 +1,5 @@
 package virtualRobot;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  * Created by shant on 11/28/2015.
  */
@@ -13,8 +11,8 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double accurateRotatePower = 0.65;
     final double BUTTON_PUSHER_RIGHT = 0.05;
     final double BUTTON_PUSHER_LEFT = 0.45;
-    final double slowSpeed = 0.2;
-    final AtomicBoolean redIsLeft = new AtomicBoolean(false);
+    final double slowSpeed = 0.3;
+    final boolean[] redIsLeft = new boolean[1];
     @Override
     public void loadCommands() {
 
@@ -31,14 +29,18 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                                 robot.getBackShieldServo(),
                                 robot.getFlipperLeftServo(),
                                 robot.getFlipperRightServo(),
-                                robot.getButtonPusherServo()
+                                robot.getButtonPusherServo(),
+                                robot.getTapeMeasureServo(),
+                                robot.getDumperServo()
                         },
                         new double[]{
-                                0.99,
+                                0.85,
                                 0.0,
                                 0.5,
                                 0.5,
-                                0.25
+                                0.25,
+                                0.485,
+                                0.0
                         }
 
                 )
@@ -48,7 +50,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Translate(2400, Translate.Direction.FORWARD, maxPower, "moving towards center"));
+        commands.add(new Translate(2300, Translate.Direction.FORWARD, maxPower, "moving towards center"));
 
         //robot.addToProgress("moved back");
 
@@ -75,7 +77,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
-        commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, "clear beacon area"));
+        commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, 4000));
 
 
         commands.add(new Pause(500));
@@ -102,12 +104,12 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         commands.add(new Rotate(90, maxPower, "turn to dump people"));
         //TODO change this back
        // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
-
+/*
         commands.add (new Translate (50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
-        TakePicture takePicture = new TakePicture(redIsLeft);
+        TakePicture takePicture = new TakePicture(commands, "blue");
 
         commands.add (takePicture);
-
+*/
         commands.add(new Pause(500));
         Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till to dump RedisLeft: " + redIsLeft.toString());
         moveDump.setRunMode(Translate.RunMode.CUSTOM);
@@ -149,12 +151,14 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(new Pause(1500));
 
+        //commands.add (new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE"));
+/*
         Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
         movePress.setRunMode(Translate.RunMode.CUSTOM);
         movePress.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor().getValue() < 11) {
+                if (robot.getUltrasoundSensor().getValue() < 13) {
                     return true;
                 }
                 return false;
@@ -175,7 +179,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                 },
                 new ExitCondition() {
                     public boolean isConditionMet() {
-                        return redIsLeft.get();
+                        return redIsLeft[0];
                     }
                 }
         ));
@@ -188,7 +192,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                 },
                 new ExitCondition() {
                     public boolean isConditionMet() {
-                        return !redIsLeft.get();
+                        return !redIsLeft[0];
                     }
                 }
         ));
@@ -199,7 +203,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         commands.add(new Translate (50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
 
 
-
+*/
 
     }
 }

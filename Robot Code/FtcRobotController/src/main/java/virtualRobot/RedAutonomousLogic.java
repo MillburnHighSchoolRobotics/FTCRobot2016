@@ -1,7 +1,5 @@
 package virtualRobot;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  * Created by shant on 11/28/2015.
  */
@@ -14,7 +12,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
     final double BUTTON_PUSHER_RIGHT = 0.05;
     final double BUTTON_PUSHER_LEFT = 0.45;
     final double slowSpeed = 0.2;
-    final AtomicBoolean redIsLeft = new AtomicBoolean(false);
+    final boolean[] redIsLeft = new boolean[] {true};
 
     @Override
     public void loadCommands() {
@@ -32,14 +30,18 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
                                 robot.getBackShieldServo(),
                                 robot.getFlipperLeftServo(),
                                 robot.getFlipperRightServo(),
-                                robot.getButtonPusherServo()
+                                robot.getButtonPusherServo(),
+                                robot.getTapeMeasureServo(),
+                                robot.getDumperServo()
                         },
                         new double[]{
-                                0.99,
+                                0.85,
                                 0.0,
                                 0.5,
                                 0.5,
-                                0.25
+                                0.25,
+                                0.485,
+                                0.0
                         }
 
                 )
@@ -48,7 +50,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Translate(2400, Translate.Direction.FORWARD, maxPower, "moving towards center"));
+        commands.add(new Translate(2300, Translate.Direction.FORWARD, maxPower, "moving towards center"));
 
         //robot.addToProgress("moved back");
 
@@ -75,7 +77,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
-        commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, "clear beacon area"));
+        commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, 4000));
 
 
         commands.add(new Pause(500));
@@ -104,10 +106,13 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
         // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
 
         commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
-        TakePicture takePicture = new TakePicture(redIsLeft);
+
+        /*TakePicture takePicture = new TakePicture(commands, "red");
 
         commands.add(takePicture);
 
+        commands.add (new Translate (0, Translate.Direction.FORWARD, slowSpeed, "Red is Left: " + Arrays.toString(redIsLeft)));
+*/
         commands.add(new Pause(500));
         Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till to dump RedisLeft: " + redIsLeft.toString());
         moveDump.setRunMode(Translate.RunMode.CUSTOM);
@@ -149,6 +154,8 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(1500));
 
+       // commands.add(new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE!!!"));
+/*
         Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
         movePress.setRunMode(Translate.RunMode.CUSTOM);
         movePress.setExitCondition(new ExitCondition() {
@@ -173,20 +180,23 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
                 },
                 new ExitCondition() {
                     public boolean isConditionMet() {
-                        return redIsLeft.get();
+                        return !redIsLeft[0];
                     }
                 }
         ));
+
+        commands.add(new Pause(3000));
+
         commands.add(new MoveServo(
                 new Servo[]{
                         robot.getButtonPusherServo()
                 },
                 new double[]{
                         BUTTON_PUSHER_LEFT
-                },
+                  },
                 new ExitCondition() {
                     public boolean isConditionMet() {
-                        return !redIsLeft.get();
+                        return redIsLeft[0];
                     }
                 }
         ));
@@ -194,8 +204,8 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
+        //commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
 
-
+*/
     }
 }
