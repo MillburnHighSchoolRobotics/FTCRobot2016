@@ -9,9 +9,9 @@ public abstract class GodThread implements Runnable {
     private Thread innerThread;
     private boolean isInnerThreadRunning;
     protected ArrayList<Thread> children;
-    protected boolean shitWentWrong;
+    //protected boolean shitWentWrong;
 
-    public GodThread () {
+    public GodThread() {
         innerThread = new Thread(new InnerThread());
         children = new ArrayList<Thread>();
     }
@@ -20,58 +20,52 @@ public abstract class GodThread implements Runnable {
         public void run() {
             try {
                 realRun();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 return;
-            }
-            finally {
+            } finally {
                 isInnerThreadRunning = false;
             }
         }
-
-
     }
 
     public void run() {
         innerThread.start();
         isInnerThreadRunning = true;
-        while (isInnerThreadRunning) {
-            approve();
-            try {
+        try {
+            while (isInnerThreadRunning) {
+                approve();
                 Thread.sleep(5);
             }
-            catch (InterruptedException e) {
-                innerThread.interrupt();
-            }
+        } catch (InterruptedException e) {
+            innerThread.interrupt();
+        } finally {
+            killActiveThreads();
         }
     }
 
-
-
-    private void approve () {
+    private void approve() {
         synchronized (this) {
             notifyAll();
         }
     }
 
-    public void requestApproval () throws InterruptedException{
+    public void requestApproval() throws InterruptedException {
         synchronized (this) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                shitWentWrong = true;
+            wait();
+        }
+    }
+
+    private void killActiveThreads() {
+        for (Thread thread : children) {
+            if (thread.isAlive()) {
+                thread.interrupt();
             }
         }
     }
 
-    public void kill() {
-        for (Thread thread: children) {
-            if (thread.isAlive())
-                thread.interrupt();
-        }
-
+    protected void killInnerThread() {
+        innerThread.interrupt();
     }
-
 
     public abstract void realRun() throws InterruptedException;
 }

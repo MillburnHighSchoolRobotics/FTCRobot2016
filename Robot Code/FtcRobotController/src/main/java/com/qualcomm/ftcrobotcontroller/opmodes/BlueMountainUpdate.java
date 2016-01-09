@@ -7,7 +7,7 @@ import virtualRobot.logicThreads.BlueMountainLogic;
  */
 public class BlueMountainUpdate extends UpdateThread {
     @Override
-    public void setLogicThread() {
-        logicThread = BlueMountainLogic.class;
+    public void setGodThread() {
+        godThread = null;//BlueMountainLogic.class;
     }
 }
