@@ -61,7 +61,7 @@ public class BlueAutoGodThread extends GodThread {
     */
 
     private void delegateMonitor(Thread logic, MonitorThread[] monitors) throws InterruptedException {
-        while (true) {
+        while (logic.isAlive()) {
             boolean isNormal = true;
             for (MonitorThread m : monitors) {
                 if (m.getStatus() != MonitorThread.NORMAL) {
@@ -70,12 +70,11 @@ public class BlueAutoGodThread extends GodThread {
                 }
             }
 
-            if (isNormal && logic.isAlive()) {
-                requestApproval();
-            } else {
+            if (!isNormal) {
                 killInnerThread();
-                break;
             }
+
+            requestApproval();
         }
     }
 }
