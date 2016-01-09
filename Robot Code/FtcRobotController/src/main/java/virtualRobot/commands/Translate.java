@@ -1,6 +1,10 @@
-package virtualRobot;
+package virtualRobot.commands;
 
 import android.util.Log;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.ExitCondition;
+import virtualRobot.PIDController;
 
 /**
  * Created by shant on 10/14/2015.
@@ -11,8 +15,10 @@ public class Translate implements Command {
     private RunMode runMode;
     private Direction direction;
     private String name;
+    public static double noAngle = Double.MIN_VALUE;
 
     private PIDController translateController;
+    private PIDController headingController;
 
     private double maxPower;
     private double currentValue;
@@ -20,6 +26,8 @@ public class Translate implements Command {
 
     private double time;
     private double timeLimit;
+
+    private double referenceAngle;
 
     private static final AutonomousRobot robot = Command.AUTO_ROBOT;
 
@@ -38,12 +46,14 @@ public class Translate implements Command {
         runMode = RunMode.WITH_PID;
 
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
+        headingController = new PIDController(0.01, 0, 0, 0);
 
         maxPower = globalMaxPower;
         currentValue = 0;
         direction = Direction.FORWARD;
         multiplier = 1;
         timeLimit = -1;
+        referenceAngle = Double.MIN_VALUE;
     }
 
     public Translate(double target) {
@@ -52,29 +62,37 @@ public class Translate implements Command {
         translateController.setTarget(target);
     }
 
+    public Translate(double target, Direction direction) {
+        this(target);
+
+        this.direction = direction;
+
+        multiplier = (direction == Direction.FORWARD ? 1 : -1);
+    }
+
     public Translate(double target, Direction direction, double maxPower) {
         this(target, direction);
 
         this.maxPower = maxPower;
     }
 
-    public Translate(double target, Direction direction, double maxPower, String name) {
+    public Translate(double target, Direction direction, double maxPower, double referenceAngle) {
         this (target, direction, maxPower);
-        this.name = name;
-    }
-    
-    public Translate(double target, Direction direction) {
-    	this(target);
-    	
-    	this.direction = direction;
-    	
-    	multiplier = (direction == Direction.FORWARD ? 1 : -1);
+
+        this.referenceAngle = referenceAngle;
     }
 
-    public Translate(double target, Direction direction, double maxPower, double timeLimit) {
-        this(target, direction, maxPower);
+    public Translate(double target, Direction direction, double maxPower, double referenceAngle, String name) {
+        this (target, direction, maxPower, referenceAngle);
+        this.name = name;
+    }
+
+    public Translate(double target, Direction direction, double maxPower, double referenceAngle, String name, double timeLimit) {
+        this(target, direction, maxPower, referenceAngle, name);
         this.timeLimit = timeLimit;
     }
+
+
 
     public void setTimeLimit(double timeLimit) {
         this.timeLimit = timeLimit;
@@ -156,7 +174,6 @@ public class Translate implements Command {
             	robot.getDriveRightMotorEncoder().clearValue();
 
                 while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
-                   
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
                     double right = Math.abs(robot.getDriveRightMotorEncoder().getValue());
 
@@ -165,6 +182,12 @@ public class Translate implements Command {
                     double pidOutput = translateController.getPIDOutput(currentValue);
                     pidOutput = Math.min(Math.max(pidOutput, -1), 1);
                     pidOutput *= maxPower;
+
+                    double headingOutput = headingController.getPIDOutput(robot.getHeadingSensor().getValue());
+                    headingOutput = Math.min(Math.max(headingOutput, -1), 1);
+                    if (robot.getHeadingSensor().getValue() > referenceAngle) {
+
+                    }
 
                     Log.d("pidoutput", Double.toString(pidOutput));
 

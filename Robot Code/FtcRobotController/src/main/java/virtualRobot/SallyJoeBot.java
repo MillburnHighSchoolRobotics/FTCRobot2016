@@ -2,6 +2,11 @@ package virtualRobot;
 
 import java.util.ArrayList;
 
+import virtualRobot.components.ColorSensor;
+import virtualRobot.components.Motor;
+import virtualRobot.components.Sensor;
+import virtualRobot.components.Servo;
+
 /**
  * Created by DOSullivan on 10/5/15.
  * Can be accesed by
@@ -89,7 +94,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return headingSensor;
     }
 
-    public synchronized virtualRobot.ColorSensor getColorSensor() {
+    public synchronized ColorSensor getColorSensor() {
         return colorSensor;
     }
 

@@ -1,4 +1,8 @@
-package virtualRobot;
+package virtualRobot.commands;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.SallyJoeBot;
+import virtualRobot.TeleopRobot;
 
 /**
  * Created by shant on 10/8/2015.

@@ -2,6 +2,11 @@ package virtualRobot;
 
 import java.util.ArrayList;
 
+import virtualRobot.components.ColorSensor;
+import virtualRobot.components.Motor;
+import virtualRobot.components.Sensor;
+import virtualRobot.components.Servo;
+
 /**
  * Created by Yanjun on 11/18/2015.
  */

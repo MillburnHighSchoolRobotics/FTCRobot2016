@@ -1,4 +1,4 @@
-package virtualRobot;
+package virtualRobot.commands;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +8,9 @@ import android.hardware.Camera;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import virtualRobot.ExitCondition;
 
 import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageByteData;
 import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.imageLock;
@@ -19,12 +22,18 @@ import static com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity.mCamera
  * Created by DOSullivan on 11/25/15.
  */
 public class TakePicture implements Command {
-     boolean[] redIsLeft;
+    //boolean[] redIsLeft;
     ArrayList<Command> commands;
     boolean isRed;
+    AtomicBoolean redisLeft;
 
     private ExitCondition exitCondition;
     private boolean isInterrupted;
+
+    public TakePicture (AtomicBoolean redisLeft) {
+        this.redisLeft = redisLeft;
+    }
+
     public TakePicture(ArrayList<Command> commands, String color) {
         
         exitCondition = new ExitCondition() {
@@ -76,28 +85,8 @@ public class TakePicture implements Command {
         options.inInputShareable = true;
         Bitmap mBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
 
-        boolean redL = DavidClass.analyzePic(mBitmap);
+        redisLeft.set(DavidClass.analyzePic(mBitmap));
 
-        if ((redL && isRed) || (!redL && !isRed)) {
-            commands.add(new MoveServo(
-                    new Servo[]{
-                            AUTO_ROBOT.getButtonPusherServo()
-                    },
-                    new double[]{
-                            0.45
-                    }
-            ));
-        } else {
-            commands.add(new MoveServo(
-                    new Servo[]{
-                            AUTO_ROBOT.getButtonPusherServo()
-                    },
-                    new double[]{
-                            0.05
-                    }
-            ));
-        }
-        
         imageLock.unlock();
 
         mCamera.stopPreview();

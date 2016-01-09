@@ -1,4 +1,6 @@
-package virtualRobot;
+package virtualRobot.commands;
+
+import virtualRobot.commands.Rotate;
 
 /**
  * Created by shant on 12/6/2015.

@@ -1,4 +1,6 @@
-package virtualRobot;
+package virtualRobot.commands;
+
+import virtualRobot.commands.Command;
 
 /**
  * Created by Yanjun on 11/12/2015.

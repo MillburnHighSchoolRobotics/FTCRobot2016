@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import virtualRobot.PIDTester;
+import virtualRobot.logicThreads.PIDTester;
 
 /**
  * Created by Yanjun on 11/28/2015.

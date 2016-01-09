@@ -1,4 +1,9 @@
-package virtualRobot;
+package virtualRobot.logicThreads;
+
+import virtualRobot.JoystickController;
+import virtualRobot.LogicThread;
+import virtualRobot.TeleopRobot;
+import virtualRobot.commands.Command;
 
 /**
  * _____ ______   ___  ___  ________

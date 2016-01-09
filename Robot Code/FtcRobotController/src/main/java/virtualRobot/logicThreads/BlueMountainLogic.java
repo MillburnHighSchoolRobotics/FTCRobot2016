@@ -1,6 +1,15 @@
-package virtualRobot;
+package virtualRobot.logicThreads;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.ExitCondition;
+import virtualRobot.LogicThread;
+import virtualRobot.commands.MoveServo;
+import virtualRobot.commands.Pause;
+import virtualRobot.commands.Rotate;
+import virtualRobot.commands.Translate;
+import virtualRobot.components.Servo;
 
 /**
  * Created by shant on 12/2/2015.

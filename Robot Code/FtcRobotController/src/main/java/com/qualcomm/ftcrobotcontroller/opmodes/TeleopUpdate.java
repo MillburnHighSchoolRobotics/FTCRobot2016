@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import virtualRobot.TeleopLogic;
+import virtualRobot.logicThreads.TeleopLogic;
 
 /**
  * _____ ______   ___  ___  ________

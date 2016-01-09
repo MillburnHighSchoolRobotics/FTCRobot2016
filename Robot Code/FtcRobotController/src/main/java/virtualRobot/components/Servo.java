@@ -1,4 +1,4 @@
-package virtualRobot;
+package virtualRobot.components;
 //com.qualcomm.robotcore.hardware.Servo;import com.qualcomm.robotcore.hardware.Servo;
 
 

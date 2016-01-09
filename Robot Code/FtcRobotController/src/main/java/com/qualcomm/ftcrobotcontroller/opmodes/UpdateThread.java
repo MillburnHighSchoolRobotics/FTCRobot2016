@@ -10,17 +10,17 @@ import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
 import java.util.ArrayList;
 
-import virtualRobot.Command;
+import virtualRobot.GodThread;
 import virtualRobot.JoystickController;
-import virtualRobot.LogicThread;
-import virtualRobot.Motor;
 import virtualRobot.SallyJoeBot;
-import virtualRobot.Sensor;
+import virtualRobot.commands.Command;
+import virtualRobot.components.Motor;
+import virtualRobot.components.Sensor;
 
 public abstract class UpdateThread extends OpMode {
 	
 	private SallyJoeBot robot;
-	protected Class<? extends LogicThread> logicThread;
+	protected Class<? extends GodThread> godThread;
 	private Thread t;
 
 	//drive and shields
@@ -42,10 +42,10 @@ public abstract class UpdateThread extends OpMode {
 	private ColorSensor colorSensor;
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vTapeMeasureBackMotor, vTapeMeasureFrontMotor;
-	private virtualRobot.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo, vHangServo;
+	private virtualRobot.components.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo, vHangServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vUltrasoundSensor, vTiltSensor;
 
-	private virtualRobot.ColorSensor vColorSensor;
+	private virtualRobot.components.ColorSensor vColorSensor;
 	private JoystickController vJoystickController1, vJoystickController2;
 
 	private ArrayList<String> robotProgress;
@@ -122,10 +122,10 @@ public abstract class UpdateThread extends OpMode {
 
 		robotProgress = new ArrayList<String>();
 
-        setLogicThread();
+        setGodThread();
 
 		try {
-			t = new Thread(logicThread.newInstance());
+			t = new Thread(godThread.newInstance());
 		} catch (InstantiationException e) {
 			return;
 		} catch (IllegalAccessException e) {
@@ -246,6 +246,6 @@ public abstract class UpdateThread extends OpMode {
 		t.interrupt();
 	}
 
-	public abstract void setLogicThread();
+	public abstract void setGodThread();
 
 }

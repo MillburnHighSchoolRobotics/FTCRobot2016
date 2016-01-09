@@ -1,4 +1,9 @@
-package virtualRobot;
+package virtualRobot.logicThreads;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.LogicThread;
+import virtualRobot.commands.Rotate;
+import virtualRobot.commands.Translate;
 
 /**
  * Created by Yanjun on 11/28/2015.

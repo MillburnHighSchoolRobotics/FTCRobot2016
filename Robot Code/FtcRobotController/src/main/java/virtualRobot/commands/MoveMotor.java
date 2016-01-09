@@ -1,4 +1,9 @@
-package virtualRobot;
+package virtualRobot.commands;
+
+import virtualRobot.ExitCondition;
+import virtualRobot.PIDController;
+import virtualRobot.components.Motor;
+import virtualRobot.components.Sensor;
 
 /**
  * Created by shant on 11/5/2015.

@@ -1,6 +1,10 @@
-package virtualRobot;
+package virtualRobot.commands;
 
 import java.util.ArrayList;
+
+import virtualRobot.ExitCondition;
+import virtualRobot.commands.Command;
+import virtualRobot.components.Servo;
 
 /**
  * Created by shant on 10/9/2015.

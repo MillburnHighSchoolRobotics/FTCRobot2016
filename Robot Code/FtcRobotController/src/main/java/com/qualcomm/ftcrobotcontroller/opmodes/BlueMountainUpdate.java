@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import virtualRobot.BlueMountainLogic;
+import virtualRobot.logicThreads.BlueMountainLogic;
 
 /**
  * Created by shant on 12/2/2015.

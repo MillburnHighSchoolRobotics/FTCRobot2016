@@ -1,4 +1,4 @@
-package virtualRobot;
+package virtualRobot.commands;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;

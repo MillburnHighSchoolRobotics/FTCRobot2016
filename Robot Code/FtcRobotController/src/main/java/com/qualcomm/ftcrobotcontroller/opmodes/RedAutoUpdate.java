@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import virtualRobot.RedAutonomousLogic;
+import virtualRobot.logicThreads.RedAutonomousLogic;
 
 /**
  * Created by Yanjun on 11/28/2015.

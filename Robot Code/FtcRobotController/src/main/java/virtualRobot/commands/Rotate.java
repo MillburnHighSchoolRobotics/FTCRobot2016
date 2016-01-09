@@ -1,6 +1,11 @@
-package virtualRobot;
+package virtualRobot.commands;
 
 import android.util.Log;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.ExitCondition;
+import virtualRobot.PIDController;
+import virtualRobot.commands.Command;
 
 /**
  * Created by shant on 10/27/2015.

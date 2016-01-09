@@ -3,6 +3,12 @@ package virtualRobot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import virtualRobot.commands.Command;
+import virtualRobot.commands.Rotate;
+import virtualRobot.commands.SpawnNewThread;
+import virtualRobot.commands.Translate;
+
 /**
  * Created by shant on 10/8/2015.
  * can access certain virtualRobot features, such as setting motor power.

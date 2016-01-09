@@ -1,4 +1,4 @@
-package virtualRobot;
+package virtualRobot.components;
 
 
 public class Motor {

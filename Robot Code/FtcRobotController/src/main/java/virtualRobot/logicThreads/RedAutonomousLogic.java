@@ -1,9 +1,19 @@
-package virtualRobot;
+package virtualRobot.logicThreads;
+
+import virtualRobot.AutonomousRobot;
+import virtualRobot.ExitCondition;
+import virtualRobot.LogicThread;
+import virtualRobot.commands.AccurateRotate;
+import virtualRobot.commands.MoveServo;
+import virtualRobot.commands.Pause;
+import virtualRobot.commands.Rotate;
+import virtualRobot.commands.Translate;
+import virtualRobot.components.Servo;
 
 /**
  * Created by shant on 11/28/2015.
  */
-public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
+public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
     double maxPower = 0.7;
     int sonarCap = 13;
     int whiteTape = 5;
@@ -11,8 +21,9 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
     double accurateRotatePower = 0.65;
     final double BUTTON_PUSHER_RIGHT = 0.05;
     final double BUTTON_PUSHER_LEFT = 0.45;
-    final double slowSpeed = 0.3;
-    final boolean[] redIsLeft = new boolean[1];
+    final double slowSpeed = 0.2;
+    final boolean[] redIsLeft = new boolean[] {true};
+
     @Override
     public void loadCommands() {
 
@@ -47,7 +58,6 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         );
 
 
-
         commands.add(new Pause(500));
 
         commands.add(new Translate(2300, Translate.Direction.FORWARD, maxPower, "moving towards center"));
@@ -56,11 +66,11 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Rotate(45, maxPower, "Rotated #1"));
+        commands.add(new Rotate(-45, maxPower, "Rotated #1"));
 
         commands.add(new Pause(500));
 
-        commands.add(new AccurateRotate(45, accurateRotatePower, "Accurate Rotate"));
+        commands.add(new AccurateRotate(-45, accurateRotatePower, "Accurate Rotate"));
 
 
         //Move into corner
@@ -84,7 +94,7 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
-        Translate moveToLine = new Translate (5000, Translate.Direction.FORWARD, slowSpeed, "move To Line");
+        Translate moveToLine = new Translate(5000, Translate.Direction.FORWARD, slowSpeed, "move To Line");
         moveToLine.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
@@ -95,20 +105,23 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
             }
         });
 
-        commands.add (new Translate (100, Translate.Direction.FORWARD, slowSpeed, "go more forward"));
+        commands.add(new Translate(100, Translate.Direction.FORWARD, slowSpeed, "go more forward"));
 
         commands.add(moveToLine);
 
         commands.add(new Pause(500));
 
-        commands.add(new Rotate(90, maxPower, "turn to dump people"));
+        commands.add(new Rotate(-90, maxPower, "turn to dump people"));
         //TODO change this back
-       // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
-/*
-        commands.add (new Translate (50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
-        TakePicture takePicture = new TakePicture(commands, "blue");
+        // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
 
-        commands.add (takePicture);
+        commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
+
+        /*TakePicture takePicture = new TakePicture(commands, "red");
+
+        commands.add(takePicture);
+
+        commands.add (new Translate (0, Translate.Direction.FORWARD, slowSpeed, "Red is Left: " + Arrays.toString(redIsLeft)));
 */
         commands.add(new Pause(500));
         Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till to dump RedisLeft: " + redIsLeft.toString());
@@ -125,12 +138,12 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(moveDump);
 
-        commands.add (
-                new MoveServo (
-                        new Servo[] {
+        commands.add(
+                new MoveServo(
+                        new Servo[]{
                                 robot.getDumperServo()
                         },
-                        new double[] {
+                        new double[]{
                                 1
                         }
                 )
@@ -151,14 +164,14 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
 
         commands.add(new Pause(1500));
 
-        //commands.add (new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE"));
+       // commands.add(new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE!!!"));
 /*
         Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
         movePress.setRunMode(Translate.RunMode.CUSTOM);
         movePress.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor().getValue() < 13) {
+                if (robot.getUltrasoundSensor().getValue() < 11) {
                     return true;
                 }
                 return false;
@@ -168,27 +181,12 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
         commands.add(movePress);
 
 
-
-
-        commands.add (new MoveServo(
-                new Servo[] {
-                        robot.getButtonPusherServo()
-                },
-                new double[] {
-                        BUTTON_PUSHER_RIGHT
-                },
-                new ExitCondition() {
-                    public boolean isConditionMet() {
-                        return redIsLeft[0];
-                    }
-                }
-        ));
         commands.add(new MoveServo(
                 new Servo[]{
                         robot.getButtonPusherServo()
                 },
                 new double[]{
-                        BUTTON_PUSHER_LEFT
+                        BUTTON_PUSHER_RIGHT
                 },
                 new ExitCondition() {
                     public boolean isConditionMet() {
@@ -197,13 +195,27 @@ public class BlueClimberDumpLogic extends LogicThread <AutonomousRobot> {
                 }
         ));
 
+        commands.add(new Pause(3000));
+
+        commands.add(new MoveServo(
+                new Servo[]{
+                        robot.getButtonPusherServo()
+                },
+                new double[]{
+                        BUTTON_PUSHER_LEFT
+                  },
+                new ExitCondition() {
+                    public boolean isConditionMet() {
+                        return redIsLeft[0];
+                    }
+                }
+        ));
+
 
         commands.add(new Pause(500));
 
-        commands.add(new Translate (50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
-
+        //commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
 
 */
-
     }
 }

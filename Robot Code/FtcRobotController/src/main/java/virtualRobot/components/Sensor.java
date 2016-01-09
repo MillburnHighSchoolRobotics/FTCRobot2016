@@ -1,4 +1,4 @@
-package virtualRobot;
+package virtualRobot.components;
 
 /**
  * Created by shant on 10/8/2015.
