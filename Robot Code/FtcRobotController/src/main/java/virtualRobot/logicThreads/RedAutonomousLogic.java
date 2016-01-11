@@ -60,7 +60,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Translate(2300, Translate.Direction.FORWARD, maxPower, "moving towards center"));
+        commands.add(new Translate(2300, Translate.Direction.FORWARD, maxPower, 0, "moving towards center"));
 
         //robot.addToProgress("moved back");
 
@@ -75,7 +75,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         //Move into corner
 
-        commands.add(new Translate(9000, Translate.Direction.FORWARD, maxPower, "moved into corner"));
+        commands.add(new Translate(9000, Translate.Direction.FORWARD, maxPower, -45, "moved into corner"));
 
 
         commands.add(new Pause(500));
@@ -87,6 +87,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
+        //@TODO check this
         commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, 4000));
 
 
@@ -94,7 +95,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
-        Translate moveToLine = new Translate(5000, Translate.Direction.FORWARD, slowSpeed, "move To Line");
+        Translate moveToLine = new Translate(5000, Translate.Direction.FORWARD, slowSpeed, 0, "move To Line");
         moveToLine.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
@@ -105,7 +106,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
             }
         });
 
-        commands.add(new Translate(100, Translate.Direction.FORWARD, slowSpeed, "go more forward"));
+        commands.add(new Translate(100, Translate.Direction.FORWARD, slowSpeed, 0, "go more forward"));
 
         commands.add(moveToLine);
 
@@ -115,7 +116,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
         //TODO change this back
         // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
 
-        commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, "back up to take picture"));
+        commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, -90, "back up to take picture"));
 
         /*TakePicture takePicture = new TakePicture(commands, "red");
 
@@ -124,7 +125,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
         commands.add (new Translate (0, Translate.Direction.FORWARD, slowSpeed, "Red is Left: " + Arrays.toString(redIsLeft)));
 */
         commands.add(new Pause(500));
-        Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till to dump RedisLeft: " + redIsLeft.toString());
+        Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, -90, "move till to dump RedisLeft: " + redIsLeft.toString());
         moveDump.setRunMode(Translate.RunMode.CUSTOM);
         moveDump.setExitCondition(new ExitCondition() {
             @Override

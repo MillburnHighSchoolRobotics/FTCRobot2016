@@ -32,7 +32,9 @@ public interface AutonomousRobot {
 
     ColorSensor getColorSensor();
 
-    Sensor getTiltSensor();
+    Sensor getPitchSensor();
+
+    Sensor getRollSensor();
 
     Sensor getUltrasoundSensor();
 

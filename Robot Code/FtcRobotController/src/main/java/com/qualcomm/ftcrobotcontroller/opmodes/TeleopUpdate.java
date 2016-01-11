@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import virtualRobot.logicThreads.TeleopLogic;
+import virtualRobot.godThreads.TeleopGodThread;
 
 /**
  * _____ ______   ___  ___  ________
@@ -18,8 +18,8 @@ import virtualRobot.logicThreads.TeleopLogic;
  */
 public class TeleopUpdate extends UpdateThread {
     @Override
-    public void setLogicThread() {
-        logicThread = TeleopLogic.class;
+    public void setGodThread() {
+        godThread = TeleopGodThread.class;
     }
 
 }

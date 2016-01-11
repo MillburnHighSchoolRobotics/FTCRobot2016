@@ -1,13 +1,13 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import virtualRobot.logicThreads.RedAutonomousLogic;
+import virtualRobot.godThreads.RedAutoGodThread;
 
 /**
  * Created by Yanjun on 11/28/2015.
  */
 public class RedAutoUpdate extends UpdateThread {
     @Override
-    public void setLogicThread() {
-        logicThread = RedAutonomousLogic.class;
+    public void setGodThread() {
+        godThread = RedAutoGodThread.class;
     }
 }

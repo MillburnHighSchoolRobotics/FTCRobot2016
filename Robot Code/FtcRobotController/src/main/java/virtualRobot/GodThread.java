@@ -63,6 +63,24 @@ public abstract class GodThread implements Runnable {
         }
     }
 
+    protected void delegateMonitor(Thread logic, MonitorThread[] monitors) throws InterruptedException {
+        while (logic.isAlive()) {
+            boolean isNormal = true;
+            for (MonitorThread m : monitors) {
+                if (m.getStatus() != MonitorThread.NORMAL) {
+                    isNormal = false;
+                    break;
+                }
+            }
+
+            if (!isNormal) {
+                killInnerThread();
+            }
+
+            requestApproval();
+        }
+    }
+
     protected void killInnerThread() {
         innerThread.interrupt();
     }

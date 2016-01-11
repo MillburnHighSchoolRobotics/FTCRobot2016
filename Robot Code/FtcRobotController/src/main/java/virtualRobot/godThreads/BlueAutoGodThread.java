@@ -4,9 +4,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
+import virtualRobot.MonitorThread;
 import virtualRobot.logicThreads.BlueClimberDumpLogic;
 import virtualRobot.logicThreads.PushLeftButton;
 import virtualRobot.logicThreads.PushRightButton;
+import virtualRobot.monitorThreads.DebrisMonitor;
+import virtualRobot.monitorThreads.TimeMonitor;
 
 /**
  * Created by shant on 1/5/2016.
@@ -15,22 +18,24 @@ public class BlueAutoGodThread extends GodThread {
 
     @Override
     public void realRun() throws InterruptedException {
-        //shitWentWrong = false;
         AtomicBoolean redisLeft = new AtomicBoolean();
+
+        //These two threads should be running from the beginning of the program to provide accurate data
+        MonitorThread watchingForDebris = new DebrisMonitor();
+        Thread dm = new Thread(watchingForDebris);
+        children.add(dm);
+
+        MonitorThread watchingForTime = new TimeMonitor(System.currentTimeMillis(), 30000);
+        Thread tm = new Thread(watchingForTime);
+        children.add(tm);
+
 
         // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
         LogicThread moveToBeacon = new BlueClimberDumpLogic(redisLeft);
         Thread mtb = new Thread(moveToBeacon);
         children.add(mtb);
 
-        MonitorThread watchingForDebris = new DebrisMonitor();
-        Thread dm = new Thread(watchingForDebris);
-        children.add(dm);
-
-        MonitorThread watchingForTime = new TimeMonitor();
-        Thread tm = new Thread(watchingForTime);
-        children.add(tm);
-
+        //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
         delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
         //waitToProceed (mtb);
 
@@ -38,12 +43,14 @@ public class BlueAutoGodThread extends GodThread {
             LogicThread pushLeft = new PushLeftButton();
             Thread pl = new Thread(pushLeft);
             children.add(pl);
-            waitToProceed(pl);
-        } else if (redisLeft.get()) {
+            delegateMonitor(pl, new MonitorThread[]{watchingForDebris, watchingForTime});
+        }
+
+        else if (redisLeft.get()) {
             LogicThread pushRight = new PushRightButton();
             Thread pr = new Thread(pushRight);
             children.add(pr);
-            waitToProceed(pr);
+            delegateMonitor(pr, new MonitorThread[]{watchingForDebris, watchingForTime});
         }
 
     }
@@ -60,21 +67,5 @@ public class BlueAutoGodThread extends GodThread {
     }
     */
 
-    private void delegateMonitor(Thread logic, MonitorThread[] monitors) throws InterruptedException {
-        while (logic.isAlive()) {
-            boolean isNormal = true;
-            for (MonitorThread m : monitors) {
-                if (m.getStatus() != MonitorThread.NORMAL) {
-                    isNormal = false;
-                    break;
-                }
-            }
 
-            if (!isNormal) {
-                killInnerThread();
-            }
-
-            requestApproval();
-        }
-    }
 }

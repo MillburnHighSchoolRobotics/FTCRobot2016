@@ -43,7 +43,7 @@ public abstract class UpdateThread extends OpMode {
 	
 	private Motor vDriveLeftMotor, vDriveRightMotor, vTapeMeasureBackMotor, vTapeMeasureFrontMotor;
 	private virtualRobot.components.Servo vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vDumperServo, vBackShieldServo, vFrontShieldServo, vButtonPusherServo, vHangServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vUltrasoundSensor, vTiltSensor;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureBackMotorEncoder, vTapeMeasureFrontMotorEncoder, vHeadingSensor, vUltrasoundSensor, vPitchSensor, vRollSensor;
 
 	private virtualRobot.components.ColorSensor vColorSensor;
 	private JoystickController vJoystickController1, vJoystickController2;
@@ -104,7 +104,8 @@ public abstract class UpdateThread extends OpMode {
         vTapeMeasureBackMotorEncoder = robot.getTapeMeasureBackMotorEncoder();
         vHeadingSensor = robot.getHeadingSensor();
 		vColorSensor = robot.getColorSensor();
-		vTiltSensor = robot.getTiltSensor();
+		vPitchSensor = robot.getPitchSensor();
+		vRollSensor = robot.getRollSensor();
 
         vTapeMeasureServo = robot.getTapeMeasureServo();
         vFlipperLeftServo = robot.getFlipperLeftServo();
@@ -161,8 +162,9 @@ public abstract class UpdateThread extends OpMode {
 		
 		// Update
 
-		vTiltSensor.setRawValue(imu.getIntegratedPitch());
+		vPitchSensor.setRawValue(imu.getIntegratedPitch());
         vHeadingSensor.setRawValue(imu.getIntegratedYaw());
+		vRollSensor.setRawValue(imu.getIntegratedRoll());
         vColorSensor.setRawValue(colorSensor.argb());
 		if (ultrasonicSensor.getUltrasonicLevel() > 0) {
 			vUltrasoundSensor.setRawValue(ultrasonicSensor.getUltrasonicLevel());
