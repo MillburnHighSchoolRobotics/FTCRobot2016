@@ -9,12 +9,6 @@ public abstract class GodThread implements Runnable {
     private Thread innerThread;
     private boolean isInnerThreadRunning;
     protected ArrayList<Thread> children;
-    //protected boolean shitWentWrong;
-
-    public GodThread() {
-        innerThread = new Thread(new InnerThread());
-        children = new ArrayList<Thread>();
-    }
 
     private class InnerThread implements Runnable {
         public void run() {
@@ -26,6 +20,11 @@ public abstract class GodThread implements Runnable {
                 isInnerThreadRunning = false;
             }
         }
+    }
+
+    public GodThread() {
+        innerThread = new Thread(new InnerThread());
+        children = new ArrayList<Thread>();
     }
 
     public void run() {
@@ -83,6 +82,7 @@ public abstract class GodThread implements Runnable {
 
     protected void killInnerThread() {
         innerThread.interrupt();
+        //killActiveThreads();
     }
 
     public abstract void realRun() throws InterruptedException;

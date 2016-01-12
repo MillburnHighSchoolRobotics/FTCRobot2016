@@ -38,6 +38,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         headingSensor = new Sensor();
         colorSensor = new ColorSensor();
         pitchSensor = new Sensor();
+        rollSensor = new Sensor();
         ultrasoundSensor = new Sensor();
         
         tapeMeasureServo = new Servo();
