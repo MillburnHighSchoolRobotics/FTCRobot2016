@@ -76,7 +76,7 @@ public class BlueClimberDumpLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Rotate(45, maxPower, "Rotated #1"));
 
-        commands.add(new Pause(500));
+        commands.add(new Pause(10000));
 
         //commands.add(new AccurateRotate(45, accurateRotatePower, "Accurate Rotate"));
 

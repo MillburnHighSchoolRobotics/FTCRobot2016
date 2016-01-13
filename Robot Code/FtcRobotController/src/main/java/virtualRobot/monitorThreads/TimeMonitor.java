@@ -1,5 +1,7 @@
 package virtualRobot.monitorThreads;
 
+import android.util.Log;
+
 import virtualRobot.AutonomousRobot;
 import virtualRobot.MonitorThread;
 
@@ -12,12 +14,16 @@ public class TimeMonitor extends MonitorThread<AutonomousRobot> {
 
     @Override
     public boolean setStatus() {
-        if (System.currentTimeMillis() - startingTime < endTime) {
+
+        double curTime = System.currentTimeMillis() - startingTime;
+        if (curTime < endTime) {
             return true;
         }
+        Log.d("roboTime", Double.toString(curTime));
         return false;
     }
 
+    //IF YOU WANT TO NOT HAVE ANY TIME LIMIT, PUT -1 FOR ENDTIME
     public TimeMonitor (double startingTime, double endTime) {
         this.startingTime = startingTime;
         this.endTime = endTime;

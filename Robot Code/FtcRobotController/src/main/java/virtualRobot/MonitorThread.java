@@ -1,5 +1,7 @@
 package virtualRobot;
 
+import android.util.Log;
+
 import virtualRobot.commands.Command;
 
 /**
@@ -20,8 +22,13 @@ public abstract class MonitorThread<T extends AutonomousRobot> implements Runnab
     public void run() {
         while (!Thread.currentThread().isInterrupted() && (status == NORMAL)) {
             status = setStatus();
-            if (status == false)
+            Log.d("Monitor", Boolean.toString(status));
+            if (status == false) {
                 break;
+            }
+        }
+        if (status != NORMAL) {
+            return;
         }
 
     }
