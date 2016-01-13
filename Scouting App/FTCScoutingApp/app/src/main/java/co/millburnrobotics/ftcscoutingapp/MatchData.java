@@ -19,12 +19,14 @@ public class MatchData extends ParseObject {
 
     public MatchData() {
         if (parkingPoints.size() == 0 || parkingStrings.size() == 0) {
+            parkingPoints.put(NONE, 0);
             parkingPoints.put(FLOOR, 5);
             parkingPoints.put(LOW, 10);
             parkingPoints.put(MID, 20);
             parkingPoints.put(HIGH, 40);
             parkingPoints.put(PULL_UP, 80);
 
+            parkingStrings.put(0, NONE);
             parkingStrings.put(5, FLOOR);
             parkingStrings.put(10, LOW);
             parkingStrings.put(20, MID);
@@ -245,6 +247,14 @@ public class MatchData extends ParseObject {
         return getInt(TELEOP_ALL_CLEAR);
     }
 
+    public String getNotes() {
+        return getString(NOTES);
+    }
+
+    public void setNotes(String notes) {
+        put(NOTES, notes);
+    }
+
    // public int getAutonomousScore () {
 
 
@@ -255,6 +265,7 @@ public class MatchData extends ParseObject {
     public static final String MATCH_NUMBER = "matchNumber";
     public static final String TEAM_NUMBER = "teamNumber";
     public static final String ALLIANCE_COLOR = "allianceColor";
+    public static final String NOTES = "notes";
 
     public static final String AUTO_CLIMBER_IN_SHELTER = "autoClimberinShelter";
     public static final String AUTO_BEACON = "autoBeacon";
@@ -269,6 +280,7 @@ public class MatchData extends ParseObject {
     public static final String TELEOP_HIGH_GOAL = "teleopHighGoal";
     public static final String TELEOP_ALL_CLEAR = "teleopAllClear";
 
+    public static final String NONE = "None";
     public static final String FLOOR = "Floor";
     public static final String LOW = "Low";
     public static final String MID = "Mid";
