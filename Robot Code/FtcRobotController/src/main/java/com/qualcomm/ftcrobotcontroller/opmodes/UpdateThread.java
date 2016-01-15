@@ -135,10 +135,10 @@ public abstract class UpdateThread extends OpMode {
 
 	}
 
-	public void init_loop() {
+	public void init_loop () {
 		imu.zeroYaw();
 		imu.zeroPitch();
-		imu.zeroYaw();
+		imu.zeroRoll();
 	}
 
 	public void start() {

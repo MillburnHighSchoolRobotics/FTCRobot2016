@@ -1,11 +1,15 @@
 package virtualRobot.godThreads;
 
+import android.util.Log;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.commands.Translate;
-import virtualRobot.monitorThreads.DebrisMonitor;
-import virtualRobot.monitorThreads.TimeMonitor;
+import virtualRobot.commands.TakePicture;
+import virtualRobot.logicThreads.PushLeftButton;
+import virtualRobot.logicThreads.PushRightButton;
 
 /**
  * Created by shant on 1/15/2016.
@@ -13,8 +17,9 @@ import virtualRobot.monitorThreads.TimeMonitor;
 public class TestingGodThread extends GodThread {
     @Override
     public void realRun() throws InterruptedException {
+        final AtomicBoolean redisLeft = new AtomicBoolean();
         //These two threads should be running from the beginning of the program to provide accurate data
-        MonitorThread watchingForDebris = new DebrisMonitor();
+        /*MonitorThread watchingForDebris = new DebrisMonitor();
         Thread dm = new Thread(watchingForDebris);
         dm.start();
         children.add(dm);
@@ -35,8 +40,35 @@ public class TestingGodThread extends GodThread {
         Thread mtb = new Thread(moveSlowly);
         mtb.start();
         children.add(mtb);
+        */
+        LogicThread cameraTest = new LogicThread() {
+            @Override
+            public void loadCommands() {
+                commands.add (new TakePicture(redisLeft));
+            }
+        };
+        Thread ct = new Thread(cameraTest);
+        ct.start();
+        children.add(ct);
+        Log.d("cameraReturn", redisLeft.get() + " ");
+        if (redisLeft.get()) {
+            LogicThread pushLeftButton = new PushLeftButton();
+            Thread plb = new Thread (pushLeftButton);
+            plb.start();
+            children.add(plb);
+            delegateMonitor(plb, new MonitorThread[]{});
+            Log.d("cameraReturn", "pushed left button");
+        }
+        else if (!redisLeft.get()) {
+            LogicThread pushRightButton = new PushRightButton();
+            Thread prb = new Thread (pushRightButton);
+            prb.start();
+            children.add(prb);
+            delegateMonitor(prb, new MonitorThread[]{});
+            Log.d("cameraReturn", "pushed right button");
+        }
 
-        delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
+        //delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
 
 
     }
