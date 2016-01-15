@@ -112,7 +112,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
         climbersList.add("1");
         climbersList.add("2");
 
-        parkingList.add("None");
+        parkingList.add(MatchData.NONE);
         parkingList.add(MatchData.FLOOR);
         parkingList.add(MatchData.LOW);
         parkingList.add(MatchData.MID);
@@ -273,10 +273,8 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
             }
         });
 
-        final Button next = (Button) findViewById(R.id.next);
-        next.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        final Runnable saving = new Runnable() {
+            public void run() {
                 Log.e("qqq", "test1");
                 if (beaconSelected[0].equals("Yes")) {
                     md1.setAutoBeacon(true);
@@ -323,6 +321,29 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
                 }
 
                 Log.e("qqq", "we here" );
+            }
+        };
+
+        final Button notes = (Button) findViewById(R.id.notes);
+        notes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saving.run();
+
+                Intent toNotes = new Intent(v.getContext(), NotesActivity.class);
+                toNotes.putExtra("SelectedCompetition", selectedCompetition);
+                toNotes.putExtra("SelectedMatch", selectedMatch);
+                startActivity(toNotes);
+            }
+        });
+
+        final Button next = (Button) findViewById(R.id.next);
+        next.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                saving.run();
+
                 Intent toTeleop = new Intent(v.getContext(), AddMatchesTeleop.class);
                 toTeleop.putExtra("SelectedCompetition", selectedCompetition);
                 toTeleop.putExtra("SelectedMatch", selectedMatch);

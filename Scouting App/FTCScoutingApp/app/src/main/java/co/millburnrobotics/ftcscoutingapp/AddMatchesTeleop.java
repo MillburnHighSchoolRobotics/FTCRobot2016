@@ -139,7 +139,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
         zipLinesList.add("2");
         zipLinesList.add("3");
 
-        parkingsList.add("none");
+        parkingsList.add(MatchData.NONE);
         parkingsList.add(MatchData.FLOOR);
         parkingsList.add(MatchData.LOW);
         parkingsList.add(MatchData.MID);
@@ -223,10 +223,8 @@ public class AddMatchesTeleop extends AppCompatActivity {
             }
         });
 
-        final Button next = (Button) findViewById(R.id.TeleOpNext);
-        next.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        final Runnable saving = new Runnable() {
+            public void run() {
                 int a = 0;
                 int c = 0;
                 int b = 0;
@@ -283,6 +281,29 @@ public class AddMatchesTeleop extends AppCompatActivity {
                         return;
                     }
                 }
+
+            }
+        };
+
+        final Button notes = (Button) findViewById(R.id.TeleOpNotes);
+        notes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saving.run();
+
+                Intent toNotes = new Intent(v.getContext(), NotesActivity.class);
+                toNotes.putExtra("SelectedCompetition", selectedCompetition);
+                toNotes.putExtra("SelectedMatch", selectedMatch);
+                startActivity(toNotes);
+            }
+        });
+
+        final Button next = (Button) findViewById(R.id.TeleOpNext);
+        next.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                saving.run();
 
                 Intent toFront = new Intent(v.getContext(), AddMatchesFrontActivity.class);
                 toFront.putExtra("SelectedCompetition", selectedCompetition);
