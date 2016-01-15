@@ -185,6 +185,7 @@ public class Translate implements Command {
 
                     double headingOutput = headingController.getPIDOutput(robot.getHeadingSensor().getValue());
                     headingOutput = Math.min(Math.max(headingOutput, -1), 1);
+
                     if (robot.getHeadingSensor().getValue() > referenceAngle) {
 
                     }

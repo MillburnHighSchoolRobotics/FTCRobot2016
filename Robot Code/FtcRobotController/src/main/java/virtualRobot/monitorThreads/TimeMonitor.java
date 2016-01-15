@@ -16,10 +16,11 @@ public class TimeMonitor extends MonitorThread<AutonomousRobot> {
     public boolean setStatus() {
 
         double curTime = System.currentTimeMillis() - startingTime;
+        Log.d("roboTime", Double.toString(curTime));
         if (curTime < endTime) {
             return true;
         }
-        Log.d("roboTime", Double.toString(curTime));
+
         return false;
     }
 

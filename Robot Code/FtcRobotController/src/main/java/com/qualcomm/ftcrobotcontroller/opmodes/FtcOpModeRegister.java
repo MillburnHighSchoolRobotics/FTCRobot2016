@@ -65,5 +65,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("Blue Mountain Autonomous", BlueMountainUpdate.class);
     manager.register("test", navXPerformanceTuningOp.class);
     manager.register("Sonar Test", SonarTest.class);
+    manager.register("Testing", TestingUpdate.class);
   }
 }

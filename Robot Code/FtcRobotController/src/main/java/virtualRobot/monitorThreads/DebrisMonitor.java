@@ -11,7 +11,8 @@ public class DebrisMonitor extends MonitorThread<AutonomousRobot> {
 
     @Override
     public boolean setStatus() {
-        if (robot.getRollSensor().getValue() > 5) {
+        double totalAngle = Math.sqrt(Math.pow(robot.getRollSensor().getValue(), 2) + Math.pow(robot.getPitchSensor().getValue(), 2));
+        if (totalAngle > 5) {
             return false;
         }
         return true;
