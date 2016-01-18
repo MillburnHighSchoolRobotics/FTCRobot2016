@@ -24,6 +24,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
     private ArrayList<String> commands;
     private ArrayList<String> robotProgress;
 
+
     public SallyJoeBot() {
         driveLeftMotor = new Motor();
         driveRightMotor = new Motor();
@@ -55,6 +56,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
         robotProgress = new ArrayList<String>();
         commands = new ArrayList<String>();
+
+
 
         tapeMeasureServo.setPosition(0.485);
     }
@@ -159,7 +162,6 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return robotProgress;
     }
 
-    @Override
     public void addToCommands(String s) {
         commands.add (s);
     }

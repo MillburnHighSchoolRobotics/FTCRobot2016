@@ -11,6 +11,11 @@ import virtualRobot.MonitorThread;
 public class TimeMonitor extends MonitorThread<AutonomousRobot> {
     private double startingTime;
     private double endTime;
+    //IF YOU WANT TO NOT HAVE ANY TIME LIMIT, PUT -1 FOR ENDTIME
+    public TimeMonitor (double startingTime, double endTime) {
+        this.startingTime = startingTime;
+        this.endTime = endTime;
+    }
 
     @Override
     public boolean setStatus() {
@@ -24,9 +29,5 @@ public class TimeMonitor extends MonitorThread<AutonomousRobot> {
         return false;
     }
 
-    //IF YOU WANT TO NOT HAVE ANY TIME LIMIT, PUT -1 FOR ENDTIME
-    public TimeMonitor (double startingTime, double endTime) {
-        this.startingTime = startingTime;
-        this.endTime = endTime;
-    }
+
 }

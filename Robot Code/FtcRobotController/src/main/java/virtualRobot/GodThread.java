@@ -36,7 +36,7 @@ public abstract class GodThread implements Runnable {
                 Thread.sleep(5);
             }
         } catch (InterruptedException e) {
-            innerThread.interrupt();
+            killInnerThread();
         } finally {
             killActiveThreads();
         }
@@ -82,7 +82,6 @@ public abstract class GodThread implements Runnable {
 
     protected void killInnerThread() {
         innerThread.interrupt();
-        //killActiveThreads();
     }
 
     public abstract void realRun() throws InterruptedException;
