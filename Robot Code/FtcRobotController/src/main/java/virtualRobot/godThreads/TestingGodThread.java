@@ -50,6 +50,7 @@ public class TestingGodThread extends GodThread {
         Thread ct = new Thread(cameraTest);
         ct.start();
         children.add(ct);
+        delegateMonitor(ct, new MonitorThread[]{});
         Log.d("cameraReturn", redisLeft.get() + " ");
         if (redisLeft.get()) {
             LogicThread pushLeftButton = new PushLeftButton();
