@@ -7,19 +7,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="co.millburnrobotics.ftcscoutingapp.StartScreenActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/light_blue">
 
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.19" />
+
+    <ImageView
+        android:layout_width="1362dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_launcher_millburn_w"
+        android:layout_weight="0.50" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        android:text="REMEMBER: COLLEGE ISN'T FOR EVERYONE!"
+        android:text="LOADING..."
         android:gravity="center_horizontal"
+        android:layout_gravity="center"
         android:layout_weight="0.29"
         android:paddingTop="80dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"/>
+        android:paddingRight="10dp"
+        android:id="@+id/load_text" />
 
 
 </LinearLayout>

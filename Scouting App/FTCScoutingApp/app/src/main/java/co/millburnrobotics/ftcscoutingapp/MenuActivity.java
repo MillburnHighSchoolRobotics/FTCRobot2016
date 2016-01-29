@@ -1,12 +1,27 @@
 package co.millburnrobotics.ftcscoutingapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class MenuActivity extends AppCompatActivity {
+
+    private String selectedCompetition;
+    
+    private Button addTeam;
+    private Button addCompetition;
+    private Button addTeamToCompetition;
+    private Button pickCompetition;
+    private Button enterMatches;
+    private Button viewMatches;
+
+    private OnSwipeTouchListener detector;
+    private GestureOverlayView gov;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,74 +29,76 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        //INSERT PARSE INIT STUFF HERE
+        loadIntent();
 
-        Intent incoming = getIntent();
-        final String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
-
-        final Button addTeam = (Button) findViewById(R.id.addTeam);
+        addTeam = (Button) findViewById(R.id.addTeam);
         addTeam.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent toAddTeam = new Intent(view.getContext(), AddTeamActivity.class);
-                toAddTeam.putExtra("SelectedCompetition", selectedCompetition);
-                startActivity(toAddTeam);
+            public void onClick(View v) {
+                goToPage(AddTeamActivity.class);
             }
         });
 
-        final Button addCompetition = (Button) findViewById(R.id.addCompetition);
+        addCompetition = (Button) findViewById(R.id.addCompetition);
         addCompetition.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                Intent toAddCompetition = new Intent(v.getContext(), AddCompetitionActivity.class);
-                toAddCompetition.putExtra("SelectedCompetition", selectedCompetition);
-                startActivity(toAddCompetition);
+                goToPage(AddCompetitionActivity.class);
             }
         });
 
-        final Button addTeamToCompetition = (Button) findViewById(R.id.addTeamToCompeition);
+        addTeamToCompetition = (Button) findViewById(R.id.addTeamToCompeition);
         addTeamToCompetition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toAddTeamToCompetition = new Intent(v.getContext(), AddTeamToCompetitionActivity.class);
-                toAddTeamToCompetition.putExtra("SelectedCompetition", selectedCompetition);
-                startActivity(toAddTeamToCompetition);
+                goToPage(AddTeamToCompetitionActivity.class);
             }
         });
 
-        final Button pickCompetition = (Button) findViewById(R.id.pickCompetition);
+        pickCompetition = (Button) findViewById(R.id.pickCompetition);
         pickCompetition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toSelectCompetition = new Intent(v.getContext(), SelectCompetitionActivity.class);
-                toSelectCompetition.putExtra("SelectedCompetition", selectedCompetition);
-                startActivity(toSelectCompetition);
+                goToPage(SelectCompetitionActivity.class);
             }
         });
 
-        final Button enterMatches = (Button) findViewById(R.id.enterMatches);
+        enterMatches = (Button) findViewById(R.id.enterMatches);
         enterMatches.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                Intent toAddMatches = new Intent(v.getContext(), AddMatchesFrontActivity.class);
-                toAddMatches.putExtra("SelectedCompetition", selectedCompetition);
-                startActivity(toAddMatches);
+                goToPage(AddMatchesFrontActivity.class);
             }
         });
 
-        final Button viewMatches = (Button) findViewById(R.id.viewMatches);
+        viewMatches = (Button) findViewById(R.id.viewMatches);
         viewMatches.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                Intent toViewMatchData = new Intent(v.getContext(), ViewMatchDataActivity.class);
-                toViewMatchData.putExtra("SelectedCompetition", selectedCompetition);
-                startActivity(toViewMatchData);
+                goToPage(ViewMatchDataActivity.class);
             }
         });
 
+        detector = new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeUp() {
+                goToPage(StartScreenActivity.class);
+            }
+        };
+
+        //gov = (GestureOverlayView) findViewById(R.id.gestureOverlayView);
+        //gov.setOnTouchListener(detector);
+    }
+
+    private void loadIntent() {
+        Intent incoming = getIntent();
+        selectedCompetition = incoming.getStringExtra(IntentName.SELECTED_COMPETITION);
+    }
+
+    private void goToPage(Class<? extends Context> dest) {
+        Intent toPage = new Intent(this, dest);
+        toPage.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        startActivity(toPage);
     }
 
 }

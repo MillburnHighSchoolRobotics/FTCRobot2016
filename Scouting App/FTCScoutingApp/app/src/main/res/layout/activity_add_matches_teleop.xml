@@ -92,7 +92,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:hint="1ea"
-                        android:maxLength="1"
                         android:id="@+id/T1Floor"
                         android:inputType="phone" />
                     <AutoCompleteTextView

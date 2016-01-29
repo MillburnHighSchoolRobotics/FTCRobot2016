@@ -11,27 +11,33 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AddMatchesFrontActivity extends AppCompatActivity {
 
-    String selectedCompetition = "";
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-    List<String> postTexts = new ArrayList<String>();
-    List<String> teamlistal = new ArrayList<String>();
+    private String selectedCompetition;
+    private boolean doLoad;
+
+    private Button back;
+    private Button next;
+
+    private EditText matchNumber;
+    private Spinner[] teams;
+    private Competition curComp;
+
+    private List<Team> teamList;
+    private List<Integer> teamNumbers;
+    private Map<Integer, Team> teamMap;
+    private ArrayAdapter<Integer> teamAdapter;
+    private Integer[] selectedIDs;
+
+    private Match curMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,246 +45,177 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_matches_front);
 
+        loadIntent();
 
-        Intent incoming = getIntent();
-        selectedCompetition = incoming.getStringExtra("SelectedCompetition");
-        //INSERT PARSE INIT STUFF HERE
-
-        final Button backButton = (Button) findViewById(R.id.toMenuPage);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        back = (Button) findViewById(R.id.toMenuPage);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onBackPressed();
+            public void onClick(View v) {
+                goToMenuPage();
             }
         });
 
-        final EditText matchNumber = (EditText) findViewById(R.id.matchnumber);
-        final Spinner team1 = (Spinner) findViewById(R.id.team1);
-        final Spinner team2 = (Spinner) findViewById(R.id.team2);
-        final Spinner team3 = (Spinner) findViewById(R.id.team3);
-        final Spinner team4 = (Spinner) findViewById(R.id.team4);
+        matchNumber = (EditText) findViewById(R.id.matchnumber);
+        teams = new Spinner[4];
 
-        final Competition[] comp = new Competition[1];
+        teams[0] = (Spinner) findViewById(R.id.team1);
+        teams[1] = (Spinner) findViewById(R.id.team2);
+        teams[2] = (Spinner) findViewById(R.id.team3);
+        teams[3] = (Spinner) findViewById(R.id.team4);
+
+        ParseQuery<Competition> compQuery = ParseQuery.getQuery(Competition.class);
+        compQuery.fromLocalDatastore();
         try {
-            comp[0] = ParseQuery.getQuery(Competition.class).get(selectedCompetition);
+            curComp = compQuery.get(selectedCompetition);
         } catch (ParseException e) {
             Toast.makeText(this, "cannot find competition", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ParseQuery<Team> query = comp[0].getTeams().getQuery();
+        ParseQuery<Team> query = curComp.getTeams().getQuery();
         query.orderByAscending(Team.NUMBER);
-        List<Team> teamList = null;
+        query.fromLocalDatastore();
         try {
             teamList = query.find();
         } catch (ParseException e) {
             Toast.makeText(this, "Could Not Download Teams", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        List<String> teamNumbers = new ArrayList<String>();
-
-        final Map<String, Team> teamMap = new HashMap<String, Team>();
+        teamNumbers = new ArrayList<>();
+        teamMap = new HashMap<>();
 
         for (Team t : teamList) {
-            teamNumbers.add(Integer.toString(t.getNumber()));
-            teamMap.put(Integer.toString(t.getNumber()), t);
+            teamNumbers.add(t.getNumber());
+            teamMap.put(t.getNumber(), t);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, teamNumbers);
+        teamAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, teamNumbers);
 
-        team1.setAdapter(adapter);
-        team2.setAdapter(adapter);
-        team3.setAdapter(adapter);
-        team4.setAdapter(adapter);
+        for (Spinner teamSpinner : teams) {
+            teamSpinner.setAdapter(teamAdapter);
+        }
 
-        final String[] selectedIDs = {"", "", "", ""};
+        selectedIDs = new Integer[4];
 
-        team1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        for (int i = 0; i < 4; i++) {
+            teams[i].setOnItemSelectedListener(new MyOnItemSelectedListener(i) {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    selectedIDs[myID] = (Integer) parent.getItemAtPosition(position);
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                    selectedIDs[myID] = null;
+                }
+            });
+        }
+
+        next = (Button) findViewById(R.id.toTeleopPage);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedIDs[0] = (String) parent.getItemAtPosition(position);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedIDs[0] = "";
+            public void onClick(View v) {
+                saveContent();
+                goToAutonomous();
             }
         });
+    }
 
-        team2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedIDs[1] = (String) parent.getItemAtPosition(position);
-            }
+    private void loadIntent() {
+        Intent incoming = getIntent();
+        selectedCompetition = incoming.getStringExtra(IntentName.SELECTED_COMPETITION);
+    }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedIDs[1] = "";
-            }
-        });
+    private void saveContent() {
 
-        team3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedIDs[2] = (String) parent.getItemAtPosition(position);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedIDs[2] = "";
-            }
-        });
-
-        team4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedIDs[3] = (String) parent.getItemAtPosition(position);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedIDs[3] = "";
-            }
-        });
-
-        ParseQuery<Match> query2 = ParseQuery.getQuery(Match.class);
-        query2.selectKeys(Arrays.asList("matchNumber"));
-        List<Match> objects = null;
+        int matchID = Integer.parseInt(matchNumber.getText().toString());
+        ParseQuery<Match> matchQuery = curComp.getMatches().getQuery();
+        matchQuery.whereEqualTo(Match.MATCH_NUMBER, matchID);
+        List<Match> tempList = null;
         try {
-            objects = (List<Match>) query2.find();
+            tempList = matchQuery.find();
         } catch (ParseException e) {
             return;
         }
 
-        for (ParseObject post : objects) {
-            postTexts.add(String.valueOf(post.getNumber("matchNumber")));
+        if (tempList.size() != 0) {
+            doLoad = true;
+            curMatch = tempList.get(0);
+            try {
+                MatchData.pinAll(curMatch.getMatchDataz().getQuery().find());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            doLoad = false;
+            curMatch = new Match();
+            if (matchNumber.getText().toString().length() == 0) {
+                Toast.makeText(this, "no match available", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            curMatch.setMatchNumber(matchID);
 
-        }
+            curMatch.setCompetitionName(curComp.getName());
+            curMatch.setCompetitionDate(curComp.getDate());
 
+            MatchData md[] = new MatchData[4];
+            for (int i = 0; i < 4; i++) {
+                md[i] = new MatchData();
+                md[i].setCompetitionName(curComp.getName());
+                md[i].setCompetitionDate(curComp.getDate());
+                md[i].setMatchNumber(curMatch.getMatchNumber());
 
-        final Button next = (Button) findViewById(R.id.toTeleopPage);
-        next.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Match match = new Match();
-                    if (matchNumber.getText().toString().length() == 0) {
-                        Toast.makeText(v.getContext(), "no match available", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    match.setMatchNumber(Integer.parseInt(matchNumber.getText().toString()));
-                    ParseQuery<Competition> query = ParseQuery.getQuery(Competition.class);
-                    Competition competition = null;
-                    try {
-                        competition = query.get(selectedCompetition);
-                    } catch (ParseException e) {
-                        return;
-                    }
-
-                    match.setCompetitionName(competition.getName());
-                    match.setCompetitionDate(competition.getDate());
-
-                    MatchData md1 = new MatchData();
-                    MatchData md2 = new MatchData();
-                    MatchData md3 = new MatchData();
-                    MatchData md4 = new MatchData();
-
-
-                    String[] existingmatch = postTexts.toArray(new String[postTexts.size()]);
-
-                    String matchnumberstring = matchNumber.getText().toString();
-                    Boolean existing = false;
-
-                    if (Arrays.asList(existingmatch).contains(matchnumberstring)) {
-                        existing = true;
-                        int matchNumber = Integer.parseInt(matchnumberstring);
-                        ParseQuery<Match> innerquery = comp[0].getMatches().getQuery();
-                        innerquery.whereEqualTo(Match.MATCH_NUMBER, matchNumber);
-                        List<Match> curMatch = null;
-                        try {
-                            curMatch = innerquery.find();
-                        } catch (ParseException e) {
-                            return;
-                        }
-                        ParseQuery<MatchData> query3 = curMatch.get(0).getMatchDataz().getQuery();
-                        match = curMatch.get(0);
-
-                        List<MatchData> objects = null;
-                        try {
-                            objects = query3.find();
-                        } catch (ParseException e) {
-                            return;
-                        }
-                        for (ParseObject teamlist : objects) {
-                            teamlistal.add(String.valueOf(teamlist.getNumber("teamNumber")));
-                        }
-                    }
-
-                    String[] existingteams = teamlistal.toArray(new String[teamlistal.size()]);
-
-                    md1.setCompetitionName(competition.getName());
-                    md2.setCompetitionName(competition.getName());
-                    md3.setCompetitionName(competition.getName());
-                    md4.setCompetitionName(competition.getName());
-
-                    md1.setCompetitionDate(competition.getDate());
-                    md2.setCompetitionDate(competition.getDate());
-                    md3.setCompetitionDate(competition.getDate());
-                    md4.setCompetitionDate(competition.getDate());
-
-                    md1.setMatchNumber(match.getMatchNumber());
-                    md2.setMatchNumber(match.getMatchNumber());
-                    md3.setMatchNumber(match.getMatchNumber());
-                    md4.setMatchNumber(match.getMatchNumber());
-
-                    if (existing == false) {
-                        md1.setTeamNumber(teamMap.get(selectedIDs[0]).getNumber());
-                        md2.setTeamNumber(teamMap.get(selectedIDs[1]).getNumber());
-                        md3.setTeamNumber(teamMap.get(selectedIDs[2]).getNumber());
-                        md4.setTeamNumber(teamMap.get(selectedIDs[3]).getNumber());
-                    } else {
-                        md1.setTeamNumber(Integer.parseInt(existingteams[0]));
-                        md2.setTeamNumber(Integer.parseInt(existingteams[1]));
-                        md3.setTeamNumber(Integer.parseInt(existingteams[2]));
-                        md4.setTeamNumber(Integer.parseInt(existingteams[3]));
-                    }
-
-
-                    md1.setAllianceColor(MatchData.RED_1);
-                    md2.setAllianceColor(MatchData.RED_2);
-                    md3.setAllianceColor(MatchData.BLUE_1);
-                    md4.setAllianceColor(MatchData.BLUE_2);
-
-                    try {
-                        md1.save();
-                        md2.save();
-                        md3.save();
-                        md4.save();
-                    } catch (ParseException e) {
-                        return;
-                    }
-
-                    match.addMatchData(md1);
-                    match.addMatchData(md2);
-                    match.addMatchData(md3);
-                    match.addMatchData(md4);
-
-                    try {
-                        match.save();
-                    } catch (ParseException e) {
-                        return;
-                    }
-
-                    comp[0].getMatches().add(match);
-
-                    try {
-                        comp[0].save();
-                    } catch (ParseException e) {
-                        return;
-                    }
-
-                    Intent toAutonomous = new Intent(v.getContext(), AddMatchesAutonomousActivity.class);
-                    toAutonomous.putExtra("SelectedCompetition", selectedCompetition);
-                    toAutonomous.putExtra("SelectedMatch", match.getObjectId());
-                    startActivity(toAutonomous);
-                }
+                md[i].setTeamNumber(teamMap.get(selectedIDs[i]).getNumber());
             }
 
-        );
+            md[0].setAllianceColor(MatchData.RED_1);
+            md[1].setAllianceColor(MatchData.RED_2);
+            md[2].setAllianceColor(MatchData.BLUE_1);
+            md[3].setAllianceColor(MatchData.BLUE_2);
+
+            try {
+                for (MatchData m : md) {
+                    m.save();
+                    m.pin();
+                    curMatch.addMatchData(m);
+                }
+            } catch (ParseException e) {
+                return;
+            }
+
+            try {
+                curMatch.save();
+                curMatch.pin();
+                MatchData.pinAll(curMatch.getMatchDataz().getQuery().find());
+            } catch (ParseException e) {
+                return;
+            }
+
+            curComp.getMatches().add(curMatch);
+
+            try {
+                curComp.save();
+            } catch (ParseException e) {
+                return;
+            }
+        }
+    }
+
+    private void goToAutonomous() {
+        Intent toAutonomous = new Intent(this, AddMatchesAutonomousActivity.class);
+        toAutonomous.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        toAutonomous.putExtra(IntentName.SELECTED_MATCH, curMatch.getObjectId());
+        toAutonomous.putExtra(IntentName.DO_LOAD, doLoad);
+        startActivity(toAutonomous);
+    }
+
+    private void goToMenuPage() {
+        Intent toMenu = new Intent(this, InnerMenuActivity.class);
+        toMenu.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        startActivity(toMenu);
+    }
+
+    public void onBackPressed() {
+        goToMenuPage();
     }
 }

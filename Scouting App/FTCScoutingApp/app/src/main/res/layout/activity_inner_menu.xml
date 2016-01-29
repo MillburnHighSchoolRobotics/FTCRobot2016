@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="co.millburnrobotics.ftcscoutingapp.InnerMenuActivity"
+    android:background="@color/light_blue"
+    android:stretchColumns="*"
+    android:shrinkColumns="*">
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/addTeamToCompetition"
+            android:src="@drawable/add_remove_team"
+            android:scaleType="fitXY"
+            android:background="@color/light_blue"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/selectCompetition"
+            android:src="@drawable/select_comp"
+            android:scaleType="fitXY"
+            android:background="@color/light_blue"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"/>
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/enterMatches"
+            android:src="@drawable/add_team"
+            android:scaleType="fitXY"
+            android:background="@color/light_blue"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/viewMatches"
+            android:src="@drawable/view_match"
+            android:scaleType="fitXY"
+            android:background="@color/light_blue"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"/>
+
+    </TableRow>
+
+</TableLayout>

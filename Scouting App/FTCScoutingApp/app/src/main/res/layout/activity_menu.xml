@@ -6,6 +6,7 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:orientation="vertical"
+    android:id="@+id/master"
     tools:context="co.millburnrobotics.ftcscoutingapp.MenuActivity">
     <Toolbar
         android:layout_width="match_parent"
@@ -13,11 +14,19 @@
         android:id="@+id/toolbar">
         
     </Toolbar>
-    <ScrollView
+
+    <android.gesture.GestureOverlayView
+        android:layout_width="match_parent"
+        android:layout_height="555dp"
+        android:id="@+id/gestureOverlayView">
+
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        >-->
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -69,9 +78,7 @@
 
 
         </LinearLayout>
-
-
-
-    </ScrollView>
+    <!--</ScrollView>-->
+    </android.gesture.GestureOverlayView>
 
 </LinearLayout>

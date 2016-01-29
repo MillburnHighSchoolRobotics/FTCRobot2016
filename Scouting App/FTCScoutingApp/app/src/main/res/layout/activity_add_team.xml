@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="co.millburnrobotics.ftcscoutingapp.StartScreenActivity">
+    tools:context="co.millburnrobotics.ftcscoutingapp.StartScreenActivity"
+    android:background="@color/light_blue"
+    android:paddingTop="30dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
 
     <TextView
@@ -34,19 +38,19 @@
         android:hint="Name"
         android:layout_gravity="center_horizontal"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit Team"
-        android:id="@+id/EnterTeamButton"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Menu Page"
-        android:id="@+id/toMenuPage"
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:layout_gravity="center_horizontal" />
+
+    <ImageButton
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:id="@+id/EnterTeamButton"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerInside"
+        android:src="@drawable/confirm"
+        android:background="@color/light_blue" />
 
 
 </LinearLayout>

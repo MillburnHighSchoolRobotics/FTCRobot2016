@@ -7,8 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="co.millburnrobotics.ftcscoutingapp.AddCompetitionActivity"
-    android:layout_margin="16dp"
-    >
+    android:paddingTop="30dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/light_blue">
 
 
     <TextView
@@ -39,7 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/type_spinner"
-        android:layout_gravity="left" />
+        android:layout_gravity="left"
+        android:popupBackground="@color/light_blue"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -47,19 +50,19 @@
         android:id="@+id/compname"
         android:hint="Competition Name" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit Competititon"
-        android:id="@+id/competition"
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Done"
-        android:id="@+id/done"
-        android:layout_gravity="center"/>
+    <ImageButton
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:id="@+id/competition"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/confirm"
+        android:scaleType="centerInside"
+        android:background="@color/light_blue" />
 
 </LinearLayout>
 

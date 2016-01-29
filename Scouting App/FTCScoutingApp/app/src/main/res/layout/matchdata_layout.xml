@@ -267,6 +267,32 @@
         android:layout_height="match_parent" >
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:layout_span="2"
+            android:id="@+id/notes"
+
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"/>
     </TableRow>

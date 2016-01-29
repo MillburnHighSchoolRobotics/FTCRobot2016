@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -14,7 +15,12 @@ import com.parse.SaveCallback;
 
 public class AddTeamActivity extends AppCompatActivity {
 
-    String selectedCompetition = "";
+    private String selectedCompetition;
+
+    private AdvButton submit;
+
+    private EditText teamNumber;
+    private EditText teamName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,68 +28,74 @@ public class AddTeamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_team);
 
-        //INSERT PARSE INIT STUFF HE2RE
+        loadIntent();
 
-        Intent incoming = getIntent();
-        selectedCompetition = incoming.getStringExtra("SelectedCompetition");
+        teamNumber = (EditText) findViewById(R.id.TeamEnterEditText);
+        teamName = (EditText) findViewById(R.id.teamname);
 
-        final Button switchact = (Button) findViewById(R.id.toMenuPage);
-        switchact.setOnClickListener(new View.OnClickListener() {
+        submit = new AdvButton((ImageButton) findViewById(R.id.EnterTeamButton), R.drawable.confirm, R.drawable.confirm_down);
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent toMenu = new Intent(view.getContext(), MenuActivity.class);
-                startActivity(toMenu);
+            public void onClick(View v) {
+                saveContent();
+                clearContent();            }
+        });
+    }
+
+    private void saveContent() {
+        String szTeamNumber = teamName.getText().toString();
+        if(szTeamNumber.length() == 0){
+            Toast.makeText(this, "No team available", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int nTeamNumber = Integer.parseInt(teamNumber.getText().toString());
+
+        Team team = new Team();
+
+        team.setName(szTeamNumber);
+        team.setNumber(nTeamNumber);
+
+        team.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(AddTeamActivity.this, "Team Saved on Parse", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddTeamActivity.this, "Team Not Saved", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        final EditText teamNumber = (EditText) findViewById(R.id.TeamEnterEditText);
-        final EditText teamName = (EditText) findViewById(R.id.teamname);
-
-        final Button submitButton = (Button) findViewById(R.id.EnterTeamButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-
+        team.pinInBackground(new SaveCallback() {
             @Override
-            public void onClick(final View v) {
-                String szTeamNumber = teamName.getText().toString();
-                if(szTeamNumber.length() == 0){
-                    Toast.makeText(v.getContext(),"No team available", Toast.LENGTH_SHORT).show();
-                    return;
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(AddTeamActivity.this, "Team Pinned", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddTeamActivity.this, "Team Not Pinned", Toast.LENGTH_SHORT).show();
                 }
-                int nTeamNumber = Integer.parseInt(teamNumber.getText().toString());
-
-                Team team = new Team();
-
-                team.setName(szTeamNumber);
-                team.setNumber(nTeamNumber);
-
-                team.saveInBackground(new SaveCallback() {
-
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(v.getContext(), "Team Saved on Parse", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(v.getContext(), "Team Not Saved", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                teamName.setText("");
-                teamNumber.setText("");
             }
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
-        return true;
+    private void clearContent() {
+        teamName.setText("");
+        teamNumber.setText("");
+    }
+
+    private void loadIntent() {
+        Intent incoming = getIntent();
+        selectedCompetition = incoming.getStringExtra(IntentName.SELECTED_COMPETITION);
+    }
+
+    private void goToMenuPage() {
+        Intent toMenuPage = new Intent(this, OuterMenuActivity.class);
+        toMenuPage.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        startActivity(toMenuPage);
     }
 
     public void onBackPressed() {
-        Intent toMenu = new Intent(this, MenuActivity.class);
-        toMenu.putExtra("SelectedCompetition", selectedCompetition);
-        startActivity(toMenu);
+        goToMenuPage();
     }
 
 }
