@@ -63,6 +63,10 @@ public class MPU9250 extends AHRS {
         return getPitch() + pitchOffset;
     }
 
+    public void zeroPitch() {
+        pitchOffset = -getPitch();
+    }
+
     public double getIntegratedRoll() {
         if (Math.abs(getRoll() - prevRoll) > 200) {
             if (getRoll() < prevRoll) {
@@ -76,5 +80,9 @@ public class MPU9250 extends AHRS {
 
         prevRoll = getRoll();
         return getRoll() + rollOffset;
+    }
+
+    public void zeroRoll() {
+        rollOffset = -getRoll();
     }
 }

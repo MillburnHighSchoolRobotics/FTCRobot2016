@@ -11,21 +11,23 @@ import virtualRobot.MonitorThread;
 public class TimeMonitor extends MonitorThread<AutonomousRobot> {
     private double startingTime;
     private double endTime;
-
-    @Override
-    public boolean setStatus() {
-
-        double curTime = System.currentTimeMillis() - startingTime;
-        if (curTime < endTime) {
-            return true;
-        }
-        Log.d("roboTime", Double.toString(curTime));
-        return false;
-    }
-
     //IF YOU WANT TO NOT HAVE ANY TIME LIMIT, PUT -1 FOR ENDTIME
     public TimeMonitor (double startingTime, double endTime) {
         this.startingTime = startingTime;
         this.endTime = endTime;
     }
+
+    @Override
+    public boolean setStatus() {
+
+        double curTime = System.currentTimeMillis() - startingTime;
+        Log.d("roboTime", Double.toString(curTime));
+        if (curTime < endTime) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

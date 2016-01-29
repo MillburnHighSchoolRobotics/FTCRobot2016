@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -85,7 +86,9 @@ public class TakePicture implements Command {
         options.inInputShareable = true;
         Bitmap mBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
 
-        redisLeft.set(DavidClass.analyzePic(mBitmap));
+        boolean analyzed = DavidClass.analyzePic(mBitmap);
+        Log.d("cameraReturn", analyzed + " ");
+        redisLeft.set(analyzed);
 
         imageLock.unlock();
 

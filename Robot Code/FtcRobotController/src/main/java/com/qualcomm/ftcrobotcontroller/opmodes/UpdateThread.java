@@ -135,8 +135,10 @@ public abstract class UpdateThread extends OpMode {
 
 	}
 
-	public void init_loop() {
+	public void init_loop () {
 		imu.zeroYaw();
+		imu.zeroPitch();
+		imu.zeroRoll();
 	}
 
 	public void start() {
@@ -222,6 +224,7 @@ public abstract class UpdateThread extends OpMode {
 		telemetry.addData("real left encoders", Double.toString(leftFront.getCurrentPosition()) + "   " + Double.toString(leftBack.getCurrentPosition()));
 		telemetry.addData("virtual encoders", vDriveRightMotorEncoder.getValue() + " " + vDriveLeftMotorEncoder.getValue());
 		telemetry.addData("sonar value", vUltrasoundSensor.getValue());
+		telemetry.addData("pitch and roll angles", vPitchSensor.getValue() + " " + vRollSensor.getValue());
 
 		//telemetry.a
 
