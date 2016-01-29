@@ -186,14 +186,29 @@ public class Translate implements Command {
                     double headingOutput = headingController.getPIDOutput(robot.getHeadingSensor().getValue());
                     headingOutput = Math.min(Math.max(headingOutput, -1), 1);
 
-                    if (robot.getHeadingSensor().getValue() > referenceAngle) {
+                    double leftPower = pidOutput;
+                    double rightPower = pidOutput;
 
+                    if (multiplier > 0 && headingOutput > 0) {
+                        rightPower -= headingOutput;
+                    }
+
+                    if (multiplier > 0 && headingOutput < 0) {
+                        leftPower += headingOutput;
+                    }
+
+                    if (multiplier < 0 && headingOutput > 0) {
+                        leftPower -= headingOutput;
+                    }
+
+                    if (multiplier < 0 && headingOutput < 0) {
+                        rightPower += headingOutput;
                     }
 
                     Log.d("pidoutput", Double.toString(pidOutput));
 
-                    robot.getDriveRightMotor().setPower(pidOutput * multiplier);
-                    robot.getDriveLeftMotor().setPower(pidOutput * multiplier);
+                    robot.getDriveRightMotor().setPower(rightPower * multiplier);
+                    robot.getDriveLeftMotor().setPower(leftPower * multiplier);
                     
                     if (Thread.currentThread().isInterrupted()) {
                     	isInterrupted = true;

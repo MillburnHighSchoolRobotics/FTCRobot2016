@@ -18,10 +18,13 @@ public class Rotate implements Command {
     public static final double KI = 0;
     public static final double KD = 1.8954;
 
+    public static final double MIN_MAX_POWER = 0.25;
+
     public static final double TOLERANCE = 1.0;
 
     private double power;
     private double angleInDegrees;
+    private double initAngle;
     private RunMode runMode;
     private static double globalMaxPower = 1;
     private String name;
@@ -129,13 +132,20 @@ public class Rotate implements Command {
     public boolean changeRobotState() throws InterruptedException{
     	boolean isInterrupted = false;
         time = System.currentTimeMillis();
+        initAngle = robot.getHeadingSensor().getValue();
         switch (runMode) {
             case WITH_ANGLE_SENSOR:
                 while (!exitCondition.isConditionMet() && Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
                     adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
-                    adjustedPower *= power;
+
+                    double ratio = Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) / (Math.abs(angleInDegrees - initAngle));
+                    double powerScaler = power;
+                    if (power > MIN_MAX_POWER) {
+                        powerScaler = (power-MIN_MAX_POWER)*ratio + MIN_MAX_POWER;
+                    }
+                    adjustedPower *= powerScaler;
 
                     robot.getDriveLeftMotor().setPower(adjustedPower);
                     robot.getDriveRightMotor().setPower(-adjustedPower);
