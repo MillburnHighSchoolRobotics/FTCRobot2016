@@ -1,3 +1,4 @@
+/*
 package virtualRobot.logicThreads;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -5,7 +6,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.AutonomousRobot;
 import virtualRobot.ExitCondition;
 import virtualRobot.LogicThread;
-import virtualRobot.commands.AccurateRotate;
 import virtualRobot.commands.MoveServo;
 import virtualRobot.commands.Pause;
 import virtualRobot.commands.Rotate;
@@ -13,10 +13,12 @@ import virtualRobot.commands.TakePicture;
 import virtualRobot.commands.Translate;
 import virtualRobot.components.Servo;
 
+*/
 /**
  * Created by shant on 11/28/2015.
- */
-public class BlueClimberDumpLogic extends LogicThread<AutonomousRobot> {
+ *//*
+
+public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
     double maxPower = 0.7;
     int sonarCap = 13;
     int whiteTape = 5;
@@ -27,7 +29,7 @@ public class BlueClimberDumpLogic extends LogicThread<AutonomousRobot> {
     final double slowSpeed = 0.3;
     AtomicBoolean redisLeft;
 
-    public BlueClimberDumpLogic (AtomicBoolean redisLeft) {
+    public BlueGetToBeacon(AtomicBoolean redisLeft) {
         super();
         this.redisLeft = redisLeft;
     }
@@ -93,14 +95,14 @@ public class BlueClimberDumpLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
+        //commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
         commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, 0, "sweep shit", 4000));
 
 
         commands.add(new Pause(500));
 
-        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
+        //commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
         Translate moveToLine = new Translate (5000, Translate.Direction.FORWARD, slowSpeed, 0, "move To Line");
         moveToLine.setExitCondition(new ExitCondition() {
@@ -170,6 +172,7 @@ public class BlueClimberDumpLogic extends LogicThread<AutonomousRobot> {
         commands.add(new Pause(1500));
 
         //commands.add (new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE"));
+*/
 /*
         Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
         movePress.setRunMode(Translate.RunMode.CUSTOM);
@@ -221,7 +224,9 @@ public class BlueClimberDumpLogic extends LogicThread<AutonomousRobot> {
         commands.add(new Translate (50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
 
 
-*/
+*//*
+
 
     }
 }
+*/

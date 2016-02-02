@@ -30,46 +30,46 @@ public abstract class LogicThread<T extends AutonomousRobot> implements Runnable
         startTime = System.currentTimeMillis();
 
         while (!Thread.currentThread().isInterrupted() && (commands.size() != 0)) {
-           boolean isInterrupted = false;
-           Command c = commands.remove(0);
+            boolean isInterrupted = false;
+            Command c = commands.remove(0);
             if (c instanceof Rotate) {
-               if (((Rotate)c).getName() != null) robot.addToProgress(((Rotate)c).getName());
+                if (((Rotate)c).getName() != null) robot.addToProgress(((Rotate)c).getName());
             }
             if (c instanceof Translate) {
                 if (((Translate)c).getName() != null) robot.addToProgress(((Translate)c).getName());
             }
-           try {
-               isInterrupted = c.changeRobotState();
-           }
-           catch (InterruptedException e) {
-        	   isInterrupted = true;
-           }
-           if (c instanceof SpawnNewThread) {
-               List<Thread> threadList = ((SpawnNewThread) c).getThreads();
+            try {
+                isInterrupted = c.changeRobotState();
+            }
+            catch (InterruptedException e) {
+                isInterrupted = true;
+            }
+            if (c instanceof SpawnNewThread) {
+                List<Thread> threadList = ((SpawnNewThread) c).getThreads();
 
-               for (Thread t : threadList) {
-                   children.add(t);
-               }
-           }
+                for (Thread t : threadList) {
+                    children.add(t);
+                }
+            }
 
             elapsedTime = System.currentTimeMillis() - startTime;
 
-           
-           if (isInterrupted) 
-        	   break;
+
+            if (isInterrupted)
+                break;
         }
-        
-       
+
+
         for (Thread x: children)
-        	if (x.isAlive())
-        		x.interrupt();
+            if (x.isAlive())
+                x.interrupt();
 
     }
-    
+
     public LogicThread() {
-    	robot = (T) Command.ROBOT;
-    	commands = new ArrayList<Command>();
-    	children = new ArrayList<Thread>();
+        robot = (T) Command.ROBOT;
+        commands = new ArrayList<Command>();
+        children = new ArrayList<Thread>();
     }
 
     public abstract void loadCommands();

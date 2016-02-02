@@ -3,7 +3,6 @@ package virtualRobot.logicThreads;
 import virtualRobot.AutonomousRobot;
 import virtualRobot.ExitCondition;
 import virtualRobot.LogicThread;
-import virtualRobot.commands.AccurateRotate;
 import virtualRobot.commands.MoveServo;
 import virtualRobot.commands.Pause;
 import virtualRobot.commands.Rotate;
@@ -70,7 +69,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new AccurateRotate(-45, accurateRotatePower, "Accurate Rotate"));
+        //commands.add(new AccurateRotate(-45, accurateRotatePower, "Accurate Rotate"));
 
 
         //Move into corner
@@ -85,7 +84,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
+        //commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
         //@TODO check this
         commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, 4000));
@@ -93,7 +92,7 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
+        //commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
         Translate moveToLine = new Translate(5000, Translate.Direction.FORWARD, slowSpeed, 0, "move To Line");
         moveToLine.setExitCondition(new ExitCondition() {

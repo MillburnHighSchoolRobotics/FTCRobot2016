@@ -162,11 +162,4 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return robotProgress;
     }
 
-    public void addToCommands(String s) {
-        commands.add (s);
-    }
-
-    public ArrayList<String> getCommands() {
-        return commands;
-    }
 }
