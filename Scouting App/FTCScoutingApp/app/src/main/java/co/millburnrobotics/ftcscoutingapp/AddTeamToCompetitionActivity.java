@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,8 +25,8 @@ public class AddTeamToCompetitionActivity extends AppCompatActivity {
 
     private String selectedCompetition;
 
-    private Button addRemoveButton;
-    private Button submitButton;
+    private AdvButton addRemoveButton;
+    private AdvButton submitButton;
 
     private Spinner teamSelector;
     private ListView teamListView;
@@ -49,10 +50,10 @@ public class AddTeamToCompetitionActivity extends AppCompatActivity {
 
         loadIntent();
 
-        addRemoveButton = (Button) findViewById(R.id.add_remove_team);
+        addRemoveButton = new AdvButton((ImageButton) findViewById(R.id.add_remove_team), R.drawable.add_remove, R.drawable.add_remove_down);
         teamSelector = (Spinner) findViewById(R.id.team_selector);
         teamListView = (ListView) findViewById(R.id.listView);
-        submitButton = (Button) findViewById(R.id.submit);
+        submitButton = new AdvButton((ImageButton) findViewById(R.id.submit), R.drawable.confirm, R.drawable.confirm_down);
 
         ParseQuery teamQuery = ParseQuery.getQuery(Team.class);
         teamQuery.orderByAscending(Team.NUMBER);
@@ -150,6 +151,7 @@ public class AddTeamToCompetitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveContent();
+                goToMenuPage();
             }
         });
     }

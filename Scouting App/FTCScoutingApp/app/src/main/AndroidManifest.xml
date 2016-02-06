@@ -95,7 +95,11 @@
             android:name=".OuterMenuActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".InnerMenuActivity"
+        <activity
+            android:name=".InnerMenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".SearchResultActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
