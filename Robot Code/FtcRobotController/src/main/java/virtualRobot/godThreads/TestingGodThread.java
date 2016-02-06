@@ -1,15 +1,11 @@
 package virtualRobot.godThreads;
 
-import android.util.Log;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.commands.TakePicture;
-import virtualRobot.logicThreads.PushLeftButton;
-import virtualRobot.logicThreads.PushRightButton;
+import virtualRobot.commands.Translate;
 
 /**
  * Created by shant on 1/15/2016.
@@ -41,7 +37,7 @@ public class TestingGodThread extends GodThread {
         mtb.start();
         children.add(mtb);
         */
-        LogicThread cameraTest = new LogicThread() {
+        /*LogicThread cameraTest = new LogicThread() {
             @Override
             public void loadCommands() {
                 commands.add (new TakePicture(redisLeft));
@@ -69,7 +65,20 @@ public class TestingGodThread extends GodThread {
             Log.d("cameraReturn", "pushed right button");
         }
 
-        //delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
+        //delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});*/
+
+        LogicThread translateTest = new LogicThread() {
+            @Override
+            public void loadCommands() {
+                commands.add (new Translate(5000, Translate.Direction.FORWARD, .2, 0));
+            }
+        };
+
+        Thread t = new Thread(translateTest);
+        t.start();
+        children.add(t);
+        delegateMonitor(t, new MonitorThread[]{});
+
 
 
     }

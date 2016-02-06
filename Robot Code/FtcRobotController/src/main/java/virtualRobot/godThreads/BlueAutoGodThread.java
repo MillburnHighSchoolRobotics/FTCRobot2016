@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.logicThreads.BlueClimberDumpLogic;
+import virtualRobot.logicThreads.BlueGetToBeacon;
 import virtualRobot.logicThreads.PushLeftButton;
 import virtualRobot.logicThreads.PushRightButton;
 import virtualRobot.monitorThreads.DebrisMonitor;
@@ -33,7 +33,7 @@ public class BlueAutoGodThread extends GodThread {
 
 
         // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
-        LogicThread moveToBeacon = new BlueClimberDumpLogic(redisLeft);
+        LogicThread moveToBeacon = new BlueGetToBeacon(redisLeft);
         Thread mtb = new Thread(moveToBeacon);
         mtb.start();
         children.add(mtb);
@@ -59,18 +59,4 @@ public class BlueAutoGodThread extends GodThread {
         }
 
     }
-
-    /*
-    private void waitToProceed (Thread t) throws InterruptedException{
-        while (!shitWentWrong && t.isAlive()) {
-            requestApproval();
-            if (shitWentWrong) {
-                kill();
-                return;
-            }
-        }
-    }
-    */
-
-
 }

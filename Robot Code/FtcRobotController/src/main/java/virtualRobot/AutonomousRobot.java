@@ -57,8 +57,4 @@ public interface AutonomousRobot {
     void addToProgress(String s);
 
     ArrayList<String> getProgress();
-
-    void addToCommands(String s);
-
-    ArrayList<String> getCommands();
 }

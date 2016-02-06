@@ -95,7 +95,7 @@ public class FtcRobotControllerActivity extends Activity implements SurfaceHolde
     protected SharedPreferences preferences;
 
     protected UpdateUI.Callback callback;
-    protected Context context;
+    static public Context context;
     private Utility utility;
     protected ImageButton buttonMenu;
 

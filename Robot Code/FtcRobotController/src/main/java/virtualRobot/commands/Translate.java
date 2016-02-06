@@ -46,7 +46,7 @@ public class Translate implements Command {
         runMode = RunMode.WITH_PID;
 
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
-        headingController = new PIDController(0.01, 0, 0, 0);
+        headingController = new PIDController(0.1, 0, 0, 0);
 
         maxPower = globalMaxPower;
         currentValue = 0;
@@ -80,6 +80,7 @@ public class Translate implements Command {
         this (target, direction, maxPower);
 
         this.referenceAngle = referenceAngle;
+        headingController.setTarget(this.referenceAngle);
     }
 
     public Translate(double target, Direction direction, double maxPower, double referenceAngle, String name) {
@@ -173,7 +174,10 @@ public class Translate implements Command {
             	robot.getDriveLeftMotorEncoder().clearValue();
             	robot.getDriveRightMotorEncoder().clearValue();
 
-                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet() && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()
+                        && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE
+                        && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
                     double right = Math.abs(robot.getDriveRightMotorEncoder().getValue());
 
