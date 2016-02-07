@@ -67,5 +67,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Sonar Test", SonarTest.class);
     manager.register("Wheel Test", WheelTest.class);
     manager.register("Testing", TestingUpdate.class);
+
+    manager.register("ServoCal", ServoCal.class);
   }
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.logicThreads.BlueGetToBeacon;
+//import virtualRobot.logicThreads.BlueGetToBeacon;
 import virtualRobot.logicThreads.PushLeftButton;
 import virtualRobot.logicThreads.PushRightButton;
 import virtualRobot.monitorThreads.DebrisMonitor;
@@ -33,13 +33,13 @@ public class BlueAutoGodThread extends GodThread {
 
 
         // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
-        LogicThread moveToBeacon = new BlueGetToBeacon(redisLeft);
+        /*LogicThread moveToBeacon = new BlueGetToBeacon(redisLeft);
         Thread mtb = new Thread(moveToBeacon);
         mtb.start();
-        children.add(mtb);
+        children.add(mtb);*/
 
         //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
-        delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
+       // delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
         //waitToProceed (mtb);
 
         if (!redisLeft.get()) {

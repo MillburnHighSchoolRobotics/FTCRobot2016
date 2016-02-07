@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -29,6 +30,9 @@ public class ViewMatchDataMatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_view_match_data_match);
 
         loadIntent();
@@ -61,6 +65,7 @@ public class ViewMatchDataMatchActivity extends AppCompatActivity {
         curMatch = match.get(0);
 
         ParseQuery<MatchData> mdQuery = match.get(0).getMatchDataz().getQuery();
+        mdQuery.orderByAscending(MatchData.ALLIANCE_COLOR);
         try {
             matchDataz = mdQuery.find();
         } catch (ParseException e) {
@@ -80,11 +85,11 @@ public class ViewMatchDataMatchActivity extends AppCompatActivity {
             nMatch.setText("Match " + Integer.toString(md.getMatchNumber()));
 
             if (md.getAllianceColor().equals(MatchData.RED_1) || md.getAllianceColor().equals(MatchData.RED_2)) {
-                nTeam.setBackgroundResource(R.color.light_red);
-                nMatch.setBackgroundResource(R.color.light_red);
+                nTeam.setBackgroundResource(R.color.alliance_red);
+                nMatch.setBackgroundResource(R.color.alliance_red);
             } else {
-                nTeam.setBackgroundResource(R.color.light_blue);
-                nMatch.setBackgroundResource(R.color.light_blue);
+                nTeam.setBackgroundResource(R.color.alliance_blue);
+                nMatch.setBackgroundResource(R.color.alliance_blue);
             }
 
             TextView nAutoClimber = (TextView) toAdd.findViewById(R.id.AutoClimber);

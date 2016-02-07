@@ -47,23 +47,23 @@ public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
                 )
         );
 
-        robot.addToCommands("Servos Moved");
+        //robot.addToCommands("Servos Moved");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(500, Translate.Direction.FORWARD));
-        robot.addToCommands("Moved Forward");
+        //robot.addToCommands("Moved Forward");
 
 
         commands.add(new Pause(1500));
 
         commands.add(new Rotate(45));
-        robot.addToCommands("Rotated");
+        //robot.addToCommands("Rotated");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(5500, Translate.Direction.FORWARD));
-        robot.addToCommands("Moved Forward");
+       // robot.addToCommands("Moved Forward");
 
         commands.add(new Pause(1500));
 
@@ -72,47 +72,47 @@ public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
         commands.add(new Pause(1500));
 
         commands.add(new Rotate(-45));
-        robot.addToCommands("Rotated");
+        //robot.addToCommands("Rotated");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(2500, Translate.Direction.FORWARD));
-        robot.addToCommands("Moved into center");
+       // robot.addToCommands("Moved into center");
 
         commands.add(new Pause(1500));
 
         commands.add(new Rotate(45));
-        robot.addToCommands("rotated");
+       //robot.addToCommands("rotated");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(5000, Translate.Direction.FORWARD));
-        robot.addToCommands("Moved into corner");
+       // robot.addToCommands("Moved into corner");
 
         commands.add(new Pause(1500));
 
         commands.add(new Rotate(0));
-        robot.addToCommands("turned");
+       // robot.addToCommands("turned");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(3000, Translate.Direction.BACKWARD));
-        robot.addToCommands("Moved to clear shit");
+        //robot.addToCommands("Moved to clear shit");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(1000, Translate.Direction.FORWARD));
-        robot.addToCommands("moved to dump people");
+       // robot.addToCommands("moved to dump people");
 
         commands.add(new Pause(1500));
 
         commands.add(new Rotate(90));
-        robot.addToCommands("rotated to dump people");
+       // robot.addToCommands("rotated to dump people");
 
         commands.add(new Pause(1500));
 
         commands.add(new Translate(300, Translate.Direction.FORWARD));
-        robot.addToCommands("moved closer to beacon");
+       // robot.addToCommands("moved closer to beacon");
 
         commands.add(
                 new MoveServo(
@@ -142,7 +142,7 @@ public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
 
         commands.add (new Translate (50, Translate.Direction.FORWARD));
 
-        robot.addToCommands("dumped people");
+      //  robot.addToCommands("dumped people");
 
        // TakePicture takePicture = new TakePicture(redIsLeft);
 
@@ -178,11 +178,11 @@ public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
                 }
         ));
 
-        robot.addToCommands("pushed button");
+      //  robot.addToCommands("pushed button");
 
 
         commands.add (new Translate(1000, Translate.Direction.BACKWARD));
-        robot.addToCommands("moved to center");
+      //  robot.addToCommands("moved to center");
 
         commands.add(new Rotate(45));
 

@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,13 +52,16 @@ public class AddMatchesTeleop extends AppCompatActivity {
     private String[] parkingsSelected;
     private String[] allClearsSelected;
 
-    private Button back;
-    private Button notes;
-    private Button next;
+    private AdvButton back;
+    private AdvButton notes;
+    private AdvButton next;
 
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_matches_teleop);
 
         loadIntent();
@@ -225,7 +229,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
             });
         }
 
-        back = (Button) findViewById(R.id.TeleOpBack);
+        back = new AdvButton((ImageButton) findViewById(R.id.TeleOpBack), R.drawable.back, R.drawable.back_down);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,7 +238,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
             }
         });
 
-        notes = (Button) findViewById(R.id.TeleOpNotes);
+        notes = new AdvButton((ImageButton) findViewById(R.id.TeleOpNotes), R.drawable.notes, R.drawable.notes_down);
         notes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,12 +247,12 @@ public class AddMatchesTeleop extends AppCompatActivity {
             }
         });
 
-        next = (Button) findViewById(R.id.TeleOpNext);
+        next = new AdvButton((ImageButton) findViewById(R.id.TeleOpNext), R.drawable.done, R.drawable.done_down);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveContent();
-                //unpinContent();
+                unpinContent();
                 goToFrontPage();
             }
         });
@@ -361,10 +365,10 @@ public class AddMatchesTeleop extends AppCompatActivity {
     }
 
     private void goToAutonomous() {
-        Intent toAutonomous = new Intent(this, AddMatchesFrontActivity.class);
+        Intent toAutonomous = new Intent(this, AddMatchesAutonomousActivity.class);
         toAutonomous.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
         toAutonomous.putExtra(IntentName.SELECTED_MATCH, selectedMatch);
-        toAutonomous.putExtra(IntentName.DO_LOAD, doLoad);
+        toAutonomous.putExtra(IntentName.DO_LOAD, true);
         startActivity(toAutonomous);
     }
 
@@ -373,6 +377,7 @@ public class AddMatchesTeleop extends AppCompatActivity {
         toNotes.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
         toNotes.putExtra(IntentName.SELECTED_MATCH, selectedMatch);
         toNotes.putExtra(IntentName.DO_LOAD, doLoad);
+        toNotes.putExtra(IntentName.SENDER, IntentName.TELEOP);
         startActivity(toNotes);
     }
 
