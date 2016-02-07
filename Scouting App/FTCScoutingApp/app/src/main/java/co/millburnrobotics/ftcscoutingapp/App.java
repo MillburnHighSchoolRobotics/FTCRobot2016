@@ -22,9 +22,9 @@ public class App extends Application {
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "SlG9zvrlCyjen53XU3WUaf3HAYoZQpra08iCLQNC", "vyRgs4rAN6Ukj6qPfm2fzKNXlTbV8n3ALVringOF");
-        ParseUser.enableAutomaticUser();
-        ParseACL defaultACL = new ParseACL();
-        ParseACL.setDefaultACL(defaultACL, true);
+        //ParseUser.enableAutomaticUser();
+        //ParseACL defaultACL = new ParseACL();
+        //ParseACL.setDefaultACL(defaultACL, true);
 
     }
 }

@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,8 +25,8 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
     private String selectedCompetition;
     private boolean doLoad;
 
-    private Button back;
-    private Button next;
+    private AdvButton edit;
+    private AdvButton create;
 
     private EditText matchNumber;
     private Spinner[] teams;
@@ -43,15 +44,23 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_matches_front);
 
         loadIntent();
 
-        back = (Button) findViewById(R.id.toMenuPage);
-        back.setOnClickListener(new View.OnClickListener() {
+        edit = new AdvButton((ImageButton) findViewById(R.id.toTeleopPageEdit), R.drawable.edit, R.drawable.edit_down);
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToMenuPage();
+                findTeam();
+                if (curMatch != null) {
+                    goToAutonomous();
+                } else {
+                    Toast.makeText(v.getContext(), "cannot find team", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -111,8 +120,8 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
             });
         }
 
-        next = (Button) findViewById(R.id.toTeleopPage);
-        next.setOnClickListener(new View.OnClickListener() {
+        create = new AdvButton((ImageButton) findViewById(R.id.toTeleopPage), R.drawable.create, R.drawable.create_down);
+        create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveContent();
@@ -126,8 +135,7 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
         selectedCompetition = incoming.getStringExtra(IntentName.SELECTED_COMPETITION);
     }
 
-    private void saveContent() {
-
+    private void findTeam() {
         int matchID = Integer.parseInt(matchNumber.getText().toString());
         ParseQuery<Match> matchQuery = curComp.getMatches().getQuery();
         matchQuery.whereEqualTo(Match.MATCH_NUMBER, matchID);
@@ -146,58 +154,69 @@ public class AddMatchesFrontActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        } else {
-            doLoad = false;
-            curMatch = new Match();
-            if (matchNumber.getText().toString().length() == 0) {
-                Toast.makeText(this, "no match available", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            curMatch.setMatchNumber(matchID);
-
-            curMatch.setCompetitionName(curComp.getName());
-            curMatch.setCompetitionDate(curComp.getDate());
-
-            MatchData md[] = new MatchData[4];
-            for (int i = 0; i < 4; i++) {
-                md[i] = new MatchData();
-                md[i].setCompetitionName(curComp.getName());
-                md[i].setCompetitionDate(curComp.getDate());
-                md[i].setMatchNumber(curMatch.getMatchNumber());
-
-                md[i].setTeamNumber(teamMap.get(selectedIDs[i]).getNumber());
-            }
-
-            md[0].setAllianceColor(MatchData.RED_1);
-            md[1].setAllianceColor(MatchData.RED_2);
-            md[2].setAllianceColor(MatchData.BLUE_1);
-            md[3].setAllianceColor(MatchData.BLUE_2);
 
             try {
-                for (MatchData m : md) {
-                    m.save();
-                    m.pin();
-                    curMatch.addMatchData(m);
-                }
-            } catch (ParseException e) {
-                return;
-            }
-
-            try {
-                curMatch.save();
                 curMatch.pin();
-                MatchData.pinAll(curMatch.getMatchDataz().getQuery().find());
             } catch (ParseException e) {
-                return;
+                e.printStackTrace();
             }
+        }
+    }
 
-            curComp.getMatches().add(curMatch);
+    private void saveContent() {
 
-            try {
-                curComp.save();
-            } catch (ParseException e) {
-                return;
+        int matchID = Integer.parseInt(matchNumber.getText().toString());
+        doLoad = false;
+        curMatch = new Match();
+        if (matchNumber.getText().toString().length() == 0) {
+            Toast.makeText(this, "no match available", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        curMatch.setMatchNumber(matchID);
+
+        curMatch.setCompetitionName(curComp.getName());
+        curMatch.setCompetitionDate(curComp.getDate());
+
+        MatchData md[] = new MatchData[4];
+        for (int i = 0; i < 4; i++) {
+            md[i] = new MatchData();
+            md[i].setCompetitionName(curComp.getName());
+            md[i].setCompetitionDate(curComp.getDate());
+            md[i].setMatchNumber(curMatch.getMatchNumber());
+
+            md[i].setTeamNumber(teamMap.get(selectedIDs[i]).getNumber());
+        }
+
+        md[0].setAllianceColor(MatchData.RED_1);
+        md[1].setAllianceColor(MatchData.RED_2);
+        md[2].setAllianceColor(MatchData.BLUE_1);
+        md[3].setAllianceColor(MatchData.BLUE_2);
+
+        try {
+            for (MatchData m : md) {
+                m.save();
+                m.pin();
+                curMatch.addMatchData(m);
             }
+        } catch (ParseException e) {
+            return;
+        }
+
+        try {
+            curMatch.save();
+            curMatch.pin();
+            MatchData.pinAll(curMatch.getMatchDataz().getQuery().find());
+        } catch (ParseException e) {
+            return;
+        }
+
+        curComp.getMatches().add(curMatch);
+
+        try {
+            curComp.save();
+            curComp.pin();
+        } catch (ParseException e) {
+            return;
         }
     }
 

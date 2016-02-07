@@ -1,75 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="fill_parent"
     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/light_blue"
     android:orientation="vertical"
+    android:paddingBottom="30dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="30dp"
     tools:context="co.millburnrobotics.ftcscoutingapp.ViewMatchDataActivity">
-    <Toolbar
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/toolbar">
+        android:layout_gravity="center_horizontal"
+        android:text="Search"
+        android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
-    </Toolbar>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:orientation="vertical">
+    <Spinner
+        android:id="@+id/teamnumber"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:popupBackground="@color/light_blue"/>
 
-
-            <Spinner
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/teamnumber"
-                android:layout_gravity="center_horizontal"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Find By Team #"
-                android:id="@+id/findByTeam"
-                android:layout_margin="8dp"/>
+    <ImageButton
+        android:id="@+id/findByTeam"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:background="@color/light_blue"
+        android:scaleType="fitXY"
+        android:src="@drawable/search" />
 
 
-            <EditText
-                android:layout_marginTop="100dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="match#"
-                android:id="@+id/matchnumber"
-                android:layout_gravity="center_horizontal"
-                android:inputType="number"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Find By Match #"
-                android:id="@+id/findByMatch"
-                android:layout_margin="8dp"/>
+    <EditText
+        android:id="@+id/matchnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:hint="Match #"
+        android:inputType="number" />
 
+    <ImageButton
+        android:id="@+id/findByMatch"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:src="@drawable/search"
+        android:scaleType="fitXY"
+        android:background="@color/light_blue"
+        android:layout_margin="8dp" />
 
-
-
-        </LinearLayout>
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back"
-                android:layout_weight="1"
-                android:id="@+id/back"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"/>
-
-
-
-    </RelativeLayout>
 
 </LinearLayout>

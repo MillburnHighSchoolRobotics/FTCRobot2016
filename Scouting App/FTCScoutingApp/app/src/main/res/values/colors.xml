@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="alliance_red">#ffdddd</color>
+    <color name="alliance_blue">#ddddff</color>
     <color name="light_red">#ffdddd</color>
     <color name="light_blue">#f4f4ff</color>
 </resources>

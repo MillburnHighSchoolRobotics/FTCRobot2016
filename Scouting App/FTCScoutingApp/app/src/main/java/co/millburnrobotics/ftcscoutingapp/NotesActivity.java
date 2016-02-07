@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.parse.ParseException;
@@ -17,16 +18,27 @@ import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
 
+    String selectedCompetition;
+    String selectedMatch;
+    boolean doLoad;
+    String sender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
         Intent incoming = getIntent();
-        String selectedCompetition = incoming.getStringExtra("SelectedCompetition");
-        String selectedMatch = incoming.getStringExtra("SelectedMatch");
+        selectedCompetition = incoming.getStringExtra("SelectedCompetition");
+        selectedMatch = incoming.getStringExtra("SelectedMatch");
+        doLoad = incoming.getBooleanExtra(IntentName.DO_LOAD, false);
+        sender = incoming.getStringExtra(IntentName.SENDER);
 
         ParseQuery<Competition> compQuery = ParseQuery.getQuery(Competition.class);
+        compQuery.fromLocalDatastore();
         Competition curComp = null;
         try {
             curComp = compQuery.get(selectedCompetition);
@@ -35,6 +47,7 @@ public class NotesActivity extends AppCompatActivity {
         }
 
         ParseQuery<Match> matchQuery = curComp.getMatches().getQuery();
+        matchQuery.fromLocalDatastore();
         Match curMatch = null;
         try {
             curMatch = matchQuery.get(selectedMatch);
@@ -60,7 +73,7 @@ public class NotesActivity extends AppCompatActivity {
         final EditText blue1Notes = (EditText) findViewById(R.id.blue1_notes);
         final EditText blue2Notes = (EditText) findViewById(R.id.blue2_notes);
 
-        final Button saveButton = (Button) findViewById(R.id.button_save);
+        final AdvButton saveButton = new AdvButton((ImageButton) findViewById(R.id.button_save), R.drawable.done, R.drawable.done_down);
 
         Collections.sort(dataz, new Comparator<MatchData>() {
             public int compare(MatchData m1, MatchData m2) {
@@ -79,6 +92,7 @@ public class NotesActivity extends AppCompatActivity {
         red2Notes.setText(dataz.get(3).getNotes());
 
         final List<MatchData> finalDataz = dataz;
+        final Match finalCurMatch = curMatch;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,13 +104,33 @@ public class NotesActivity extends AppCompatActivity {
                 for (MatchData md : finalDataz) {
                     try {
                         md.save();
+                        md.pin();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
 
-                onBackPressed();
+                goBack();
             }
         });
+    }
+
+    private void goBack() {
+        Intent outgoing = null;
+        if (sender.equals(IntentName.AUTO)) {
+            outgoing = new Intent(this, AddMatchesAutonomousActivity.class);
+        } else if (sender.equals(IntentName.TELEOP)) {
+            outgoing = new Intent(this, AddMatchesTeleop.class);
+        }
+
+        outgoing.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        outgoing.putExtra(IntentName.SELECTED_MATCH, selectedMatch);
+        outgoing.putExtra(IntentName.DO_LOAD, true);
+
+        startActivity(outgoing);
+    }
+
+    public void onBackPressed() {
+        goBack();
     }
 }

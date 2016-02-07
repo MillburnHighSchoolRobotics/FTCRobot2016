@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,9 +30,9 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
     private Spinner[] climbersAutos;
     private Spinner[] parkingAutos;
 
-    private Button back;
-    private Button notes;
-    private Button next;
+    private AdvButton back;
+    private AdvButton notes;
+    private AdvButton next;
 
     private String[] beaconList;
     private Integer[] climbersAutoList;
@@ -49,11 +50,15 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_add_matches_autonomous);
 
         loadIntent();
 
-        back = (Button) findViewById(R.id.back);
+        back = new AdvButton((ImageButton) findViewById(R.id.back), R.drawable.back, R.drawable.back_down);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +181,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
             });
         }
 
-        notes = (Button) findViewById(R.id.notes);
+        notes = new AdvButton((ImageButton) findViewById(R.id.notes), R.drawable.notes, R.drawable.notes_down);
         notes.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -186,7 +191,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
             }
         });
 
-        next = (Button) findViewById(R.id.next);
+        next = new AdvButton((ImageButton) findViewById(R.id.next), R.drawable.next, R.drawable.next_down);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,6 +242,7 @@ public class AddMatchesAutonomousActivity extends AppCompatActivity {
         toNotes.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
         toNotes.putExtra(IntentName.SELECTED_MATCH, selectedMatch);
         toNotes.putExtra(IntentName.DO_LOAD, doLoad);
+        toNotes.putExtra(IntentName.SENDER, IntentName.AUTO);
         startActivity(toNotes);
     }
 

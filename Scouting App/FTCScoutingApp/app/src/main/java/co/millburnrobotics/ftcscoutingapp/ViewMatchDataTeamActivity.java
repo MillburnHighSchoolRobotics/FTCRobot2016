@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -28,6 +29,9 @@ public class ViewMatchDataTeamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_view_match_data_team);
 
         loadIntent();
@@ -48,7 +52,7 @@ public class ViewMatchDataTeamActivity extends AppCompatActivity {
         mdQuery.whereEqualTo(MatchData.TEAM_NUMBER, teamNumber);
         mdQuery.whereEqualTo(MatchData.COMPETITION_NAME, curComp.getName());
         mdQuery.whereEqualTo(MatchData.COMPETITION_DATE, curComp.getDate());
-        mdQuery.orderByAscending(MatchData.ALLIANCE_COLOR);
+        mdQuery.orderByAscending(MatchData.MATCH_NUMBER);
 
         try {
             matchDataz = mdQuery.find();
@@ -68,11 +72,11 @@ public class ViewMatchDataTeamActivity extends AppCompatActivity {
             nMatch.setText("Match " + Integer.toString(md.getMatchNumber()));
 
             if (md.getAllianceColor().equals(MatchData.RED_1) || md.getAllianceColor().equals(MatchData.RED_2)) {
-                nTeam.setBackgroundResource(R.color.light_red);
-                nMatch.setBackgroundResource(R.color.light_red);
+                nTeam.setBackgroundResource(R.color.alliance_red);
+                nMatch.setBackgroundResource(R.color.alliance_red);
             } else {
-                nTeam.setBackgroundResource(R.color.light_blue);
-                nMatch.setBackgroundResource(R.color.light_blue);
+                nTeam.setBackgroundResource(R.color.alliance_blue);
+                nMatch.setBackgroundResource(R.color.alliance_blue);
             }
 
             TextView nAutoClimber = (TextView) toAdd.findViewById(R.id.AutoClimber);
