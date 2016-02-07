@@ -1,3 +1,5 @@
+/*
+
 package virtualRobot.logicThreads;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -11,9 +13,11 @@ import virtualRobot.commands.Rotate;
 import virtualRobot.commands.Translate;
 import virtualRobot.components.Servo;
 
+*/
 /**
  * Created by shant on 12/2/2015.
- */
+ *//*
+
 public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
 
     final double BUTTON_PUSHER_LEFT = 0.05;
@@ -207,3 +211,4 @@ public class BlueMountainLogic extends LogicThread<AutonomousRobot> {
 
     }
 }
+*/

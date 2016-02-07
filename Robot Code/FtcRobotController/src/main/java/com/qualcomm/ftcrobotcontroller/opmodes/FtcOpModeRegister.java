@@ -58,6 +58,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Diagnostic Op Mode", DiagnosticsOpMode.class);
 
     manager.register("Teleop", TeleopUpdate.class);
+    manager.register("Servo Zero", ArmTest.class);
     //manager.register("IMU Test", IMUTest.class);
     manager.register("PIDTester", PIDTesterUpdate.class);
     manager.register("Red Climber Autonomous", RedAutoUpdate.class);

@@ -16,33 +16,37 @@ public interface AutonomousRobot {
 
     Motor getDriveLeftMotor();
 
-    Motor getTapeMeasureFrontMotor();
+    Motor getReaperMotor();
 
-    Motor getTapeMeasureBackMotor();
+    Motor getLiftMotor();
+
+    Motor getTapeMeasureMotor();
 
     Sensor getDriveRightMotorEncoder();
 
     Sensor getDriveLeftMotorEncoder();
 
-    Sensor getTapeMeasureFrontMotorEncoder();
+    Sensor getTapeMeasureMotorEncoder();
 
-    Sensor getTapeMeasureBackMotorEncoder();
+    Sensor getLiftMotorEncoder();
 
     Sensor getHeadingSensor();
-
-    ColorSensor getColorSensor();
 
     Sensor getPitchSensor();
 
     Sensor getRollSensor();
 
-    Sensor getUltrasoundSensor();
+    Sensor getUltrasoundSensor1();
+
+    Sensor getUltrasoundSensor2();
+
+    Sensor getUltrasoundSensor3();
+
+    ColorSensor getColorSensor();
 
     Servo getFlipperLeftServo();
 
     Servo getFlipperRightServo();
-
-    Servo getFrontShieldServo();
 
     Servo getBackShieldServo();
 
@@ -50,9 +54,9 @@ public interface AutonomousRobot {
 
     Servo getDumperServo();
 
-    Servo getButtonPusherServo();
+    Servo getBasketServo();
 
-    Servo getHangServo();
+    Servo getGateServo();
 
     void addToProgress(String s);
 
