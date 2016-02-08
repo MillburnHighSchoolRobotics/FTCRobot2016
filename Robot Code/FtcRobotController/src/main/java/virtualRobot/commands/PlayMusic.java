@@ -11,6 +11,11 @@ import java.io.IOException;
  * Created by shant on 1/29/2016.
  */
 public class PlayMusic implements Command {
+    private String fileName;
+
+    public PlayMusic (String fileName) {
+        this.fileName = fileName;
+    }
     @Override
     public boolean changeRobotState() throws InterruptedException {
         final MediaPlayer mp = new MediaPlayer();
@@ -24,7 +29,7 @@ public class PlayMusic implements Command {
         try {
             mp.reset();
             AssetFileDescriptor afd;
-            afd = FtcRobotControllerActivity.context.getAssets().openFd("AudioFile.mp3");
+            afd = FtcRobotControllerActivity.context.getAssets().openFd(fileName);
             mp.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             mp.prepare();
             mp.start();
