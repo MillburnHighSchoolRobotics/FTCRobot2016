@@ -3,6 +3,7 @@ package virtualRobot;
 import java.util.ArrayList;
 
 import virtualRobot.components.ColorSensor;
+import virtualRobot.components.LocationSensor;
 import virtualRobot.components.Motor;
 import virtualRobot.components.Sensor;
 import virtualRobot.components.Servo;
@@ -19,6 +20,7 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
     private ColorSensor colorSensor;
     private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, backShieldServo, dumperServo, basketServo, gateServo;
 
+    private LocationSensor locationSensor;
     private JoystickController joystickController1, joystickController2;
 
     private ArrayList<String> robotProgress;
@@ -52,6 +54,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         dumperServo = new Servo();
         basketServo = new Servo();
         gateServo = new Servo();
+
+        locationSensor = new LocationSensor();
 
         joystickController1 = new JoystickController();
         joystickController2 = new JoystickController();
@@ -164,6 +168,10 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
     public synchronized Servo getGateServo() {
         return gateServo;
+    }
+
+    public synchronized LocationSensor getLocationSensor() {
+        return locationSensor;
     }
 
     public synchronized JoystickController getJoystickController1() {

@@ -14,6 +14,7 @@ import virtualRobot.GodThread;
 import virtualRobot.JoystickController;
 import virtualRobot.SallyJoeBot;
 import virtualRobot.commands.Command;
+import virtualRobot.components.LocationSensor;
 import virtualRobot.components.Motor;
 import virtualRobot.components.Sensor;
 
@@ -33,6 +34,7 @@ public abstract class UpdateThread extends OpMode {
 	private Motor vDriveRightMotor, vDriveLeftMotor, vReaperMotor, vLiftMotor, vTapeMeasureMotor;
 	private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureMotorEncoder, vLiftMotorEncoder, vHeadingSensor, vPitchSensor, vRollSensor, vUltrasoundSensor1, vUltrasoundSensor2, vUltrasoundSensor3;
+	private LocationSensor vLocationSensor;
 
 	private virtualRobot.components.ColorSensor vColorSensor;
 	private JoystickController vJoystickController1, vJoystickController2;
@@ -104,6 +106,7 @@ public abstract class UpdateThread extends OpMode {
 		vBackShieldServo = robot.getBackShieldServo();
 		vBasketServo = robot.getBasketServo();
 		vGateServo = robot.getGateServo();
+		vLocationSensor = robot.getLocationSensor();
 
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
@@ -141,10 +144,17 @@ public abstract class UpdateThread extends OpMode {
 	}
 	
 	public void loop() {
+		// Update Location
+		double prevEncoderValue = (vDriveLeftMotorEncoder.getValue() + vDriveRightMotorEncoder.getValue())/2;
+		double newEncoderValue = ((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2) + ((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2) / 2;
+		double headingAngle = imu.getIntegratedYaw();
+		vLocationSensor.setAngle(headingAngle);
+		vLocationSensor.setX(vLocationSensor.getX() + ((newEncoderValue - prevEncoderValue) * Math.cos(Math.toRadians(vLocationSensor.getAngle()))));
+		vLocationSensor.setY(vLocationSensor.getY() + ((newEncoderValue - prevEncoderValue) * Math.sin(Math.toRadians(vLocationSensor.getAngle()))));
 
 		// Update Sensor Values
 		vPitchSensor.setRawValue(imu.getIntegratedPitch());
-        vHeadingSensor.setRawValue(imu.getIntegratedYaw());
+        vHeadingSensor.setRawValue(headingAngle);
 		vRollSensor.setRawValue(imu.getIntegratedRoll());
         vColorSensor.setRawValue(colorSensor.argb());
 		if (sonar1.getValue() > 0) {

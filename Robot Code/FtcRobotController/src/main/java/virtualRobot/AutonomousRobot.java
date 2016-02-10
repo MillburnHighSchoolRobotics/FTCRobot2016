@@ -3,6 +3,7 @@ package virtualRobot;
 import java.util.ArrayList;
 
 import virtualRobot.components.ColorSensor;
+import virtualRobot.components.LocationSensor;
 import virtualRobot.components.Motor;
 import virtualRobot.components.Sensor;
 import virtualRobot.components.Servo;
@@ -43,6 +44,8 @@ public interface AutonomousRobot {
     Sensor getUltrasoundSensor3();
 
     ColorSensor getColorSensor();
+
+    LocationSensor getLocationSensor();
 
     Servo getFlipperLeftServo();
 
