@@ -128,4 +128,27 @@ public class JoystickController {
         return dpad_right.get();
     }
 
+    public static int BUTTON_X = 0;
+    public static int BUTTON_A = 1;
+    public static int BUTTON_Y = 2;
+    public static int BUTTON_B = 3;
+    public static int BUTTON_LB = 4;
+    public static int BUTTON_RB = 5;
+    public static int BUTTON_LT = 6;
+    public static int BUTTON_RT = 7;
+    public static int BUTTON_BACK = 8;
+    public static int BUTTON_START = 9;
+    public static int BUTTON_LEFT_STICK = 10;
+    public static int BUTTON_RIGHT_STICK = 11;
+
+    public static int X_1 = 0;
+    public static int Y_1 = 1;
+    public static int R_1 = 2;
+    public static int THETA_1 = 3;
+    public static int X_2 = 4;
+    public static int Y_2 = 5;
+    public static int R_2 = 6;
+    public static int THETA_2 = 7;
+    public static int RT_PRESSURE = 8;
+    public static int LT_PRESSURE = 9;
 }
