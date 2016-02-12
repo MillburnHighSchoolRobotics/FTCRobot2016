@@ -20,6 +20,9 @@ import virtualRobot.commands.Command;
  * Created by shant on 11/25/2015.
  */
 public class TeleopLogic extends LogicThread<TeleopRobot> {
+    public double getDriveValue(double x, double sign) {
+        return sign * 0.5 * Math.pow((2*x - 1), 3) + 0.5;
+    }
     @Override
     public void loadCommands() {
 
@@ -31,21 +34,16 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                 boolean FLIPPED = false;
                 boolean isInterrupted = false;
                 double dumperCurrentPos = 0;
-                double buttonCurrentPos = 0.5;
-                double hangCurrentPos = 0;
-                final double BUTTON_PUSHER_LEFT = 0.05;
-                final double BUTTON_PUSHER_RIGHT = 0.45;
                 double tapeMeasureCurrentPos = 0.63;
                 final double servoDelta = 0.0023; //0.00115
-                final double ARM_BOTTOM_CAP = 0.485;
-                final double ARM_TOP_CAP = 0.725;
+                final double ARM_BOTTOM_CAP = 0.2;
+                final double ARM_TOP_CAP = 0.3;
                 boolean isRightFlipperDown = false;
                 boolean isLeftFlipperDown = false;
                 while (!isInterrupted) {
 
                     joystick1.logicalRefresh();
                     joystick2.logicalRefresh();
-
 
                     //Back Button to flip right and left
                     if (joystick1.isPressed(JoystickController.BUTTON_BACK)) {
@@ -54,64 +52,62 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
 
                     //DRIVE
+                    //Polynomial drive control for greater handling at the lower and mid range of the joystick.
+                    double leftJoystick = -joystick1.getValue(JoystickController.Y_2);
+                    double rightJoystick = -joystick2.getValue(JoystickController.Y_1);
+
+
+
                     if (FLIPPED){
-                        robot.getDriveLeftMotor().setPower(-joystick1.getValue(JoystickController.Y_2));
-                        robot.getDriveRightMotor().setPower(-joystick1.getValue(JoystickController.Y_1));
+                        robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
+                        robot.getDriveRightMotor().setPower(getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
                     }
 
                     else {
-                        robot.getDriveLeftMotor().setPower(joystick1.getValue(JoystickController.Y_1));
-                        robot.getDriveRightMotor().setPower(joystick1.getValue(JoystickController.Y_2));
+                        robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
+                        robot.getDriveRightMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
                     }
 
 
                     //SHIELDS
                     if (joystick1.isDpadDown()) {
-                        robot.getFrontShieldServo().setPosition(0.85);
-                        robot.getBackShieldServo().setPosition(0);
-                    }
-
-                    if (joystick1.isDpadUp()) {
-                        robot.getFrontShieldServo().setPosition(0.1);
                         robot.getBackShieldServo().setPosition(1);
                     }
 
-
-
-
-
-                    //FLIPPING THE PEOPLE OFF
-                    if (!joystick1.isPressed(JoystickController.BUTTON_LEFT_STICK) && joystick1.isPressed(JoystickController.BUTTON_RIGHT_STICK)) {
-                        if (FLIPPED){
-                            isLeftFlipperDown = !isLeftFlipperDown;
-                            //robot.getFlipperLeftServo().setPosition(0);
-                        }
-                        else {
-                            isRightFlipperDown = !isRightFlipperDown;
-                            //robot.getFlipperRightServo().setPosition(0);
-                        }
-                    }
-                    else if (joystick1.isPressed(JoystickController.BUTTON_LEFT_STICK) && !joystick1.isPressed(JoystickController.BUTTON_RIGHT_STICK)) {
-                        if (FLIPPED){
-                            isRightFlipperDown = !isRightFlipperDown;
-                            //robot.getFlipperRightServo().setPosition(0);
-                        }
-                        else {
-                            isLeftFlipperDown = !isLeftFlipperDown;
-                            //robot.getFlipperLeftServo().setPosition(0);
-                        }
+                    if (joystick1.isDpadUp()) {
+                        robot.getBackShieldServo().setPosition(0);
                     }
 
 
-                        robot.getFlipperLeftServo().setPosition(isLeftFlipperDown ? 0 : 0.5);
-                        robot.getFlipperRightServo().setPosition(isRightFlipperDown ? 0 : 0.5);
+
+
+
+                    //ZIPLINE FLIPPERS
+                    if (!joystick1.isDpadLeft() && joystick1.isDpadRight()) {
+                        if (FLIPPED){
+                            isLeftFlipperDown = !isLeftFlipperDown;
+                        }
+                        else {
+                            isRightFlipperDown = !isRightFlipperDown;
+                        }
+                    }
+                    else if (joystick1.isDpadLeft() && !joystick1.isDpadRight()) {
+                        if (FLIPPED){
+                            isRightFlipperDown = !isRightFlipperDown;
+                        }
+                        else {
+                            isLeftFlipperDown = !isLeftFlipperDown;
+                        }
+                    }
+
+                    //TODO tune flippers
+                    robot.getFlipperLeftServo().setPosition(isLeftFlipperDown ? 0 : 0.5);
+                    robot.getFlipperRightServo().setPosition(isRightFlipperDown ? 0 : 0.5);
 
 
 
                     //Dumping the People
                     if (joystick2.isDpadDown()){
-
-
                         robot.getDumperServo().setPosition(0);
                     }
 
@@ -120,40 +116,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getDumperServo().setPosition(1);
                     }
 
-                    /*JUST FOR TESTING AUTONOMOUS
 
-                    //Button Pusher
-                    if (!joystick1.isDown(JoystickController.BUTTON_LB) && joystick1.isDown(JoystickController.BUTTON_LT)) {
-                        buttonCurrentPos += 0.01;
-                        if (buttonCurrentPos > BUTTON_PUSHER_RIGHT) buttonCurrentPos = BUTTON_PUSHER_RIGHT;
-                        if (buttonCurrentPos < BUTTON_PUSHER_LEFT) buttonCurrentPos = BUTTON_PUSHER_LEFT;
-
-                        robot.getButtonPusherServo().setPosition(buttonCurrentPos);
-
-                    }
-
-                    else if (joystick1.isDown(JoystickController.BUTTON_LB) && !joystick1.isDown(JoystickController.BUTTON_LT)) {
-                        buttonCurrentPos -= 0.01;
-                        if (buttonCurrentPos > BUTTON_PUSHER_RIGHT) buttonCurrentPos = BUTTON_PUSHER_RIGHT;
-                        if (buttonCurrentPos < BUTTON_PUSHER_LEFT) buttonCurrentPos = BUTTON_PUSHER_LEFT;
-
-                        robot.getButtonPusherServo().setPosition(buttonCurrentPos);
-
-                    }
-
-
-
-
-
-
-                    if (joystick1.isDown(JoystickController.BUTTON_LB) && !joystick1.isDown(JoystickController.BUTTON_LT)) {
-                        buttonCurrentPos -= 0.05;
-                        if (buttonCurrentPos > .2) buttonCurrentPos = 0.2;
-                        if (buttonCurrentPos < 0) buttonCurrentPos = 0;
-
-                        robot.getButtonPusherServo().setPosition(buttonCurrentPos);
-                    }
-                    */
                     //TAPE MEASURE PLATFORM
                     if ((joystick2.isDown(JoystickController.BUTTON_RB)) && (!joystick2.isDown(JoystickController.BUTTON_LB))) {
                         tapeMeasureCurrentPos += servoDelta;
@@ -172,28 +135,17 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     }
 
                     //TAPE Measures
-                    if ((!joystick1.isDown(JoystickController.BUTTON_LT)) && (joystick1.isDown(JoystickController.BUTTON_LB))) {
-                        robot.getTapeMeasureBackMotor().setPower(1);
+                    if ((!joystick1.isDown(JoystickController.BUTTON_LT)) && (joystick1.isDown(JoystickController.BUTTON_RT))) {
+                        robot.getTapeMeasureMotor().setPower(1);
                     }
-                    else if ((joystick1.isDown(JoystickController.BUTTON_LT)) && (!joystick1.isDown(JoystickController.BUTTON_LB))) {
-                        robot.getTapeMeasureBackMotor().setPower(-1);
-                    }
-                    else {
-                        robot.getTapeMeasureBackMotor().setPower(0);
-                    }
-
-                    if ((!joystick1.isDown(JoystickController.BUTTON_RT)) && (joystick1.isDown(JoystickController.BUTTON_RB))) {
-                        robot.getTapeMeasureFrontMotor().setPower(1);
-                    }
-                    else if ((joystick1.isDown(JoystickController.BUTTON_RT)) && (!joystick1.isDown(JoystickController.BUTTON_RB))) {
-                        robot.getTapeMeasureFrontMotor().setPower(-1);
+                    else if ((joystick1.isDown(JoystickController.BUTTON_LT)) && (!joystick1.isDown(JoystickController.BUTTON_RT))) {
+                        robot.getTapeMeasureMotor().setPower(-1);
                     }
                     else {
-                        robot.getTapeMeasureFrontMotor().setPower(0);
+                        robot.getTapeMeasureMotor().setPower(0);
                     }
 
-
-
+                    /*
                     //permanent hang servos
                     if ((!joystick2.isDown(JoystickController.BUTTON_LT)) && (joystick2.isDown(JoystickController.BUTTON_RT))) {
                         hangCurrentPos += 0.05;
@@ -211,7 +163,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getHangServo().setPosition(hangCurrentPos);
                     }
 
-
+                    */
 
 
                     try {
