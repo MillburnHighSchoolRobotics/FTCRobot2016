@@ -10,8 +10,11 @@ import com.qualcomm.robotcore.util.Range;
  * Created by shant on 10/15/2015.
  */
 public class ArmTest extends OpMode {
-    Servo tape;
+    //Servo tape;
+    Servo normal;
 
+    double normalcurPos = 0;
+    final double normaldelta = .05;
     //DcMotor motorSweeper;
     double currentPos = .25;
     final double servoDelta = 0.00115;
@@ -21,9 +24,10 @@ public class ArmTest extends OpMode {
 
     @Override
     public void init() {
-        tape = hardwareMap.servo.get("tape");
+        //tape = hardwareMap.servo.get("tape");
+        normal = hardwareMap.servo.get("normal");
 
-        Log.d("robot", "servo ports: " + tape.getPortNumber());
+        //Log.d("robot", "servo ports: " + tape.getPortNumber());
 
     }
 
@@ -35,11 +39,13 @@ public class ArmTest extends OpMode {
         else {
             if (gamepad1.a) {
                 currentPos += servoDelta;
+                normalcurPos += normaldelta;
                 telemetry.addData("key", "adding value");
                 Log.d("robot", "adding value");
 
             }
             if (gamepad1.b) {
+                normalcurPos -= normaldelta;
                 currentPos -= servoDelta;
                 telemetry.addData("key", "subtracting value");
                 Log.d("robot", "subtracting value");
@@ -54,9 +60,10 @@ public class ArmTest extends OpMode {
         } else {
             motorSweeper.setPower(0);
         }*/
-
-        tape.setPosition(currentPos);
+        Range.clip(normalcurPos, 0, 1);
+        normal.setPosition(normalcurPos);
+        //tape.setPosition(currentPos);
         Log.d("robot", "setting value to " + currentPos);
-        telemetry.addData("servo value: ", currentPos);
+        telemetry.addData("servo value: ", normalcurPos);
     }
 }

@@ -35,11 +35,11 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
         commands.add(
                 new MoveServo(
                         new Servo[]{
-                                robot.getFrontShieldServo(),
+                                //robot.getFrontShieldServo(),
                                 robot.getBackShieldServo(),
                                 robot.getFlipperLeftServo(),
                                 robot.getFlipperRightServo(),
-                                robot.getButtonPusherServo(),
+                                //robot.getButtonPusherServo(),
                                 robot.getTapeMeasureServo(),
                                 robot.getDumperServo()
                         },
@@ -129,9 +129,9 @@ public class RedAutonomousLogic extends LogicThread<AutonomousRobot> {
         moveDump.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor().getValue() < 13) {
+               /* if (robot.getUltrasoundSensor().getValue() < 13) {
                     return true;
-                }
+                }*/
                 return false;
             }
         });

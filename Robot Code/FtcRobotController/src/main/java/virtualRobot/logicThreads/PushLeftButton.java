@@ -14,7 +14,7 @@ public class PushLeftButton extends LogicThread<AutonomousRobot> {
     public void loadCommands() {
         commands.add(new MoveServo(
                 new Servo[]{
-                        robot.getButtonPusherServo()
+                      //  robot.getButtonPusherServo()
                 },
                 new double[]{
                         BUTTON_PUSHER_LEFT

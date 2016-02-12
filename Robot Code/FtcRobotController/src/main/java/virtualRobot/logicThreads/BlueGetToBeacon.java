@@ -1,22 +1,11 @@
 
 package virtualRobot.logicThreads;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import virtualRobot.AutonomousRobot;
-import virtualRobot.ExitCondition;
-import virtualRobot.LogicThread;
-import virtualRobot.commands.MoveServo;
-import virtualRobot.commands.Pause;
-import virtualRobot.commands.Rotate;
-import virtualRobot.commands.TakePicture;
-import virtualRobot.commands.Translate;
-import virtualRobot.components.Servo;
-
 /**
  * Created by shant on 11/28/2015.
  */
 
+/*
 public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
     double maxPower = 0.7;
     int sonarCap = 13;
@@ -172,6 +161,7 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
 
         //commands.add (new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE"));
 
+*/
 /*
         Translate movePress = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, "move till pressing");
         movePress.setRunMode(Translate.RunMode.CUSTOM);
@@ -223,9 +213,11 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
         commands.add(new Translate (50, Translate.Direction.FORWARD, maxPower, "CHARGEEE!!"));
 
 
-*/
+*//*
+
 
 
     }
 }
 
+*/
