@@ -60,7 +60,7 @@ public class ArmTest extends OpMode {
         } else {
             motorSweeper.setPower(0);
         }*/
-        Range.clip(normalcurPos, 0, 1);
+        normalcurPos = Math.max(Math.min(normalcurPos, 1), 0);
         normal.setPosition(normalcurPos);
         //tape.setPosition(currentPos);
         Log.d("robot", "setting value to " + currentPos);
