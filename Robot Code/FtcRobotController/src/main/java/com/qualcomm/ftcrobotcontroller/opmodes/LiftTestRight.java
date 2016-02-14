@@ -23,10 +23,10 @@ public class LiftTestRight extends OpMode {
         }
         else {
             if (gamepad1.a) {
-                motor1.setPower(-1);
+                motor1.setPower(1);
             }
             else if (gamepad1.b) {
-                motor1.setPower(1);
+                motor1.setPower(-1);
             }
             else {
                 motor1.setPower(0);
