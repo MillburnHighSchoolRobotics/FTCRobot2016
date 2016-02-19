@@ -1,61 +1,51 @@
 package virtualRobot.components;
 
+import virtualRobot.*;
+
 /**
  * Created by shant on 2/8/2016.
  */
 public class LocationSensor extends Sensor {
 
-    private Point location;
+    private Location location;
 
     public LocationSensor() {
-        location = new Point();
+        location = new Location();
     }
 
     public synchronized double getX () {
         synchronized (this) {
-            return location.x;
+            return location.getX();
         }
     }
 
     public synchronized void setX (double newX) {
         synchronized (this) {
-            location.x = newX;
+            location.setX(newX);
         }
     }
 
     public synchronized double getY() {
         synchronized (this) {
-            return location.y;
+            return location.getY();
         }
     }
 
     public synchronized void setY (double newY) {
         synchronized (this) {
-            location.y = newY;
+            location.setY(newY);
         }
     }
 
     public synchronized double getAngle() {
         synchronized (this) {
-            return location.angle;
+            return location.getAngle();
         }
     }
 
     public synchronized void setAngle (double newAngle) {
         synchronized (this) {
-            location.angle = newAngle;
-        }
-    }
-
-    private class Point {
-        public volatile double x;
-        public volatile double y;
-        public volatile double angle;
-
-        public Point () {
-            x = 0;
-            y = 0;
-            angle = 0;
+            location.setAngle(newAngle);
         }
     }
 }
