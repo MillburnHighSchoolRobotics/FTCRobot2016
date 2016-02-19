@@ -2,7 +2,7 @@ package virtualRobot.logicThreads;
 
 import virtualRobot.AutonomousRobot;
 import virtualRobot.LogicThread;
-import virtualRobot.commands.Rotate;
+import virtualRobot.commands.MoveMotor;
 import virtualRobot.commands.Translate;
 
 /**
@@ -11,8 +11,7 @@ import virtualRobot.commands.Translate;
 public class PIDTester extends LogicThread<AutonomousRobot> {
     @Override
     public void loadCommands() {
-        Rotate.setGlobalMaxPower(0.4);
-        Translate.setGlobalMaxPower(0.6);
-        commands.add(new Rotate(90));
+
+        commands.add(new MoveMotor(robot.getLiftMotor(), 0.5, robot.getLiftMotorEncoder(), 5000, Translate.RunMode.CUSTOM, false));
     }
 }

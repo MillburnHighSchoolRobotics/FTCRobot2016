@@ -26,8 +26,8 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         /**
          * CONTROLLER 1 FUNCTIONS
          * 1. Joysticks: Tank drive
-         * 2. Bumpers: Tape Measure Platform
-         * 3. Triggers: Tape Measure Extension
+         * 2. Bumpers: Pipe servo
+         * 3. Triggers: Reeling In/Out
          * 4. A/B: Collection System Toggle
          * 5. Dpad Up/Down: Shield Up/Shield Down
          *

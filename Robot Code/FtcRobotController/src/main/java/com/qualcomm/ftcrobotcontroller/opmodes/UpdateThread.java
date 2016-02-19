@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import virtualRobot.GodThread;
 import virtualRobot.JoystickController;
+import virtualRobot.PIDController;
 import virtualRobot.SallyJoeBot;
 import virtualRobot.commands.Command;
 import virtualRobot.components.LocationSensor;
@@ -38,6 +39,9 @@ public abstract class UpdateThread extends OpMode {
 
 	private virtualRobot.components.ColorSensor vColorSensor;
 	private JoystickController vJoystickController1, vJoystickController2;
+
+    private double initLiftRightEncoder;
+    private double initLiftLeftEncoder;
 
 	private ArrayList<String> robotProgress;
 	
@@ -69,6 +73,10 @@ public abstract class UpdateThread extends OpMode {
 		rightFront.setDirection(DcMotor.Direction.REVERSE);
 		rightBack.setDirection(DcMotor.Direction.REVERSE);
 		liftRight.setDirection(DcMotor.Direction.REVERSE);
+
+        //RESETTING THE LIFT VALUES TO MAKE PID WORK
+        initLiftLeftEncoder = liftLeft.getCurrentPosition();
+        initLiftRightEncoder = liftRight.getCurrentPosition();
 
 
         //SENSOR SETUP
@@ -188,8 +196,17 @@ public abstract class UpdateThread extends OpMode {
 		double leftPower = vDriveLeftMotor.getPower();
 		double rightPower = vDriveRightMotor.getPower();
 		double tapeMeasurePower = vTapeMeasureMotor.getPower();
-		double liftPower = vLiftMotor.getPower();
+		double liftRightPower = vLiftMotor.getPower();
+        double liftLeftPower = vLiftMotor.getPower();
 		double reaperPower = vReaperMotor.getPower();
+
+        //PID CONTROLLER TO KEEP LIFT ARMS AT THE SAME EXTENSION
+        //TODO TUNE THIS PID CONTROLLER
+        PIDController liftController = new PIDController();
+        liftController.setTarget(0);
+        double liftPIDOut = liftController.getPIDOutput((liftLeft.getCurrentPosition() - initLiftLeftEncoder) - (liftRight.getCurrentPosition() - initLiftRightEncoder));
+        liftLeftPower += liftPIDOut;
+        liftRightPower -= liftPIDOut;
 
 		// Copy State of Motors and Servos
 		rightFront.setPower(rightPower);
@@ -198,8 +215,8 @@ public abstract class UpdateThread extends OpMode {
 		leftBack.setPower(leftPower);
 		tapeMeasureMotor.setPower(tapeMeasurePower);
 		reaper.setPower(reaperPower);
-		liftLeft.setPower(liftPower);
-		liftRight.setPower(liftPower);
+		liftLeft.setPower(liftLeftPower);
+		liftRight.setPower(liftRightPower);
 
 
 		tapeMeasureServo.setPosition(vTapeMeasureServo.getPosition());
