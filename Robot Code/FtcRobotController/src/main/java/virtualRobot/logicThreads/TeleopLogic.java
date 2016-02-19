@@ -69,8 +69,8 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                     // 1. DRIVE - Joystick
                     // Polynomial drive control for greater handling at the lower and mid range of the joystick.
-                    double leftJoystick = -joystick1.getValue(JoystickController.Y_2);
-                    double rightJoystick = -joystick2.getValue(JoystickController.Y_1);
+                    double leftJoystick = joystick1.getValue(JoystickController.Y_1);
+                    double rightJoystick = joystick1.getValue(JoystickController.Y_2);
 
                     if (FLIPPED1){
                         robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
@@ -78,8 +78,8 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     }
 
                     else {
-                        robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
-                        robot.getDriveRightMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
+                        robot.getDriveLeftMotor().setPower(-getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
+                        robot.getDriveRightMotor().setPower(-getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
                     }
 
                     // 2. Tape Measure Platform - Bumpers
@@ -111,13 +111,13 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     }
 
                     // 4. Collection System - A/B
-                    if ((joystick1.isPressed(JoystickController.BUTTON_A)) && !(joystick2.isPressed(JoystickController.BUTTON_B))) {
+                    if ((joystick2.isPressed(JoystickController.BUTTON_A)) && !(joystick2.isPressed(JoystickController.BUTTON_B))) {
                         if (collectionSystemDirection == 1) {
                             collectionSystemDirection = 0;
                         } else {
                             collectionSystemDirection = 1;
                         }
-                    } else if (!(joystick1.isPressed(JoystickController.BUTTON_A)) && (joystick2.isPressed(JoystickController.BUTTON_B))) {
+                    } else if (!(joystick2.isPressed(JoystickController.BUTTON_A)) && (joystick2.isPressed(JoystickController.BUTTON_B))) {
                         if (collectionSystemDirection == -1) {
                             collectionSystemDirection = 0;
                         } else {
@@ -207,6 +207,6 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         });
     }
     public double getDriveValue(double x, double sign) {
-        return sign * 0.5 * Math.pow((2*x - 1), 3) + 0.5;
+        return sign * (0.5 * Math.pow((2*x - 1), 3) + 0.5);
     }
 }

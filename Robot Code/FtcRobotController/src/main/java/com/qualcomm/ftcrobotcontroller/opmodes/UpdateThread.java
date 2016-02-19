@@ -58,7 +58,7 @@ public abstract class UpdateThread extends OpMode {
 		liftRight = hardwareMap.dcMotor.get("liftRight");
 
         //SERVO SETUP
-        tapeMeasureServo = hardwareMap.servo.get("tapeMeasureLeft");
+        tapeMeasureServo = hardwareMap.servo.get("tapeMeasure");
         flipperLeft = hardwareMap.servo.get("flipperLeft");
         flipperRight = hardwareMap.servo.get("flipperRight");
 		dumper = hardwareMap.servo.get("dumper");
@@ -80,7 +80,7 @@ public abstract class UpdateThread extends OpMode {
 
 
         //SENSOR SETUP
-		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 5);
+		imu = MPU9250.getInstance(hardwareMap.deviceInterfaceModule.get("dim"), 0);
 		colorSensor = hardwareMap.colorSensor.get("color");
 		sonar1 = hardwareMap.analogInput.get("sonar1");
 		sonar2 = hardwareMap.analogInput.get("sonar2");
@@ -202,7 +202,7 @@ public abstract class UpdateThread extends OpMode {
 
         //PID CONTROLLER TO KEEP LIFT ARMS AT THE SAME EXTENSION
         //TODO TUNE THIS PID CONTROLLER
-        PIDController liftController = new PIDController();
+        PIDController liftController = new PIDController(0.005, 0, 0, 0);
         liftController.setTarget(0);
         double liftPIDOut = liftController.getPIDOutput((liftLeft.getCurrentPosition() - initLiftLeftEncoder) - (liftRight.getCurrentPosition() - initLiftRightEncoder));
         liftLeftPower += liftPIDOut;
