@@ -26,14 +26,14 @@ public abstract class UpdateThread extends OpMode {
 	private Thread t;
 
 	private DcMotor rightFront, rightBack, leftFront, leftBack, reaper, liftRight, liftLeft, tapeMeasureMotor;
-	private Servo backShieldRight, backShieldLeft, tapeMeasureServo, flipperRight, flipperLeft, basket, gate, dumper;
+	private Servo backShieldRight, backShieldLeft, tapeMeasureServo, flipperRight, flipperLeft, basket, gate, dumper, scoop;
 
 	private MPU9250 imu;
 	private AnalogInput sonar1, sonar2, sonar3;
 	private ColorSensor colorSensor;
 
 	private Motor vDriveRightMotor, vDriveLeftMotor, vReaperMotor, vLiftMotor, vTapeMeasureMotor;
-	private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo;
+	private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo, vScoopServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureMotorEncoder, vLiftMotorEncoder, vHeadingSensor, vPitchSensor, vRollSensor, vUltrasoundSensor1, vUltrasoundSensor2, vUltrasoundSensor3;
 	private LocationSensor vLocationSensor;
 
@@ -66,6 +66,7 @@ public abstract class UpdateThread extends OpMode {
         backShieldRight = hardwareMap.servo.get("backShieldRight");
 		basket = hardwareMap.servo.get("basket");
 		gate = hardwareMap.servo.get("gate");
+        scoop = hardwareMap.servo.get("scoop");
 
         //REVERSE RIGHT SIDE
         backShieldRight.setDirection(Servo.Direction.REVERSE);
@@ -114,6 +115,7 @@ public abstract class UpdateThread extends OpMode {
 		vBackShieldServo = robot.getBackShieldServo();
 		vBasketServo = robot.getBasketServo();
 		vGateServo = robot.getGateServo();
+        vScoopServo = robot.getScoopServo();
 		vLocationSensor = robot.getLocationSensor();
 
         vJoystickController1 = robot.getJoystickController1();
@@ -201,12 +203,19 @@ public abstract class UpdateThread extends OpMode {
 		double reaperPower = vReaperMotor.getPower();
 
         //PID CONTROLLER TO KEEP LIFT ARMS AT THE SAME EXTENSION
-        //TODO TUNE THIS PID CONTROLLER
         PIDController liftController = new PIDController(0.005, 0, 0, 0);
         liftController.setTarget(0);
         double liftPIDOut = liftController.getPIDOutput((liftLeft.getCurrentPosition() - initLiftLeftEncoder) - (liftRight.getCurrentPosition() - initLiftRightEncoder));
         liftLeftPower += liftPIDOut;
         liftRightPower -= liftPIDOut;
+
+        liftRightPower = Math.min(Math.max(liftRightPower, -1), 1);
+        liftLeftPower = Math.min(Math.max(liftLeftPower, -1), 1);
+
+        if (vLiftMotor.getPower() == 0) {
+            liftRightPower = 0;
+            liftLeftPower = 0;
+        }
 
 		// Copy State of Motors and Servos
 		rightFront.setPower(rightPower);
@@ -227,10 +236,15 @@ public abstract class UpdateThread extends OpMode {
 		backShieldRight.setPosition(vBackShieldServo.getPosition());
 		basket.setPosition(vBasketServo.getPosition());
 		gate.setPosition(vGateServo.getPosition());
+        scoop.setPosition(vScoopServo.getPosition());
 
 		for (int i = 0; i < robot.getProgress().size(); i++) {
 			telemetry.addData("robot progress " + i, robot.getProgress().get(i));
 		}
+
+        telemetry.addData("left enc", vDriveLeftMotorEncoder.getValue());
+        telemetry.addData("right enc", vDriveRightMotorEncoder.getValue());
+        telemetry.addData("heading", vHeadingSensor.getValue());
 	}
 	
 	public void stop() {

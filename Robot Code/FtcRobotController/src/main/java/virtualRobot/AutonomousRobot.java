@@ -61,6 +61,8 @@ public interface AutonomousRobot {
 
     Servo getGateServo();
 
+    Servo getScoopServo();
+
     void addToProgress(String s);
 
     ArrayList<String> getProgress();

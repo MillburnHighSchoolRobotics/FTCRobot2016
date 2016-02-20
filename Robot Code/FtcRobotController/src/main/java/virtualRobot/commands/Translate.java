@@ -175,7 +175,7 @@ public class Translate implements Command {
             	robot.getDriveRightMotorEncoder().clearValue();
 
                 while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()
-                        && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE
+                        /*&& Math.abs(currentValue - translateController.getTarget()) > TOLERANCE*/
                         && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
@@ -192,7 +192,7 @@ public class Translate implements Command {
 
                     double leftPower = pidOutput;
                     double rightPower = pidOutput;
-
+                    /*
                     if (multiplier > 0 && headingOutput > 0) {
                         rightPower -= headingOutput;
                     }
@@ -208,7 +208,7 @@ public class Translate implements Command {
                     if (multiplier < 0 && headingOutput < 0) {
                         rightPower += headingOutput;
                     }
-
+                    */
                     Log.d("pidoutput", Double.toString(pidOutput));
 
                     robot.getDriveRightMotor().setPower(rightPower * multiplier);
@@ -272,9 +272,9 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static final double KP = 0.00744;
+    public static final double KP = 0.010125;
     public static final double KI = 0.0000;
-    public static final double KD = 0.03255;
+    public static final double KD = 0.031641;
     public static final double THRESHOLD = 1000;
     
     public static final double TOLERANCE = 10;
