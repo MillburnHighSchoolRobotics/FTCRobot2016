@@ -6,7 +6,7 @@ import virtualRobot.AutonomousRobot;
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.commands.Translate;
+import virtualRobot.commands.Rotate;
 
 /**
  * Created by shant on 1/15/2016.
@@ -71,7 +71,7 @@ public class TestingGodThread extends GodThread {
         LogicThread<AutonomousRobot> translateTest = new LogicThread<AutonomousRobot>() {
             @Override
             public void loadCommands() {
-                commands.add (new Translate(5000, Translate.Direction.FORWARD, .2, 0));
+                commands.add (new Rotate(45, 1, "Test"));
             }
         };
 

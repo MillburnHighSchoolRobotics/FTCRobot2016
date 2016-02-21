@@ -46,7 +46,7 @@ public class Translate implements Command {
         runMode = RunMode.WITH_PID;
 
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
-        headingController = new PIDController(0.1, 0, 0, 0);
+        headingController = new PIDController(0.2, 0, 0, 0);
 
         maxPower = globalMaxPower;
         currentValue = 0;
@@ -175,7 +175,7 @@ public class Translate implements Command {
             	robot.getDriveRightMotorEncoder().clearValue();
 
                 while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()
-                        /*&& Math.abs(currentValue - translateController.getTarget()) > TOLERANCE*/
+                        && Math.abs(currentValue - translateController.getTarget()) > TOLERANCE
                         && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
 
                     double left = Math.abs(robot.getDriveLeftMotorEncoder().getValue());
@@ -192,23 +192,27 @@ public class Translate implements Command {
 
                     double leftPower = pidOutput;
                     double rightPower = pidOutput;
-                    /*
+
                     if (multiplier > 0 && headingOutput > 0) {
                         rightPower -= headingOutput;
+                        leftPower += headingOutput;
                     }
 
                     if (multiplier > 0 && headingOutput < 0) {
                         leftPower += headingOutput;
+                        rightPower -= headingOutput;
                     }
 
                     if (multiplier < 0 && headingOutput > 0) {
                         leftPower -= headingOutput;
+                        rightPower += headingOutput;
                     }
 
                     if (multiplier < 0 && headingOutput < 0) {
                         rightPower += headingOutput;
+                        leftPower -= headingOutput;
                     }
-                    */
+
                     Log.d("pidoutput", Double.toString(pidOutput));
 
                     robot.getDriveRightMotor().setPower(rightPower * multiplier);

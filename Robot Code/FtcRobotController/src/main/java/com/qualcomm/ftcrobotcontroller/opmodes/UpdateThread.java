@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public abstract class UpdateThread extends OpMode {
 
     private double initLiftRightEncoder;
     private double initLiftLeftEncoder;
+    private ElapsedTime runtime = new ElapsedTime();
 
 	private ArrayList<String> robotProgress;
 	
@@ -136,9 +138,10 @@ public abstract class UpdateThread extends OpMode {
 	}
 
 	public void init_loop () {
-		imu.zeroYaw();
+        imu.zeroYaw();
 		imu.zeroPitch();
 		imu.zeroRoll();
+        telemetry.addData("Init Loop Time", runtime.toString());
 	}
 
 	public void start() {
@@ -149,7 +152,7 @@ public abstract class UpdateThread extends OpMode {
 		vLiftMotorEncoder.setRawValue((-liftRight.getCurrentPosition() + -liftLeft.getCurrentPosition()) / 2);
 
 		tapeMeasureServo.setPosition(0.25);
-		
+
 		t.start();
 	}
 	
@@ -206,6 +209,8 @@ public abstract class UpdateThread extends OpMode {
         PIDController liftController = new PIDController(0.005, 0, 0, 0);
         liftController.setTarget(0);
         double liftPIDOut = liftController.getPIDOutput((liftLeft.getCurrentPosition() - initLiftLeftEncoder) - (liftRight.getCurrentPosition() - initLiftRightEncoder));
+        liftPIDOut /= 2;
+        //liftPIDOut = 0;
         liftLeftPower += liftPIDOut;
         liftRightPower -= liftPIDOut;
 
@@ -244,7 +249,8 @@ public abstract class UpdateThread extends OpMode {
 
         telemetry.addData("left enc", vDriveLeftMotorEncoder.getValue());
         telemetry.addData("right enc", vDriveRightMotorEncoder.getValue());
-        telemetry.addData("heading", vHeadingSensor.getValue());
+        telemetry.addData("heading", "Yaw: " + imu.getIntegratedYaw() + " ");
+        telemetry.addData("Color sensor: ", "Red: " + vColorSensor.getRed() + " Green: " + vColorSensor.getGreen() + " Blue: " + vColorSensor.getBlue());
 	}
 	
 	public void stop() {

@@ -5,7 +5,6 @@ import android.util.Log;
 import virtualRobot.AutonomousRobot;
 import virtualRobot.ExitCondition;
 import virtualRobot.PIDController;
-import virtualRobot.commands.Command;
 
 /**
  * Created by shant on 10/27/2015.
@@ -18,7 +17,7 @@ public class Rotate implements Command {
     public static final double KI = 0;
     public static final double KD = 1.8954;
 
-    public static final double MIN_MAX_POWER = 0.25;
+    public static final double MIN_MAX_POWER = .99;
 
     public static final double TOLERANCE = 1.0;
 

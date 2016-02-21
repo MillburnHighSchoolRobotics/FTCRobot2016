@@ -5,11 +5,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-//import virtualRobot.logicThreads.BlueGetToBeacon;
-import virtualRobot.logicThreads.PushLeftButton;
-import virtualRobot.logicThreads.PushRightButton;
-import virtualRobot.monitorThreads.DebrisMonitor;
+import virtualRobot.logicThreads.BlueGetToBeacon;
 import virtualRobot.monitorThreads.TimeMonitor;
+
+//import virtualRobot.logicThreads.BlueGetToBeacon;
 
 /**
  * Created by shant on 1/5/2016.
@@ -21,10 +20,10 @@ public class BlueAutoGodThread extends GodThread {
         AtomicBoolean redisLeft = new AtomicBoolean();
 
         //These two threads should be running from the beginning of the program to provide accurate data
-        MonitorThread watchingForDebris = new DebrisMonitor();
+        /*MonitorThread watchingForDebris = new DebrisMonitor();
         Thread dm = new Thread(watchingForDebris);
         dm.start();
-        children.add(dm);
+        children.add(dm);*/
 
         MonitorThread watchingForTime = new TimeMonitor(System.currentTimeMillis(), 30000);
         Thread tm = new Thread(watchingForTime);
@@ -33,15 +32,15 @@ public class BlueAutoGodThread extends GodThread {
 
 
         // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
-        /*LogicThread moveToBeacon = new BlueGetToBeacon(redisLeft);
+        LogicThread moveToBeacon = new BlueGetToBeacon(redisLeft);
         Thread mtb = new Thread(moveToBeacon);
         mtb.start();
-        children.add(mtb);*/
+        children.add(mtb);
 
         //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
-       // delegateMonitor(mtb, new MonitorThread[]{watchingForDebris, watchingForTime});
+        delegateMonitor(mtb, new MonitorThread[]{watchingForTime});
         //waitToProceed (mtb);
-
+        /*
         if (!redisLeft.get()) {
             LogicThread pushLeft = new PushLeftButton();
             Thread pl = new Thread(pushLeft);
@@ -57,6 +56,7 @@ public class BlueAutoGodThread extends GodThread {
             children.add(pr);
             delegateMonitor(pr, new MonitorThread[]{watchingForDebris, watchingForTime});
         }
+        */
 
     }
 }

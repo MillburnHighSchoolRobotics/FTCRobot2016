@@ -62,12 +62,12 @@ public class FtcOpModeRegister implements OpModeRegister {
       manager.register("Lift Test Left", LiftTestLeft.class);
       manager.register("Lift Test Right", LiftTestRight.class);
       manager.register("Lift Test Both", LiftTestBoth.class);
-    //manager.register("IMU Test", IMUTest.class);
+    manager.register("IMU Test", IMUTest.class);
     manager.register("PIDTester", PIDTesterUpdate.class);
     //manager.register("Red Climber Autonomous", RedAutoUpdate.class);
-    //manager.register("Blue Climber Autonomous", BlueClimberDumpUpdate.class);
+    manager.register("Blue Climber Autonomous", BlueClimberDumpUpdate.class);
     //manager.register("Blue Mountain Autonomous", BlueMountainUpdate.class);
-    manager.register("test", navXPerformanceTuningOp.class);
+    manager.register("Navx imu test", navXPerformanceTuningOp.class);
     manager.register("Sonar Test", SonarTest.class);
     manager.register("Wheel Test", WheelTest.class);
     manager.register("Testing", TestingUpdate.class);
