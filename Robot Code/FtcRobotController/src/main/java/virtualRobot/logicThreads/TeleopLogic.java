@@ -36,6 +36,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
          * 1. Triggers: Lift Up/Down
          * 2. Dpad Left/Right: Zipline Flippers
          * 3. Dpad Up/Down: People Dumper
+         * 4. A/B: Scoop Servo
          */
         commands.add(new Command() {
             @Override
@@ -79,8 +80,8 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                      *  Polynomial drive control for greater handling at the lower and mid range of the joystick.
                      */
 
-                    double leftJoystick = -joystick1.getValue(JoystickController.Y_1);
-                    double rightJoystick = -joystick1.getValue(JoystickController.Y_2);
+                    double rightJoystick = -joystick1.getValue(JoystickController.Y_1);
+                    double leftJoystick = -joystick1.getValue(JoystickController.Y_2);
 
                     if (FLIPPED1){
                         robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
@@ -218,6 +219,13 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     robot.getDumperServo().setPosition(dumperCurrentPos);
 
 
+                    /** 4. Scoop Servo */
+                    if (joystick2.isPressed(JoystickController.BUTTON_A) && !(joystick2.isPressed(JoystickController.BUTTON_B))) {
+                        robot.getScoopServo().setPosition(0.75);
+                    }
+                    if (!joystick2.isPressed(JoystickController.BUTTON_A) && (joystick2.isPressed(JoystickController.BUTTON_B))) {
+                        robot.getScoopServo().setPosition(1);
+                    }
                     try {
                         Thread.currentThread().sleep(30);
                     } catch (InterruptedException e) {

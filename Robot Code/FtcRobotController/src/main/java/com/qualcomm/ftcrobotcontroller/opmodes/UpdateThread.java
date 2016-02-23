@@ -251,7 +251,9 @@ public abstract class UpdateThread extends OpMode {
         telemetry.addData("right enc", vDriveRightMotorEncoder.getValue());
         telemetry.addData("heading", "Yaw: " + imu.getIntegratedYaw() + " ");
         telemetry.addData("Color sensor: ", "Red: " + vColorSensor.getRed() + " Green: " + vColorSensor.getGreen() + " Blue: " + vColorSensor.getBlue());
-	}
+	    telemetry.addData("Sonar Front", vUltrasoundSensor2.getValue());
+        telemetry.addData("Sonar Back", vUltrasoundSensor1.getValue());
+    }
 	
 	public void stop() {
 		imu.close();

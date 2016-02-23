@@ -13,6 +13,7 @@ import virtualRobot.commands.MoveServo;
 import virtualRobot.commands.Pause;
 import virtualRobot.commands.Rotate;
 import virtualRobot.commands.SpawnNewThread;
+import virtualRobot.commands.TakePicture;
 import virtualRobot.commands.Translate;
 import virtualRobot.components.Servo;
 
@@ -20,8 +21,17 @@ import virtualRobot.components.Servo;
  * Created by shant on 11/28/2015.
  */
 
+/**
+ * STARTS ALIGNED WITH WALL
+ * MOVES TOWARDS CENTER
+ * TURNS AND MOVES TOWARDS CORNER
+ * MOVE IN FRONT OF THE BEACON
+ * (TAKE A PICTURE)
+ * DUMP THE PEOPLE
+ * ALIGN TO PUSH THE BUTTON
+ */
 
-public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
+public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
     double maxPower = 0.7;
     int sonarCap = 13;
     int whiteTape = 30;
@@ -32,7 +42,7 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
     final double slowSpeed = 0.3;
     AtomicBoolean redisLeft;
 
-    public BlueGetToBeacon(AtomicBoolean redisLeft) {
+    public BlueDumpPeople(AtomicBoolean redisLeft) {
         super();
         this.redisLeft = redisLeft;
     }
@@ -97,7 +107,7 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
 
         //Move into corner
 
-        commands.add(new Translate(9000, Translate.Direction.FORWARD, maxPower, 50, "moved into corner"));
+        commands.add(new Translate(8500, Translate.Direction.FORWARD, maxPower, 50, "moved into corner"));
 
 
         commands.add(new Pause(500));
@@ -106,15 +116,6 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
 
 
         commands.add(new Pause(500));
-
-        //commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
-
-        //commands.add(new Translate(3000, Translate.Direction.BACKWARD, 0.3, 0, "sweep shit", 4000));
-
-
-        //commands.add(new Pause(500));
-
-        //commands.add(new AccurateRotate(0, accurateRotatePower, "accurate rotate"));
 
         Translate moveToLine = new Translate(5000, Translate.Direction.BACKWARD, 0.15, 0, "move To Line");
         moveToLine.setExitCondition(new ExitCondition() {
@@ -129,36 +130,45 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
 
         commands.add(moveToLine);
 
-        //commands.add(new Translate(100, Translate.Direction.FORWARD, slowSpeed, 0, "go more forward"));
-
-
 
         commands.add(new Pause(500));
 
+
+
         commands.add(new Rotate(90, maxPower, "turn to dump people"));
-        //TODO change this back
-        // commands.add(new AccurateRotate(90, accurateRotatePower, "Accurate Rotate"));
 
-        //commands.add(new Translate(50, Translate.Direction.FORWARD, maxPower, 90, "back up to take picture"));
-        //TakePicture takePicture = new TakePicture(redisLeft);
+        Translate moveToDumpForward = new Translate(500, Translate.Direction.FORWARD, 0.15, 90, "Dump People");
 
-        //commands.add(takePicture);
-
-        //commands.add(new Pause(500));
-        /*Translate moveDump = new Translate(2500, Translate.Direction.FORWARD, slowSpeed, 90, "move till to dump");
-        moveDump.setRunMode(Translate.RunMode.CUSTOM);
-        moveDump.setExitCondition(new ExitCondition() {
+        moveToDumpForward.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor().getValue() < 13) {
+                if (robot.getUltrasoundSensor2().getValue() <= 21) {
                     return true;
                 }
                 return false;
             }
         });
 
-        commands.add(moveDump);
-        */
+
+
+        commands.add(moveToDumpForward);
+
+        Translate moveToDumpBackward = new Translate(500, Translate.Direction.BACKWARD, 0.15, 90, "Dump People");
+
+        moveToDumpForward.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getUltrasoundSensor2().getValue() >= 21) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
+        commands.add(moveToDumpBackward);
+
         commands.add(
                 new MoveServo(
                         new Servo[]{
@@ -182,10 +192,17 @@ public class BlueGetToBeacon extends LogicThread<AutonomousRobot> {
                 )
 
         );
-
         commands.add(new Pause(1500));
 
-        //commands.add (new Translate (2500, Translate.Direction.BACKWARD, maxPower, "CHARGEE"));
+        commands.add(new Rotate(0));
+
+
+
+        TakePicture takePicture = new TakePicture(redisLeft);
+         commands.add(takePicture);
+
+
+        commands.add(new Rotate(-90));
 
     }
 }

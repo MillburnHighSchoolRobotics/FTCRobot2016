@@ -23,6 +23,6 @@ public class TeleopGodThread extends GodThread {
         teleopThread.start();
         children.add(teleopThread);
 
-        delegateMonitor(teleopThread, new MonitorThread[]{watchForTime});
+        delegateMonitor(teleopThread, new MonitorThread[]{});
     }
 }

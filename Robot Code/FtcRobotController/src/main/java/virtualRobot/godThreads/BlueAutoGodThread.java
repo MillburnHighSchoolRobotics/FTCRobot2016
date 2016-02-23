@@ -5,10 +5,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.logicThreads.BlueGetToBeacon;
+import virtualRobot.commands.Command;
+import virtualRobot.logicThreads.BlueDumpPeople;
+import virtualRobot.logicThreads.PushLeftButton;
+import virtualRobot.logicThreads.PushRightButton;
 import virtualRobot.monitorThreads.TimeMonitor;
 
-//import virtualRobot.logicThreads.BlueGetToBeacon;
+//import virtualRobot.logicThreads.BlueDumpPeople;
 
 /**
  * Created by shant on 1/5/2016.
@@ -32,7 +35,7 @@ public class BlueAutoGodThread extends GodThread {
 
 
         // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
-        LogicThread moveToBeacon = new BlueGetToBeacon(redisLeft);
+        LogicThread moveToBeacon = new BlueDumpPeople(redisLeft);
         Thread mtb = new Thread(moveToBeacon);
         mtb.start();
         children.add(mtb);
@@ -40,13 +43,13 @@ public class BlueAutoGodThread extends GodThread {
         //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
         delegateMonitor(mtb, new MonitorThread[]{watchingForTime});
         //waitToProceed (mtb);
-        /*
+        Command.ROBOT.addToProgress("red is left /" + Boolean.toString(redisLeft.get()));
         if (!redisLeft.get()) {
             LogicThread pushLeft = new PushLeftButton();
             Thread pl = new Thread(pushLeft);
             pl.start();
             children.add(pl);
-            delegateMonitor(pl, new MonitorThread[]{watchingForDebris, watchingForTime});
+            delegateMonitor(pl, new MonitorThread[]{watchingForTime});
         }
 
         else if (redisLeft.get()) {
@@ -54,9 +57,9 @@ public class BlueAutoGodThread extends GodThread {
             Thread pr = new Thread(pushRight);
             pr.start();
             children.add(pr);
-            delegateMonitor(pr, new MonitorThread[]{watchingForDebris, watchingForTime});
+            delegateMonitor(pr, new MonitorThread[]{watchingForTime});
         }
-        */
+
 
     }
 }
