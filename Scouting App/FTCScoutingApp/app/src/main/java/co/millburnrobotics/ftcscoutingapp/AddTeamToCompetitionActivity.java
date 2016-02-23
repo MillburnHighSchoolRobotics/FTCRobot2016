@@ -46,6 +46,9 @@ public class AddTeamToCompetitionActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_team_to_competition);
 
         loadIntent();
@@ -187,6 +190,7 @@ public class AddTeamToCompetitionActivity extends AppCompatActivity {
 
         try {
             curComp.save();
+            curComp.pin();
         } catch (ParseException e) {
             Toast.makeText(this, "cannot save comp", Toast.LENGTH_SHORT).show();
             return;
@@ -200,6 +204,6 @@ public class AddTeamToCompetitionActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        goToMenuPage();;
+        goToMenuPage();
     }
 }

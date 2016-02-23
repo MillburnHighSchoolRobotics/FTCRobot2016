@@ -3,6 +3,7 @@ package virtualRobot;
 import java.util.ArrayList;
 
 import virtualRobot.components.ColorSensor;
+import virtualRobot.components.LocationSensor;
 import virtualRobot.components.Motor;
 import virtualRobot.components.Sensor;
 import virtualRobot.components.Servo;
@@ -13,137 +14,170 @@ import virtualRobot.components.Servo;
  */
 public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, tapeMeasureBackMotor, tapeMeasureFrontMotor;
-    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureFrontMotorEncoder, tapeMeasureBackMotorEncoder;
-    private Sensor headingSensor, pitchSensor, rollSensor, ultrasoundSensor;
+    private Motor driveLeftMotor, driveRightMotor, reaperMotor, liftMotor, tapeMeasureMotor;
+    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureMotorEncoder, liftMotorEncoder;
+    private Sensor headingSensor, pitchSensor, rollSensor, ultrasoundSensor1, ultrasoundSensor2, ultrasoundSensor3;
     private ColorSensor colorSensor;
-    private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, frontShieldServo, backShieldServo, dumperServo, buttonPusherServo, hangServo;
+    private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, backShieldServo, dumperServo, basketServo, gateServo, scoopServo;
 
+    private LocationSensor locationSensor;
     private JoystickController joystickController1, joystickController2;
 
-    private ArrayList<String> commands;
     private ArrayList<String> robotProgress;
 
 
     public SallyJoeBot() {
         driveLeftMotor = new Motor();
         driveRightMotor = new Motor();
-        tapeMeasureBackMotor = new Motor();
-        tapeMeasureFrontMotor = new Motor();
+        reaperMotor = new Motor();
+        liftMotor = new Motor();
+        tapeMeasureMotor = new Motor();
 
         driveLeftMotorEncoder = new Sensor();
         driveRightMotorEncoder = new Sensor();
-        tapeMeasureFrontMotorEncoder = new Sensor();
-        tapeMeasureBackMotorEncoder = new Sensor();
+        tapeMeasureMotorEncoder = new Sensor();
+        liftMotorEncoder = new Sensor();
 
         headingSensor = new Sensor();
         colorSensor = new ColorSensor();
         pitchSensor = new Sensor();
         rollSensor = new Sensor();
-        ultrasoundSensor = new Sensor();
+        ultrasoundSensor1 = new Sensor();
+        ultrasoundSensor2 = new Sensor();
+        ultrasoundSensor3 = new Sensor();
         
         tapeMeasureServo = new Servo();
         flipperLeftServo = new Servo();
         flipperRightServo = new Servo();
-        frontShieldServo = new Servo();
+        backShieldServo = new Servo();
         backShieldServo = new Servo();
         dumperServo = new Servo();
-        buttonPusherServo = new Servo();
-        hangServo = new Servo();
+        basketServo = new Servo();
+        gateServo = new Servo();
+        scoopServo = new Servo();
+
+        locationSensor = new LocationSensor();
 
         joystickController1 = new JoystickController();
         joystickController2 = new JoystickController();
 
         robotProgress = new ArrayList<String>();
-        commands = new ArrayList<String>();
 
-
-
-        tapeMeasureServo.setPosition(0.485);
+        tapeMeasureServo.setPosition(0.25);
+        scoopServo.setPosition(0.75);
     }
 
-    public synchronized Motor getDriveRightMotor() {
-        return driveRightMotor;
-    }
-
+    @Override
     public synchronized Motor getDriveLeftMotor() {
         return driveLeftMotor;
     }
 
-    public synchronized Motor getTapeMeasureBackMotor() {
-        return tapeMeasureBackMotor;
+    @Override
+    public synchronized Motor getDriveRightMotor() {
+        return driveRightMotor;
     }
 
-    public synchronized Motor getTapeMeasureFrontMotor() {
-        return tapeMeasureFrontMotor;
+    public synchronized Motor getReaperMotor() {
+        return reaperMotor;
     }
 
-    public synchronized Sensor getDriveRightMotorEncoder() {
-        return driveRightMotorEncoder;
+    public synchronized Motor getLiftMotor() {
+        return liftMotor;
     }
 
+    public synchronized Motor getTapeMeasureMotor() {
+        return tapeMeasureMotor;
+    }
+
+    @Override
     public synchronized Sensor getDriveLeftMotorEncoder() {
         return driveLeftMotorEncoder;
     }
 
-    public synchronized Sensor getTapeMeasureFrontMotorEncoder() {
-        return tapeMeasureFrontMotorEncoder;
+    @Override
+    public synchronized Sensor getDriveRightMotorEncoder() {
+        return driveRightMotorEncoder;
     }
 
-    public synchronized Sensor getTapeMeasureBackMotorEncoder() {
-        return tapeMeasureBackMotorEncoder;
+    public synchronized Sensor getTapeMeasureMotorEncoder() {
+        return tapeMeasureMotorEncoder;
     }
 
+    public synchronized Sensor getLiftMotorEncoder() {
+        return liftMotorEncoder;
+    }
+
+    @Override
     public synchronized Sensor getHeadingSensor() {
         return headingSensor;
     }
 
-    public synchronized ColorSensor getColorSensor() {
-        return colorSensor;
-    }
-
+    @Override
     public synchronized Sensor getPitchSensor() {
         return pitchSensor;
     }
 
+    @Override
     public synchronized Sensor getRollSensor() {
         return rollSensor;
     }
 
-    public synchronized Sensor getUltrasoundSensor() {
-        return ultrasoundSensor;
+    public synchronized Sensor getUltrasoundSensor1() {
+        return ultrasoundSensor1;
     }
 
+    public synchronized Sensor getUltrasoundSensor2() {
+        return ultrasoundSensor2;
+    }
+
+    public synchronized Sensor getUltrasoundSensor3() {
+        return ultrasoundSensor3;
+    }
+
+    @Override
+    public synchronized ColorSensor getColorSensor() {
+        return colorSensor;
+    }
+
+    @Override
     public synchronized Servo getTapeMeasureServo() {
         return tapeMeasureServo;
     }
 
+    @Override
     public synchronized Servo getFlipperLeftServo() {
         return flipperLeftServo;
     }
 
+    @Override
     public synchronized Servo getFlipperRightServo() {
         return flipperRightServo;
     }
 
-    public synchronized Servo getFrontShieldServo() {
-        return frontShieldServo;
-    }
-
+    @Override
     public synchronized Servo getBackShieldServo() {
         return backShieldServo;
     }
 
+    @Override
     public synchronized Servo getDumperServo() {
         return dumperServo;
     }
 
-    public synchronized Servo getButtonPusherServo() {
-        return buttonPusherServo;
+    public synchronized Servo getBasketServo() {
+        return basketServo;
     }
 
-    public synchronized Servo getHangServo() {
-        return hangServo;
+    public synchronized Servo getGateServo() {
+        return gateServo;
+    }
+
+    public synchronized Servo getScoopServo() {
+        return scoopServo;
+    }
+
+    public synchronized LocationSensor getLocationSensor() {
+        return locationSensor;
     }
 
     public synchronized JoystickController getJoystickController1() {

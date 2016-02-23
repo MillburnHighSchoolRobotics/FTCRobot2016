@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot>
+    <MotorController name="M1" serialNumber="AL00XTUJ">
+        <Motor name="leftFront" port="1" />
+        <Motor name="rightFront" port="2" />
+    </MotorController>
+    <MotorController name="M2" serialNumber="AL00VXR5">
+        <Motor name="leftBack" port="1" />
+        <Motor name="rightBack" port="2" />
+    </MotorController>
+	<MotorController name="M3" serialNumber="AL00VW3T">
+		<Motor name="liftLeft" port="1" />
+		<Motor name="liftRight" port="2" />
+	</MotorController>
+	<MotorController name="M4" serialNumber="AL00XQN4">
+		<Motor name="reaper" port="1" />
+		<Motor name="tapeMeasureMotor" port="2" />
+	</MotorController>
+	<ServoController name="S1" serialNumber="AL00YALC">
+		<Servo name="dumper" port="1" />
+		<Servo name="flipperLeft" port="2" />
+		<Servo name="flipperRight" port="3" />
+		<Servo name="basket" port="4" />
+		<Servo name="gate" port="5" />
+		<Servo name="scoop" port="6" />
+	</ServoController>
+	<ServoController name="S2" serialNumber="AL00VE2J">
+		<Servo name="backShieldLeft" port="6" />
+		<Servo name="backShieldRight" port="2" />
+		<Servo name="tapeMeasure" port="4" />
+	</ServoController>
+	<DeviceInterfaceModule name="dim" serialNumber="AL00VC28">
+		<I2cDevice name="imu" port="0" />
+		<ColorSensor name="color" port="5" />
+	</DeviceInterfaceModule>
+</Robot>

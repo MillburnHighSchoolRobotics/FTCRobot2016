@@ -3,7 +3,6 @@ package virtualRobot.commands;
 import java.util.ArrayList;
 
 import virtualRobot.ExitCondition;
-import virtualRobot.commands.Command;
 import virtualRobot.components.Servo;
 
 /**

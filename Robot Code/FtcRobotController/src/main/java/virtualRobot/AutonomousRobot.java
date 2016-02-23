@@ -3,6 +3,7 @@ package virtualRobot;
 import java.util.ArrayList;
 
 import virtualRobot.components.ColorSensor;
+import virtualRobot.components.LocationSensor;
 import virtualRobot.components.Motor;
 import virtualRobot.components.Sensor;
 import virtualRobot.components.Servo;
@@ -16,33 +17,39 @@ public interface AutonomousRobot {
 
     Motor getDriveLeftMotor();
 
-    Motor getTapeMeasureFrontMotor();
+    Motor getReaperMotor();
 
-    Motor getTapeMeasureBackMotor();
+    Motor getLiftMotor();
+
+    Motor getTapeMeasureMotor();
 
     Sensor getDriveRightMotorEncoder();
 
     Sensor getDriveLeftMotorEncoder();
 
-    Sensor getTapeMeasureFrontMotorEncoder();
+    Sensor getTapeMeasureMotorEncoder();
 
-    Sensor getTapeMeasureBackMotorEncoder();
+    Sensor getLiftMotorEncoder();
 
     Sensor getHeadingSensor();
-
-    ColorSensor getColorSensor();
 
     Sensor getPitchSensor();
 
     Sensor getRollSensor();
 
-    Sensor getUltrasoundSensor();
+    Sensor getUltrasoundSensor1();
+
+    Sensor getUltrasoundSensor2();
+
+    Sensor getUltrasoundSensor3();
+
+    ColorSensor getColorSensor();
+
+    LocationSensor getLocationSensor();
 
     Servo getFlipperLeftServo();
 
     Servo getFlipperRightServo();
-
-    Servo getFrontShieldServo();
 
     Servo getBackShieldServo();
 
@@ -50,9 +57,11 @@ public interface AutonomousRobot {
 
     Servo getDumperServo();
 
-    Servo getButtonPusherServo();
+    Servo getBasketServo();
 
-    Servo getHangServo();
+    Servo getGateServo();
+
+    Servo getScoopServo();
 
     void addToProgress(String s);
 

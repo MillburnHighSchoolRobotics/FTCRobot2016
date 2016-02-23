@@ -10,25 +10,25 @@ import com.qualcomm.robotcore.util.Range;
  * Created by shant on 10/15/2015.
  */
 public class ArmTest extends OpMode {
-    Servo armRight;
-    Servo armLeft;
+    //Servo tape;
+    Servo normal;
+
+    double normalcurPos = 0;
+    final double normaldelta = .05;
     //DcMotor motorSweeper;
-    double currentPos = .7;
+    double currentPos = .25;
     final double servoDelta = 0.00115;
 
-    final double ARM_TOP_CAP = 0.55;
-    final double ARM_BOTTOM_CAP = 0.7;
+    final double ARM_TOP_CAP = 0.3;
+    final double ARM_BOTTOM_CAP = 0.2;
 
     @Override
     public void init() {
-        armRight = hardwareMap.servo.get("armRight");
-        armLeft = hardwareMap.servo.get("armLeft");
-        //motorSweeper = hardwareMap.dcMotor.get("motorSweeper");
-        armLeft.setDirection(Servo.Direction.REVERSE);
-        Log.d("robot", "servo ports: " + armRight.getPortNumber() + "   " + armLeft.getPortNumber());
-        armRight.setPosition(currentPos);
-        armLeft.setPosition(currentPos);
-        //telemetry.addData("arm", "servo moving to 1");
+        //tape = hardwareMap.servo.get("tape");
+        normal = hardwareMap.servo.get("normal");
+
+        //Log.d("robot", "servo ports: " + tape.getPortNumber());
+
     }
 
     @Override
@@ -39,11 +39,13 @@ public class ArmTest extends OpMode {
         else {
             if (gamepad1.a) {
                 currentPos += servoDelta;
+                normalcurPos += normaldelta;
                 telemetry.addData("key", "adding value");
                 Log.d("robot", "adding value");
 
             }
             if (gamepad1.b) {
+                normalcurPos -= normaldelta;
                 currentPos -= servoDelta;
                 telemetry.addData("key", "subtracting value");
                 Log.d("robot", "subtracting value");
@@ -52,15 +54,16 @@ public class ArmTest extends OpMode {
 
         }
 
-            currentPos = Range.clip(currentPos, 0.2, ARM_BOTTOM_CAP);
+            currentPos = Range.clip(currentPos, ARM_BOTTOM_CAP, ARM_TOP_CAP);
         /*if (currentPos == ARM_BOTTOM_CAP) {
             motorSweeper.setPower(-.5);
         } else {
             motorSweeper.setPower(0);
         }*/
-
-        armLeft.setPosition(currentPos);
-        armRight.setPosition(currentPos);
+        normalcurPos = Math.max(Math.min(normalcurPos, 1), 0);
+        normal.setPosition(normalcurPos);
+        //tape.setPosition(currentPos);
         Log.d("robot", "setting value to " + currentPos);
+        telemetry.addData("servo value: ", normalcurPos);
     }
 }

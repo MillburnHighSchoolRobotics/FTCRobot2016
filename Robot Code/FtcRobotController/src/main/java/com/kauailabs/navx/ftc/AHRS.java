@@ -379,6 +379,7 @@ public class AHRS {
      * the getYaw() method.
      */
     public void zeroYaw() {
+        Log.d("IMU Testing", "inside the zeroYaw function");
         io_thread_obj.zeroYaw();
     }
 

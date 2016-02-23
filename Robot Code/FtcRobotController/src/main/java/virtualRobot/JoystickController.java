@@ -31,9 +31,9 @@ public class JoystickController {
             released.set(i, false);
         }
 
-        stickValues = new AtomicReferenceArray<Double>(8);
+        stickValues = new AtomicReferenceArray<Double>(10);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 10; i++) {
             stickValues.set(i, 0.0);
         }
 
@@ -84,7 +84,7 @@ public class JoystickController {
 	                down.set(i, curEvent.buttonStates[i]);
 	            }
 	
-	            for (int i = 0; i < 8; i++) {
+	            for (int i = 0; i < stickValues.length(); i++) {
 	                stickValues.set(i, curEvent.stickValues[i]);
 	            }
 	
@@ -149,4 +149,6 @@ public class JoystickController {
     public static int Y_2 = 5;
     public static int R_2 = 6;
     public static int THETA_2 = 7;
+    public static int RT_PRESSURE = 8;
+    public static int LT_PRESSURE = 9;
 }

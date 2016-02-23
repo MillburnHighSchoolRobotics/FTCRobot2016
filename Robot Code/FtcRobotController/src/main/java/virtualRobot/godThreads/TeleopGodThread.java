@@ -14,13 +14,15 @@ public class TeleopGodThread extends GodThread {
     public void realRun() throws InterruptedException {
         MonitorThread watchForTime = new TimeMonitor(System.currentTimeMillis(), 120000);
         Thread tm = new Thread (watchForTime);
+        tm.start();
         children.add(tm);
 
 
         LogicThread teleop = new TeleopLogic();
         Thread teleopThread = new Thread(teleop);
+        teleopThread.start();
         children.add(teleopThread);
 
-        delegateMonitor(teleopThread, new MonitorThread[]{watchForTime});
+        delegateMonitor(teleopThread, new MonitorThread[]{});
     }
 }

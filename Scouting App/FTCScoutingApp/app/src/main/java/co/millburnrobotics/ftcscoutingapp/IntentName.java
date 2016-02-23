@@ -9,4 +9,8 @@ public class IntentName {
     public static final String DO_LOAD = "DoLoad";
     public static final String TEAM_NUMBER = "TeamNumber";
     public static final String MATCH_NUMBER = "MatchNumber";
+    public static final String SENDER = "Sender";
+
+    public static final String AUTO = "Auto";
+    public static final String TELEOP = "TeleOp";
 }

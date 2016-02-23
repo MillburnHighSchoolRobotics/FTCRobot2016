@@ -38,6 +38,8 @@ public class SelectCompetitionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+
         super.onCreate(savedInstanceState);
 
         View decorView = getWindow().getDecorView();

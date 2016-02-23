@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,14 +29,16 @@ public class ViewMatchDataActivity extends AppCompatActivity {
     private ArrayAdapter<Integer> teamAdapter;
     private Integer selectedTeamNumber;
 
-    private Button viewByTeam;
-    private Button viewByMatch;
-    private Button back;
+    private AdvButton viewByTeam;
+    private AdvButton viewByMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_view_match_data);
 
         loadIntent();
@@ -81,7 +84,7 @@ public class ViewMatchDataActivity extends AppCompatActivity {
             }
         });
 
-        viewByTeam = (Button) findViewById(R.id.findByTeam);
+        viewByTeam = new AdvButton((ImageButton) findViewById(R.id.findByTeam), R.drawable.search, R.drawable.search_down);
         viewByTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,19 +92,11 @@ public class ViewMatchDataActivity extends AppCompatActivity {
             }
         });
 
-        viewByMatch = (Button) findViewById(R.id.findByMatch);
+        viewByMatch = new AdvButton((ImageButton) findViewById(R.id.findByMatch), R.drawable.search, R.drawable.search_down);
         viewByMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToMatches();
-            }
-        });
-
-        back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToMenuPage();
             }
         });
     }

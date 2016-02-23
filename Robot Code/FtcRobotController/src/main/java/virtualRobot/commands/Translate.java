@@ -46,7 +46,7 @@ public class Translate implements Command {
         runMode = RunMode.WITH_PID;
 
         translateController = new PIDController(KP, KI, KD, THRESHOLD);
-        headingController = new PIDController(0.1, 0, 0, 0);
+        headingController = new PIDController(0.2, 0, 0, 0);
 
         maxPower = globalMaxPower;
         currentValue = 0;
@@ -195,18 +195,22 @@ public class Translate implements Command {
 
                     if (multiplier > 0 && headingOutput > 0) {
                         rightPower -= headingOutput;
+                        leftPower += headingOutput;
                     }
 
                     if (multiplier > 0 && headingOutput < 0) {
                         leftPower += headingOutput;
+                        rightPower -= headingOutput;
                     }
 
                     if (multiplier < 0 && headingOutput > 0) {
                         leftPower -= headingOutput;
+                        rightPower += headingOutput;
                     }
 
                     if (multiplier < 0 && headingOutput < 0) {
                         rightPower += headingOutput;
+                        leftPower -= headingOutput;
                     }
 
                     Log.d("pidoutput", Double.toString(pidOutput));
@@ -272,9 +276,9 @@ public class Translate implements Command {
     	BACKWARD
     }
 
-    public static final double KP = 0.00744;
+    public static final double KP = 0.010125;
     public static final double KI = 0.0000;
-    public static final double KD = 0.03255;
+    public static final double KD = 0.031641;
     public static final double THRESHOLD = 1000;
     
     public static final double TOLERANCE = 10;

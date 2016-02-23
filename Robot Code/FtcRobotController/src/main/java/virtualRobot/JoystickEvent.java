@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 public class JoystickEvent {
     
     public boolean[] buttonStates = new boolean[12];
-    public double[] stickValues = new double[8];
+    public double[] stickValues = new double[10];
     public boolean dpad_up, dpad_down, dpad_left, dpad_right;
     
     public JoystickEvent(Gamepad gamepad) {
@@ -24,8 +24,15 @@ public class JoystickEvent {
             buttonStates[BUTTON_RB] = gamepad.right_bumper;
             buttonStates[BUTTON_LB] = gamepad.left_bumper;
 
-            buttonStates[BUTTON_RT] = (gamepad.right_trigger > 0.7);
-            buttonStates[BUTTON_LT] = (gamepad.left_trigger > 0.7);
+            double rightTriggerValue = gamepad.right_trigger;
+            double leftTriggerValue = gamepad.left_trigger;
+
+            buttonStates[BUTTON_RT] = (rightTriggerValue > 0.7);
+            buttonStates[BUTTON_LT] = (leftTriggerValue > 0.7);
+
+            stickValues[RT_PRESSURE] = rightTriggerValue;
+            stickValues[LT_PRESSURE] = leftTriggerValue;
+
 
             buttonStates[BUTTON_START] = gamepad.start;
             buttonStates[BUTTON_BACK] = gamepad.back;
@@ -99,13 +106,13 @@ public class JoystickEvent {
     }
 
     public boolean equals(JoystickEvent other) {
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < buttonStates.length; i++) {
             if (buttonStates[i] != other.buttonStates[i]) {
                 return false;
             }
         }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < stickValues.length; i++) {
             if (stickValues[i] != other.stickValues[i]) {
                 return false;
             }
@@ -139,4 +146,6 @@ public class JoystickEvent {
     public static int Y_2 = 5;
     public static int R_2 = 6;
     public static int THETA_2 = 7;
+    public static int RT_PRESSURE = 8;
+    public static int LT_PRESSURE = 9;
 }
