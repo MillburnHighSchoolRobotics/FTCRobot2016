@@ -39,7 +39,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
     double accurateRotatePower = 0.65;
     final double BUTTON_PUSHER_RIGHT = 0.05;
     final double BUTTON_PUSHER_LEFT = 0.45;
-    final double slowSpeed = 0.3;
+    final double slowSpeed = 0.15;
     AtomicBoolean redisLeft;
 
     public BlueDumpPeople(AtomicBoolean redisLeft) {
@@ -117,7 +117,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        Translate moveToLine = new Translate(5000, Translate.Direction.BACKWARD, 0.15, 0, "move To Line");
+        Translate moveToLine = new Translate(5000, Translate.Direction.BACKWARD, slowSpeed, 0, "move To Line");
         moveToLine.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
@@ -137,7 +137,9 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(new Rotate(90, maxPower, "turn to dump people"));
 
-        Translate moveToDumpForward = new Translate(500, Translate.Direction.FORWARD, 0.15, 90, "Dump People");
+        commands.add(new Pause(500));
+
+        Translate moveToDumpForward = new Translate(500, Translate.Direction.FORWARD, slowSpeed, 90, "Dump People");
 
         moveToDumpForward.setExitCondition(new ExitCondition() {
             @Override
@@ -149,16 +151,16 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
             }
         });
 
-
-
         commands.add(moveToDumpForward);
 
-        Translate moveToDumpBackward = new Translate(500, Translate.Direction.BACKWARD, 0.15, 90, "Dump People");
+        commands.add(new Pause(500));
 
-        moveToDumpForward.setExitCondition(new ExitCondition() {
+        Translate moveToDumpBackward = new Translate(500, Translate.Direction.BACKWARD, slowSpeed, 90, "Dump People");
+
+        moveToDumpBackward.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor2().getValue() >= 21) {
+                if (robot.getUltrasoundSensor2().getValue() >= 22) {
                     return true;
                 }
                 return false;
@@ -193,6 +195,19 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         );
         commands.add(new Pause(1500));
+
+        Translate moveToPic = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, 90, "Move back to take pic");
+        moveToPic.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getUltrasoundSensor2().getValue() >= 37) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        commands.add(moveToPic);
 
         commands.add(new Rotate(0));
 
