@@ -33,6 +33,13 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/btnEnterTeam"
                 android:text="Enter" />
+            <Button
+                android:layout_width="192dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:text = "Back"
+                android:id="@+id/BackAlliance"
+                />
         </LinearLayout>
     </ScrollView>
 

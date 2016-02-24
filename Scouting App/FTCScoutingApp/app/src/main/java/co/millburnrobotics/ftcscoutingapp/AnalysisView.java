@@ -26,7 +26,7 @@ public class AnalysisView extends AppCompatActivity {
     private List<MatchData> matchDataz;
     private MatchData[] alldata;
     private ArrayList<Integer> alliances;
-
+    private Button back;
     private void loadIntent() {
         Intent incoming = getIntent();
         selectedCompetition = incoming.getStringExtra(IntentName.SELECTED_COMPETITION);
@@ -82,13 +82,22 @@ public class AnalysisView extends AppCompatActivity {
                     }
                 }
 
-                 alliances = (ArrayList<Integer>)Analysis.findOptimalAlliance(alldata,theTeam);
+                alliances = (ArrayList<Integer>) Analysis.findOptimalAlliance(alldata, theTeam);
                 teamListAdapter.notifyDataSetChanged();
-
-
 
             }
         });
+        back = (Button) findViewById(R.id.BackAlliance);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMenuPage();
+            }
+        });
 
+    } private void goToMenuPage() {
+        Intent toMenu = new Intent(this, InnerMenuActivity.class);
+        toMenu.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        startActivity(toMenu);
     }
 }
