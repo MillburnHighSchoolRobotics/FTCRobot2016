@@ -28,4 +28,14 @@ public class Waypoint {
     public Location getLocation() {
         return location;
     }
+
+    public Path getPathTo(Waypoint end) {
+        for (Path path : paths) {
+            if (path.getEnd() == end) {
+                return path;
+            }
+        }
+
+        return null;
+    }
 }
