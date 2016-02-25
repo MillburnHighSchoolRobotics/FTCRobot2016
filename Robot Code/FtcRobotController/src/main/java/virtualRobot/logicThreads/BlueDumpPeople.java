@@ -98,7 +98,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Rotate(50, maxPower, "Rotated #1"));
+        commands.add(new Rotate(47.5, maxPower, "Rotated #1"));
 
         commands.add(new Pause(100));
 
@@ -107,7 +107,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         //Move into corner
 
-        commands.add(new Translate(8500, Translate.Direction.FORWARD, maxPower, 50, "moved into corner"));
+        commands.add(new Translate(8500, Translate.Direction.FORWARD, maxPower, 47.5, "moved into corner"));
 
 
         commands.add(new Pause(500));
@@ -128,7 +128,10 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
             }
         });
 
+
+
         commands.add(moveToLine);
+        commands.add(new Translate(100, Translate.Direction.FORWARD, slowSpeed, 0, "fudge"));
 
 
         commands.add(new Pause(500));
@@ -200,7 +203,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         moveToPic.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor2().getValue() >= 37) {
+                if (robot.getUltrasoundSensor2().getValue() >= 34) {
                     return true;
                 }
                 return false;
@@ -214,9 +217,21 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
 
         TakePicture takePicture = new TakePicture(redisLeft);
-         commands.add(takePicture);
+        commands.add(takePicture);
+/*
+        moveToLine = new Translate(5000, Translate.Direction.FORWARD, slowSpeed, 0, "move To Line");
+        moveToLine.setExitCondition(new ExitCondition() {
+            @Override
+            public boolean isConditionMet() {
+                if (robot.getColorSensor().getRed() >= whiteTape && robot.getColorSensor().getBlue() >= whiteTape && robot.getColorSensor().getGreen() >= whiteTape) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
-
+        commands.add(moveToLine);
+*/
         commands.add(new Rotate(-90));
 
     }

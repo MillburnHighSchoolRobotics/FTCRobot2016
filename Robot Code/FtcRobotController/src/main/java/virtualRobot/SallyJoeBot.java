@@ -14,8 +14,8 @@ import virtualRobot.components.Servo;
  */
 public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
-    private Motor driveLeftMotor, driveRightMotor, reaperMotor, liftMotor, tapeMeasureMotor;
-    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureMotorEncoder, liftMotorEncoder;
+    private Motor driveLeftMotor, driveRightMotor, reaperMotor, liftRightMotor, liftLeftMotor, tapeMeasureMotor;
+    private Sensor driveLeftMotorEncoder, driveRightMotorEncoder, tapeMeasureMotorEncoder, liftRightMotorEncoder, liftLeftMotorEncoder;
     private Sensor headingSensor, pitchSensor, rollSensor, ultrasoundSensor1, ultrasoundSensor2, ultrasoundSensor3;
     private ColorSensor colorSensor;
     private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, backShieldServo, dumperServo, basketServo, gateServo, scoopServo;
@@ -30,13 +30,15 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         driveLeftMotor = new Motor();
         driveRightMotor = new Motor();
         reaperMotor = new Motor();
-        liftMotor = new Motor();
+        liftRightMotor = new Motor();
+        liftLeftMotor = new Motor();
         tapeMeasureMotor = new Motor();
 
         driveLeftMotorEncoder = new Sensor();
         driveRightMotorEncoder = new Sensor();
         tapeMeasureMotorEncoder = new Sensor();
-        liftMotorEncoder = new Sensor();
+        liftLeftMotorEncoder = new Sensor();
+        liftRightMotorEncoder = new Sensor();
 
         headingSensor = new Sensor();
         colorSensor = new ColorSensor();
@@ -81,8 +83,12 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return reaperMotor;
     }
 
-    public synchronized Motor getLiftMotor() {
-        return liftMotor;
+    public synchronized Motor getLiftLeftMotor() {
+        return liftLeftMotor;
+    }
+
+    public synchronized Motor getLiftRightMotor() {
+        return liftRightMotor;
     }
 
     public synchronized Motor getTapeMeasureMotor() {
@@ -103,8 +109,12 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         return tapeMeasureMotorEncoder;
     }
 
-    public synchronized Sensor getLiftMotorEncoder() {
-        return liftMotorEncoder;
+    public synchronized Sensor getLiftRightMotorEncoder() {
+        return liftRightMotorEncoder;
+    }
+
+    public synchronized Sensor getLiftLeftMotorEncoder() {
+        return liftLeftMotorEncoder;
     }
 
     @Override
