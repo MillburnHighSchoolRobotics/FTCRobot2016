@@ -19,7 +19,7 @@ public class MenuActivity extends AppCompatActivity {
     private Button pickCompetition;
     private Button enterMatches;
     private Button viewMatches;
-
+    private Button OptimalAlliance;
     private OnSwipeTouchListener detector;
     private GestureOverlayView gov;
 
@@ -30,7 +30,14 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         loadIntent();
+        OptimalAlliance = (Button) findViewById(R.id.OptimalAlliance);
+        OptimalAlliance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPage(AnalysisView.class);
 
+            }
+        });
         addTeam = (Button) findViewById(R.id.addTeam);
         addTeam.setOnClickListener(new View.OnClickListener() {
             @Override
