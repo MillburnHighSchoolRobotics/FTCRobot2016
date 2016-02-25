@@ -19,7 +19,9 @@ public interface AutonomousRobot {
 
     Motor getReaperMotor();
 
-    Motor getLiftMotor();
+    Motor getLiftRightMotor();
+
+    Motor getLiftLeftMotor();
 
     Motor getTapeMeasureMotor();
 
@@ -29,7 +31,9 @@ public interface AutonomousRobot {
 
     Sensor getTapeMeasureMotorEncoder();
 
-    Sensor getLiftMotorEncoder();
+    Sensor getLiftRightMotorEncoder();
+
+    Sensor getLiftLeftMotorEncoder();
 
     Sensor getHeadingSensor();
 

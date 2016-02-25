@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import virtualRobot.GodThread;
 import virtualRobot.JoystickController;
-import virtualRobot.PIDController;
 import virtualRobot.SallyJoeBot;
 import virtualRobot.commands.Command;
 import virtualRobot.components.LocationSensor;
@@ -33,9 +32,9 @@ public abstract class UpdateThread extends OpMode {
 	private AnalogInput sonar1, sonar2, sonar3;
 	private ColorSensor colorSensor;
 
-	private Motor vDriveRightMotor, vDriveLeftMotor, vReaperMotor, vLiftMotor, vTapeMeasureMotor;
+	private Motor vDriveRightMotor, vDriveLeftMotor, vReaperMotor, vLiftLeftMotor, vLiftRightMotor, vTapeMeasureMotor;
 	private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo, vScoopServo;
-	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureMotorEncoder, vLiftMotorEncoder, vHeadingSensor, vPitchSensor, vRollSensor, vUltrasoundSensor1, vUltrasoundSensor2, vUltrasoundSensor3;
+	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureMotorEncoder, vLiftRightMotorEncoder, vLiftLeftMotorEncoder, vHeadingSensor, vPitchSensor, vRollSensor, vUltrasoundSensor1, vUltrasoundSensor2, vUltrasoundSensor3;
 	private LocationSensor vLocationSensor;
 
 	private virtualRobot.components.ColorSensor vColorSensor;
@@ -96,12 +95,14 @@ public abstract class UpdateThread extends OpMode {
         vDriveLeftMotor = robot.getDriveLeftMotor();
         vDriveRightMotor = robot.getDriveRightMotor();
         vReaperMotor = robot.getReaperMotor();
-		vLiftMotor = robot.getLiftMotor();
+		vLiftLeftMotor = robot.getLiftLeftMotor();
+        vLiftRightMotor = robot.getLiftRightMotor();
 		vTapeMeasureMotor = robot.getTapeMeasureMotor();
 		vDriveLeftMotorEncoder = robot.getDriveLeftMotorEncoder();
         vDriveRightMotorEncoder = robot.getDriveRightMotorEncoder();
         vTapeMeasureMotorEncoder = robot.getTapeMeasureMotorEncoder();
-		vLiftMotorEncoder = robot.getLiftMotorEncoder();
+		vLiftRightMotorEncoder = robot.getLiftRightMotorEncoder();
+        vLiftLeftMotorEncoder = robot.getLiftLeftMotorEncoder();
         vHeadingSensor = robot.getHeadingSensor();
 		vPitchSensor = robot.getPitchSensor();
 		vRollSensor = robot.getRollSensor();
@@ -149,8 +150,8 @@ public abstract class UpdateThread extends OpMode {
 		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
 		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
         vTapeMeasureMotorEncoder.setRawValue(-tapeMeasureMotor.getCurrentPosition());
-		vLiftMotorEncoder.setRawValue((-liftRight.getCurrentPosition() + -liftLeft.getCurrentPosition()) / 2);
-
+        vLiftRightMotorEncoder.setRawValue(-liftRight.getCurrentPosition());
+        vLiftLeftMotorEncoder.setRawValue(-liftLeft.getCurrentPosition());
 		tapeMeasureServo.setPosition(0.25);
 
 		t.start();
@@ -186,8 +187,8 @@ public abstract class UpdateThread extends OpMode {
 		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
 		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
 		vTapeMeasureMotorEncoder.setRawValue(-tapeMeasureMotor.getCurrentPosition());
-		vLiftMotorEncoder.setRawValue((-liftRight.getCurrentPosition() + -liftLeft.getCurrentPosition()) / 2);
-
+        vLiftLeftMotorEncoder.setRawValue(-liftLeft.getCurrentPosition());
+        vLiftRightMotorEncoder.setRawValue(-liftRight.getCurrentPosition());
 
 		try {
             vJoystickController1.copyStates(gamepad1);
@@ -201,24 +202,17 @@ public abstract class UpdateThread extends OpMode {
 		double leftPower = vDriveLeftMotor.getPower();
 		double rightPower = vDriveRightMotor.getPower();
 		double tapeMeasurePower = vTapeMeasureMotor.getPower();
-		double liftRightPower = vLiftMotor.getPower();
-        double liftLeftPower = vLiftMotor.getPower();
+		double liftRightPower = vLiftRightMotor.getPower();
+        double liftLeftPower = vLiftLeftMotor.getPower();
 		double reaperPower = vReaperMotor.getPower();
 
         //PID CONTROLLER TO KEEP LIFT ARMS AT THE SAME EXTENSION
-        PIDController liftController = new PIDController(0.005, 0, 0, 0);
-        liftController.setTarget(0);
-        double liftPIDOut = liftController.getPIDOutput((liftLeft.getCurrentPosition() - initLiftLeftEncoder) - (liftRight.getCurrentPosition() - initLiftRightEncoder));
-        liftPIDOut /= 2;
-        //liftPIDOut = 0;
-        liftLeftPower += liftPIDOut;
-        liftRightPower -= liftPIDOut;
 
-        liftRightPower = Math.min(Math.max(liftRightPower, -1), 1);
-        liftLeftPower = Math.min(Math.max(liftLeftPower, -1), 1);
 
-        if (vLiftMotor.getPower() == 0) {
+        if (vLiftRightMotor.getPower() == 0) {
             liftRightPower = 0;
+        }
+        if (vLiftLeftMotor.getPower() == 0) {
             liftLeftPower = 0;
         }
 

@@ -2,6 +2,7 @@ package virtualRobot.logicThreads;
 
 import virtualRobot.JoystickController;
 import virtualRobot.LogicThread;
+import virtualRobot.PIDController;
 import virtualRobot.TeleopRobot;
 import virtualRobot.commands.Command;
 
@@ -29,18 +30,19 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
          * 2. Bumpers: Tape Measure Platform
          * 3. Triggers: Tape Measure In/Out
          * 4. A/B: Collection System Toggle
-         * 5. Dpad Up/Down: Shield Up/Shield Down
-         * 6. Dpad Left/Right: Scoop Servo Up/Down
+         * 5. Dpad Up/Down: Scoop Servo
          *
          * CONTROLLER 2 FUNCTIONS
          * 1. Triggers: Lift Up/Down
-         * 2. Dpad Left/Right: Zipline Flippers
-         * 3. Dpad Up/Down: People Dumper
-         * 4. A/B: Scoop Servo
+         * 2. Bumpers: Lift Adjustment
+         * 3. Dpad Left/Right: Zipline Flippers
+         * 4. X/Y: People Dumper
+         * 5. A/B: Basket Dump
+         * 6. Dpad Up/Down: Shield Up/Shield Down
          */
         commands.add(new Command() {
             @Override
-            public boolean changeRobotState() {
+            public boolean changeRobotState() throws InterruptedException {
                 JoystickController joystick1 = robot.getJoystickController1();
                 JoystickController joystick2 = robot.getJoystickController2();
                 boolean FLIPPED1 = false;
@@ -49,7 +51,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                 //dumper servo caps and deltas
                 double dumperCurrentPos = 0;
-                double dumperDelta = 0.005;
+                double dumperDelta = 0.05;
 
                 //TAPE Measure Servo caps and delta
                 double tapeMeasureCurrentPos = 0.25;
@@ -61,6 +63,11 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                 boolean isLeftFlipperDown = false;
 
                 int collectionSystemDirection = 0;
+                int liftMultiplier = 0;
+
+                PIDController liftController = new PIDController(0.005, 0, 0, 0);
+                liftController.setTarget(0);
+
                 while (!isInterrupted) {
                     joystick1.logicalRefresh();
                     joystick2.logicalRefresh();
@@ -132,22 +139,12 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     }
                     robot.getReaperMotor().setPower(collectionSystemDirection);
 
+                    /** 5. Scoop Servo */
 
-                    /** 5. Shields */
                     if (joystick1.isDpadDown()) {
-                        robot.getBackShieldServo().setPosition(0);
-                    }
-
-                    if (joystick1.isDpadUp()) {
-                        robot.getBackShieldServo().setPosition(1);
-                    }
-
-                    /** 6. Scoop Servo */
-
-                    if (joystick1.isDpadRight()) {
                         robot.getScoopServo().setPosition(0.5);
                     }
-                    if (joystick1.isDpadLeft()) {
+                    if (joystick1.isDpadUp()) {
                         robot.getScoopServo().setPosition(1);
                     }
 
@@ -168,18 +165,43 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                      *          to a static value.
                      **/
 
+
+                    double liftPIDOut = liftController.getPIDOutput(robot.getLiftLeftMotorEncoder().getValue() - robot.getLiftRightMotorEncoder().getValue());
+                    liftPIDOut /= 2;
+
                     if ((joystick2.getValue(JoystickController.RT_PRESSURE) > .3) && !(joystick2.getValue(JoystickController.LT_PRESSURE) > .3)) {
-                        robot.getLiftMotor().setPower(.6);
+                        robot.getLiftRightMotor().setPower(.6 + liftPIDOut);
+                        robot.getLiftLeftMotor().setPower(.6 - liftPIDOut);
+                        liftMultiplier = 1;
+
+
                     }
                     else if (!(joystick2.getValue(JoystickController.RT_PRESSURE) > .3) && (joystick2.getValue(JoystickController.LT_PRESSURE) > .3)) {
-                        robot.getLiftMotor().setPower(-.6);
+                        robot.getLiftRightMotor().setPower(-.6 + liftPIDOut);
+                        robot.getLiftLeftMotor().setPower(-.6 - liftPIDOut);
+                        liftMultiplier = -1;
                     }
                     else {
-                        robot.getLiftMotor().setPower(0);
+                        robot.getLiftRightMotor().setPower(0);
+                        robot.getLiftLeftMotor().setPower(0);
+
+                        /** 2. Bumpers: Lift Adjustment */
+                        //The Lift motor encoder values are being cleared to reset the PID Values
+                        if (joystick2.isDown(JoystickController.BUTTON_RB)) {
+                            robot.getLiftRightMotor().setPower(liftMultiplier*0.6);
+
+                            robot.getLiftRightMotorEncoder().clearValue();
+                            robot.getLiftLeftMotorEncoder().clearValue();
+                        }
+                        if (joystick2.isDown(JoystickController.BUTTON_LB)) {
+                            robot.getLiftLeftMotor().setPower(liftMultiplier*0.6);
+
+                            robot.getLiftRightMotorEncoder().clearValue();
+                            robot.getLiftLeftMotorEncoder().clearValue();
+                        }
                     }
 
-
-                    /** 2. Zipline Flippers */
+                    /** 3. Zipline Flippers */
                     if (!joystick2.isDpadLeft() && joystick2.isDpadRight()) {
                         if (FLIPPED2){
                             isLeftFlipperDown = !isLeftFlipperDown;
@@ -198,19 +220,19 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     }
 
                     //TODO tune flippers
-                    robot.getFlipperLeftServo().setPosition(isLeftFlipperDown ? 0 : 0.5);
-                    robot.getFlipperRightServo().setPosition(isRightFlipperDown ? 0 : 0.5);
+                    robot.getFlipperLeftServo().setPosition(isLeftFlipperDown ? 0.2 : 0.8);
+                    robot.getFlipperRightServo().setPosition(isRightFlipperDown ? 0.2 : 0.8);
 
 
 
-                    /** 3. Dumping the People */
-                    if (joystick2.isDpadDown()){
+                    /** 4. Dumping the People */
+                    if (joystick2.isDown(JoystickController.BUTTON_X)){
                         dumperCurrentPos += dumperDelta;
 
 
                     }
 
-                    if (joystick2.isDpadUp()){
+                    if (joystick2.isDown(JoystickController.BUTTON_Y)){
                         dumperCurrentPos -= dumperDelta;
 
                     }
@@ -218,14 +240,32 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     dumperCurrentPos = Math.max(Math.min(dumperCurrentPos, 1), 0);
                     robot.getDumperServo().setPosition(dumperCurrentPos);
 
-
-                    /** 4. Scoop Servo */
-                    if (joystick2.isPressed(JoystickController.BUTTON_A) && !(joystick2.isPressed(JoystickController.BUTTON_B))) {
-                        robot.getScoopServo().setPosition(0.75);
-                    }
-                    if (!joystick2.isPressed(JoystickController.BUTTON_A) && (joystick2.isPressed(JoystickController.BUTTON_B))) {
+                    /** 5. Dump Debris */
+                    if (joystick2.isPressed(JoystickController.BUTTON_A)) {
+                        robot.getScoopServo().setPosition(0);
+                        robot.getGateServo().setPosition(GATE_OPEN);
+                        Thread.sleep(200);
+                        robot.getBasketServo().setPosition(1);
+                        Thread.sleep(500);
+                        robot.getBasketServo().setPosition(0);
+                        robot.getGateServo().setPosition(1);
                         robot.getScoopServo().setPosition(1);
                     }
+
+
+                    /** 6. Shields */
+                    if (joystick2.isDpadDown()) {
+                        robot.getBackShieldServo().setPosition(0);
+                    }
+
+                    if (joystick2.isDpadUp()) {
+                        robot.getBackShieldServo().setPosition(1);
+                    }
+
+
+
+
+
                     try {
                         Thread.currentThread().sleep(30);
                     } catch (InterruptedException e) {
@@ -243,4 +283,6 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
     public double getDriveValue(double x, double sign) {
         return sign * (0.5 * Math.pow((2*x - 1), 3) + 0.5);
     }
+
+    final double GATE_OPEN = 0.2;
 }
