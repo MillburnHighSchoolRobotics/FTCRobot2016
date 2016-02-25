@@ -5,6 +5,7 @@ import virtualRobot.LogicThread;
 import virtualRobot.PIDController;
 import virtualRobot.TeleopRobot;
 import virtualRobot.commands.Command;
+import virtualRobot.commands.MoveLift;
 
 /**
  * _____ ______   ___  ___  ________
@@ -170,15 +171,13 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     liftPIDOut /= 2;
 
                     if ((joystick2.getValue(JoystickController.RT_PRESSURE) > .3) && !(joystick2.getValue(JoystickController.LT_PRESSURE) > .3)) {
-                        robot.getLiftRightMotor().setPower(.6 + liftPIDOut);
-                        robot.getLiftLeftMotor().setPower(.6 - liftPIDOut);
+                        new MoveLift(MoveLift.RunMode.CONTINUOUS, MoveLift.Direction.OUT).changeRobotState();
                         liftMultiplier = 1;
 
 
                     }
                     else if (!(joystick2.getValue(JoystickController.RT_PRESSURE) > .3) && (joystick2.getValue(JoystickController.LT_PRESSURE) > .3)) {
-                        robot.getLiftRightMotor().setPower(-.6 + liftPIDOut);
-                        robot.getLiftLeftMotor().setPower(-.6 - liftPIDOut);
+                        new MoveLift(MoveLift.RunMode.CONTINUOUS, MoveLift.Direction.IN).changeRobotState();
                         liftMultiplier = -1;
                     }
                     else {
