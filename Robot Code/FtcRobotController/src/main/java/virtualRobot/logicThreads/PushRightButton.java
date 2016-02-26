@@ -12,7 +12,7 @@ public class PushRightButton extends LogicThread<AutonomousRobot> {
     final double BUTTON_PUSHER_RIGHT = 0.05;
     public void loadCommands () {
         robot.addToProgress("Pushed Right Button");
-        commands.add(new MoveLift(MoveLift.RunMode.TO_VALUE, MoveLift.Direction.OUT, 1000));
+        commands.add(new MoveLift(MoveLift.RunMode.TO_VALUE, MoveLift.Direction.OUT, 4000));
         commands.add(new Pause(500));
         commands.add(new MoveLift(MoveLift.RunMode.TO_VALUE, MoveLift.Direction.IN, 0));
     }

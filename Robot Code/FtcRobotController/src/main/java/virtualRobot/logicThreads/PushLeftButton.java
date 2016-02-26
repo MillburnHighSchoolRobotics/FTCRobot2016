@@ -14,7 +14,7 @@ public class PushLeftButton extends LogicThread<AutonomousRobot> {
     public void loadCommands() {
 
         robot.addToProgress("Pushed Left Button");
-        commands.add(new MoveLift(MoveLift.RunMode.TO_VALUE, MoveLift.Direction.OUT, 1000));
+        commands.add(new MoveLift(MoveLift.RunMode.TO_VALUE, MoveLift.Direction.OUT, 4000));
         commands.add(new Pause(500));
         commands.add(new MoveLift(MoveLift.RunMode.TO_VALUE, MoveLift.Direction.IN, 0));
     }
