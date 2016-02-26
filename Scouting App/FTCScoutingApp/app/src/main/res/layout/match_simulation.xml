@@ -124,5 +124,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/winningalliance"
         android:layout_weight="0.24" />
-
+    <Button
+        android:layout_margin="108dp"
+        android:layout_width="164dp"
+        android:text="Back"
+        android:id="@+id/backsimlulation"
+        android:layout_height="64dp" />
 </LinearLayout>
