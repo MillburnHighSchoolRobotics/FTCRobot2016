@@ -30,7 +30,7 @@ public class BlueAutoGodThread extends GodThread {
 
         MonitorThread watchingForTime = new TimeMonitor(System.currentTimeMillis(), 30000);
         Thread tm = new Thread(watchingForTime);
-        tm.start();
+        //tm.start();
         children.add(tm);
 
 
@@ -49,7 +49,7 @@ public class BlueAutoGodThread extends GodThread {
             Thread pl = new Thread(pushLeft);
             pl.start();
             children.add(pl);
-            delegateMonitor(pl, new MonitorThread[]{watchingForTime});
+            delegateMonitor(pl, new MonitorThread[]{});
         }
 
         else if (redisLeft.get()) {
@@ -57,7 +57,7 @@ public class BlueAutoGodThread extends GodThread {
             Thread pr = new Thread(pushRight);
             pr.start();
             children.add(pr);
-            delegateMonitor(pr, new MonitorThread[]{watchingForTime});
+            delegateMonitor(pr, new MonitorThread[]{});
         }
 
 

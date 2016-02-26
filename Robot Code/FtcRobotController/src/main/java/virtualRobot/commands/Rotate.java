@@ -139,13 +139,13 @@ public class Rotate implements Command {
                     double adjustedPower = pidController.getPIDOutput(robot.getHeadingSensor().getValue());
                     adjustedPower = Math.min(Math.max(adjustedPower, -1), 1);
 
-                    double ratio = Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) / (Math.abs(angleInDegrees - initAngle));
+                    /*double ratio = Math.abs(angleInDegrees - robot.getHeadingSensor().getValue()) / (Math.abs(angleInDegrees - initAngle));
                     double powerScaler = power;
                     if (power > MIN_MAX_POWER) {
                         powerScaler = (power-MIN_MAX_POWER)*ratio + MIN_MAX_POWER;
                     }
                     adjustedPower *= powerScaler;
-
+*/
                     robot.getDriveLeftMotor().setPower(adjustedPower);
                     robot.getDriveRightMotor().setPower(-adjustedPower);
 
