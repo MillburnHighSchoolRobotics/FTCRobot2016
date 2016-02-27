@@ -122,8 +122,16 @@ public class MatchSimulation extends AppCompatActivity {
                 alliance2[1] = Analysis.getAverageResults(curComp, theRed2);
 
 
-                Analysis.SimulationResult matchwinner = new Analysis.SimulationResult();
-                matchwinner = Analysis.simulateRound(alliance1,alliance2);
+                Analysis.SimulationResult result = new Analysis.SimulationResult();
+                result = Analysis.simulateRound(alliance1,alliance2);
+
+                int winner = result.winner;
+                if (winner == Analysis.FIRST) {
+                    WinningTeam.setText("Alliance 1 wins");
+                }
+                else{
+                    WinningTeam.setText("Alliance 2 wins");
+                }
 
             }
         });
