@@ -241,14 +241,17 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                     /** 5. Dump Debris */
                     if (joystick2.isPressed(JoystickController.BUTTON_A)) {
-                        robot.getScoopServo().setPosition(0);
+                        robot.getScoopServo().setPosition(SCOOP_DOWN);
                         robot.getGateServo().setPosition(GATE_OPEN);
-                        Thread.sleep(200);
-                        robot.getBasketServo().setPosition(1);
-                        Thread.sleep(500);
-                        robot.getBasketServo().setPosition(0);
-                        robot.getGateServo().setPosition(1);
-                        robot.getScoopServo().setPosition(1);
+                        robot.getBasketServo().setPosition(BASKET_UP);
+
+                        Thread.sleep(1500);
+
+                        robot.getBasketServo().setPosition(BASKET_DOWN);
+                        robot.getGateServo().setPosition(GATE_CLOSED);
+                        robot.getScoopServo().setPosition(SCOOP_UP);
+
+                        Thread.sleep(1500);
                     }
 
 
@@ -283,5 +286,9 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         return sign * (0.5 * Math.pow((2*x - 1), 3) + 0.5);
     }
 
-    final double GATE_OPEN = 0.2;
-}
+    private final double SCOOP_UP = 0.7;
+    private final double SCOOP_DOWN = 0;
+    private final double GATE_OPEN = 0.6;
+    private final double GATE_CLOSED = 0;
+    private final double BASKET_UP = 0.6;
+    private final double BASKET_DOWN = 0;}

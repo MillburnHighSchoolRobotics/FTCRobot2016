@@ -1,5 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.robotcore.hardware.Servo;
+
 import virtualRobot.godThreads.TeleopGodThread;
 
 /**
@@ -16,9 +18,12 @@ import virtualRobot.godThreads.TeleopGodThread;
  * <p>
  * Created by shant on 11/27/2015.
  */
-public class TeleopUpdate extends UpdateThread {
+public class BlueTeleopUpdate extends UpdateThread {
     @Override
     public void setGodThread() {
+        basket.setDirection(Servo.Direction.REVERSE);
+        scoop.setDirection(Servo.Direction.REVERSE);
+        gate.setDirection(Servo.Direction.REVERSE);
         godThread = TeleopGodThread.class;
     }
 

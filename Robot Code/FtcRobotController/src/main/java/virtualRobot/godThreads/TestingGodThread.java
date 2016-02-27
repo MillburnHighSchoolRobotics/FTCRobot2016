@@ -71,6 +71,7 @@ public class TestingGodThread extends GodThread {
         LogicThread<AutonomousRobot> translateTest = new LogicThread<AutonomousRobot>() {
             @Override
             public void loadCommands() {
+
                 commands.add (new Rotate (90));
                 commands.add (new Rotate (0));
                 commands.add (new Rotate (-90));

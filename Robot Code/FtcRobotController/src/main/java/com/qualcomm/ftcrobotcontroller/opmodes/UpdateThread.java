@@ -26,7 +26,8 @@ public abstract class UpdateThread extends OpMode {
 	private Thread t;
 
 	private DcMotor rightFront, rightBack, leftFront, leftBack, reaper, liftRight, liftLeft, tapeMeasureMotor;
-	private Servo backShieldRight, backShieldLeft, tapeMeasureServo, flipperRight, flipperLeft, basket, gate, dumper, scoop;
+	private Servo backShieldRight, backShieldLeft, tapeMeasureServo, flipperRight, flipperLeft, dumper;
+    protected Servo basket, gate, scoop;
 
 	private MPU9250 imu;
 	private AnalogInput sonar1, sonar2, sonar3;
