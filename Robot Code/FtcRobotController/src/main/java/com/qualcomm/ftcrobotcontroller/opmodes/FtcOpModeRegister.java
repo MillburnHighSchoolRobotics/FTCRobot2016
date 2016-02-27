@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.ExampleOpModes.navXPerformanceTuningOp;
 import com.qualcomm.ftcrobotcontroller.opmodes.TestingOpModes.IMUTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.TestingOpModes.ServoCal;
 import com.qualcomm.ftcrobotcontroller.opmodes.TestingOpModes.TestingUpdate;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -68,6 +69,7 @@ public class FtcOpModeRegister implements OpModeRegister {
       manager.register("Navx imu test", navXPerformanceTuningOp.class);
 
       manager.register("Testing", TestingUpdate.class);
+      manager.register("Servo Zero", ServoCal.class);
 
 
     //  manager.register("N60Test", N60Test.class );

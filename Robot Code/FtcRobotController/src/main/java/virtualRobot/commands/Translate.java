@@ -233,6 +233,54 @@ public class Translate implements Command {
                 }
 
                 break;
+            case HEADING_ONLY:
+
+                while (!Thread.currentThread().isInterrupted() && !exitCondition.isConditionMet()
+                        && (timeLimit == -1 || (System.currentTimeMillis() - time) < timeLimit)) {
+
+                    double headingOutput = headingController.getPIDOutput(robot.getHeadingSensor().getValue());
+                    headingOutput = Math.min(Math.max(headingOutput, -1), 1);
+
+                    double leftPower = maxPower;
+                    double rightPower = maxPower;
+
+                    if (multiplier > 0 && headingOutput > 0) {
+                        rightPower -= headingOutput;
+                        leftPower += headingOutput;
+                    }
+
+                    if (multiplier > 0 && headingOutput < 0) {
+                        leftPower += headingOutput;
+                        rightPower -= headingOutput;
+                    }
+
+                    if (multiplier < 0 && headingOutput > 0) {
+                        leftPower -= headingOutput;
+                        rightPower += headingOutput;
+                    }
+
+                    if (multiplier < 0 && headingOutput < 0) {
+                        rightPower += headingOutput;
+                        leftPower -= headingOutput;
+                    }
+
+                    robot.getDriveRightMotor().setPower(rightPower * multiplier);
+                    robot.getDriveLeftMotor().setPower(leftPower * multiplier);
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        isInterrupted = true;
+                        break;
+                    }
+
+                    try {
+                        Thread.currentThread().sleep(10);
+                    } catch (InterruptedException e) {
+                        isInterrupted = true;
+                        break;
+                    }
+                }
+
+                break;
             default:
                 break;
         }
@@ -268,7 +316,8 @@ public class Translate implements Command {
     public enum RunMode {
         CUSTOM,
         WITH_ENCODERS,
-        WITH_PID
+        WITH_PID,
+        HEADING_ONLY
     }
     
     public enum Direction {

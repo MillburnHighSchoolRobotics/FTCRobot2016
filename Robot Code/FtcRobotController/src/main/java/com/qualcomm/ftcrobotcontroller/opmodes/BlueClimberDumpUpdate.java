@@ -1,5 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.robotcore.hardware.Servo;
+
 import virtualRobot.godThreads.BlueAutoGodThread;
 
 /**
@@ -8,6 +10,9 @@ import virtualRobot.godThreads.BlueAutoGodThread;
 public class BlueClimberDumpUpdate extends UpdateThread {
     @Override
     public void setGodThread() {
+        basket.setDirection(Servo.Direction.REVERSE);
+        scoop.setDirection(Servo.Direction.REVERSE);
+        gate.setDirection(Servo.Direction.REVERSE);
         godThread = BlueAutoGodThread.class;
     }
 }

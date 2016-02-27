@@ -34,7 +34,7 @@ import virtualRobot.components.Servo;
 public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
     double maxPower = 0.7;
     int sonarCap = 13;
-    int whiteTape = 30;
+    int whiteTape = 20;
     int blueTape = 1;
     double accurateRotatePower = 0.65;
     final double BUTTON_PUSHER_RIGHT = 0.05;
@@ -69,8 +69,8 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
                         },
                         new double[]{
                                 0.0,
-                                0.5,
-                                0.5,
+                                1.0,
+                                1.0,
                                 0.75,
                                 0.25,
                                 1.0
@@ -217,7 +217,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         commands.add(new Rotate(-90));
 
         Translate moveToPush1 = new Translate(1000, Translate.Direction.FORWARD, slowSpeed, -90, "Move back to lift");
-        moveToPic.setExitCondition(new ExitCondition() {
+        moveToPush1.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
                 if (robot.getUltrasoundSensor1().getValue() >= 35) {
@@ -229,7 +229,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         commands.add(moveToPush1);
 
         Translate moveToPush2 = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, -90, "Move forward to lift");
-        moveToPic.setExitCondition(new ExitCondition() {
+        moveToPush2.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
                 if (robot.getUltrasoundSensor1().getValue() <= 35) {
