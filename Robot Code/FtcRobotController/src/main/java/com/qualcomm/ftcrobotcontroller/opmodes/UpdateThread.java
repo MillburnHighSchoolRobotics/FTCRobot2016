@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -31,6 +32,7 @@ public abstract class UpdateThread extends OpMode {
 	private MPU9250 imu;
 	private AnalogInput sonar1, sonar2, sonar3;
 	private ColorSensor colorSensor;
+	private DigitalChannel liftEndStop1, liftEndStop2;
 
 	private Motor vDriveRightMotor, vDriveLeftMotor, vReaperMotor, vLiftLeftMotor, vLiftRightMotor, vTapeMeasureMotor;
 	private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo, vScoopServo;
@@ -87,6 +89,9 @@ public abstract class UpdateThread extends OpMode {
 		sonar1 = hardwareMap.analogInput.get("sonar1");
 		sonar2 = hardwareMap.analogInput.get("sonar2");
 		sonar3 = hardwareMap.analogInput.get("sonar3");
+
+		liftEndStop1 = hardwareMap.digitalChannel.get("liftEndStop1");
+		liftEndStop2 = hardwareMap.digitalChannel.get("liftEndStop2");
 
         //FETCH VIRTUAL ROBOT FROM COMMAND INTERFACE
 		robot = Command.ROBOT;
@@ -247,6 +252,8 @@ public abstract class UpdateThread extends OpMode {
         telemetry.addData("Color sensor: ", "Red: " + vColorSensor.getRed() + " Green: " + vColorSensor.getGreen() + " Blue: " + vColorSensor.getBlue());
 	    telemetry.addData("Sonar Front", vUltrasoundSensor2.getValue());
         telemetry.addData("Sonar Back", vUltrasoundSensor1.getValue());
+		telemetry.addData("Lift End Stop 1", liftEndStop1.getState());
+		telemetry.addData("Lift End Stop 2", liftEndStop2.getState());
     }
 	
 	public void stop() {
