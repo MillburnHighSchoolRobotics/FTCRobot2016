@@ -25,6 +25,8 @@ public class MatchSimulation extends AppCompatActivity {
     private EditText Red2;
     private Button Enter;
     private TextView WinningTeam;
+    private Button backpage;
+
 
     private String selectedCompetition;
     private List<Team> teamList;
@@ -48,7 +50,7 @@ public class MatchSimulation extends AppCompatActivity {
         Red2 = (EditText)findViewById(R.id.red2team);
         Enter = (Button) findViewById(R.id.enterteams);
         WinningTeam = (TextView) findViewById(R.id.winningalliance);
-
+        backpage = (Button)findViewById(R.id.backsimlulation);
         ParseQuery<Competition> compQuery = ParseQuery.getQuery(Competition.class);
         compQuery.fromLocalDatastore();
         try {
@@ -120,14 +122,33 @@ public class MatchSimulation extends AppCompatActivity {
                 alliance2[1] = Analysis.getAverageResults(curComp, theRed2);
 
 
-                Analysis.SimulationResult matchwinner = new Analysis.SimulationResult();
-                matchwinner = Analysis.simulateRound(alliance1,alliance2);
+                Analysis.SimulationResult result = new Analysis.SimulationResult();
+                result = Analysis.simulateRound(alliance1,alliance2);
 
-                WinningTeam = (TextView)matchwinner;
+                int winner = result.winner;
+                if (winner == Analysis.FIRST) {
+                    WinningTeam.setText("Alliance 1 wins");
+                }
+                else{
+                    WinningTeam.setText("Alliance 2 wins");
+                }
+
+            }
+        });
+
+        backpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                goToMenuPage();
             }
         });
     }
-
+    private void goToMenuPage() {
+        Intent toMenu = new Intent(this, InnerMenuActivity.class);
+        toMenu.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
+        startActivity(toMenu);
+    }
 
 
 
