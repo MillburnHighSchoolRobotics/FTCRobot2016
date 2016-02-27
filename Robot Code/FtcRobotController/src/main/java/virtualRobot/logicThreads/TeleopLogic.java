@@ -40,7 +40,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                 }
         ));
         /**
-         * CONTROLLER 1 FUNCTIONS
+         * CONTROLLER 1 FUNCTIONS - MAINLY MOVEMENT AND GETTING DEBRIS TO BASKET
          * 1. Joysticks: Tank drive
          * 2. Bumpers: Tape Measure Platform
          * 3. Triggers: Tape Measure In/Out
@@ -50,7 +50,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
          *      X + Y = Keep wheels spinning faster
          *      X + Start = Keep wheels spinning slower
          *
-         * CONTROLLER 2 FUNCTIONS
+         * CONTROLLER 2 FUNCTIONS - MAINLY MOUNTAIN FUNCTIONS AND ASSORTED OTHERS
          * 1. Triggers: Lift Up/Down
          * 2. Bumpers: Lift Adjustment
          * 3. Dpad Left/Right: Zipline Flippers
