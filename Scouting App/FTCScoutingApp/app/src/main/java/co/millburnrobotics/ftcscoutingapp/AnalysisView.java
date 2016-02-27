@@ -3,6 +3,7 @@ package co.millburnrobotics.ftcscoutingapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,15 +56,19 @@ public class AnalysisView extends AppCompatActivity {
         query.fromLocalDatastore();
         try {
             teamList = query.find();
+
         } catch (ParseException e) {
             Toast.makeText(this, "Could Not Download Teams", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
         //////////////////////////////////////////////////////////////////////////
         // find average for all teams
-       alldata = new MatchData[teamList.size()];
+       int intteamlist = teamList.size();
+       alldata = new MatchData[intteamlist];
         for(int i =0; i < teamList.size();i++){
-            alldata[i]= Analysis.getAverageResults(curComp, teamList.get(i));
+           alldata[i]= Analysis.getAverageResults(curComp, teamList.get(i));
         }
 
         final ArrayAdapter<Integer> teamListAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, alliances);
@@ -99,5 +104,5 @@ public class AnalysisView extends AppCompatActivity {
         Intent toMenu = new Intent(this, InnerMenuActivity.class);
         toMenu.putExtra(IntentName.SELECTED_COMPETITION, selectedCompetition);
         startActivity(toMenu);
-    }
-}
+    }    }
+
