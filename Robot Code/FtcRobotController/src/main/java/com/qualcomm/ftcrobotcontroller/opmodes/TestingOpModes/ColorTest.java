@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.qualcomm.ftcrobotcontroller.opmodes.TestingOpModes;
 
 import com.qualcomm.hardware.AdafruitI2cColorSensor;
 import com.qualcomm.hardware.ModernRoboticsI2cGyro;

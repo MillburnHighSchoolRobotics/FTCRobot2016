@@ -1,4 +1,3 @@
-
 package virtualRobot.logicThreads;
 
 import java.util.ArrayList;
@@ -18,20 +17,9 @@ import virtualRobot.commands.Translate;
 import virtualRobot.components.Servo;
 
 /**
- * Created by shant on 11/28/2015.
+ * Created by shant on 2/27/2016.
  */
-
-/**
- * STARTS ALIGNED WITH WALL
- * MOVES TOWARDS CENTER
- * TURNS AND MOVES TOWARDS CORNER
- * MOVE IN FRONT OF THE BEACON
- * (TAKE A PICTURE)
- * DUMP THE PEOPLE
- * ALIGN TO PUSH THE BUTTON
- */
-
-public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
+public class RedDumpPeople extends LogicThread<AutonomousRobot> {
     double maxPower = 0.7;
     int sonarCap = 13;
     int whiteTape = 20;
@@ -42,7 +30,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
     final double slowSpeed = 0.15;
     AtomicBoolean redisLeft;
 
-    public BlueDumpPeople(AtomicBoolean redisLeft) {
+    public RedDumpPeople(AtomicBoolean redisLeft) {
         super();
         this.redisLeft = redisLeft;
     }
@@ -96,13 +84,13 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        commands.add(new Rotate(50, maxPower, "Rotated #1"));
+        commands.add(new Rotate(-50, maxPower, "Rotated #1"));
 
         commands.add(new Pause(100));
 
         //Move into corner
 
-        commands.add(new Translate(8250, Translate.Direction.FORWARD, maxPower, 50, "moved into corner"));
+        commands.add(new Translate(8250, Translate.Direction.FORWARD, maxPower, -50, "moved into corner"));
 
 
         commands.add(new Pause(500));
@@ -124,16 +112,15 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         });
 
 
-
         commands.add(moveToLine);
 
         commands.add(new Pause(500));
 
-        commands.add(new Rotate(90, maxPower, "turn to dump people"));
+        commands.add(new Rotate(-90, maxPower, "turn to dump people"));
 
         commands.add(new Pause(500));
 
-        Translate moveToDumpForward = new Translate(500, Translate.Direction.FORWARD, slowSpeed, 90, "Dump People");
+        Translate moveToDumpForward = new Translate(500, Translate.Direction.FORWARD, slowSpeed, -90, "Dump People");
 
         moveToDumpForward.setExitCondition(new ExitCondition() {
             @Override
@@ -149,7 +136,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(new Pause(500));
 
-        Translate moveToDumpBackward = new Translate(500, Translate.Direction.BACKWARD, slowSpeed, 90, "Dump People");
+        Translate moveToDumpBackward = new Translate(500, Translate.Direction.BACKWARD, slowSpeed, -90, "Dump People");
 
         moveToDumpBackward.setExitCondition(new ExitCondition() {
             @Override
@@ -190,8 +177,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         commands.add(new Pause(1500));
 
 
-
-        Translate moveToPic = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, 90, "Move back to take pic");
+        Translate moveToPic = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, -90, "Move back to take pic");
         moveToPic.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
@@ -208,15 +194,14 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         commands.add(new Rotate(0));
 
 
-
         TakePicture takePicture = new TakePicture(redisLeft);
         commands.add(takePicture);
 
         robot.addToProgress(redisLeft.toString());
 
-        commands.add(new Rotate(-90));
+        commands.add(new Rotate(90));
 
-        Translate moveToPush1 = new Translate(1000, Translate.Direction.FORWARD, slowSpeed, -90, "Move back to lift");
+        Translate moveToPush1 = new Translate(1000, Translate.Direction.FORWARD, slowSpeed, 90, "Move back to lift");
         moveToPush1.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
@@ -228,7 +213,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         });
         commands.add(moveToPush1);
 
-        Translate moveToPush2 = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, -90, "Move forward to lift");
+        Translate moveToPush2 = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, 90, "Move forward to lift");
         moveToPush2.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {

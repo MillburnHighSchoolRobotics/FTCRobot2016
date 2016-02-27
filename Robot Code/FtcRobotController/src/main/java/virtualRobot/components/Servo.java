@@ -19,8 +19,10 @@ public class Servo {
 
 
     public synchronized void setPosition(double position) {
-    	synchronized (this) {
-    		this.position = position;
+    	position = Math.max (Math.min(position, 1), 0);
+        synchronized (this) {
+
+            this.position = position;
     	}
     }
 

@@ -6,6 +6,8 @@ import virtualRobot.PIDController;
 import virtualRobot.TeleopRobot;
 import virtualRobot.commands.Command;
 import virtualRobot.commands.MoveLift;
+import virtualRobot.commands.MoveServo;
+import virtualRobot.components.Servo;
 
 /**
  * _____ ______   ___  ___  ________
@@ -25,15 +27,30 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
     @Override
     public void loadCommands() {
+        commands.add(new MoveServo(
+                new Servo []{
+                    robot.getDumperServo(),
+                    robot.getBackShieldServo(),
+                        robot.getScoopServo()
+                },
+                new double[]{
+                    0.5,
+                    0.0,
+                        SCOOP_DOWN
+                }
+        ));
         /**
-         * CONTROLLER 1 FUNCTIONS
+         * CONTROLLER 1 FUNCTIONS - MAINLY MOVEMENT AND GETTING DEBRIS TO BASKET
          * 1. Joysticks: Tank drive
          * 2. Bumpers: Tape Measure Platform
          * 3. Triggers: Tape Measure In/Out
          * 4. A/B: Collection System Toggle
          * 5. Dpad Up/Down: Scoop Servo
+         * 6. X: Keep Wheels moving on the ramp
+         *      X + Y = Keep wheels spinning faster
+         *      X + Start = Keep wheels spinning slower
          *
-         * CONTROLLER 2 FUNCTIONS
+         * CONTROLLER 2 FUNCTIONS - MAINLY MOUNTAIN FUNCTIONS AND ASSORTED OTHERS
          * 1. Triggers: Lift Up/Down
          * 2. Bumpers: Lift Adjustment
          * 3. Dpad Left/Right: Zipline Flippers
@@ -63,6 +80,11 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                 boolean isRightFlipperDown = false;
                 boolean isLeftFlipperDown = false;
 
+                boolean isDumping = false;
+
+                double continuousWheelSpeed = 0.1;
+                boolean areWheelsSpinning = false;
+
                 int collectionSystemDirection = 0;
                 int liftMultiplier = 0;
 
@@ -91,14 +113,47 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     double rightJoystick = -joystick1.getValue(JoystickController.Y_1);
                     double leftJoystick = -joystick1.getValue(JoystickController.Y_2);
 
-                    if (FLIPPED1){
-                        robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
-                        robot.getDriveRightMotor().setPower(getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
+
+                    /** 6. Keep wheels spinning */
+
+                    //Increasing and decreasing the spinning wheels speed
+                    if (areWheelsSpinning) {
+                        if (joystick1.isPressed(JoystickController.BUTTON_Y)) {
+                            continuousWheelSpeed += 0.05;
+                        }
+                        if (joystick1.isPressed(JoystickController.BUTTON_START)) {
+                            continuousWheelSpeed -= 0.05;
+                        }
                     }
 
+                    //Activate the continuous spinning wheels
+                    if (Math.abs(rightJoystick) < 0.2 && Math.abs(leftJoystick) < 0.2) {
+                        if (joystick1.isPressed(JoystickController.BUTTON_X)) {
+                            areWheelsSpinning = !areWheelsSpinning;
+
+                        }
+                        if (areWheelsSpinning) {
+
+                            continuousWheelSpeed = Math.max(Math.min(continuousWheelSpeed, 1), 0.1);
+                            robot.getDriveRightMotor().setPower(-continuousWheelSpeed);
+                            robot.getDriveLeftMotor().setPower(-continuousWheelSpeed);
+
+
+                        }
+                        else {
+                            robot.getDriveLeftMotor().setPower(0);
+                            robot.getDriveRightMotor().setPower(0);
+                        }
+                    }
                     else {
-                        robot.getDriveLeftMotor().setPower(-getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
-                        robot.getDriveRightMotor().setPower(-getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
+                        areWheelsSpinning = false;
+                        if (FLIPPED1) {
+                            robot.getDriveLeftMotor().setPower(getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
+                            robot.getDriveRightMotor().setPower(getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
+                        } else {
+                            robot.getDriveLeftMotor().setPower(-getDriveValue(Math.abs(rightJoystick), Math.signum(rightJoystick)));
+                            robot.getDriveRightMotor().setPower(-getDriveValue(Math.abs(leftJoystick), Math.signum(leftJoystick)));
+                        }
                     }
 
                     /** 2. Tape Measure Platform - Bumpers*/
@@ -142,13 +197,30 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                     /** 5. Scoop Servo */
 
-                    if (joystick1.isDpadDown()) {
-                        robot.getScoopServo().setPosition(0.5);
-                    }
+
                     if (joystick1.isDpadUp()) {
-                        robot.getScoopServo().setPosition(1);
+                        robot.getReaperMotor().setPower(0);
+                        robot.getScoopServo().setPosition(SCOOP_UP);
                     }
 
+                    if (joystick1.isDpadDown()) {
+                        robot.getScoopServo().setPosition(SCOOP_DOWN);
+                        Thread.sleep(400);
+                        robot.getReaperMotor().setPower(collectionSystemDirection);
+                    }
+
+                    /** 6. Keep wheels spinning */
+
+                    if (areWheelsSpinning) {
+
+                        if (joystick1.isPressed(JoystickController.BUTTON_Y)) {
+                            continuousWheelSpeed += 0.05;
+                        }
+                        if (joystick1.isPressed(JoystickController.BUTTON_START)) {
+                            continuousWheelSpeed -= 0.05;
+                        }
+                        //continuousWheelSpeed = Math.max(Math.min(continuousWheelSpeed, 1), 0);
+                    }
 
                     /**
                      * JOYSTICK 2 PROGRAMMING
@@ -171,12 +243,19 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     liftPIDOut /= 2;
 
                     if ((joystick2.getValue(JoystickController.RT_PRESSURE) > .3) && !(joystick2.getValue(JoystickController.LT_PRESSURE) > .3)) {
+                        robot.getReaperMotor().setPower(collectionSystemDirection = 0);
+                        robot.getScoopServo().setPosition(SCOOP_CARRY);
                         new MoveLift(MoveLift.RunMode.CONTINUOUS, MoveLift.Direction.OUT).changeRobotState();
                         liftMultiplier = 1;
 
 
                     }
                     else if (!(joystick2.getValue(JoystickController.RT_PRESSURE) > .3) && (joystick2.getValue(JoystickController.LT_PRESSURE) > .3)) {
+                        robot.getReaperMotor().setPower(collectionSystemDirection = 0);
+                        robot.getBasketServo().setPosition(BASKET_DOWN);
+                        robot.getGateServo().setPosition(GATE_CLOSED);
+                        robot.getScoopServo().setPosition(SCOOP_CARRY);
+                        Thread.sleep(200);
                         new MoveLift(MoveLift.RunMode.CONTINUOUS, MoveLift.Direction.IN).changeRobotState();
                         liftMultiplier = -1;
                     }
@@ -241,14 +320,30 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
                     /** 5. Dump Debris */
                     if (joystick2.isPressed(JoystickController.BUTTON_A)) {
-                        robot.getScoopServo().setPosition(0);
-                        robot.getGateServo().setPosition(GATE_OPEN);
+                        isDumping = !isDumping;
+                    }
+
+                    if (isDumping) {
+                        robot.getScoopServo().setPosition(SCOOP_FLAT);
                         Thread.sleep(200);
-                        robot.getBasketServo().setPosition(1);
-                        Thread.sleep(500);
-                        robot.getBasketServo().setPosition(0);
-                        robot.getGateServo().setPosition(1);
-                        robot.getScoopServo().setPosition(1);
+                        robot.getGateServo().setPosition(GATE_OPEN);
+                        robot.getBasketServo().setPosition(BASKET_UP);
+                    }
+                    if (!isDumping) {
+                        robot.getBasketServo().setPosition(BASKET_DOWN);
+                        robot.getGateServo().setPosition(GATE_CLOSED);
+                        Thread.sleep(200);
+                        //robot.getScoopServo().setPosition(SCOOP_UP);
+                    }
+
+                    /** 5a. Platform Wobble */
+
+                    if (joystick2.isPressed(JoystickController.BUTTON_B)) {
+                        robot.getBasketServo().setPosition(robot.getBasketServo().getPosition() + 0.2);
+                        Thread.sleep(200);
+                        robot.getBasketServo().setPosition(robot.getBasketServo().getPosition() - 0.4);
+                        Thread.sleep(200);
+                        robot.getBasketServo().setPosition(robot.getBasketServo().getPosition() + 0.2);
                     }
 
 
@@ -260,9 +355,6 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     if (joystick2.isDpadUp()) {
                         robot.getBackShieldServo().setPosition(1);
                     }
-
-
-
 
 
                     try {
@@ -283,5 +375,11 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         return sign * (0.5 * Math.pow((2*x - 1), 3) + 0.5);
     }
 
-    final double GATE_OPEN = 0.2;
-}
+    private final double SCOOP_UP = 0.4;
+    private final double SCOOP_FLAT = 0.9;
+    private final double SCOOP_CARRY = 0.7;
+    private final double SCOOP_DOWN = .95;
+    private final double GATE_OPEN = 0.3;
+    private final double GATE_CLOSED = 1;
+    private final double BASKET_UP = 0.35;
+    private final double BASKET_DOWN = 0;}

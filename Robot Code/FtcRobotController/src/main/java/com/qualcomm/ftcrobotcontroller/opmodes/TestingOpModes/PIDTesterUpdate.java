@@ -1,4 +1,6 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.qualcomm.ftcrobotcontroller.opmodes.TestingOpModes;
+
+import com.qualcomm.ftcrobotcontroller.opmodes.UpdateThread;
 
 import virtualRobot.godThreads.PIDTesterGodThread;
 
