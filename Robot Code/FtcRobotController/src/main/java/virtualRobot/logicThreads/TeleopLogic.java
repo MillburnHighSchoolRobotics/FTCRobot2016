@@ -30,13 +30,13 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         commands.add(new MoveServo(
                 new Servo []{
                     robot.getDumperServo(),
-                    robot.getBackShieldServo(),
-                        robot.getScoopServo()
+                        robot.getBackShieldServo(),
+                            robot.getScoopServo()
                 },
                 new double[]{
                     0.5,
-                    0.0,
-                        SCOOP_DOWN
+                        0.0,
+                            SCOOP_DOWN
                 }
         ));
         /**

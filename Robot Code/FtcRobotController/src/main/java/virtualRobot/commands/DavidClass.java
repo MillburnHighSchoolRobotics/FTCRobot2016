@@ -51,6 +51,7 @@ public class DavidClass {
             }
 
         }
+
         int lNum = leftPixels.size(), rNum = rightPixels.size();
         long lSum = 0, rSum = 0;
         long lAvg, rAvg;
