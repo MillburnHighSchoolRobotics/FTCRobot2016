@@ -15,7 +15,8 @@ public class InnerMenuActivity extends AppCompatActivity {
     private AdvButton enterMatches;
     private AdvButton viewMatches;
     private AdvButton selectCompetition;
-
+    private Button optimalAlliances;
+    private Button matchSimulation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,20 @@ public class InnerMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goToPage(ViewMatchDataActivity.class);
+            }
+        });
+        optimalAlliances = (Button)findViewById(R.id.OptimalAlliances);
+        optimalAlliances.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPage(AnalysisView.class);
+            }
+        });
+        matchSimulation = (Button)findViewById(R.id.MatchSimulators);
+        matchSimulation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPage(MatchSimulation.class);
             }
         });
     }

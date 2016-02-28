@@ -63,7 +63,12 @@
         >
         <Button
             android:id="@+id/OptimalAlliances"
+            android:text="Optimal Alliance"
 
+            />
+        <Button
+            android:id="@+id/MatchSimulators"
+            android:text="Match Simulator"
 
             />
     </TableRow>
