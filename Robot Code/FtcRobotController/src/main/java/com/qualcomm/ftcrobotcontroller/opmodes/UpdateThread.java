@@ -132,6 +132,7 @@ public abstract class UpdateThread extends OpMode {
 
 		robotProgress = new ArrayList<String>();
 
+        addPresets();
         setGodThread();
 
 		try {
@@ -263,5 +264,7 @@ public abstract class UpdateThread extends OpMode {
 	}
 
 	public abstract void setGodThread();
+
+    public void addPresets(){}
 
 }

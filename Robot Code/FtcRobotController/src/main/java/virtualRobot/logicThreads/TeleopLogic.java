@@ -46,9 +46,9 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
          * 3. Triggers: Tape Measure In/Out
          * 4. A/B: Collection System Toggle
          * 5. Dpad Up/Down: Scoop Servo
-         * 6. X: Keep Wheels moving on the ramp
-         *      X + Y = Keep wheels spinning faster
-         *      X + Start = Keep wheels spinning slower
+         * 6. Right Stick: Keep Wheels moving on the ramp
+         *      RightStick + Y = Keep wheels spinning faster
+         *      RightStick + X = Keep wheels spinning slower
          *
          * CONTROLLER 2 FUNCTIONS - MAINLY MOUNTAIN FUNCTIONS AND ASSORTED OTHERS
          * 1. Triggers: Lift Up/Down
@@ -56,7 +56,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
          * 3. Dpad Left/Right: Zipline Flippers
          * 4. X/Y: People Dumper
          * 5. A/B: Basket Dump
-         * 6. Dpad Up/Down: Shield Up/Shield Down
+         * 6. Dpad Up/Down: Shield Up/Shie ld Down
          */
         commands.add(new Command() {
             @Override
@@ -121,14 +121,14 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         if (joystick1.isPressed(JoystickController.BUTTON_Y)) {
                             continuousWheelSpeed += 0.05;
                         }
-                        if (joystick1.isPressed(JoystickController.BUTTON_START)) {
+                        if (joystick1.isPressed(JoystickController.BUTTON_X)) {
                             continuousWheelSpeed -= 0.05;
                         }
                     }
 
                     //Activate the continuous spinning wheels
                     if (Math.abs(rightJoystick) < 0.2 && Math.abs(leftJoystick) < 0.2) {
-                        if (joystick1.isPressed(JoystickController.BUTTON_X)) {
+                        if (joystick1.isPressed(JoystickController.BUTTON_RIGHT_STICK)) {
                             areWheelsSpinning = !areWheelsSpinning;
 
                         }
@@ -199,14 +199,16 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
 
 
                     if (joystick1.isDpadUp()) {
-                        robot.getReaperMotor().setPower(0);
+                        collectionSystemDirection = 0;
                         robot.getScoopServo().setPosition(SCOOP_UP);
                     }
 
                     if (joystick1.isDpadDown()) {
+                        collectionSystemDirection = 0;
                         robot.getScoopServo().setPosition(SCOOP_DOWN);
-                        Thread.sleep(400);
-                        robot.getReaperMotor().setPower(collectionSystemDirection);
+                        //Thread.sleep(400);
+                        //robot.getReaperMotor().setPower(collectionSystemDirection);
+
                     }
 
                     /** 6. Keep wheels spinning */
@@ -255,7 +257,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                         robot.getBasketServo().setPosition(BASKET_DOWN);
                         robot.getGateServo().setPosition(GATE_CLOSED);
                         robot.getScoopServo().setPosition(SCOOP_CARRY);
-                        Thread.sleep(200);
+                        //Thread.sleep(200);
                         new MoveLift(MoveLift.RunMode.CONTINUOUS, MoveLift.Direction.IN).changeRobotState();
                         liftMultiplier = -1;
                     }
@@ -332,7 +334,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
                     if (!isDumping) {
                         robot.getBasketServo().setPosition(BASKET_DOWN);
                         robot.getGateServo().setPosition(GATE_CLOSED);
-                        Thread.sleep(200);
+                        //Thread.sleep(200);
                         //robot.getScoopServo().setPosition(SCOOP_UP);
                     }
 
@@ -375,11 +377,13 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         return sign * (0.5 * Math.pow((2*x - 1), 3) + 0.5);
     }
 
-    private final double SCOOP_UP = 0.4;
-    private final double SCOOP_FLAT = 0.9;
-    private final double SCOOP_CARRY = 0.7;
-    private final double SCOOP_DOWN = .95;
-    private final double GATE_OPEN = 0.3;
-    private final double GATE_CLOSED = 1;
-    private final double BASKET_UP = 0.35;
-    private final double BASKET_DOWN = 0;}
+
+    protected double SCOOP_UP = 0.4;
+    protected double SCOOP_FLAT = 0.9;
+    protected double SCOOP_CARRY = 0.7;
+    protected double SCOOP_DOWN = .95;
+    protected double GATE_OPEN = 0.3;
+    protected double GATE_CLOSED = 1;
+    protected double BASKET_UP = 0.35;
+    protected double BASKET_DOWN = 0;
+}

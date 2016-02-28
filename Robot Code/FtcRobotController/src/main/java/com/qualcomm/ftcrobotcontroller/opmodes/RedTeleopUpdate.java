@@ -10,4 +10,9 @@ public class RedTeleopUpdate extends UpdateThread {
     public void setGodThread() {
         godThread = TeleopGodThread.class;
     }
+
+    @Override
+    public void addPresets() {
+
+    }
 }

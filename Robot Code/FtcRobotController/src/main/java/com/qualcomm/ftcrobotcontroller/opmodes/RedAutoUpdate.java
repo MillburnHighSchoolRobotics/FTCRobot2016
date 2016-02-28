@@ -10,4 +10,9 @@ public class RedAutoUpdate extends UpdateThread {
     public void setGodThread() {
         godThread = RedAutoGodThread.class;
     }
+
+    @Override
+    public void addPresets() {
+
+    }
 }

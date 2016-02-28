@@ -21,10 +21,14 @@ import virtualRobot.godThreads.TeleopGodThread;
 public class BlueTeleopUpdate extends UpdateThread {
     @Override
     public void setGodThread() {
+        godThread = TeleopGodThread.class;
+    }
+
+    @Override
+    public void addPresets() {
         basket.setDirection(Servo.Direction.REVERSE);
         scoop.setDirection(Servo.Direction.REVERSE);
         gate.setDirection(Servo.Direction.REVERSE);
-        godThread = TeleopGodThread.class;
     }
 
 }

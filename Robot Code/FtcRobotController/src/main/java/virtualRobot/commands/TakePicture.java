@@ -92,7 +92,7 @@ public class TakePicture implements Command {
         options.inInputShareable = true;
         Bitmap mBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
 
-        boolean analyzed = DavidClass.analyzePic(mBitmap);
+        boolean analyzed = DavidClass.analyzePic2(mBitmap);
         Log.d("cameraReturn", analyzed + " ");
         redisLeft.set(analyzed);
 

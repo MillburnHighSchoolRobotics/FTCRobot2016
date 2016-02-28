@@ -10,9 +10,14 @@ import virtualRobot.godThreads.BlueAutoGodThread;
 public class BlueClimberDumpUpdate extends UpdateThread {
     @Override
     public void setGodThread() {
+
+        godThread = BlueAutoGodThread.class;
+    }
+
+    @Override
+    public void addPresets() {
         basket.setDirection(Servo.Direction.REVERSE);
         scoop.setDirection(Servo.Direction.REVERSE);
         gate.setDirection(Servo.Direction.REVERSE);
-        godThread = BlueAutoGodThread.class;
     }
 }
