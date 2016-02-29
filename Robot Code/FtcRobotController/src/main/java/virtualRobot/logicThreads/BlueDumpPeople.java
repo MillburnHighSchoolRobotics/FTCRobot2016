@@ -8,12 +8,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.AutonomousRobot;
 import virtualRobot.ExitCondition;
 import virtualRobot.LogicThread;
+import virtualRobot.commands.Command;
 import virtualRobot.commands.MoveMotor;
 import virtualRobot.commands.MoveServo;
 import virtualRobot.commands.Pause;
 import virtualRobot.commands.Rotate;
 import virtualRobot.commands.SpawnNewThread;
-import virtualRobot.commands.TakePicture;
 import virtualRobot.commands.Translate;
 import virtualRobot.components.Servo;
 
@@ -127,6 +127,15 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(moveToLine);
 
+        commands.add(new Command() {
+
+            @Override
+            public boolean changeRobotState() throws InterruptedException {
+                children.get(0).interrupt();
+                return false;
+            }
+        });
+
         commands.add(new Pause(500));
 
         commands.add(new Rotate(90, maxPower, "turn to dump people"));
@@ -203,7 +212,7 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         });
 
         commands.add(moveToPic);
-
+        /*`
 
         commands.add(new Rotate(0));
 
@@ -232,12 +241,13 @@ public class BlueDumpPeople extends LogicThread<AutonomousRobot> {
         moveToPush2.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor1().getValue() <= 35) {
+                if (robot.getUltrasoundSensor1().getValue() <= 31) {
                     return true;
                 }
                 return false;
             }
         });
         commands.add(moveToPush2);
+        */
     }
 }

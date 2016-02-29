@@ -28,7 +28,7 @@ public abstract class UpdateThread extends OpMode {
 
 	private DcMotor rightFront, rightBack, leftFront, leftBack, reaper, liftRight, liftLeft, tapeMeasureMotor;
 	private Servo backShieldRight, backShieldLeft, tapeMeasureServo, flipperRight, flipperLeft, dumper;
-    protected Servo basket, gate, scoop;
+    protected Servo basket, gate, scoop, permaHang;
 
 	private MPU9250 imu;
 	private AnalogInput sonar1, sonar2, sonar3;
@@ -36,7 +36,8 @@ public abstract class UpdateThread extends OpMode {
 	private DigitalChannel liftEndStop1, liftEndStop2;
 
 	private Motor vDriveRightMotor, vDriveLeftMotor, vReaperMotor, vLiftLeftMotor, vLiftRightMotor, vTapeMeasureMotor;
-	private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo, vScoopServo;
+	private virtualRobot.components.Servo vPermaHangServo;
+    private virtualRobot.components.Servo vBackShieldServo, vTapeMeasureServo, vFlipperLeftServo, vFlipperRightServo, vBasketServo, vGateServo, vDumperServo, vScoopServo;
 	private Sensor vDriveLeftMotorEncoder, vDriveRightMotorEncoder, vTapeMeasureMotorEncoder, vLiftRightMotorEncoder, vLiftLeftMotorEncoder, vHeadingSensor, vPitchSensor, vRollSensor, vUltrasoundSensor1, vUltrasoundSensor2, vUltrasoundSensor3;
 	private LocationSensor vLocationSensor;
 
@@ -71,6 +72,7 @@ public abstract class UpdateThread extends OpMode {
 		basket = hardwareMap.servo.get("basket");
 		gate = hardwareMap.servo.get("gate");
         scoop = hardwareMap.servo.get("scoop");
+        permaHang = hardwareMap.servo.get("permaHang");
 
         //REVERSE RIGHT SIDE
         backShieldRight.setDirection(Servo.Direction.REVERSE);
@@ -127,10 +129,16 @@ public abstract class UpdateThread extends OpMode {
         vScoopServo = robot.getScoopServo();
 		vLocationSensor = robot.getLocationSensor();
 
+        vPermaHangServo = robot.getPermaHang();
+
         vJoystickController1 = robot.getJoystickController1();
         vJoystickController2 = robot.getJoystickController2();
 
 		robotProgress = new ArrayList<String>();
+
+        tapeMeasureServo.setPosition(0.35);
+        backShieldLeft.setPosition(0);
+        backShieldRight.setPosition(0);
 
         addPresets();
         setGodThread();
@@ -155,7 +163,7 @@ public abstract class UpdateThread extends OpMode {
 	public void start() {
 
 		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
-		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
+		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition()));
         vTapeMeasureMotorEncoder.setRawValue(-tapeMeasureMotor.getCurrentPosition());
         vLiftRightMotorEncoder.setRawValue(-liftRight.getCurrentPosition());
         vLiftLeftMotorEncoder.setRawValue(-liftLeft.getCurrentPosition());
@@ -192,7 +200,7 @@ public abstract class UpdateThread extends OpMode {
 		else { /*don't update*/ }
 
 		vDriveLeftMotorEncoder.setRawValue((-leftFront.getCurrentPosition() + -leftBack.getCurrentPosition())/2);
-		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition() + -rightBack.getCurrentPosition())/2);
+		vDriveRightMotorEncoder.setRawValue((-rightFront.getCurrentPosition()));
 		vTapeMeasureMotorEncoder.setRawValue(-tapeMeasureMotor.getCurrentPosition());
         vLiftLeftMotorEncoder.setRawValue(-liftLeft.getCurrentPosition());
         vLiftRightMotorEncoder.setRawValue(-liftRight.getCurrentPosition());
@@ -243,6 +251,7 @@ public abstract class UpdateThread extends OpMode {
 		basket.setPosition(vBasketServo.getPosition());
 		gate.setPosition(vGateServo.getPosition());
         scoop.setPosition(vScoopServo.getPosition());
+        permaHang.setPosition(vPermaHangServo.getPosition());
 
 		for (int i = 0; i < robot.getProgress().size(); i++) {
 			telemetry.addData("robot progress " + i, robot.getProgress().get(i));
@@ -250,6 +259,8 @@ public abstract class UpdateThread extends OpMode {
 
         telemetry.addData("left enc", vDriveLeftMotorEncoder.getValue());
         telemetry.addData("right enc", vDriveRightMotorEncoder.getValue());
+        telemetry.addData("right power", rightPower);
+        telemetry.addData("left power", leftPower);
         telemetry.addData("heading", "Yaw: " + imu.getIntegratedYaw() + " ");
         telemetry.addData("Color sensor: ", "Red: " + vColorSensor.getRed() + " Green: " + vColorSensor.getGreen() + " Blue: " + vColorSensor.getBlue());
 	    telemetry.addData("Sonar Front", vUltrasoundSensor2.getValue());

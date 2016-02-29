@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.AutonomousRobot;
 import virtualRobot.ExitCondition;
 import virtualRobot.LogicThread;
+import virtualRobot.commands.Command;
 import virtualRobot.commands.MoveMotor;
 import virtualRobot.commands.MoveServo;
 import virtualRobot.commands.Pause;
@@ -114,6 +115,15 @@ public class RedDumpPeople extends LogicThread<AutonomousRobot> {
 
         commands.add(moveToLine);
 
+        commands.add(new Command() {
+
+            @Override
+            public boolean changeRobotState() throws InterruptedException {
+                children.get(0).interrupt();
+                return false;
+            }
+        });
+
         commands.add(new Pause(500));
 
         commands.add(new Rotate(-90, maxPower, "turn to dump people"));
@@ -191,7 +201,7 @@ public class RedDumpPeople extends LogicThread<AutonomousRobot> {
         commands.add(moveToPic);
 
 
-        commands.add(new Rotate(0));
+        commands.add(new Rotate(-180));
 
 
         TakePicture takePicture = new TakePicture(redisLeft);
@@ -199,9 +209,9 @@ public class RedDumpPeople extends LogicThread<AutonomousRobot> {
 
         robot.addToProgress(redisLeft.toString());
 
-        commands.add(new Rotate(90));
+        commands.add(new Rotate(-270));
 
-        Translate moveToPush1 = new Translate(1000, Translate.Direction.FORWARD, slowSpeed, 90, "Move back to lift");
+        Translate moveToPush1 = new Translate(1000, Translate.Direction.FORWARD, slowSpeed, -270, "Move back to lift");
         moveToPush1.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
@@ -213,11 +223,11 @@ public class RedDumpPeople extends LogicThread<AutonomousRobot> {
         });
         commands.add(moveToPush1);
 
-        Translate moveToPush2 = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, 90, "Move forward to lift");
+        Translate moveToPush2 = new Translate(1000, Translate.Direction.BACKWARD, slowSpeed, -270, "Move forward to lift");
         moveToPush2.setExitCondition(new ExitCondition() {
             @Override
             public boolean isConditionMet() {
-                if (robot.getUltrasoundSensor1().getValue() <= 35) {
+                if (robot.getUltrasoundSensor1().getValue() <= 31) {
                     return true;
                 }
                 return false;

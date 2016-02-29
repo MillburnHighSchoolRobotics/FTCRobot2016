@@ -5,10 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import virtualRobot.GodThread;
 import virtualRobot.LogicThread;
 import virtualRobot.MonitorThread;
-import virtualRobot.commands.Command;
 import virtualRobot.logicThreads.BlueDumpPeople;
-import virtualRobot.logicThreads.PushLeftButton;
-import virtualRobot.logicThreads.PushRightButton;
 import virtualRobot.monitorThreads.TimeMonitor;
 
 //import virtualRobot.logicThreads.BlueDumpPeople;
@@ -43,6 +40,7 @@ public class BlueAutoGodThread extends GodThread {
         //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
         delegateMonitor(mtb, new MonitorThread[]{watchingForTime});
         //waitToProceed (mtb);
+        /*
         Command.ROBOT.addToProgress("red is left /" + Boolean.toString(redisLeft.get()));
         if (!redisLeft.get()) {
             LogicThread pushLeft = new PushLeftButton();
@@ -60,6 +58,6 @@ public class BlueAutoGodThread extends GodThread {
             delegateMonitor(pr, new MonitorThread[]{});
         }
 
-
+        */
     }
 }

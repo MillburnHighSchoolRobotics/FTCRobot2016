@@ -30,13 +30,13 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         commands.add(new MoveServo(
                 new Servo []{
                     robot.getDumperServo(),
-                        robot.getBackShieldServo(),
-                            robot.getScoopServo()
+                    robot.getBackShieldServo(),
+                    robot.getScoopServo()
                 },
                 new double[]{
                     0.5,
-                        0.0,
-                            SCOOP_DOWN
+                    0.0,
+                    SCOOP_DOWN
                 }
         ));
         /**
@@ -56,7 +56,7 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
          * 3. Dpad Left/Right: Zipline Flippers
          * 4. X/Y: People Dumper
          * 5. A/B: Basket Dump
-         * 6. Dpad Up/Down: Shield Up/Shie ld Down
+         * 6. Dpad Up/Down: Shield Up/Shield Down
          */
         commands.add(new Command() {
             @Override
@@ -377,6 +377,20 @@ public class TeleopLogic extends LogicThread<TeleopRobot> {
         return sign * (0.5 * Math.pow((2*x - 1), 3) + 0.5);
     }
 
+    public TeleopLogic () {
+
+    }
+
+    public TeleopLogic (double[] values) {
+        SCOOP_UP = values[0];
+        SCOOP_FLAT = values[1];
+        SCOOP_CARRY = values[2];
+        SCOOP_DOWN = values[3];
+        GATE_OPEN = values[4];
+        GATE_CLOSED = values[5];
+        BASKET_UP = values[6];
+        BASKET_DOWN = values[7];
+    }
 
     protected double SCOOP_UP = 0.4;
     protected double SCOOP_FLAT = 0.9;

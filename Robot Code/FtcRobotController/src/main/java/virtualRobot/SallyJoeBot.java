@@ -20,6 +20,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
     private ColorSensor colorSensor;
     private Servo tapeMeasureServo, flipperLeftServo, flipperRightServo, backShieldServo, dumperServo, basketServo, gateServo, scoopServo;
 
+    private Servo permaHang;
+
     private LocationSensor locationSensor;
     private JoystickController joystickController1, joystickController2;
 
@@ -58,6 +60,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
         gateServo = new Servo();
         scoopServo = new Servo();
 
+        permaHang = new Servo();
+
         locationSensor = new LocationSensor();
 
         joystickController1 = new JoystickController();
@@ -65,8 +69,8 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
         robotProgress = new ArrayList<String>();
 
-        tapeMeasureServo.setPosition(0.25);
-        scoopServo.setPosition(0.75);
+        tapeMeasureServo.setPosition(0.3);
+        //scoopServo.setPosition(0.75);
     }
 
     @Override
@@ -204,6 +208,10 @@ public class SallyJoeBot implements AutonomousRobot, TeleopRobot {
 
     public synchronized ArrayList<String> getProgress () {
         return robotProgress;
+    }
+
+    public synchronized Servo getPermaHang() {
+        return permaHang;
     }
 
 

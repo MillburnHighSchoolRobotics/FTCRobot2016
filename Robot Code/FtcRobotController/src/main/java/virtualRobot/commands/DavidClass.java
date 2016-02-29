@@ -3,8 +3,14 @@ package virtualRobot.commands;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +31,16 @@ public class DavidClass {
         matrix.postRotate(90);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(), true);
         image = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+
+
+
         int[] pixels = new int[image.getWidth() * image.getHeight()];
 
         int height = image.getHeight(), width = image.getWidth();
         image.getPixels(pixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight()); //gets pixels in pixel array
 
-        final int startX = (int) ((0.5) * width);
-        final int endX = width;
+        final int startX = (int) ((0.4) * width);
+        final int endX = (int) (0.9*width);
         final int startY = (int) (0.55*height);
         final int endY = (int) (0.77*height);
 
@@ -65,6 +74,24 @@ public class DavidClass {
         lAvg = roundUp(lSum, lNum);
         rAvg = roundUp(rSum, rNum);
         Log.d("qqq", Long.toString(lAvg) + " " + Long.toString(rAvg));
+
+
+        OutputStream fos = null;
+        try {
+            fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/FIRST/" + Boolean.toString(lAvg>rAvg)+Long.toString(System.currentTimeMillis()) + ".jpg"));
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return (lAvg-RED > rAvg-RED);}
     /*public static boolean analyzePic(Bitmap bmp) {
         Log.d("zzz", Long.toString(RED));
