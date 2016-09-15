@@ -9,63 +9,11 @@ import virtualRobot.components.Sensor;
 import virtualRobot.components.Servo;
 
 /**
- * Created by Yanjun on 11/18/2015.
+ * Created by DOSullivan on 11/18/2015.
  */
 public interface AutonomousRobot {
+//Motors, sensors, servos will be added here e.g. Motor getMotor();
 
-    Motor getDriveRightMotor();
-
-    Motor getDriveLeftMotor();
-
-    Motor getReaperMotor();
-
-    Motor getLiftRightMotor();
-
-    Motor getLiftLeftMotor();
-
-    Motor getTapeMeasureMotor();
-
-    Sensor getDriveRightMotorEncoder();
-
-    Sensor getDriveLeftMotorEncoder();
-
-    Sensor getTapeMeasureMotorEncoder();
-
-    Sensor getLiftRightMotorEncoder();
-
-    Sensor getLiftLeftMotorEncoder();
-
-    Sensor getHeadingSensor();
-
-    Sensor getPitchSensor();
-
-    Sensor getRollSensor();
-
-    Sensor getUltrasoundSensor1();
-
-    Sensor getUltrasoundSensor2();
-
-    Sensor getUltrasoundSensor3();
-
-    ColorSensor getColorSensor();
-
-    LocationSensor getLocationSensor();
-
-    Servo getFlipperLeftServo();
-
-    Servo getFlipperRightServo();
-
-    Servo getBackShieldServo();
-
-    Servo getTapeMeasureServo();
-
-    Servo getDumperServo();
-
-    Servo getBasketServo();
-
-    Servo getGateServo();
-
-    Servo getScoopServo();
 
     void addToProgress(String s);
 

@@ -22,14 +22,10 @@ public class RedAutoGodThread extends GodThread {
         children.add(tm);
 
 
-        // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
-        LogicThread moveToBeacon = new RedDumpPeople(redisLeft);
-        Thread mtb = new Thread(moveToBeacon);
-        mtb.start();
-        children.add(mtb);
-
         //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
         delegateMonitor(mtb, new MonitorThread[]{watchingForTime});
+
+        //What Follows is Code we May use to push our button:
         //waitToProceed (mtb);
         /*
         Command.ROBOT.addToProgress("red is left /" + Boolean.toString(redisLeft.get()));

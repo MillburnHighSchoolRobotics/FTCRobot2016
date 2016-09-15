@@ -19,26 +19,16 @@ public class BlueAutoGodThread extends GodThread {
     public void realRun() throws InterruptedException {
         AtomicBoolean redisLeft = new AtomicBoolean();
 
-        //These two threads should be running from the beginning of the program to provide accurate data
-        /*MonitorThread watchingForDebris = new DebrisMonitor();
-        Thread dm = new Thread(watchingForDebris);
-        dm.start();
-        children.add(dm);*/
 
         MonitorThread watchingForTime = new TimeMonitor(System.currentTimeMillis(), 30000);
         Thread tm = new Thread(watchingForTime);
         //tm.start();
         children.add(tm);
 
-
-        // THIS IS THE STANDARD FORMAT FOR ADDING A LOGICTHREAD TO THE LIST
-        LogicThread moveToBeacon = new BlueDumpPeople(redisLeft);
-        Thread mtb = new Thread(moveToBeacon);
-        mtb.start();
-        children.add(mtb);
-
-        //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition
+        //keep the program alive as long as the two monitor threads are still going - should proceed every logicThread addition: delegateMonitor(thread, newMonitorThread[]{yourmonitors})
         delegateMonitor(mtb, new MonitorThread[]{watchingForTime});
+
+        //What Follows is Code we May use to push our button:
         //waitToProceed (mtb);
         /*
         Command.ROBOT.addToProgress("red is left /" + Boolean.toString(redisLeft.get()));
